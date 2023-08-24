@@ -1,0 +1,2572 @@
+fileFormatVersion: 2
+guid: 34f3985c5ab979db0931800a9ec273e0
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 62a9f0aa5b59740cfbadc7e5f9823bb0, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 0
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 100
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  previousAsepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  asepriteImporterSettings:
+    fileImportMode: 1
+    importHiddenLayers: 0
+    layerImportMode: 1
+    defaultPivotSpace: 0
+    defaultPivotAlignment: 7
+    customPivotPosition: {x: 0.5, y: 0.5}
+    spritePadding: 0
+    generateModelPrefab: 1
+    generateAnimationClips: 1
+    addSortingGroup: 1
+    addShadowCasters: 0
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  textureAssetName: 
+  singleSpriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+  animatedSpriteImportData:
+  - name: FurDevill_Frame_0
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 87
+      width: 14
+      height: 12
+    spriteID: 4355a0a4c86aead589c2652fbde134d6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 63}
+  - name: FurDevill_Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 118
+      width: 14
+      height: 13
+    spriteID: 2b548f577471a4d5a96cf3e10c6bffb6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 75, y: 118}
+  - name: FurDevill_Frame_2
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 139
+      width: 14
+      height: 13
+    spriteID: 8dbbd9cd32f7061d38c7f8134458057a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 115}
+  - name: FurDevill_Frame_3
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 107
+      width: 14
+      height: 12
+    spriteID: d09a2269d85496447a64c4e0f48951d2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 83}
+  - name: FurDevill_Frame_4
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 27
+      width: 12
+      height: 12
+    spriteID: 1263cfeae5b47b0a19e54acca6072fd4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 3}
+  - name: FurDevill_Frame_5
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 67
+      width: 12
+      height: 13
+    spriteID: bca00f2007c570817bfdfb6fa6090182
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 43}
+  - name: FurDevill_Frame_6
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 238
+      y: 4
+      width: 14
+      height: 15
+    spriteID: 1f1643aab1c42f8859a7ab08829358c2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 213, y: -20}
+  - name: FurDevill_Frame_7
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 101
+      width: 14
+      height: 17
+    spriteID: 0aee7b5299cef3f39b7520c68ef6b496
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 77}
+  - name: FurDevill_Frame_8
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 157
+      width: 14
+      height: 16
+    spriteID: f8e4313f05f2883378d0d4d49ef1b4f7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 133}
+  - name: FurDevill_Frame_9
+    originalName: 
+    pivot: {x: 0.5, y: -0.5833334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 127
+      width: 14
+      height: 12
+    spriteID: 9b145461e8e15c464a601c1422de2566
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 104}
+  - name: FurDevill_Frame_10
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 147
+      width: 14
+      height: 12
+    spriteID: 8d0262a5c747b5615b4a6ef56196c2ea
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 123}
+  - name: FurDevill_Frame_11
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 167
+      width: 14
+      height: 12
+    spriteID: becb765cfa8c2580c920ff26c03b65fa
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 143}
+  - name: FurDevill_Frame_12
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 168
+      width: 14
+      height: 15
+    spriteID: 9e2ce27531f67a9c99f76d35cf862094
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 144}
+  - name: FurDevill_Frame_13
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 88
+      width: 12
+      height: 13
+    spriteID: fb2da186857f73a90bf7bfa7bddb4e02
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 64}
+  - name: FurDevill_Frame_14
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 187
+      width: 14
+      height: 12
+    spriteID: 25c15de97e5bd7bb78958da126537df1
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 163}
+  - name: FurDevill_Frame_15
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 207
+      width: 14
+      height: 12
+    spriteID: 64d86d92617d25f7a9dae97aea0e4410
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 183}
+  - name: FurDevill_Frame_16
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 191
+      width: 14
+      height: 15
+    spriteID: d71e56c908f76657b8af2c72d8f25a10
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 167}
+  - name: FurDevill_Frame_17
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 126
+      width: 14
+      height: 17
+    spriteID: dc84872bd7bb4a4f0871484ca51957ce
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 102}
+  - name: FurDevill_Frame_18
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 181
+      width: 14
+      height: 16
+    spriteID: 9329b3c909da59d45bf8d49a70422f9e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 157}
+  - name: FurDevill_Frame_19
+    originalName: 
+    pivot: {x: 0.53333336, y: -0.9166667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 27
+      width: 15
+      height: 12
+    spriteID: a59c819a4c8010946b210fc837dca54f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 0}
+  - name: FurDevill_Frame_20
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.71428573}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 188
+      y: 4
+      width: 17
+      height: 14
+    spriteID: bb8976b9b34e16ad3aa3a06d4c44914f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 165, y: -22}
+  - name: FurDevill_Frame_21
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.6923077}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 107
+      y: 4
+      width: 19
+      height: 13
+    spriteID: cb8bc1358dec986888725d1029c74df3
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 85, y: -21}
+  - name: FurDevill_Frame_22
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 47
+      width: 12
+      height: 12
+    spriteID: c8afbb98d6a1c8143b899c9e47955657
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 23}
+  - name: FurDevill_Frame_23
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 109
+      width: 12
+      height: 13
+    spriteID: ec2ac532abb82220d838f87a1b0ce78f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 85}
+  - name: FurDevill_Frame_24
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 214
+      width: 14
+      height: 15
+    spriteID: 2a742fe3d946b9828ab11d3fb2634adf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 190}
+  - name: FurDevill_Frame_25
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 151
+      width: 14
+      height: 17
+    spriteID: a61b7c153488b82a1abccf9db9ba5350
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 127}
+  - name: FurDevill_Frame_26
+    originalName: 
+    pivot: {x: 0.5, y: -0.3529412}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 176
+      width: 14
+      height: 17
+    spriteID: 6b605196742522791802eb8ae7f2f700
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 154}
+  - name: FurDevill_Frame_27
+    originalName: 
+    pivot: {x: 0.5, y: -0.25}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 52
+      width: 16
+      height: 16
+    spriteID: 179be91cf6b7ba44391e84d1b5935b4e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2, y: 32}
+  - name: FurDevill_Frame_28
+    originalName: 
+    pivot: {x: 0.5, y: -0.2857143}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 38
+      y: 4
+      width: 26
+      height: 14
+    spriteID: d8144d0dbf82bbfc6aa03a598268198d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 19, y: -16}
+  - name: FurDevill_Frame_29
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 227
+      width: 14
+      height: 12
+    spriteID: e9c6b3aa2d571dcb49aaea13f8aca556
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 94, y: 203}
+  - name: FurDevill_Frame_30
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 160
+      width: 14
+      height: 13
+    spriteID: 62504741f9d9c3326af64876b6fd934d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 136}
+  - name: FurDevill_Frame_31
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 181
+      width: 14
+      height: 13
+    spriteID: ffda0d06f1417c7ae96aa73ed9ff2a9f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 157}
+  - name: FurDevill_Frame_32
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 48
+      width: 14
+      height: 12
+    spriteID: 30a08fc1f628003878e8c75b261dccb5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 24}
+  - name: FurDevill_Frame_33
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 67
+      width: 12
+      height: 12
+    spriteID: a0068b788699c200c912371511da90c6
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 43}
+  - name: FurDevill_Frame_34
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 130
+      width: 12
+      height: 13
+    spriteID: aa825f82503167c4694a1c48a70f185a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 106}
+  - name: FurDevill_Frame_35
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 237
+      width: 14
+      height: 15
+    spriteID: 81c20b420bdf2a8d6a51cc1550d346bf
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 213}
+  - name: FurDevill_Frame_36
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 201
+      width: 14
+      height: 17
+    spriteID: d9e111e5297219193a777c0abeaf19a7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 177}
+  - name: FurDevill_Frame_37
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 205
+      width: 14
+      height: 16
+    spriteID: 2d6e2aca369e714bda8e4ff2ad9074ad
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 181}
+  - name: FurDevill_Frame_38
+    originalName: 
+    pivot: {x: 0.5, y: -0.6363636}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 235
+      width: 14
+      height: 11
+    spriteID: 630f86169815f3a63ab6002e067abe00
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 117, y: 212}
+  - name: FurDevill_Frame_39
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 68
+      width: 14
+      height: 12
+    spriteID: b0e04262f50a706bf8c9fb75ff1e23a0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 44}
+  - name: FurDevill_Frame_40
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 88
+      width: 14
+      height: 12
+    spriteID: 4e2e06c0f6ebee789b31c1c2cd23cb1b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 64}
+  - name: FurDevill_Frame_41
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 27
+      width: 14
+      height: 15
+    spriteID: dc190cabc3d5f284b9e026489d6e814d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 3}
+  - name: FurDevill_Frame_42
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 151
+      width: 12
+      height: 13
+    spriteID: e6b48ea62bd3c185cb0f89cc859e5afd
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 127}
+  - name: FurDevill_Frame_43
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 108
+      width: 14
+      height: 12
+    spriteID: 9fa7e37f108367e43a834654e36fb75b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 84}
+  - name: FurDevill_Frame_44
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 128
+      width: 14
+      height: 12
+    spriteID: adbb691b9db2fde4181a81a2ab868b04
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 104}
+  - name: FurDevill_Frame_45
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 50
+      width: 14
+      height: 15
+    spriteID: c1344f448b922c3f8a88b3c1d2ec54f9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 26}
+  - name: FurDevill_Frame_46
+    originalName: 
+    pivot: {x: 0.5, y: -0.5714286}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 96
+      width: 14
+      height: 14
+    spriteID: a729f49720bf22b968e5c9b5ef7c91ae
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 72}
+  - name: FurDevill_Frame_47
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 202
+      width: 14
+      height: 13
+    spriteID: 58440cfe49846b36a86436adf0c416ef
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 178}
+  - name: FurDevill_Frame_48
+    originalName: 
+    pivot: {x: 0.53333336, y: -0.5833334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 47
+      width: 15
+      height: 12
+    spriteID: a2bd8631b33cb42ceaa9cd20e8fa926f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 20}
+  - name: FurDevill_Frame_49
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.42857146}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 213
+      y: 4
+      width: 17
+      height: 14
+    spriteID: aeb8dc3a3b6d30f37903ee9db31a0026
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 190, y: -22}
+  - name: FurDevill_Frame_50
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.3846154}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 134
+      y: 4
+      width: 19
+      height: 13
+    spriteID: a44ed5dac190acc8a9cfe04299880634
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 112, y: -21}
+  - name: FurDevill_Frame_51
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 87
+      width: 12
+      height: 12
+    spriteID: b0b4d5105d0230dd38bfcbe8d0e8fd9c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 63}
+  - name: FurDevill_Frame_52
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 172
+      width: 12
+      height: 13
+    spriteID: e218132253800f6eb839dff8f1bc76ab
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 148}
+  - name: FurDevill_Frame_53
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 73
+      width: 14
+      height: 15
+    spriteID: c8511f4178606227386a0211b08ab959
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 49}
+  - name: FurDevill_Frame_54
+    originalName: 
+    pivot: {x: 0.5, y: -0.4}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 27
+      width: 14
+      height: 20
+    spriteID: 1429a5903dfba0b4f881e0f55183d971
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 3}
+  - name: FurDevill_Frame_55
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 229
+      width: 14
+      height: 16
+    spriteID: d38688ac892a264dbb6138bfe84c0250
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 205}
+  - name: FurDevill_Frame_56
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 27
+      width: 16
+      height: 17
+    spriteID: 79d806c81e887dd4eaf740ea41ad30da
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2, y: 3}
+  - name: FurDevill_Frame_57
+    originalName: 
+    pivot: {x: 0.5, y: -0.53333336}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 26
+      height: 15
+    spriteID: 616f78527c2e6e4dabc009956eea0fae
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -15, y: -20}
+  - name: FurDevill_Frame_58
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 148
+      width: 14
+      height: 12
+    spriteID: 8e2cdd0fee6fec311bdd2eac5ddda05a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 124}
+  - name: FurDevill_Frame_59
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 75
+      y: 223
+      width: 14
+      height: 13
+    spriteID: e118edbbd0963cfd19a2213039bb500f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 50, y: 199}
+  - name: FurDevill_Frame_60
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 27
+      width: 14
+      height: 13
+    spriteID: cf20c9fb30f93db7a827109ea1595043
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 3}
+  - name: FurDevill_Frame_61
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 168
+      width: 14
+      height: 12
+    spriteID: 48af1db6a7b5d1c819dfa6e63c81fd67
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 144}
+  - name: FurDevill_Frame_62
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 107
+      width: 12
+      height: 12
+    spriteID: 649ce3290f69e94f78d772dc02d70b34
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 83}
+  - name: FurDevill_Frame_63
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 193
+      width: 12
+      height: 13
+    spriteID: 9e8f0a72bf3c987288f42b1d3617b211
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 169}
+  - name: FurDevill_Frame_64
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 72
+      width: 14
+      height: 16
+    spriteID: f14ac6132df23985781ea1b1eab20f15
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 48}
+  - name: FurDevill_Frame_65
+    originalName: 
+    pivot: {x: 0.42857146, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 226
+      width: 14
+      height: 17
+    spriteID: 3d138e5030364c4c586bc1803714168d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 202}
+  - name: FurDevill_Frame_66
+    originalName: 
+    pivot: {x: 0.42857146, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 82
+      width: 14
+      height: 17
+    spriteID: 505934c95f1287b71881d369ce9b5844
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -22, y: 58}
+  - name: FurDevill_Frame_67
+    originalName: 
+    pivot: {x: 0.42857146, y: -0.5833334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 188
+      width: 14
+      height: 12
+    spriteID: 4c7eee4c521032e70b7e4a0015477896
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 71, y: 165}
+  - name: FurDevill_Frame_68
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 208
+      width: 14
+      height: 12
+    spriteID: 26e64ead23678acb0b9901b9f735769c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 184}
+  - name: FurDevill_Frame_69
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 97
+      y: 228
+      width: 14
+      height: 12
+    spriteID: f43a9003a9a5fefce878d20df1ac2232
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 72, y: 204}
+  - name: FurDevill_Frame_70
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 96
+      width: 14
+      height: 16
+    spriteID: fe60c4e563cb2cbe7b54d6757bf0a226
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 72}
+  - name: FurDevill_Frame_71
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 127
+      width: 12
+      height: 12
+    spriteID: 3660f6c54d222b2a88d89cf91fe7cada
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 103}
+  - name: FurDevill_Frame_72
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 27
+      width: 14
+      height: 12
+    spriteID: 93924d9855e134ab895613969f5c4a7a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 117, y: 3}
+  - name: FurDevill_Frame_73
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 47
+      width: 14
+      height: 12
+    spriteID: 5dda11f84dbb20d29840fffc20b95fe4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 117, y: 23}
+  - name: FurDevill_Frame_74
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 120
+      width: 14
+      height: 16
+    spriteID: c08e88c42562c647a9bb48343651b41a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 96}
+  - name: FurDevill_Frame_75
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 107
+      width: 14
+      height: 17
+    spriteID: ec1488aab7cb3cfb2b89df9d32e64e02
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 83}
+  - name: FurDevill_Frame_76
+    originalName: 
+    pivot: {x: 0.5, y: -0.47058824}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 132
+      width: 14
+      height: 17
+    spriteID: 0cdda88cec0880a65bbb30f5043559c5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 108}
+  - name: FurDevill_Frame_77
+    originalName: 
+    pivot: {x: 0.53333336, y: -0.75}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 119
+      y: 67
+      width: 15
+      height: 12
+    spriteID: fc1ef62ccb70f4ce395d1deaa1c98285
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 95, y: 40}
+  - name: FurDevill_Frame_78
+    originalName: 
+    pivot: {x: 0.5294118, y: -0.5714286}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 27
+      width: 17
+      height: 14
+    spriteID: 94f64f5eca6e211709add415f64599d4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 27, y: 1}
+  - name: FurDevill_Frame_79
+    originalName: 
+    pivot: {x: 0.5263158, y: -0.53846157}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 161
+      y: 4
+      width: 19
+      height: 13
+    spriteID: 2b4f15b02f4509dea8e8232df028f855
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 139, y: -21}
+  - name: FurDevill_Frame_80
+    originalName: 
+    pivot: {x: 0.5, y: -0.6666667}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 164
+      y: 147
+      width: 12
+      height: 12
+    spriteID: 8681ff1d161f7aeb1aa73a8f0800511d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 138, y: 123}
+  - name: FurDevill_Frame_81
+    originalName: 
+    pivot: {x: 0.5, y: -0.61538464}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 142
+      y: 214
+      width: 12
+      height: 13
+    spriteID: 29e7008fa04bda97ca9be3a9bebb653e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 116, y: 190}
+  - name: FurDevill_Frame_82
+    originalName: 
+    pivot: {x: 0.5, y: -0.5}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 144
+      width: 14
+      height: 16
+    spriteID: dfdb9581817504c05a878d3661e17053
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 25, y: 120}
+  - name: FurDevill_Frame_83
+    originalName: 
+    pivot: {x: 0.5, y: -0.42105263}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 55
+      width: 14
+      height: 19
+    spriteID: e1bf460ed98829eeabed92e470e83d34
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -21, y: 31}
+  - name: FurDevill_Frame_84
+    originalName: 
+    pivot: {x: 0.4666667, y: -0.4117647}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 26
+      y: 76
+      width: 15
+      height: 17
+    spriteID: 86138a48007940ef4bc5edefed652a12
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1, y: 53}
+  - name: FurDevill_Frame_85
+    originalName: 
+    pivot: {x: 0.40000004, y: -0.33333334}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 50
+      y: 49
+      width: 15
+      height: 15
+    spriteID: 3f00444ece7322e30a7f5123a5342310
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 24, y: 28}
+  - name: FurDevill_Frame_86
+    originalName: 
+    pivot: {x: 0.4074074, y: -0.4615385}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 72
+      y: 4
+      width: 27
+      height: 13
+    spriteID: 71895b5ca1a470aed8e043772ebbf84e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 51, y: -18}
+  spriteSheetImportData: []
+  asepriteLayers:
+  - layerIndex: 0
+    guid: -1849002517
+    name: FurDevill
+    layerFlags: 0
+    layerType: 0
+    blendMode: 0
+    cells:
+    - name: FurDevill_Frame_0
+      frameIndex: 0
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 4355a0a4c86aead589c2652fbde134d6
+    - name: FurDevill_Frame_1
+      frameIndex: 1
+      cellRect:
+        x: 9
+        y: 8
+        width: 14
+        height: 13
+      spriteId: 2b548f577471a4d5a96cf3e10c6bffb6
+    - name: FurDevill_Frame_2
+      frameIndex: 2
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 8dbbd9cd32f7061d38c7f8134458057a
+    - name: FurDevill_Frame_3
+      frameIndex: 3
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: d09a2269d85496447a64c4e0f48951d2
+    - name: FurDevill_Frame_4
+      frameIndex: 4
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 1263cfeae5b47b0a19e54acca6072fd4
+    - name: FurDevill_Frame_5
+      frameIndex: 5
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: bca00f2007c570817bfdfb6fa6090182
+    - name: FurDevill_Frame_6
+      frameIndex: 6
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 1f1643aab1c42f8859a7ab08829358c2
+    - name: FurDevill_Frame_7
+      frameIndex: 7
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 0aee7b5299cef3f39b7520c68ef6b496
+    - name: FurDevill_Frame_8
+      frameIndex: 8
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: f8e4313f05f2883378d0d4d49ef1b4f7
+    - name: FurDevill_Frame_9
+      frameIndex: 9
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 9b145461e8e15c464a601c1422de2566
+    - name: FurDevill_Frame_10
+      frameIndex: 10
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 8d0262a5c747b5615b4a6ef56196c2ea
+    - name: FurDevill_Frame_11
+      frameIndex: 11
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: becb765cfa8c2580c920ff26c03b65fa
+    - name: FurDevill_Frame_12
+      frameIndex: 12
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 9e2ce27531f67a9c99f76d35cf862094
+    - name: FurDevill_Frame_13
+      frameIndex: 13
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: fb2da186857f73a90bf7bfa7bddb4e02
+    - name: FurDevill_Frame_14
+      frameIndex: 14
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 25c15de97e5bd7bb78958da126537df1
+    - name: FurDevill_Frame_15
+      frameIndex: 15
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 64d86d92617d25f7a9dae97aea0e4410
+    - name: FurDevill_Frame_16
+      frameIndex: 16
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: d71e56c908f76657b8af2c72d8f25a10
+    - name: FurDevill_Frame_17
+      frameIndex: 17
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: dc84872bd7bb4a4f0871484ca51957ce
+    - name: FurDevill_Frame_18
+      frameIndex: 18
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 9329b3c909da59d45bf8d49a70422f9e
+    - name: FurDevill_Frame_19
+      frameIndex: 19
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: a59c819a4c8010946b210fc837dca54f
+    - name: FurDevill_Frame_20
+      frameIndex: 20
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: bb8976b9b34e16ad3aa3a06d4c44914f
+    - name: FurDevill_Frame_21
+      frameIndex: 21
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: cb8bc1358dec986888725d1029c74df3
+    - name: FurDevill_Frame_22
+      frameIndex: 22
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: c8afbb98d6a1c8143b899c9e47955657
+    - name: FurDevill_Frame_23
+      frameIndex: 23
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: ec2ac532abb82220d838f87a1b0ce78f
+    - name: FurDevill_Frame_24
+      frameIndex: 24
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 2a742fe3d946b9828ab11d3fb2634adf
+    - name: FurDevill_Frame_25
+      frameIndex: 25
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: a61b7c153488b82a1abccf9db9ba5350
+    - name: FurDevill_Frame_26
+      frameIndex: 26
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 6b605196742522791802eb8ae7f2f700
+    - name: FurDevill_Frame_27
+      frameIndex: 27
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 179be91cf6b7ba44391e84d1b5935b4e
+    - name: FurDevill_Frame_28
+      frameIndex: 28
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: d8144d0dbf82bbfc6aa03a598268198d
+    - name: FurDevill_Frame_29
+      frameIndex: 29
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: e9c6b3aa2d571dcb49aaea13f8aca556
+    - name: FurDevill_Frame_30
+      frameIndex: 30
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 62504741f9d9c3326af64876b6fd934d
+    - name: FurDevill_Frame_31
+      frameIndex: 31
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: ffda0d06f1417c7ae96aa73ed9ff2a9f
+    - name: FurDevill_Frame_32
+      frameIndex: 32
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 30a08fc1f628003878e8c75b261dccb5
+    - name: FurDevill_Frame_33
+      frameIndex: 33
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: a0068b788699c200c912371511da90c6
+    - name: FurDevill_Frame_34
+      frameIndex: 34
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: aa825f82503167c4694a1c48a70f185a
+    - name: FurDevill_Frame_35
+      frameIndex: 35
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 81c20b420bdf2a8d6a51cc1550d346bf
+    - name: FurDevill_Frame_36
+      frameIndex: 36
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: d9e111e5297219193a777c0abeaf19a7
+    - name: FurDevill_Frame_37
+      frameIndex: 37
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 2d6e2aca369e714bda8e4ff2ad9074ad
+    - name: FurDevill_Frame_38
+      frameIndex: 38
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 630f86169815f3a63ab6002e067abe00
+    - name: FurDevill_Frame_39
+      frameIndex: 39
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: b0e04262f50a706bf8c9fb75ff1e23a0
+    - name: FurDevill_Frame_40
+      frameIndex: 40
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 4e2e06c0f6ebee789b31c1c2cd23cb1b
+    - name: FurDevill_Frame_41
+      frameIndex: 41
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: dc190cabc3d5f284b9e026489d6e814d
+    - name: FurDevill_Frame_42
+      frameIndex: 42
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: e6b48ea62bd3c185cb0f89cc859e5afd
+    - name: FurDevill_Frame_43
+      frameIndex: 43
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 9fa7e37f108367e43a834654e36fb75b
+    - name: FurDevill_Frame_44
+      frameIndex: 44
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: adbb691b9db2fde4181a81a2ab868b04
+    - name: FurDevill_Frame_45
+      frameIndex: 45
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: c1344f448b922c3f8a88b3c1d2ec54f9
+    - name: FurDevill_Frame_46
+      frameIndex: 46
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: a729f49720bf22b968e5c9b5ef7c91ae
+    - name: FurDevill_Frame_47
+      frameIndex: 47
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 58440cfe49846b36a86436adf0c416ef
+    - name: FurDevill_Frame_48
+      frameIndex: 48
+      cellRect:
+        x: -16
+        y: -20
+        width: 64
+        height: 64
+      spriteId: a2bd8631b33cb42ceaa9cd20e8fa926f
+    - name: FurDevill_Frame_49
+      frameIndex: 49
+      cellRect:
+        x: -16
+        y: -20
+        width: 64
+        height: 64
+      spriteId: aeb8dc3a3b6d30f37903ee9db31a0026
+    - name: FurDevill_Frame_50
+      frameIndex: 50
+      cellRect:
+        x: -16
+        y: -20
+        width: 64
+        height: 64
+      spriteId: a44ed5dac190acc8a9cfe04299880634
+    - name: FurDevill_Frame_51
+      frameIndex: 51
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: b0b4d5105d0230dd38bfcbe8d0e8fd9c
+    - name: FurDevill_Frame_52
+      frameIndex: 52
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: e218132253800f6eb839dff8f1bc76ab
+    - name: FurDevill_Frame_53
+      frameIndex: 53
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: c8511f4178606227386a0211b08ab959
+    - name: FurDevill_Frame_54
+      frameIndex: 54
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 1429a5903dfba0b4f881e0f55183d971
+    - name: FurDevill_Frame_55
+      frameIndex: 55
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: d38688ac892a264dbb6138bfe84c0250
+    - name: FurDevill_Frame_56
+      frameIndex: 56
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 79d806c81e887dd4eaf740ea41ad30da
+    - name: FurDevill_Frame_57
+      frameIndex: 57
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 616f78527c2e6e4dabc009956eea0fae
+    - name: FurDevill_Frame_58
+      frameIndex: 58
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 8e2cdd0fee6fec311bdd2eac5ddda05a
+    - name: FurDevill_Frame_59
+      frameIndex: 59
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: e118edbbd0963cfd19a2213039bb500f
+    - name: FurDevill_Frame_60
+      frameIndex: 60
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: cf20c9fb30f93db7a827109ea1595043
+    - name: FurDevill_Frame_61
+      frameIndex: 61
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 48af1db6a7b5d1c819dfa6e63c81fd67
+    - name: FurDevill_Frame_62
+      frameIndex: 62
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 649ce3290f69e94f78d772dc02d70b34
+    - name: FurDevill_Frame_63
+      frameIndex: 63
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 9e8f0a72bf3c987288f42b1d3617b211
+    - name: FurDevill_Frame_64
+      frameIndex: 64
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: f14ac6132df23985781ea1b1eab20f15
+    - name: FurDevill_Frame_65
+      frameIndex: 65
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 3d138e5030364c4c586bc1803714168d
+    - name: FurDevill_Frame_66
+      frameIndex: 66
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 505934c95f1287b71881d369ce9b5844
+    - name: FurDevill_Frame_67
+      frameIndex: 67
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 4c7eee4c521032e70b7e4a0015477896
+    - name: FurDevill_Frame_68
+      frameIndex: 68
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 26e64ead23678acb0b9901b9f735769c
+    - name: FurDevill_Frame_69
+      frameIndex: 69
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: f43a9003a9a5fefce878d20df1ac2232
+    - name: FurDevill_Frame_70
+      frameIndex: 70
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: fe60c4e563cb2cbe7b54d6757bf0a226
+    - name: FurDevill_Frame_71
+      frameIndex: 71
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 3660f6c54d222b2a88d89cf91fe7cada
+    - name: FurDevill_Frame_72
+      frameIndex: 72
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 93924d9855e134ab895613969f5c4a7a
+    - name: FurDevill_Frame_73
+      frameIndex: 73
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 5dda11f84dbb20d29840fffc20b95fe4
+    - name: FurDevill_Frame_74
+      frameIndex: 74
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: c08e88c42562c647a9bb48343651b41a
+    - name: FurDevill_Frame_75
+      frameIndex: 75
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: ec1488aab7cb3cfb2b89df9d32e64e02
+    - name: FurDevill_Frame_76
+      frameIndex: 76
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 0cdda88cec0880a65bbb30f5043559c5
+    - name: FurDevill_Frame_77
+      frameIndex: 77
+      cellRect:
+        x: -16
+        y: -18
+        width: 64
+        height: 64
+      spriteId: fc1ef62ccb70f4ce395d1deaa1c98285
+    - name: FurDevill_Frame_78
+      frameIndex: 78
+      cellRect:
+        x: -16
+        y: -18
+        width: 64
+        height: 64
+      spriteId: 94f64f5eca6e211709add415f64599d4
+    - name: FurDevill_Frame_79
+      frameIndex: 79
+      cellRect:
+        x: -16
+        y: -18
+        width: 64
+        height: 64
+      spriteId: 2b4f15b02f4509dea8e8232df028f855
+    - name: FurDevill_Frame_80
+      frameIndex: 80
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 8681ff1d161f7aeb1aa73a8f0800511d
+    - name: FurDevill_Frame_81
+      frameIndex: 81
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 29e7008fa04bda97ca9be3a9bebb653e
+    - name: FurDevill_Frame_82
+      frameIndex: 82
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: dfdb9581817504c05a878d3661e17053
+    - name: FurDevill_Frame_83
+      frameIndex: 83
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: e1bf460ed98829eeabed92e470e83d34
+    - name: FurDevill_Frame_84
+      frameIndex: 84
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 86138a48007940ef4bc5edefed652a12
+    - name: FurDevill_Frame_85
+      frameIndex: 85
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 3f00444ece7322e30a7f5123a5342310
+    - name: FurDevill_Frame_86
+      frameIndex: 86
+      cellRect:
+        x: -16
+        y: -16
+        width: 64
+        height: 64
+      spriteId: 71895b5ca1a470aed8e043772ebbf84e
+    linkedCells: []
+    parentIndex: -1
+  platformSettings: []
+  secondarySpriteTextures: []
+  spritePackingTag: 
+  canvasSize: {x: 32, y: 32}
