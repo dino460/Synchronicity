@@ -17,14 +17,17 @@ namespace Enemy
 
         [SerializeField] private EnemyAnimationController enemyAnimationController;
         [SerializeField] private NavMeshAgent agent;
+        [SerializeField] private Player.PlayerInputHandler playerInputHandler;
         [SerializeField] private Transform player;
         [SerializeField] private Transform thisTransform;
+        [SerializeField] private Transform spriteTransform;
 
 
         [Header("Movement")]
         [SerializeField] private float moveSpeed;
         [SerializeField] private float alignSpeed = 2f;
         [SerializeField] private float alignMargin = 0.05f;
+        [SerializeField] private float alignDistance = 0.5f;
 
 
         [Header("Combat")]
@@ -58,6 +61,7 @@ namespace Enemy
             alignModifier = (int) agent.transform.localScale.x;
 
             target = player.position;
+
             agent.SetDestination(
                     new Vector3(target.x, target.y, thisTransform.position.z));
         }
@@ -68,14 +72,27 @@ namespace Enemy
 
             target = player.position;
 
-            
-            if (Vector2.Distance(agent.transform.position, target) <= 
+            if (state == State.Attack)
+            {
+
+            }
+            else if (state == State.Hurt)
+            {
+                // TODO: Knockback + Damage + Animation 
+            }
+            else if (state == State.Dead)
+            {
+                // TODO: Kill enemy
+            }
+            else if (Vector2.Distance(agent.transform.position, target) <= 
                 agent.stoppingDistance)
             {
                 AlignToAttack();
             }
-            else if (state != State.Attack && state != State.Dead && state != State.Hurt)
+            else
             {
+                agent.isStopped = false;
+
                 testForAttackTimer = 0f;
                 alignTimer = 0f;
                 alignModifier = (int) agent.transform.localScale.x;
@@ -103,6 +120,9 @@ namespace Enemy
 
             if (alignTimer >= timeToAlign * 50f)
             {
+                Debug.Log(alignTimer / 50f);
+                Debug.Log(timeToAlign);
+
                 alignTimer = 0f;
                 alignModifier *= -1;
                 alignTimerIsSet = false;
@@ -113,13 +133,17 @@ namespace Enemy
 
         private void AlignToAttack()
         {
-            if (state == State.Attack) return;
+            if (state == State.Attack || playerInputHandler.PlayerIsMovingThisFrame())
+            {
+                return;
+            }
 
+            agent.isStopped = true;
             state = State.Align;
 
             var destination = new Vector2(target.x - 
-                (alignModifier * agent.stoppingDistance), 
-                target.y - 0.5f);
+                (alignModifier * alignDistance), 
+                target.y - 0.6f);
             
 
             float distance = Vector2.Distance(destination, agent.transform.position);
@@ -139,6 +163,7 @@ namespace Enemy
                 return;
             }
 
+            firstAttack = true;
             canTestForAttack = false;
             testForAttackTimer = 0f;
 
@@ -153,18 +178,21 @@ namespace Enemy
 
             if ((target - thisTransform.position).x >= 0f) 
             {
-                agent.transform.localScale = new Vector2(1f, 1f);
+                spriteTransform.localScale = new Vector2(1f, 1f);
             }
             else
             {
-                agent.transform.localScale = new Vector2(-1f, 1f);
+                spriteTransform.localScale = new Vector2(-1f, 1f);
             }
         }
 
 
         private void TestForAttack()
         {
-            if (!canTestForAttack) return;
+            if (!canTestForAttack || playerInputHandler.PlayerIsMovingThisFrame())
+            {
+                return;
+            }
 
             alignTimerIsSet = false;
             
@@ -182,6 +210,7 @@ namespace Enemy
             if (testForAttackTimer >= timeToTestForAttack * 50f)
             {
                 testForAttackTimer = 0f;
+                alignTimer = 0f;
 
                 state = State.Attack;
             }
