@@ -46,7 +46,6 @@ namespace Player
                     break;
                 
                 case State.Attack:
-                    //  Do some stuff so combo goes brrr
                     anim.Play(attackAnimations[p_direction].name);
                     // playerController.p_comboValue += 3;
                     break;
