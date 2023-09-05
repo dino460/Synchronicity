@@ -37,11 +37,13 @@ namespace Player
             set { if (state == State.Attack) comboValue = value; }
         }
         [SerializeField] private GameObject[] attackHitBoxes;
+        [SerializeField] private float attackDamage = 10;
+        [SerializeField] private float comboDamageMod = 1.2;
 
 
         [Header("Health")]
-        [SerializeField] private int maxHealthPoints = 50;
-        [SerializeField] private int currentHealthPoints;
+        [SerializeField] private float maxHealthPoints = 50;
+        [SerializeField] private float currentHealthPoints;
 
         [SerializeField] private int maxEstusAmount  = 3;
         [SerializeField] private int currentEstusAmount;

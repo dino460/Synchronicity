@@ -786,10 +786,11 @@ MonoBehaviour:
   spriteTransform: {fileID: 1651608148}
   moveSpeed: 5
   alignSpeed: 3.5
-  alignMargin: 0.15
-  alignDistance: 1.2
+  alignMargin: 0.17
+  alignDistance: 1.25
   testForAttackTimer: 0
   timeToTestForAttack: 0.75
+  timeToArriveAtAttackPosMod: 2.5
   timeToAlign: 0
   alignTimer: 0
   alignTimerIsSet: 0
@@ -800,7 +801,7 @@ MonoBehaviour:
   hitCount: 0
   hitCountToInvulnerable: 3
   invulnerableTimer: 0
-  invulnerableTime: 2
+  invulnerableTime: 3
   isInvulnerable: 0
   timeSinceLastHit: 0
   hitCountResetTime: 2.5

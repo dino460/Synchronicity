@@ -34,10 +34,11 @@ namespace Enemy
         [SerializeField] private float testForAttackTimer  = 0f;
         [SerializeField] private float timeToTestForAttack = 2f;        
 
+        [SerializeField] private float timeToArriveAtAttackPosMod = 2.5f;
         [SerializeField] private float timeToAlign;
         [SerializeField] private float alignTimer      = 0f;
         [SerializeField] private bool  alignTimerIsSet = false;
-        [SerializeField] private int   alignModifier   = 1; 
+        [SerializeField] private int   alignModifier   = 1;
 
         [SerializeField] private bool canTestForAttack = false;
         [SerializeField] private bool firstAttack      = true;
@@ -211,7 +212,7 @@ namespace Enemy
             if (!alignTimerIsSet)
             {
                 alignTimerIsSet = true;
-                timeToAlign = 2.2f * distance / alignSpeed;
+                timeToAlign = timeToArriveAtAttackPosMod * distance / alignSpeed;
             }
 
 
