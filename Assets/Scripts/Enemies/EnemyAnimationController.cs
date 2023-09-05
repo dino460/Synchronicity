@@ -14,11 +14,13 @@ namespace Enemy
         [SerializeField] private AnimationClip idleAnimation;
         [SerializeField] private AnimationClip walkAnimation;
         [SerializeField] private AnimationClip attackAnimation;
+        [SerializeField] private AnimationClip hurtAnimation;
 
 
         public static event Action End;
         public static event Action HitboxHide;
         public static event Action HitboxAttack;
+        public static event Action Unhurt;
 
 
         public void UpdateAnimation(State e_state)
@@ -42,7 +44,7 @@ namespace Enemy
                     break;
                 
                 case State.Hurt:
-                    // anim.Play(attackAnimations[p_direction].name);
+                    anim.Play(hurtAnimation.name);
                     break;
 
                 case State.Dead:
@@ -70,6 +72,11 @@ namespace Enemy
         public void DisableAttackHitbox()
         {
             HitboxHide?.Invoke();
+        }
+
+        public void ExitHurt()
+        {
+            Unhurt?.Invoke();
         }
     }
 }

@@ -521,7 +521,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.02, y: -0.15, z: -10}
+  m_LocalPosition: {x: -2.09, y: -0.13, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -742,6 +742,7 @@ GameObject:
   m_Component:
   - component: {fileID: 948069885}
   - component: {fileID: 948069886}
+  - component: {fileID: 948069887}
   m_Layer: 0
   m_Name: Mud Controller
   m_TagString: Untagged
@@ -795,6 +796,49 @@ MonoBehaviour:
   alignModifier: 1
   canTestForAttack: 0
   firstAttack: 1
+  playerHitboxTag: PlayerHitbox
+  hitCount: 0
+  hitCountToInvulnerable: 3
+  invulnerableTimer: 0
+  invulnerableTime: 2
+  isInvulnerable: 0
+  timeSinceLastHit: 0
+  hitCountResetTime: 2.5
+--- !u!58 &948069887
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948069884}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.2, y: 0.5}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!4 &1078497941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2332468280630243035, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
@@ -2757,6 +2801,7 @@ MonoBehaviour:
   idleAnimation: {fileID: 7400000, guid: 93040e40642409bfebffa7f791ebd8f4, type: 2}
   walkAnimation: {fileID: 7400000, guid: c38c8ebbd2eb27142b9ab5ddc03dc526, type: 2}
   attackAnimation: {fileID: 7400000, guid: 1ef2ae8c37f4b11c6bfe75f39cbbf0ac, type: 2}
+  hurtAnimation: {fileID: 7400000, guid: 1120c8123ccb18948924d925ed4a61d9, type: 2}
 --- !u!1 &1726543137
 GameObject:
   m_ObjectHideFlags: 0
@@ -24188,6 +24233,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 388829117387597525, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 430033823994057055, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 525028202796494479, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 670769394017244402, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644880446024738322, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293225150252397475, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2332468280630243035, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -24206,11 +24275,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2332468280630243035, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.02
+      value: -2.09
       objectReference: {fileID: 0}
     - target: {fileID: 2332468280630243035, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.15
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 2332468280630243035, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_LocalPosition.z
@@ -24248,16 +24317,56 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3530562844929801156, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864389230513976668, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
     - target: {fileID: 5240021071308799741, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5240021071308799741, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
       objectReference: {fileID: 0}
     - target: {fileID: 6583582147066413664, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6583582147066413664, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 6926052939896484817, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 7226541919619053259, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8020407285899771094, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
     - target: {fileID: 8026036233675963185, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8238169668855330519, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8882232749374936994, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
+      value: PlayerHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907149317355925624, guid: 36dc4b449005a39e19930dd1a962e312, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

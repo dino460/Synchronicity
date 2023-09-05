@@ -126,12 +126,12 @@ TextureImporter:
       name: damaged and death_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 161
-        width: 82
+        width: 25
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -147,12 +147,12 @@ TextureImporter:
       name: damaged and death_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 138
-        width: 82
+        width: 25
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: damaged and death_2
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 115
-        width: 82
+        width: 25
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -189,12 +189,12 @@ TextureImporter:
       name: damaged and death_3
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 92
-        width: 82
+        width: 25
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -210,12 +210,12 @@ TextureImporter:
       name: damaged and death_4
       rect:
         serializedVersion: 2
-        x: 0
+        x: 10
         y: 69
-        width: 82
+        width: 25
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -231,12 +231,12 @@ TextureImporter:
       name: damaged and death_5
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 46
-        width: 82
+        width: 38
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -252,12 +252,12 @@ TextureImporter:
       name: damaged and death_6
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 23
-        width: 82
+        width: 42
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -275,10 +275,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 82
+        width: 44
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

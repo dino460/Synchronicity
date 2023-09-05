@@ -25,22 +25,36 @@ namespace Enemy
 
         [Header("Movement")]
         [SerializeField] private float moveSpeed;
-        [SerializeField] private float alignSpeed = 2f;
-        [SerializeField] private float alignMargin = 0.05f;
+        [SerializeField] private float alignSpeed    = 2f;
+        [SerializeField] private float alignMargin   = 0.05f;
         [SerializeField] private float alignDistance = 0.5f;
 
 
         [Header("Combat")]
-        [SerializeField] private float testForAttackTimer = 0f;
+        [SerializeField] private float testForAttackTimer  = 0f;
         [SerializeField] private float timeToTestForAttack = 2f;        
 
         [SerializeField] private float timeToAlign;
-        [SerializeField] private float alignTimer = 0f;
+        [SerializeField] private float alignTimer      = 0f;
         [SerializeField] private bool  alignTimerIsSet = false;
-        [SerializeField] private int   alignModifier = 1; 
+        [SerializeField] private int   alignModifier   = 1; 
 
         [SerializeField] private bool canTestForAttack = false;
-        [SerializeField] private bool firstAttack = true;
+        [SerializeField] private bool firstAttack      = true;
+
+
+        [Header("Damage")]
+        [SerializeField] private string playerHitboxTag;
+
+        [SerializeField] private int hitCount               = 0;
+        [SerializeField] private int hitCountToInvulnerable = 3;
+        
+        [SerializeField] private float invulnerableTimer = 0f;
+        [SerializeField] private float invulnerableTime  = 2f;
+        [SerializeField] private bool  isInvulnerable    = false;
+
+        [SerializeField] private float timeSinceLastHit  = 0f;
+        [SerializeField] private float hitCountResetTime = 2.5f;
 
 
         // TODO: Make it patrol when far from player
@@ -48,7 +62,8 @@ namespace Enemy
 
         private void Start()
         {
-            EnemyAnimationController.End += ExitAttack;
+            EnemyAnimationController.End    += ExitAttack;
+            EnemyAnimationController.Unhurt += Unhurt;
 
             state = State.Idle;
 
@@ -57,6 +72,7 @@ namespace Enemy
             canTestForAttack     = false;
             alignTimerIsSet      = false;
             firstAttack          = true;
+            isInvulnerable       = false;
 
             alignModifier = (int) agent.transform.localScale.x;
 
@@ -72,37 +88,34 @@ namespace Enemy
 
             target = player.position;
 
-            if (state == State.Attack)
+            if (hitCount == hitCountToInvulnerable)
             {
-
+                hitCount = 0;
+                isInvulnerable = true;
             }
-            else if (state == State.Hurt)
-            {
-                // TODO: Knockback + Damage + Animation 
-            }
-            else if (state == State.Dead)
-            {
-                // TODO: Kill enemy
-            }
-            else if (Vector2.Distance(agent.transform.position, target) <= 
-                agent.stoppingDistance)
-            {
-                AlignToAttack();
-            }
-            else
-            {
-                agent.isStopped = false;
+            
+            if (state != State.Attack && state != State.Hurt && state != State.Dead)
+            {    
+                if (Vector2.Distance(agent.transform.position, target) <= 
+                    agent.stoppingDistance)
+                {
+                    AlignToAttack();
+                }
+                else
+                {
+                    agent.isStopped = false;
 
-                testForAttackTimer = 0f;
-                alignTimer = 0f;
-                alignModifier = (int) agent.transform.localScale.x;
-                alignTimerIsSet = false;
-                firstAttack = true;
+                    testForAttackTimer = 0f;
+                    alignTimer = 0f;
+                    alignModifier = (int) agent.transform.localScale.x;
+                    alignTimerIsSet = false;
+                    firstAttack = true;
 
-                state = State.Walk;
+                    state = State.Walk;
 
-                agent.SetDestination(
-                    new Vector3(target.x, target.y, thisTransform.position.z));
+                    agent.SetDestination(
+                        new Vector3(target.x, target.y, thisTransform.position.z));
+                }
             }
 
             enemyAnimationController.UpdateAnimation(state);
@@ -117,19 +130,66 @@ namespace Enemy
             {
                 alignTimer++;
             }
-
             if (alignTimer >= timeToAlign * 50f)
             {
-                Debug.Log(alignTimer / 50f);
-                Debug.Log(timeToAlign);
-
                 alignTimer = 0f;
                 alignModifier *= -1;
                 alignTimerIsSet = false;
                 // Do something to change align side
             }
+
+
+            if (isInvulnerable)
+            {
+                invulnerableTimer++;
+            }
+            if (invulnerableTimer >= invulnerableTime * 50f)
+            {
+                invulnerableTimer = 0f;
+                isInvulnerable = false;
+            }
+
+            
+            timeSinceLastHit++;
+            if (timeSinceLastHit >= hitCountResetTime * 50)
+            {
+                timeSinceLastHit = 0f;
+                hitCount = 0;
+            }
         }
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.tag == playerHitboxTag)
+            {
+                Debug.Log("Hit");
+                
+                if (!isInvulnerable)
+                {
+                    timeSinceLastHit = 0f;
+                    hitCount++;
+                    state = State.Hurt;
+                }
+            }
+        }
+
+
+        private void TurnThis()
+        {
+            if (state == State.Attack) return;
+
+            if ((target - thisTransform.position).x >= 0f) 
+            {
+                spriteTransform.localScale = new Vector2(1f, 1f);
+            }
+            else
+            {
+                spriteTransform.localScale = new Vector2(-1f, 1f);
+            }
+        }
+
+
+        #region Combat
 
         private void AlignToAttack()
         {
@@ -151,7 +211,7 @@ namespace Enemy
             if (!alignTimerIsSet)
             {
                 alignTimerIsSet = true;
-                timeToAlign = 2f * distance / alignSpeed;
+                timeToAlign = 2.2f * distance / alignSpeed;
             }
 
 
@@ -170,22 +230,6 @@ namespace Enemy
             agent.transform.position = Vector2.Lerp(agent.transform.position, 
                 destination, alignSpeed * Time.deltaTime);
         }
-
-
-        private void TurnThis()
-        {
-            if (state == State.Attack) return;
-
-            if ((target - thisTransform.position).x >= 0f) 
-            {
-                spriteTransform.localScale = new Vector2(1f, 1f);
-            }
-            else
-            {
-                spriteTransform.localScale = new Vector2(-1f, 1f);
-            }
-        }
-
 
         private void TestForAttack()
         {
@@ -220,5 +264,17 @@ namespace Enemy
         {
             state = State.Align;
         }
+
+        #endregion
+       
+
+        #region TakeDamage
+
+        private void Unhurt()
+        {
+            state = State.Idle;
+        }
+        
+        #endregion
     }
 }
