@@ -120,6 +120,17 @@
                 },
                 {
                     "name": "",
+                    "id": "0c3712e3-accc-4c4c-aba6-abff63ea3998",
+                    "path": "<Gamepad>/dpad",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "ee3d5f0b-0cd5-494b-81a2-d3fb51a60bd9",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -132,7 +143,7 @@
                 {
                     "name": "",
                     "id": "6c7c4d37-3e53-4074-8009-a2abf637dc35",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",

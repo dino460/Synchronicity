@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
+using System;
 
 
 namespace Player
 {
-    // TODO: Somehow make upgrades happen and work
-    
     public enum State {Idle, Walk, Dash, Attack, Cancel}
     public enum FacingDirection {Up, Down, Side}
 
@@ -37,12 +36,15 @@ namespace Player
             set { if (state == State.Attack) comboValue = value; }
         }
         [SerializeField] private GameObject[] attackHitBoxes;
-        [SerializeField] private float attackDamage = 10;
-        [SerializeField] private float comboDamageMod = 1.2;
+        [SerializeField] private float baseAttackDamage = 10;
+        [SerializeField] private float upgradeDamageMod = 1f;
+        [SerializeField] private float comboDamageMod   = 1.2f;
+        [SerializeField] private float finalAttackDamage;
+        [SerializeField] private string enemyHitboxTag;
 
 
         [Header("Health")]
-        [SerializeField] private float maxHealthPoints = 50;
+        [SerializeField] private float maxHealthPoints = 50f;
         [SerializeField] private float currentHealthPoints;
 
         [SerializeField] private int maxEstusAmount  = 3;
@@ -56,6 +58,9 @@ namespace Player
         [SerializeField] private State state;
 
 
+        // TODO: Somehow make upgrades happen and work
+        // TODO: Refactor some messy methods and further separate functions into distinct methods
+    
         #region Setup
         private void Start()
         {
@@ -65,6 +70,7 @@ namespace Player
             PlayerAnimationHandler.End          += EndAttack;
             PlayerAnimationHandler.Cancel       += CancelAttack;
             PlayerAnimationHandler.HitboxAttack += EnableAttackHitbox;
+            Enemy.EnemyController.GetHurt       += DamageEnemy;
 
             state = State.Idle;
             facingDirection = FacingDirection.Down;
@@ -79,7 +85,6 @@ namespace Player
         private void Update()
         {
             UpdateMovement();
-
             
             if (state != State.Attack && state != State.Cancel)
             {
@@ -95,6 +100,17 @@ namespace Player
             {
                 dashTimer = 0;
                 state = State.Idle;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.tag == enemyHitboxTag)
+            {
+                // TODO: finish adding systems for player taking damage (use similar method to enemy system)
+                // Invoke event Action on player script with PlayerController argument
+                // Listen to event Action on enemy script with method that damages player through passed PlayerController
+                // Enemy controller sould call TakeDamage(damage)  
             }
         }
 
@@ -193,6 +209,8 @@ namespace Player
             state = State.Attack;
             rigidbody2D.velocity = Vector2.zero;
 
+            finalAttackDamage = baseAttackDamage * Mathf.Pow(comboDamageMod, (comboValue / 3f)) * upgradeDamageMod;
+
             playerAnimationHandler.UpdateAnimation(state, comboValue + (int) facingDirection);
         }
 
@@ -214,6 +232,11 @@ namespace Player
             attackHitBoxes[comboValue + (int) facingDirection].SetActive(true); 
         }
 
+        private void DamageEnemy(Enemy.EnemyController _enemyController)
+        {
+            _enemyController.TakeDamage(finalAttackDamage);
+        }
+
         #endregion
 
 
@@ -232,11 +255,11 @@ namespace Player
             if (currentHealthPoints >= maxHealthPoints) currentHealthPoints = maxHealthPoints;
         }
 
-        private void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             currentHealthPoints -= damage;
 
-            if (currentHealthPoints <= 0) currentHealthPoints = 0;
+            if (currentHealthPoints <= 0f) currentHealthPoints = 0f;
         }
 
         #endregion

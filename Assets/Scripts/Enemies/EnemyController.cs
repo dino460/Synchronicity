@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.AI;
 using UnityEngine;
+using System;
 
 
 namespace Enemy
 {
     public enum State {Idle, Walk, Align, Attack, Hurt, Dead}
     
-    public class MudGuardController : MonoBehaviour
+    public class EnemyController : MonoBehaviour
     {
         [SerializeField] private State state = State.Idle;
 
@@ -21,6 +22,9 @@ namespace Enemy
         [SerializeField] private Transform player;
         [SerializeField] private Transform thisTransform;
         [SerializeField] private Transform spriteTransform;
+
+
+        public static event Action<EnemyController> GetHurt;
 
 
         [Header("Movement")]
@@ -42,9 +46,13 @@ namespace Enemy
 
         [SerializeField] private bool canTestForAttack = false;
         [SerializeField] private bool firstAttack      = true;
+        [SerializeField] private GameObject attackHitBox;
 
 
-        [Header("Damage")]
+        [Header("Health")]
+        [SerializeField] private float maxHealth = 30;
+        [SerializeField] private float currenthealth;
+
         [SerializeField] private string playerHitboxTag;
 
         [SerializeField] private int hitCount               = 0;
@@ -63,8 +71,12 @@ namespace Enemy
 
         private void Start()
         {
-            EnemyAnimationController.End    += ExitAttack;
-            EnemyAnimationController.Unhurt += Unhurt;
+            currenthealth = maxHealth;
+
+            EnemyAnimationController.End          += ExitAttack;
+            EnemyAnimationController.Unhurt       += Unhurt;
+            EnemyAnimationController.HitboxHide   += DisableAttackHitbox;
+            EnemyAnimationController.HitboxAttack += EnableAttackHitbox;
 
             state = State.Idle;
 
@@ -83,7 +95,7 @@ namespace Enemy
                     new Vector3(target.x, target.y, thisTransform.position.z));
         }
 
-        void Update()
+        private void Update()
         {
             TurnThis();
 
@@ -163,12 +175,11 @@ namespace Enemy
         {
             if (other.tag == playerHitboxTag)
             {
-                Debug.Log("Hit");
-                
-                if (!isInvulnerable)
+                if (!isInvulnerable && state != State.Hurt)
                 {
                     timeSinceLastHit = 0f;
                     hitCount++;
+                    GetHurt?.Invoke(this);
                     state = State.Hurt;
                 }
             }
@@ -261,6 +272,16 @@ namespace Enemy
             }
         }
 
+        private void EnableAttackHitbox()
+        {
+            attackHitBox.SetActive(true); 
+        }
+
+        private void DisableAttackHitbox()
+        {
+            attackHitBox.SetActive(false); 
+        }
+
         private void ExitAttack()
         {
             state = State.Align;
@@ -270,6 +291,11 @@ namespace Enemy
        
 
         #region TakeDamage
+
+        public void TakeDamage(float damage)
+        {
+            Debug.Log(damage);
+        }
 
         private void Unhurt()
         {
