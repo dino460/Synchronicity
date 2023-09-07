@@ -22,9 +22,10 @@ namespace Enemy
         [SerializeField] private Transform player;
         [SerializeField] private Transform thisTransform;
         [SerializeField] private Transform spriteTransform;
+        [SerializeField] private Transform colliderTransform;
 
 
-        public static event Action<EnemyController> GetHurt;
+        public static event Action<GameObject> GetHurt;
 
 
         [Header("Movement")]
@@ -49,6 +50,7 @@ namespace Enemy
         [SerializeField] private GameObject attackHitBox;
 
         [SerializeField] private float attackDamage = 13f;
+        [SerializeField] private float knockbackForce = 2f;
 
 
         [Header("Health")]
@@ -182,7 +184,7 @@ namespace Enemy
                 {
                     timeSinceLastHit = 0f;
                     hitCount++;
-                    GetHurt?.Invoke(this);
+                    GetHurt?.Invoke(this.gameObject);
                     state = State.Hurt;
                 }
             }
@@ -195,11 +197,13 @@ namespace Enemy
 
             if ((target - thisTransform.position).x >= 0f) 
             {
-                spriteTransform.localScale = new Vector2(1f, 1f);
+                spriteTransform.localScale   = new Vector2(1f, 1f);
+                colliderTransform.localScale = new Vector2(1f, 1f);
             }
             else
             {
-                spriteTransform.localScale = new Vector2(-1f, 1f);
+                spriteTransform.localScale   = new Vector2(-1f, 1f);
+                colliderTransform.localScale = new Vector2(-1f, 1f);
             }
         }
 
@@ -279,7 +283,8 @@ namespace Enemy
         {
             if (_enemyController != this) return;
 
-            _playerController.TakeDamage(attackDamage);
+            Vector2 knockback = (player.position - thisTransform.position).normalized;
+            _playerController.TakeDamage(attackDamage, knockback * knockbackForce);
         }
 
         private void EnableAttackHitbox()
@@ -302,13 +307,17 @@ namespace Enemy
 
         #region TakeDamage
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, Vector2 knockback)
         {
+            state = State.Hurt;
+
             currenthealth -= damage;
 
-            if (currenthealth <= 0f) currenthealth = 0f;
+            GetComponentInParent<Rigidbody2D>().velocity = Vector2.zero;
+            Debug.Log(knockback);
+            GetComponentInParent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
 
-            Debug.Log(damage);
+            if (currenthealth <= 0f) currenthealth = 0f;
         }
 
         private void Unhurt()

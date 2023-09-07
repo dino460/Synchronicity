@@ -6,7 +6,7 @@ using System;
 
 namespace Player
 {
-    public enum State {Idle, Walk, Dash, Attack, Cancel}
+    public enum State {Idle, Walk, Dash, Attack, Cancel, Hurt}
     public enum FacingDirection {Up, Down, Side}
 
     public class PlayerController : MonoBehaviour
@@ -46,6 +46,8 @@ namespace Player
         [SerializeField] private float finalAttackDamage;
         [SerializeField] private string enemyHitboxTag;
 
+        [SerializeField] private float knockbackForce = 10f;
+
 
         [Header("Health")]
         [SerializeField] private float maxHealthPoints = 50f;
@@ -71,7 +73,7 @@ namespace Player
             PlayerInputHandler.Dash             += Dash;
             PlayerInputHandler.Heal             += Heal;
             PlayerInputHandler.Attack           += Attack;
-            PlayerAnimationHandler.End          += EndAttack;
+            PlayerAnimationHandler.End          += EndAnimation;
             PlayerAnimationHandler.Cancel       += CancelAttack;
             PlayerAnimationHandler.HitboxAttack += EnableAttackHitbox;
             Enemy.EnemyController.GetHurt       += DamageEnemy;
@@ -88,11 +90,17 @@ namespace Player
 
         private void Update()
         {
-            UpdateMovement();
-            
-            if (state != State.Attack && state != State.Cancel)
+            if (state != State.Attack)
             {
-                playerAnimationHandler.UpdateAnimation(state, (int) facingDirection);
+                if (state != State.Dash && state != State.Hurt)
+                {
+                    UpdateMovement();
+                }
+                
+                if (state != State.Cancel)
+                {
+                    playerAnimationHandler.UpdateAnimation(state, (int) facingDirection);
+                }
             }
         }
 
@@ -121,8 +129,6 @@ namespace Player
         #region Movement
         private void UpdateMovement()
         {
-            if (state == State.Dash || state == State.Attack) return;
-
             if (playerInputHandler.PlayerIsMovingThisFrame())
             {
                 comboValue = 0;
@@ -222,20 +228,18 @@ namespace Player
             comboValue += 3;
         }
 
-        private void EndAttack()
-        {
-            state = State.Idle;
-            comboValue = 0;
-        }
-
         private void EnableAttackHitbox()
         {
             attackHitBoxes[comboValue + (int) facingDirection].SetActive(true); 
         }
 
-        private void DamageEnemy(Enemy.EnemyController _enemyController)
+        private void DamageEnemy(GameObject enemyController)
         {
-            _enemyController.TakeDamage(finalAttackDamage);
+            Vector2 knockback = directionBuffer;
+            
+            knockback *= (comboValue >= 4) ? knockbackForce : 0f;
+
+            enemyController.GetComponent<Enemy.EnemyController>().TakeDamage(finalAttackDamage, knockback);
         }
 
         #endregion
@@ -256,14 +260,27 @@ namespace Player
             if (currentHealthPoints >= maxHealthPoints) currentHealthPoints = maxHealthPoints;
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, Vector2 knockback)
         {
             Debug.Log("Hurt Player");
+            
+            state = State.Hurt;
+            rigidbody2D.velocity = Vector2.zero;
+
+            rigidbody2D.AddForce(knockback, ForceMode2D.Impulse);
+
             currentHealthPoints -= damage;
 
             if (currentHealthPoints <= 0f) currentHealthPoints = 0f;
         }
 
         #endregion
+
+
+        private void EndAnimation()
+        {
+            state = State.Idle;
+            comboValue = 0;
+        }
     }
 }

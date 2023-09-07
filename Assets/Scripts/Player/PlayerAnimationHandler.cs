@@ -17,6 +17,7 @@ namespace Player
         [SerializeField] private AnimationClip[] idleAnimations;
         [SerializeField] private AnimationClip[] walkAnimations;
         [SerializeField] private AnimationClip[] dashAnimations;
+        [SerializeField] private AnimationClip[] hurtAnimations;
 
         // 0-2: Attack 1 | 3-5: Attack 2 | 6-8: Attack 3
         // Directions and combo are accessed by doing 'comboValue + (int) p_direction'
@@ -47,6 +48,11 @@ namespace Player
                 
                 case State.Attack:
                     anim.Play(attackAnimations[p_direction].name);
+                    // playerController.p_comboValue += 3;
+                    break;
+                
+                case State.Hurt:
+                    anim.Play(hurtAnimations[p_direction].name);
                     // playerController.p_comboValue += 3;
                     break;
                 

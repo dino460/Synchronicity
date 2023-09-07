@@ -402,6 +402,10 @@ MonoBehaviour:
   - {fileID: 7400000, guid: da38a78d04a0d3591a3366c5f9f4291f, type: 2}
   - {fileID: 7400000, guid: 86233dec63d4a27228a41c6ae70a21ec, type: 2}
   - {fileID: 7400000, guid: cb9e3cb486884a035bde520fa13f8410, type: 2}
+  hurtAnimations:
+  - {fileID: 7400000, guid: 3e1d233056685c14492c7467b32887ed, type: 2}
+  - {fileID: 7400000, guid: 246cc9cc1dcc9a441899726ff1b69eac, type: 2}
+  - {fileID: 7400000, guid: be7ca1e71fc55364e96684e16d677c6f, type: 2}
   attackAnimations:
   - {fileID: 7400000, guid: 33cc307496efb951e85e5ee555b117ac, type: 2}
   - {fileID: 7400000, guid: e54d1c57753ee6f6d9f3fc81117ce0fd, type: 2}
@@ -482,6 +486,7 @@ MonoBehaviour:
   comboDamageMod: 1.2
   finalAttackDamage: 0
   enemyHitboxTag: EnemyHitbox
+  knockbackForce: 100
   maxHealthPoints: 50
   currentHealthPoints: 0
   maxEstusAmount: 3
@@ -908,8 +913,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 10
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

@@ -24045,17 +24045,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1078497941}
     - target: {fileID: 365772653671488618, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
-      propertyPath: maxHealth
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 365772653671488618, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
       propertyPath: playerInputHandler
       value: 
       objectReference: {fileID: 423581551}
-    - target: {fileID: 365772653671488618, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
-      propertyPath: timeToArriveAtAttackPosMod
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 461718494862638647, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.7847633
@@ -24099,14 +24091,6 @@ PrefabInstance:
     - target: {fileID: 966932650090920087, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
       propertyPath: m_Name
       value: Mud Guard
-      objectReference: {fileID: 0}
-    - target: {fileID: 3018539299224231986, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6065989920571394985, guid: a5baefae989ad1d45b4b6f7336b63376, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
