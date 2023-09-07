@@ -11,6 +11,10 @@ namespace Player
 
     public class PlayerController : MonoBehaviour
     {
+
+        public static event Action<PlayerController, Enemy.EnemyController> GetHurt;
+
+
         [Header("Components")]
         [SerializeField] private PlayerAnimationHandler playerAnimationHandler;
         [SerializeField] private PlayerInputHandler     playerInputHandler;
@@ -107,10 +111,7 @@ namespace Player
         {
             if (other.tag == enemyHitboxTag)
             {
-                // TODO: finish adding systems for player taking damage (use similar method to enemy system)
-                // Invoke event Action on player script with PlayerController argument
-                // Listen to event Action on enemy script with method that damages player through passed PlayerController
-                // Enemy controller sould call TakeDamage(damage)  
+                GetHurt?.Invoke(this, other.gameObject.GetComponentInParent<Enemy.EnemyController>());
             }
         }
 
@@ -240,7 +241,7 @@ namespace Player
         #endregion
 
 
-        #region Healing
+        #region Health
         private void Heal()
         {
             if (currentEstusAmount <= 0)
@@ -257,6 +258,7 @@ namespace Player
 
         public void TakeDamage(float damage)
         {
+            Debug.Log("Hurt Player");
             currentHealthPoints -= damage;
 
             if (currentHealthPoints <= 0f) currentHealthPoints = 0f;

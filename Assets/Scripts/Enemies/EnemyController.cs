@@ -48,6 +48,8 @@ namespace Enemy
         [SerializeField] private bool firstAttack      = true;
         [SerializeField] private GameObject attackHitBox;
 
+        [SerializeField] private float attackDamage = 13f;
+
 
         [Header("Health")]
         [SerializeField] private float maxHealth = 30;
@@ -77,6 +79,7 @@ namespace Enemy
             EnemyAnimationController.Unhurt       += Unhurt;
             EnemyAnimationController.HitboxHide   += DisableAttackHitbox;
             EnemyAnimationController.HitboxAttack += EnableAttackHitbox;
+            Player.PlayerController.GetHurt       += DamagePlayer;
 
             state = State.Idle;
 
@@ -120,7 +123,7 @@ namespace Enemy
 
                     testForAttackTimer = 0f;
                     alignTimer = 0f;
-                    alignModifier = (int) agent.transform.localScale.x;
+                    alignModifier = (int) spriteTransform.localScale.x;
                     alignTimerIsSet = false;
                     firstAttack = true;
 
@@ -272,6 +275,13 @@ namespace Enemy
             }
         }
 
+        private void DamagePlayer(Player.PlayerController _playerController, EnemyController _enemyController)
+        {
+            if (_enemyController != this) return;
+
+            _playerController.TakeDamage(attackDamage);
+        }
+
         private void EnableAttackHitbox()
         {
             attackHitBox.SetActive(true); 
@@ -294,6 +304,10 @@ namespace Enemy
 
         public void TakeDamage(float damage)
         {
+            currenthealth -= damage;
+
+            if (currenthealth <= 0f) currenthealth = 0f;
+
             Debug.Log(damage);
         }
 
