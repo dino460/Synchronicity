@@ -23,9 +23,18 @@ namespace Enemy
         [SerializeField] private Transform thisTransform;
         [SerializeField] private Transform spriteTransform;
         [SerializeField] private Transform colliderTransform;
+        [SerializeField] private float maximumDetectDistance = 25f;
+        [SerializeField] private float distanceToPlayer;
 
 
         public static event Action<GameObject> GetHurt;
+
+
+        [Header("Spawn")]
+        [SerializeField] private Vector2 spawnPoint;
+        [SerializeField] private float timeToReturnToSpawn = 3f;
+        [SerializeField] private float returnToSpawnTimer;
+        [SerializeField] private bool isAtSpawnPoint = false;
 
 
         [Header("Movement")]
@@ -73,6 +82,11 @@ namespace Enemy
         // TODO: Make it patrol when far from player
         // TODO: Make it not leave a certain distance from its spawn point
 
+        private void Awake()
+        {
+            spawnPoint = thisTransform.position;
+        }
+
         private void Start()
         {
             currenthealth = maxHealth;
@@ -91,48 +105,57 @@ namespace Enemy
             alignTimerIsSet      = false;
             firstAttack          = true;
             isInvulnerable       = false;
+            isAtSpawnPoint       = false;
 
             alignModifier = (int) agent.transform.localScale.x;
 
-            target = player.position;
-
             agent.SetDestination(
-                    new Vector3(target.x, target.y, thisTransform.position.z));
+                    new Vector3(player.position.x, player.position.y, thisTransform.position.z));
         }
 
         private void Update()
         {
-            TurnThis();
-
-            target = player.position;
-
-            if (hitCount == hitCountToInvulnerable)
-            {
-                hitCount = 0;
-                isInvulnerable = true;
-            }
+            distanceToPlayer = Vector2.Distance(player.position, thisTransform.position);
             
-            if (state != State.Attack && state != State.Hurt && state != State.Dead)
-            {    
-                if (Vector2.Distance(agent.transform.position, target) <= 
-                    agent.stoppingDistance)
+            if (distanceToPlayer <= maximumDetectDistance)
+            {
+                isAtSpawnPoint = false;
+
+                TurnThis(player.position);
+
+                if (hitCount == hitCountToInvulnerable)
                 {
-                    AlignToAttack();
+                    hitCount = 0;
+                    isInvulnerable = true;
+                }
+                
+                if (state != State.Attack && state != State.Hurt && state != State.Dead)
+                {    
+                    if (Vector2.Distance(agent.transform.position, player.position) <= 
+                        agent.stoppingDistance)
+                    {
+                        AlignToAttack(player.position);
+                    }
+                    else
+                    {
+                        Move(new Vector2(player.position.x, player.position.y));
+                    }
+                }
+            }
+            else
+            {
+                if (returnToSpawnTimer >= timeToReturnToSpawn * 50f && !isAtSpawnPoint)
+                {
+                    TurnThis(spawnPoint);
+                    Move(spawnPoint);
+
+                    if (Vector2.Distance(agent.transform.position, spawnPoint) <= 
+                        agent.stoppingDistance) isAtSpawnPoint = true;
                 }
                 else
                 {
-                    agent.isStopped = false;
-
-                    testForAttackTimer = 0f;
-                    alignTimer = 0f;
-                    alignModifier = (int) spriteTransform.localScale.x;
-                    alignTimerIsSet = false;
-                    firstAttack = true;
-
-                    state = State.Walk;
-
-                    agent.SetDestination(
-                        new Vector3(target.x, target.y, thisTransform.position.z));
+                    agent.isStopped = true;
+                    state = State.Idle;
                 }
             }
 
@@ -141,38 +164,43 @@ namespace Enemy
 
         private void FixedUpdate()
         {
-            TestForAttack();
-
-
-            if (alignTimerIsSet)
+            if (distanceToPlayer <= maximumDetectDistance)
             {
-                alignTimer++;
+                TestForAttack();
+
+                if (alignTimerIsSet)
+                {
+                    alignTimer++;
+                }
+                if (alignTimer >= timeToAlign * 50f)
+                {
+                    alignTimer = 0f;
+                    alignModifier *= -1;
+                    alignTimerIsSet = false;
+                    // Do something to change align side
+                }
+
+                if (isInvulnerable)
+                {
+                    invulnerableTimer++;
+                }
+                if (invulnerableTimer >= invulnerableTime * 50f)
+                {
+                    invulnerableTimer = 0f;
+                    isInvulnerable = false;
+                }
+
+                
+                timeSinceLastHit++;
+                if (timeSinceLastHit >= hitCountResetTime * 50)
+                {
+                    timeSinceLastHit = 0f;
+                    hitCount = 0;
+                }
             }
-            if (alignTimer >= timeToAlign * 50f)
+            else
             {
-                alignTimer = 0f;
-                alignModifier *= -1;
-                alignTimerIsSet = false;
-                // Do something to change align side
-            }
-
-
-            if (isInvulnerable)
-            {
-                invulnerableTimer++;
-            }
-            if (invulnerableTimer >= invulnerableTime * 50f)
-            {
-                invulnerableTimer = 0f;
-                isInvulnerable = false;
-            }
-
-            
-            timeSinceLastHit++;
-            if (timeSinceLastHit >= hitCountResetTime * 50)
-            {
-                timeSinceLastHit = 0f;
-                hitCount = 0;
+                returnToSpawnTimer++;
             }
         }
 
@@ -191,7 +219,23 @@ namespace Enemy
         }
 
 
-        private void TurnThis()
+        private void Move(Vector2 destination)
+        {
+            agent.isStopped = false;
+
+            testForAttackTimer = 0f;
+            alignTimer = 0f;
+            alignModifier = (int) spriteTransform.localScale.x;
+            alignTimerIsSet = false;
+            firstAttack = true;
+
+            state = State.Walk;
+
+            agent.SetDestination(destination);
+        }
+
+
+        private void TurnThis(Vector3 target)
         {
             if (state == State.Attack) return;
 
@@ -210,7 +254,7 @@ namespace Enemy
 
         #region Combat
 
-        private void AlignToAttack()
+        private void AlignToAttack(Vector3 target)
         {
             if (state == State.Attack || playerInputHandler.PlayerIsMovingThisFrame())
             {
@@ -313,9 +357,9 @@ namespace Enemy
 
             currenthealth -= damage;
 
-            GetComponentInParent<Rigidbody2D>().velocity = Vector2.zero;
-            Debug.Log(knockback);
-            GetComponentInParent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
+            //GetComponentInParent<Rigidbody2D>().velocity = Vector2.zero;
+            //Debug.Log(knockback);
+            //GetComponentInParent<Rigidbody2D>().AddForce(knockback, ForceMode2D.Impulse);
 
             if (currenthealth <= 0f) currenthealth = 0f;
         }
