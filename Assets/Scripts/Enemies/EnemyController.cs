@@ -91,10 +91,10 @@ namespace Enemy
         {
             currenthealth = maxHealth;
 
-            EnemyAnimationController.End          += ExitAttack;
-            EnemyAnimationController.Unhurt       += Unhurt;
-            EnemyAnimationController.HitboxHide   += DisableAttackHitbox;
-            EnemyAnimationController.HitboxAttack += EnableAttackHitbox;
+            // EnemyAnimationController.End          += ExitAttack;
+            // EnemyAnimationController.Unhurt       += Unhurt;
+            // EnemyAnimationController.HitboxHide   += DisableAttackHitbox;
+            // EnemyAnimationController.HitboxAttack += EnableAttackHitbox;
             Player.PlayerController.GetHurt       += DamagePlayer;
 
             state = State.Idle;
@@ -115,6 +115,11 @@ namespace Enemy
 
         private void Update()
         {
+            if (currenthealth <= 0f)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+
             distanceToPlayer = Vector2.Distance(player.position, thisTransform.position);
             
             if (distanceToPlayer <= maximumDetectDistance)
@@ -331,17 +336,17 @@ namespace Enemy
             _playerController.TakeDamage(attackDamage, knockback * knockbackForce);
         }
 
-        private void EnableAttackHitbox()
+        public void EnableAttackHitbox()
         {
             attackHitBox.SetActive(true); 
         }
 
-        private void DisableAttackHitbox()
+        public void DisableAttackHitbox()
         {
             attackHitBox.SetActive(false); 
         }
 
-        private void ExitAttack()
+        public void ExitAttack()
         {
             state = State.Align;
         }
@@ -364,7 +369,7 @@ namespace Enemy
             if (currenthealth <= 0f) currenthealth = 0f;
         }
 
-        private void Unhurt()
+        public void Unhurt()
         {
             state = State.Idle;
         }

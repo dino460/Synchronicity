@@ -198,8 +198,8 @@
                 {
                     "name": "",
                     "id": "952a2090-6517-4097-be54-c3f17384359e",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Hold(duration=2)",
                     "processors": "",
                     "groups": "",
                     "action": "debug",

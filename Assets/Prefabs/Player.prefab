@@ -465,11 +465,19 @@ MonoBehaviour:
   playerInputHandler: {fileID: 2005106464447999029}
   rigidbody2D: {fileID: 4483702850100946008}
   transform: {fileID: 2332468280630243035}
+  gameOverHUD: {fileID: 0}
+  HPGUI: {fileID: 0}
+  DashGUI: {fileID: 0}
+  EstusGUI: {fileID: 0}
   directionBuffer: {x: 0, y: 0}
   walkSpeed: 4
   dashSpeed: 12
   dashTime: 0.2
   dashTimer: 0
+  dashRechargeTime: 1
+  dashRechargeTimer: 0
+  maxDash: 3
+  currentDash: 0
   comboValue: 0
   attackHitBoxes:
   - {fileID: 8020407285899771094}
@@ -486,7 +494,7 @@ MonoBehaviour:
   comboDamageMod: 1.2
   finalAttackDamage: 0
   enemyHitboxTag: EnemyHitbox
-  knockbackForce: 100
+  knockbackForce: 30
   maxHealthPoints: 50
   currentHealthPoints: 0
   maxEstusAmount: 3

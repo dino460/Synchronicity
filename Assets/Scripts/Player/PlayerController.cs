@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System;
+using TMPro;
 
 
 namespace Player
 {
-    public enum State {Idle, Walk, Dash, Attack, Cancel, Hurt}
+    public enum State {Idle, Walk, Dash, Attack, Cancel, Hurt, Dead}
     public enum FacingDirection {Up, Down, Side}
 
     public class PlayerController : MonoBehaviour
@@ -20,6 +21,10 @@ namespace Player
         [SerializeField] private PlayerInputHandler     playerInputHandler;
         [SerializeField] private Rigidbody2D            rigidbody2D;
         [SerializeField] private Transform              transform;
+        [SerializeField] private GameObject             gameOverHUD;
+        [SerializeField] private TextMeshProUGUI        HPGUI;
+        [SerializeField] private TextMeshProUGUI        DashGUI;
+        [SerializeField] private TextMeshProUGUI        EstusGUI;
 
 
         [Header("Movement")]
@@ -30,6 +35,12 @@ namespace Player
 
         [SerializeField] private float dashTime  = 2f;
         [SerializeField] private float dashTimer = 0f;
+        
+        [SerializeField] private float dashRechargeTime = 2f;
+        [SerializeField] private float dashRechargeTimer;
+
+        [SerializeField] private int maxDash = 3;
+        [SerializeField] private int currentDash;
 
 
         [Header("Combat")]
@@ -84,13 +95,26 @@ namespace Player
             comboValue = 0;
             currentHealthPoints = maxHealthPoints;
             currentEstusAmount  = maxEstusAmount;
+            currentDash         = maxDash;
 
             directionBuffer = new Vector2(0f, -1f);
+
+            HPGUI.text = "HP: " + currentHealthPoints.ToString() + "/" 
+                + maxHealthPoints.ToString();
+            DashGUI.text = "Dash: " + currentDash.ToString() + "/" 
+                + maxDash.ToString();
+            EstusGUI.text = "Estus: " + currentEstusAmount.ToString() + "/" 
+                + maxEstusAmount.ToString();
         }
 
         private void Update()
         {
-            if (state != State.Attack)
+            if (state == State.Dead)
+            {
+                gameOverHUD.SetActive(true);
+            }
+
+            if (state != State.Attack && state != State.Dead)
             {
                 if (state != State.Dash && state != State.Hurt)
                 {
@@ -106,12 +130,21 @@ namespace Player
 
         private void FixedUpdate()
         {
-            if (state == State.Dash) dashTimer += 0.02f;
-
-            if (dashTimer >= dashTime)
+            if (state == State.Dash) dashTimer++;
+            if (dashTimer >= dashTime * 50f)
             {
                 dashTimer = 0;
                 state = State.Idle;
+            }
+            
+            if (currentDash < maxDash) dashRechargeTimer++;
+            if (dashRechargeTimer >= dashRechargeTime * 50f)
+            {
+                dashRechargeTimer = 0f;
+                currentDash++;
+
+                DashGUI.text = "Dash: " + currentDash.ToString() + "/" 
+                + maxDash.ToString();
             }
         }
 
@@ -151,9 +184,14 @@ namespace Player
 
         private void Dash()
         {
-            if (state == State.Dash || state == State.Attack) return;
+            if (state == State.Dash || state == State.Attack || currentDash <= 0) return;
 
             comboValue = 0;
+            currentDash--;
+            dashRechargeTimer = 0f;
+
+            DashGUI.text = "Dash: " + currentDash.ToString() + "/" 
+                + maxDash.ToString();
 
             if (playerInputHandler.PlayerIsMovingThisFrame())
             {
@@ -258,6 +296,11 @@ namespace Player
             currentEstusAmount--;
 
             if (currentHealthPoints >= maxHealthPoints) currentHealthPoints = maxHealthPoints;
+
+            HPGUI.text = "HP: " + currentHealthPoints.ToString() + "/" 
+                + maxHealthPoints.ToString();
+            EstusGUI.text = "Estus: " + currentEstusAmount.ToString() + "/" 
+                + maxEstusAmount.ToString();
         }
 
         public void TakeDamage(float damage, Vector2 knockback)
@@ -271,7 +314,14 @@ namespace Player
 
             currentHealthPoints -= damage;
 
-            if (currentHealthPoints <= 0f) currentHealthPoints = 0f;
+            HPGUI.text = "HP: " + currentHealthPoints.ToString() + "/" 
+                + maxHealthPoints.ToString();
+
+            if (currentHealthPoints <= 0f) 
+            {
+                state = State.Dead;
+                currentHealthPoints = 0f;
+            }
         }
 
         #endregion

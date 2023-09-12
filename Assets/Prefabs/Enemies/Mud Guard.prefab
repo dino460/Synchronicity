@@ -48,7 +48,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -110,6 +110,12 @@ MonoBehaviour:
   thisTransform: {fileID: 461718494862638647}
   spriteTransform: {fileID: 1269307994592344328}
   colliderTransform: {fileID: 7211353306648544462}
+  maximumDetectDistance: 5
+  distanceToPlayer: 0
+  spawnPoint: {x: 0, y: 0}
+  timeToReturnToSpawn: 3
+  returnToSpawnTimer: 0
+  isAtSpawnPoint: 0
   moveSpeed: 5
   alignSpeed: 3.5
   alignMargin: 0.17
@@ -132,7 +138,7 @@ MonoBehaviour:
   hitCount: 0
   hitCountToInvulnerable: 3
   invulnerableTimer: 0
-  invulnerableTime: 2
+  invulnerableTime: 1
   isInvulnerable: 0
   timeSinceLastHit: 0
   hitCountResetTime: 1.5
@@ -291,6 +297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 8090840631707349655}
+  _enemyController: {fileID: 365772653671488618}
   idleAnimation: {fileID: 7400000, guid: 93040e40642409bfebffa7f791ebd8f4, type: 2}
   walkAnimation: {fileID: 7400000, guid: c38c8ebbd2eb27142b9ab5ddc03dc526, type: 2}
   attackAnimation: {fileID: 7400000, guid: 1ef2ae8c37f4b11c6bfe75f39cbbf0ac, type: 2}

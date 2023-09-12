@@ -9,6 +9,7 @@ namespace Enemy
     public class EnemyAnimationController : MonoBehaviour
     {
         [SerializeField] private Animator anim;
+        [SerializeField] private EnemyController _enemyController;
 
 
         [SerializeField] private AnimationClip idleAnimation;
@@ -17,10 +18,10 @@ namespace Enemy
         [SerializeField] private AnimationClip hurtAnimation;
 
 
-        public static event Action End;
-        public static event Action HitboxHide;
-        public static event Action HitboxAttack;
-        public static event Action Unhurt;
+        // public static event Action End;
+        // public static event Action HitboxHide;
+        // public static event Action HitboxAttack;
+        // public static event Action Unhurt;
 
 
         public void UpdateAnimation(State e_state)
@@ -59,24 +60,27 @@ namespace Enemy
 
         public void EndAnimation()
         {
-            End?.Invoke();
+            _enemyController.ExitAttack();
         }
 
         public void EnableAttackHitbox()
         {
-            HitboxAttack?.Invoke();
+            _enemyController.EnableAttackHitbox();
+            // HitboxAttack?.Invoke();
             // Somehow enable right hitbox based on combo value
             // Debug.Log("Yes, I am definetely enabling a collider");
         }
 
         public void DisableAttackHitbox()
         {
-            HitboxHide?.Invoke();
+            // HitboxHide?.Invoke();
+            _enemyController.DisableAttackHitbox();
         }
 
         public void ExitHurt()
         {
-            Unhurt?.Invoke();
+            _enemyController.Unhurt();
+            // Unhurt?.Invoke();
         }
     }
 }
