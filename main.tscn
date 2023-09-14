@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://dttp1mfdbuxh5"]
+
+[ext_resource type="PackedScene" uid="uid://1bb54x08q2m4" path="res://Player/player.tscn" id="1_w2y65"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rtood"]
+size = Vector2(50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h87mm"]
+albedo_color = Color(0.176471, 0.376471, 0, 1)
+distance_fade_min_distance = 55.0
+distance_fade_max_distance = 25.0
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_kfnqf"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ctfrn"]
+
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.710382, 0.703816, 0, -0.703816, 0.710382, 0, 0, 0)
+light_energy = 1.5
+shadow_enabled = true
+directional_shadow_fade_start = 0.84
+directional_shadow_max_distance = 200.0
+
+[node name="Player" parent="." instance=ExtResource("1_w2y65")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23007, 0)
+
+[node name="FloorStaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="FloorMesh" type="MeshInstance3D" parent="FloorStaticBody3D"]
+mesh = SubResource("PlaneMesh_rtood")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_h87mm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FloorStaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_kfnqf")
+
+[node name="Box" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ctfrn")

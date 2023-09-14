@@ -1,8 +1,0 @@
-Spritesheet in order
-
-Idle
-Run
-Hit
-Death (With Blink)
-Deaht (No Blink)
-Attack
