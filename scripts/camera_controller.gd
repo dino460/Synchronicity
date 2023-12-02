@@ -11,12 +11,12 @@ func _ready() -> void:
 	self.rotation.y = 0.0
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("rotate_camera_clockwise"):
+	if Input.is_action_just_pressed("rotate_camera_left"):
 		target_rotation += deg_to_rad(rotation_angle)
-	elif Input.is_action_just_pressed("rotate_camera_anticlockwise"):
+	elif Input.is_action_just_pressed("rotate_camera_right"):
 		target_rotation -= deg_to_rad(rotation_angle)
 		
 	if not is_equal_approx(self.rotation.y, target_rotation):
 		self.rotation.y = lerp_angle(self.rotation.y, target_rotation, delta * rotation_speed)
-	else
+	else:
 		self.rotation.y = target_rotation

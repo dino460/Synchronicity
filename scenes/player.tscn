@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://bylwa0aplfyax"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_y5g7h"]
+[ext_resource type="PackedScene" uid="uid://dgqt7bfi0adi3" path="res://synchronicity-mc.glb" id="2_p4g5p"]
+[ext_resource type="Script" path="res://scripts/camera_controller.gd" id="2_xs3ga"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
+radius = 0.24
+height = 2.36495
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_h5i45"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yq6du"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1cl5e"]
+albedo_color = Color(0.839216, 0, 0.12549, 1)
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_y5g7h")
+walk_speed = 8.0
+dash_speed = 40.0
+dash_time = 0.1
+smooth_speed = 8.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_sv48k")
+
+[node name="MeshPivot" type="Node3D" parent="."]
+
+[node name="synchronicity-mc" parent="MeshPivot" instance=ExtResource("2_p4g5p")]
+transform = Transform3D(-0.23177, 0, -2.02619e-08, 0, 0.23177, 0, 2.02619e-08, 0, -0.23177, 0, 0.22609, 0)
+
+[node name="TmpMesh3D" type="MeshInstance3D" parent="MeshPivot"]
+visible = false
+mesh = SubResource("CapsuleMesh_h5i45")
+skeleton = NodePath("../..")
+
+[node name="Forward" type="MeshInstance3D" parent="MeshPivot/TmpMesh3D"]
+transform = Transform3D(0.787466, 0, 0, 0, 0.309196, 0, 0, 0, 0.378234, 0, 0.532833, -0.442347)
+mesh = SubResource("BoxMesh_yq6du")
+surface_material_override/0 = SubResource("StandardMaterial3D_1cl5e")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+script = ExtResource("2_xs3ga")
+rotation_speed = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 6, 10)
+projection = 1
+size = 15.0
+far = 100.0
+
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
