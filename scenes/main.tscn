@@ -1,8 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=10 format=3 uid="uid://divk0ab7tgtd0"]
 
+[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://Shaders/pixelate.tres" id="1_e4oxw"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
-[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://scenes/pixelate.tres" id="2_vd4rs"]
-[ext_resource type="Texture2D" uid="uid://dh38f7mile2j6" path="res://icon.svg" id="3_vdflx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfqes"]
+shader = ExtResource("1_e4oxw")
+shader_parameter/PixelAmount = 448.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(80, 0.1, 80)
@@ -11,7 +14,8 @@ size = Vector3(80, 0.1, 80)
 size = Vector3(80, 0.1, 80)
 
 [sub_resource type="Environment" id="Environment_4t3x5"]
-ssao_enabled = true
+background_mode = 1
+background_color = Color(0.737255, 0.85098, 0.827451, 1)
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_kq36g"]
 
@@ -20,11 +24,18 @@ ssao_enabled = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hd5d2"]
 albedo_color = Color(0.352941, 0.670588, 0, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kduu7"]
-shader = ExtResource("2_vd4rs")
-shader_parameter/PixelAmount = 600.0
-
 [node name="Main" type="Node"]
+
+[node name="Pixel Effect CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="Pixel Effect CanvasLayer"]
+material = SubResource("ShaderMaterial_rfqes")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -41,8 +52,7 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-walk_speed = 7.0
-run_speed = 9.0
+run_speed = 12.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_4t3x5")
@@ -337,10 +347,3 @@ transform = Transform3D(-1.02347, 0, 0.906957, 0, 1.3675, 0, -0.906957, 0, -1.02
 mesh = SubResource("BoxMesh_tk35j")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_kduu7")
-position = Vector2(-1, -1.00002)
-scale = Vector2(15.0156, 8.4375)
-texture = ExtResource("3_vdflx")
-centered = false
