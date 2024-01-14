@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://divk0ab7tgtd0"]
 
-[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://Shaders/pixelate.tres" id="1_e4oxw"]
+[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://shaders/pixelate.tres" id="1_7fkre"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rfqes"]
-shader = ExtResource("1_e4oxw")
+shader = ExtResource("1_7fkre")
 shader_parameter/PixelAmount = 448.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]

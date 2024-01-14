@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 # Get references to nodes
 # Removes get_node call each time the node is referenced 
 @onready var dash_timer_ref = $DashTimer
@@ -10,6 +11,7 @@ signal idling
 signal walking
 signal running
 signal dashing(dash_time)
+signal attack_light(attack_time, combo)
 
 @export_group("Movement Properties")
 @export var applied_speed : float = 0.0
@@ -24,22 +26,28 @@ signal dashing(dash_time)
 
 @export var fall_acceleration : float = 75.0
 
+var target_velocity : Vector3 = Vector3.ZERO
+var direction       : Vector3 = Vector3.ZERO
 
 @export_group("Rotation Properties")
 @export var smooth_speed : float = 2.0
 
-var target_velocity : Vector3 = Vector3.ZERO
-var direction       : Vector3 = Vector3.ZERO
+@export_group("Combat Properties")
+@export var combo        : int   = 0
+@export var attack_time  : float = 0.5
+@export var is_attacking : bool  = false
 
+@onready var sword = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D/Sword
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta : float) -> void:
+func start_dash():
 	if Input.is_action_just_pressed("player_dash") and not is_dashing and not direction == Vector3.ZERO:
 		is_dashing = true
 		applied_speed = dash_speed
-		dashing.emit(dash_time)
-	
-	if not is_dashing:
+		dashing.emit(dash_time, combo)
+
+
+func set_speed():
+	if not is_dashing and not is_attacking:
 		if run_is_toggle:
 			if Input.is_action_just_pressed("player_run"):
 				if applied_speed != run_speed:
@@ -53,8 +61,39 @@ func _process(_delta : float) -> void:
 				applied_speed = walk_speed
 
 
+func check_attack():
+	if not is_dashing:
+		if Input.is_action_just_pressed("attack_light") and combo < 5:
+			attack_light.emit(attack_time, combo)
+			combo += 1 # Make sure to reset after a time 
+			is_attacking = true
+
+
+func get_player_direction_this_frame() -> Vector3:
+	var new_direction : Vector3 = Vector3.ZERO
+	
+	new_direction.x = Input.get_axis("player_move_left", "player_move_right")
+	new_direction.z = Input.get_axis("player_move_forward", "player_move_backward")
+	
+	return new_direction
+
+
+func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
+	return direction_to_rotate.rotated(Vector3.UP, camera_pivot_ref.global_transform.basis.get_euler().y).normalized()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta : float) -> void:
+	check_attack()
+	start_dash()
+	set_speed()
+
+
 func _physics_process(delta : float) -> void:
-	direction = get_player_direction_this_frame()
+	if is_attacking:
+		direction = Vector3.ZERO
+	else:
+		direction = get_player_direction_this_frame()
 	
 	if direction != Vector3.ZERO:
 		if not is_dashing:
@@ -84,18 +123,8 @@ func _physics_process(delta : float) -> void:
 	move_and_slide()
 
 
-func get_player_direction_this_frame() -> Vector3:
-	var new_direction : Vector3 = Vector3.ZERO
-	
-	new_direction.x = Input.get_axis("player_move_left", "player_move_right")
-	new_direction.z = Input.get_axis("player_move_forward", "player_move_backward")
-	
-	return new_direction
-
-func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
-	return direction_to_rotate.rotated(Vector3.UP, camera_pivot_ref.global_transform.basis.get_euler().y).normalized()
-
-
-
 func _on_animation_handler_dash_ended():
 	is_dashing = false
+
+func _on_animation_handler_attack_ended():
+	is_attacking = false
