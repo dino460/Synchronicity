@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 @onready var animator = $"../MeshPivot/Viking_Female/AnimationPlayer"
 
@@ -12,6 +12,7 @@ var wanted_state  : State = State.IDLE
 var there_is_animation_playing : bool  = false
 var animation_speed            : float = 1.0
 var combo_value                : int   = 0
+var current_weapon             : Weapon
 
 var interruptable_states = [State.IDLE, State.WALK, State.RUN]
 
@@ -29,10 +30,11 @@ func _on_player_dashing(dash_time):
 	wanted_state = State.DASH
 	animation_speed = 1.0 / dash_time
 
-func _on_player_attack_light(attack_time, combo):
+func _on_player_attack_light(weapon: Weapon, current_combo_value):
 	wanted_state = State.ATTACK_LIGHT
-	combo_value = combo
-	animation_speed = 1.0 / attack_time
+	current_weapon = weapon
+	combo_value = current_combo_value
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -65,8 +67,7 @@ func play_animation():
 			animator.play("Roll", -1, animation_speed, false)
 		
 		State.ATTACK_LIGHT:
-			var attack_animation_name : String = str("Attack_Light_", combo_value)
-			animator.play(attack_animation_name, -1, animation_speed, false)
+			animator.play(current_weapon.light_attack_animations[combo_value], -1, animation_speed, false)
 
 
 func _on_animation_player_animation_finished(anim_name):
@@ -74,5 +75,5 @@ func _on_animation_player_animation_finished(anim_name):
 	
 	if anim_name == "Roll":
 		dash_ended.emit()
-	elif anim_name == "Attack_Light_0":
+	elif anim_name in current_weapon.light_attack_animations or anim_name in current_weapon.heavy_attack_animations:
 		attack_ended.emit()

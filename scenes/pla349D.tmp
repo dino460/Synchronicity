@@ -1,11 +1,10 @@
-[gd_scene load_steps=39 format=3 uid="uid://bylwa0aplfyax"]
+[gd_scene load_steps=38 format=3 uid="uid://bylwa0aplfyax"]
 
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_br4xa"]
-[ext_resource type="Script" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
-[ext_resource type="Script" path="res://scripts/player/input_handler.gd" id="3_imqgc"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_y5g7h"]
+[ext_resource type="Script" path="res://scripts/animation_handler.gd" id="2_5xgb0"]
+[ext_resource type="Script" path="res://scripts/camera_controller.gd" id="2_xs3ga"]
 [ext_resource type="ArrayMesh" uid="uid://bgqujvinxx8qv" path="res://models/Sword.obj" id="3_jn1ia"]
 [ext_resource type="Script" path="res://scripts/weapons/shortsword.gd" id="4_hqh6n"]
-[ext_resource type="Script" path="res://scripts/player/camera_controller.gd" id="5_lu2e7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
 radius = 0.281037
@@ -4597,17 +4596,14 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D"]
-script = ExtResource("1_br4xa")
+script = ExtResource("1_y5g7h")
 run_speed = 15.0
 dash_speed = 20.0
 dash_time = 0.5
 smooth_speed = 20.0
 
-[node name="AnimationHandler" type="Node" parent="."]
-script = ExtResource("2_u5517")
-
-[node name="InputHandler" type="Node" parent="."]
-script = ExtResource("3_imqgc")
+[node name="AnimationHandler" type="Node3D" parent="."]
+script = ExtResource("2_5xgb0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_sv48k")
@@ -4820,7 +4816,7 @@ libraries = {
 }
 
 [node name="CameraPivot" type="Node3D" parent="."]
-script = ExtResource("5_lu2e7")
+script = ExtResource("2_xs3ga")
 rotation_speed = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
@@ -4839,6 +4835,4 @@ one_shot = true
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
 [connection signal="attack_ended" from="AnimationHandler" to="." method="_on_animation_handler_attack_ended"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
-[connection signal="dash_performed" from="InputHandler" to="." method="_on_input_handler_dash_performed"]
-[connection signal="light_attack_performed" from="InputHandler" to="." method="_on_input_handler_light_attack_performed"]
 [connection signal="animation_finished" from="MeshPivot/Viking_Female/AnimationPlayer" to="AnimationHandler" method="_on_animation_player_animation_finished"]

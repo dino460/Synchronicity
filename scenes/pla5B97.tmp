@@ -4603,7 +4603,7 @@ dash_speed = 20.0
 dash_time = 0.5
 smooth_speed = 20.0
 
-[node name="AnimationHandler" type="Node" parent="."]
+[node name="AnimationHandler" type="Node3D" parent="."]
 script = ExtResource("2_u5517")
 
 [node name="InputHandler" type="Node" parent="."]

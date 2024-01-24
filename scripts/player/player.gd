@@ -3,15 +3,17 @@ extends CharacterBody3D
 
 # Get references to nodes
 # Removes get_node call each time the node is referenced 
-@onready var dash_timer_ref = $DashTimer
-@onready var mesh_pivot_ref = $MeshPivot
+@onready var combo_timer_ref  = $ComboCooldownTimer
+@onready var mesh_pivot_ref   = $MeshPivot
 @onready var camera_pivot_ref = $CameraPivot
+
+@onready var input_handler_ref : InputHandler = $InputHandler
 
 signal idling
 signal walking
 signal running
-signal dashing(dash_time)
-signal attack_light(attack_time, combo)
+signal dashing(dash_time: float)
+signal attack_light(weapon: Weapon, current_combo_value: float)
 
 @export_group("Movement Properties")
 @export var applied_speed : float = 0.0
@@ -33,17 +35,14 @@ var direction       : Vector3 = Vector3.ZERO
 @export var smooth_speed : float = 2.0
 
 @export_group("Combat Properties")
-@export var combo        : int   = 0
-@export var attack_time  : float = 0.5
-@export var is_attacking : bool  = false
+@export var current_combo_value : int   = 0
+@export var is_attacking        : bool  = false
 
-@onready var sword = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D/Sword
+var weapon: Weapon
 
-func start_dash():
-	if Input.is_action_just_pressed("player_dash") and not is_dashing and not direction == Vector3.ZERO:
-		is_dashing = true
-		applied_speed = dash_speed
-		dashing.emit(dash_time, combo)
+
+func _ready():
+	weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
 
 
 func set_speed():
@@ -61,21 +60,12 @@ func set_speed():
 				applied_speed = walk_speed
 
 
-func check_attack():
-	if not is_dashing:
-		if Input.is_action_just_pressed("attack_light") and combo < 5:
-			attack_light.emit(attack_time, combo)
-			combo += 1 # Make sure to reset after a time 
-			is_attacking = true
-
-
-func get_player_direction_this_frame() -> Vector3:
-	var new_direction : Vector3 = Vector3.ZERO
+func combo_handler():
+	if current_combo_value >= weapon.light_attack_animations.size():
+		current_combo_value = 0
 	
-	new_direction.x = Input.get_axis("player_move_left", "player_move_right")
-	new_direction.z = Input.get_axis("player_move_forward", "player_move_backward")
-	
-	return new_direction
+	if combo_timer_ref.is_stopped() and is_attacking == false:
+		current_combo_value = 0
 
 
 func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
@@ -84,8 +74,7 @@ func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
-	check_attack()
-	start_dash()
+	combo_handler()
 	set_speed()
 
 
@@ -93,7 +82,7 @@ func _physics_process(delta : float) -> void:
 	if is_attacking:
 		direction = Vector3.ZERO
 	else:
-		direction = get_player_direction_this_frame()
+		direction = input_handler_ref.get_player_direction_this_frame()#get_player_direction_this_frame()
 	
 	if direction != Vector3.ZERO:
 		if not is_dashing:
@@ -106,7 +95,8 @@ func _physics_process(delta : float) -> void:
 		direction = rotate_direction(direction)
 		# Smoothly rotate character Mesh3D to face direction of movement
 		mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-direction.x, -direction.z), delta * smooth_speed)
-	else:
+	
+	elif not is_attacking:
 		idling.emit()
 	
 	target_velocity.x = direction.x * applied_speed
@@ -128,3 +118,16 @@ func _on_animation_handler_dash_ended():
 
 func _on_animation_handler_attack_ended():
 	is_attacking = false
+	combo_timer_ref.start(weapon.combo_wait_time)
+
+func _on_input_handler_light_attack_performed():
+	if not is_dashing:
+		attack_light.emit(weapon, current_combo_value)
+		current_combo_value += 1
+		is_attacking = true
+
+func _on_input_handler_dash_performed():
+	if not is_dashing and not direction == Vector3.ZERO:
+		is_dashing = true
+		applied_speed = dash_speed
+		dashing.emit(dash_time)
