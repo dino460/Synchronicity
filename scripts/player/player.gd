@@ -60,11 +60,8 @@ func set_speed():
 				applied_speed = walk_speed
 
 
-func combo_handler():
+func reset_combo():
 	if current_combo_value >= weapon.light_attack_animations.size():
-		current_combo_value = 0
-	
-	if combo_timer_ref.is_stopped() and is_attacking == false:
 		current_combo_value = 0
 
 
@@ -74,7 +71,7 @@ func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
-	combo_handler()
+	reset_combo()
 	set_speed()
 
 
@@ -122,6 +119,7 @@ func _on_animation_handler_attack_ended():
 
 func _on_input_handler_light_attack_performed():
 	if not is_dashing:
+		combo_timer_ref.stop()
 		attack_light.emit(weapon, current_combo_value)
 		current_combo_value += 1
 		is_attacking = true
@@ -131,3 +129,6 @@ func _on_input_handler_dash_performed():
 		is_dashing = true
 		applied_speed = dash_speed
 		dashing.emit(dash_time)
+
+func _on_combo_cooldown_timer_timeout():
+	current_combo_value = 0
