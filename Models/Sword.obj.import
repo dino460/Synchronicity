@@ -4,14 +4,14 @@ importer="wavefront_obj"
 importer_version=1
 type="Mesh"
 uid="uid://bgqujvinxx8qv"
-path="res://.godot/imported/Sword.obj-7fb09e6e9d5ddc33d6858edfe2e7c937.mesh"
+path="res://.godot/imported/Sword.obj-e7400a8f922ed0bca731dd00ea9731e3.mesh"
 
 [deps]
 
-files=["res://.godot/imported/Sword.obj-7fb09e6e9d5ddc33d6858edfe2e7c937.mesh"]
+files=["res://.godot/imported/Sword.obj-e7400a8f922ed0bca731dd00ea9731e3.mesh"]
 
-source_file="res://models/Sword.obj"
-dest_files=["res://.godot/imported/Sword.obj-7fb09e6e9d5ddc33d6858edfe2e7c937.mesh", "res://.godot/imported/Sword.obj-7fb09e6e9d5ddc33d6858edfe2e7c937.mesh"]
+source_file="res://Models/Sword.obj"
+dest_files=["res://.godot/imported/Sword.obj-e7400a8f922ed0bca731dd00ea9731e3.mesh", "res://.godot/imported/Sword.obj-e7400a8f922ed0bca731dd00ea9731e3.mesh"]
 
 [params]
 

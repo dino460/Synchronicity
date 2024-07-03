@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://divk0ab7tgtd0"]
 
-[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://shaders/pixelate.tres" id="1_7fkre"]
+[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://Shaders/pixelate.tres" id="1_7fkre"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rfqes"]
