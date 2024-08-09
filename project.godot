@@ -19,7 +19,7 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1728
 window/size/viewport_height=972
-window/stretch/mode="viewport"
+window/vsync/vsync_mode=2
 
 [filesystem]
 
@@ -93,3 +93,4 @@ attack_heavy={
 lights_and_shadows/use_physical_light_units=true
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
+anti_aliasing/screen_space_roughness_limiter/enabled=false

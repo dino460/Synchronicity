@@ -1,14 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=12 format=3 uid="uid://divk0ab7tgtd0"]
 
-[ext_resource type="Shader" uid="uid://cd3o2wu3t7idn" path="res://Shaders/pixelate.tres" id="1_7fkre"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rfqes"]
-shader = ExtResource("1_7fkre")
-shader_parameter/PixelAmount = 448.0
+[ext_resource type="PackedScene" uid="uid://2smwte7i8ht" path="res://assets/lukkys props/containers/barrel.glb" id="2_5yvay"]
+[ext_resource type="Texture2D" uid="uid://bup7t2v40s3iw" path="res://assets/lukkys textures/brick_dark_color_corrected.png" id="2_gqjc7"]
+[ext_resource type="PackedScene" uid="uid://co7mw48qs41dx" path="res://assets/lukkys props/containers/crate.glb" id="3_ed0uo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(80, 0.1, 80)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yn4rr"]
+albedo_texture = ExtResource("2_gqjc7")
+uv1_scale = Vector3(0.45, 0.45, 0.45)
+uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_d6yvy"]
 size = Vector3(80, 0.1, 80)
@@ -16,6 +19,7 @@ size = Vector3(80, 0.1, 80)
 [sub_resource type="Environment" id="Environment_4t3x5"]
 background_mode = 1
 background_color = Color(0.737255, 0.85098, 0.827451, 1)
+ssao_enabled = true
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_kq36g"]
 
@@ -26,324 +30,363 @@ albedo_color = Color(0.352941, 0.670588, 0, 1)
 
 [node name="Main" type="Node"]
 
-[node name="Pixel Effect CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
-
-[node name="ColorRect" type="ColorRect" parent="Pixel Effect CanvasLayer"]
-material = SubResource("ShaderMaterial_rfqes")
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch = true
+stretch_shrink = 4
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(432, 243)
+render_target_update_mode = 4
+
+[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_ywxjf")]
+
+[node name="Ground" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Ground"]
 shape = SubResource("BoxShape3D_7h77l")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Ground"]
+material_override = SubResource("StandardMaterial3D_yn4rr")
 mesh = SubResource("BoxMesh_d6yvy")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.47958, 0.877498, 0, -0.877498, 0.47958, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_ywxjf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-run_speed = 12.0
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_4t3x5")
 camera_attributes = SubResource("CameraAttributesPhysical_kq36g")
 
-[node name="ReferenceBoxes" type="Node3D" parent="."]
+[node name="ReferenceBoxes" type="Node3D" parent="SubViewportContainer/SubViewport"]
+visible = false
 
-[node name="Box" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.674341, 0, -0.73842, 0, 1, 0, 0.73842, 0, 0.674341, 3.04083, -0.551498, 0)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box2" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box2" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.984613, 0, 0.174748, 0, 1, 0, -0.174748, 0, 0.984613, -1.96909, -0.551498, -5.3427)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box3" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box3" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(1.34646, 0, 0.238969, 0, 1.3675, 0, -0.238969, 0, 1.34646, -5.19866, -0.616276, -0.935307)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box4" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box4" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.901591, 0, -0.432589, 0, 1, 0, 0.432589, 0, -0.901591, 7.49713, -0.551498, 7.45398)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box5" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box5" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.116792, 0, -0.993156, 0, 1, 0, 0.993156, 0, -0.116792, 14.0582, -0.551498, 4.19877)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box6" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box6" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.159713, 0, -1.35814, 0, 1.3675, 0, 1.35814, 0, -0.159713, 10.7701, -0.616276, -0.165174)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box7" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box7" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.901591, 0, -0.432589, 0, 1, 0, 0.432589, 0, -0.901591, -5.76853, -0.551498, -20.0028)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box8" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box8" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.116792, 0, -0.993156, 0, 1, 0, 0.993156, 0, -0.116792, 0.792526, -0.551498, -23.258)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box9" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box9" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.159713, 0, -1.35814, 0, 1.3675, 0, 1.35814, 0, -0.159713, -2.49552, -0.616276, -27.6219)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box10" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box10" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.287511, 0, 0.957777, 0, 1, 0, -0.957777, 0, -0.287511, 14.2938, -0.551497, -16.0246)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box11" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box11" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.963022, 0, 0.269424, 0, 1, 0, -0.269424, 0, -0.963022, 16.4919, -0.551497, -9.03804)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box51" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box51" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.931666, 0, -0.363316, 0, 1, 0, 0.363316, 0, 0.931666, -6.85785, -0.634987, 33.4937)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box52" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box52" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(1.27406, 0, -0.496836, 0, 1.3675, 0, 0.496836, 0, 1.27406, -11.9096, -0.699764, 35.5759)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box54" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box54" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.931666, 0, -0.363316, 0, 1, 0, 0.363316, 0, 0.931666, -36.7715, -0.634987, 39.4116)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box56" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box56" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.999321, 0, -0.036853, 0, 1, 0, 0.036853, 0, -0.999321, -26.3691, -0.634985, 28.1691)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box57" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box57" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.503427, 0, -0.864038, 0, 1, 0, 0.864038, 0, -0.503427, -19.0541, -0.634985, 27.8026)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box12" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box12" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.31694, 0, 0.368438, 0, 1.3675, 0, -0.368438, 0, -1.31694, 21.3131, -0.616274, -11.6094)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box41" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box41" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(1.34646, 0, 0.238969, 0, 1.3675, 0, -0.238969, 0, 1.34646, 17.5955, -0.616276, -16.4207)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box42" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box42" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.901591, 0, -0.432589, 0, 1, 0, 0.432589, 0, -0.901591, 30.2913, -0.551498, -8.03139)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box43" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box43" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.116792, 0, -0.993156, 0, 1, 0, 0.993156, 0, -0.116792, 36.8523, -0.551498, -11.2866)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box44" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box44" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.159713, 0, -1.35814, 0, 1.3675, 0, 1.35814, 0, -0.159713, 33.5643, -0.616276, -15.6505)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box45" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box45" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.901591, 0, -0.432589, 0, 1, 0, 0.432589, 0, -0.901591, 17.0256, -0.551498, -35.4881)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box46" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box46" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.116792, 0, -0.993156, 0, 1, 0, 0.993156, 0, -0.116792, 23.5867, -0.551498, -38.7433)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box48" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box48" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.287511, 0, 0.957777, 0, 1, 0, -0.957777, 0, -0.287511, 37.0879, -0.551497, -31.51)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box49" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box49" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.963022, 0, 0.269424, 0, 1, 0, -0.269424, 0, -0.963022, 39.2861, -0.551497, -24.5234)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box26" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box26" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.59623, 0, 0.83511, 0, 1.10624, 0, -0.884813, 0, -0.562738, 3.01294, -0.549201, 24.5167)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box27" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box27" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.02947, 0, -0.0302534, 0, 1.10624, 0, 0.029385, 0, -1.05989, 7.17304, -0.549201, 30.9583)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box28" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box28" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.4078, 0, -0.0413717, 0, 1.51279, 0, 0.0401841, 0, -1.4494, 10.8858, -0.62086, 26.88)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box29" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box29" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.59623, 0, 0.83511, 0, 1.10624, 0, -0.884813, 0, -0.562738, 27.5176, -0.549201, 6.66599)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box30" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box30" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.02947, 0, -0.0302534, 0, 1.10624, 0, 0.029385, 0, -1.05989, 31.6777, -0.549201, 13.1076)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box31" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box31" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.4078, 0, -0.0413717, 0, 1.51279, 0, 0.0401841, 0, -1.4494, 35.3905, -0.62086, 9.0293)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box32" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box32" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.909059, 0, 0.451892, 0, 1.10624, 0, -0.424887, 0, 0.966837, 26.7659, -0.549199, 28.3386)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box33" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box33" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.133828, 0, 0.953355, 0, 1.10624, 0, -1.04643, 0, 0.121925, 20.3488, -0.549199, 31.642)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box34" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box34" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.183011, 0, 1.30372, 0, 1.51279, 0, -1.431, 0, 0.166732, 23.5792, -0.620858, 36.35)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box13" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box13" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.870914, 0, 0.491436, 0, 1, 0, -0.491436, 0, 0.870914, -9.99172, -0.551497, 7.05376)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box14" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box14" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.0506627, 0, 0.998716, 0, 1, 0, -0.998716, 0, 0.0506627, -16.3224, -0.551497, 10.737)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box35" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box35" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.4078, 0, -0.0413717, 0, 1.51279, 0, 0.0401841, 0, -1.4494, 9.48194, -0.620864, 18.5582)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box36" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box36" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.909059, 0, 0.451892, 0, 1.10624, 0, -0.424887, 0, 0.966837, 0.857317, -0.549202, 37.8675)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box39" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box39" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.870914, 0, 0.491436, 0, 1, 0, -0.491436, 0, 0.870914, -35.9003, -0.5515, 16.5826)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box15" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box15" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.0692813, 0, 1.36575, 0, 1.3675, 0, -1.36575, 0, 0.0692813, -12.7522, -0.616274, 14.8732)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box16" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box16" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.961063, 0, -0.972842, 0, 1.3675, 0, 0.972842, 0, 0.961063, -9.82398, -0.616278, -28.796)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box17" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box17" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.225121, 0, -0.974331, 0, 1, 0, 0.974331, 0, -0.225121, -35.646, -0.5515, -28.2658)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box18" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box18" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.702787, 0, -0.711401, 0, 1, 0, 0.711401, 0, 0.702787, -34.0915, -0.5515, -35.4231)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box19" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box19" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.961063, 0, -0.972842, 0, 1.3675, 0, 0.972842, 0, 0.961063, -39.5532, -0.616278, -35.5801)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box21" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box21" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.811798, 0, -0.583938, 0, 1, 0, 0.583938, 0, -0.811798, -13.1813, -0.551498, -38.8057)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box23" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box23" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(0.160002, 0, 0.987117, 0, 1, 0, -0.987117, 0, 0.160002, -17.1503, -0.551498, -8.07175)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box24" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box24" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-0.748424, 0, 0.663221, 0, 1, 0, -0.663221, 0, -0.748424, -18.2267, -0.551498, -0.827082)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
 
-[node name="Box25" type="MeshInstance3D" parent="ReferenceBoxes"]
+[node name="Box25" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/ReferenceBoxes"]
 transform = Transform3D(-1.02347, 0, 0.906957, 0, 1.3675, 0, -0.906957, 0, -1.02347, -12.7666, -0.616276, -1.03279)
 mesh = SubResource("BoxMesh_tk35j")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_hd5d2")
+
+[node name="Test Props" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="barrel" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("2_5yvay")]
+transform = Transform3D(1.25855, 0, 0, 0, 1.25855, 0, 0, 0, 1.25855, 1.7549, -0.95, -3.16035)
+
+[node name="barrel5" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("2_5yvay")]
+transform = Transform3D(1.25855, 0, 0, 0, 1.25855, 0, 0, 0, 1.25855, 2.30528, -0.95, 2.51632)
+
+[node name="barrel6" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("2_5yvay")]
+transform = Transform3D(1.25855, 0, 0, 0, 1.25855, 0, 0, 0, 1.25855, -4.29785, -0.95, 2.96959)
+
+[node name="barrel2" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("2_5yvay")]
+transform = Transform3D(1.25855, 0, 0, 0, 1.25855, 0, 0, 0, 1.25855, -4.4979, -0.95, -2.52716)
+
+[node name="barrel3" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("2_5yvay")]
+transform = Transform3D(1.25855, 0, 0, 0, 1.25855, 0, 0, 0, 1.25855, -4.9488, -0.95, -3.35006)
+
+[node name="barrel4" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("2_5yvay")]
+transform = Transform3D(1.25855, 0, 0, 0, 1.25855, 0, 0, 0, 1.25855, -3.84353, -0.95, -3.45075)
+
+[node name="crate" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("3_ed0uo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.38409, -0.887702, -2.36336)
+
+[node name="crate2" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("3_ed0uo")]
+transform = Transform3D(0.844216, 0, -0.536004, 0, 1, 0, 0.536004, 0, 0.844216, -5.74396, -0.887702, 2.16556)
+
+[node name="crate3" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("3_ed0uo")]
+transform = Transform3D(0.214275, 0, -0.976773, 0, 1, 0, 0.976773, 0, 0.214275, 3.37441, -0.887702, 1.66825)
+
+[node name="crate4" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("3_ed0uo")]
+transform = Transform3D(-0.133519, 0, -0.991046, 0, 1, 0, 0.991046, 0, -0.133519, 3.6349, -0.887702, 0.494372)
+
+[node name="crate5" parent="SubViewportContainer/SubViewport/Test Props" instance=ExtResource("3_ed0uo")]
+transform = Transform3D(-0.639305, 0, -0.768953, 0, 1, 0, 0.768953, 0, -0.639305, 3.59629, 0.115815, 1.00905)

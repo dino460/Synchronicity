@@ -40,7 +40,7 @@ var direction       : Vector3 = Vector3.ZERO
 @export var can_attack_move     : bool = true
 
 #var weapon: Weapon
-@onready var weapon : Weapon = $MeshPivot/LowPolyCharacter/rig/Skeleton3D/BoneAttachment3D/Sword
+#@onready var weapon : Weapon = $MeshPivot/LowPolyCharacter/rig/Skeleton3D/BoneAttachment3D/Sword
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
@@ -63,7 +63,7 @@ func set_speed():
 
 
 func reset_combo():
-	if current_combo_value >= weapon.light_attack_animations.size():
+#	if current_combo_value >= weapon.light_attack_animations.size():
 		current_combo_value = 0
 
 
@@ -117,12 +117,12 @@ func _on_animation_handler_dash_ended():
 
 func _on_animation_handler_attack_ended():
 	is_attacking = false
-	combo_timer_ref.start(weapon.combo_wait_time)
+#	combo_timer_ref.start(weapon.combo_wait_time)
 
 func _on_input_handler_light_attack_performed():
 	if not is_dashing:
 		combo_timer_ref.stop()
-		attack_light.emit(weapon, current_combo_value)
+#		attack_light.emit(weapon, current_combo_value)
 		current_combo_value += 1
 		is_attacking = true
 		can_attack_move = true
