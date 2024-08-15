@@ -20,6 +20,8 @@ signal attack_light(weapon: Weapon, current_combo_value: float)
 @export var walk_speed    : float = 3.3
 
 @export var run_speed     : float = 18.0
+@export var acceleration  : float = 2.0
+@export var is_running    : bool  = false
 @export var run_is_toggle : bool  = false
 
 @export var dash_speed : float = 32.0
@@ -47,19 +49,36 @@ func _ready():
 	pass
 
 
-func set_speed():
+func set_is_running():
 	if not is_dashing and not is_attacking:
 		if run_is_toggle:
 			if Input.is_action_just_pressed("player_run"):
 				if applied_speed != run_speed:
-					applied_speed = run_speed
+					is_running = true
 				else:
-					applied_speed = walk_speed
+					is_running = false
 		else:
 			if (Input.is_action_pressed("player_run")):
-				applied_speed = run_speed
+				is_running = true
 			else:
-				applied_speed = walk_speed
+				is_running = false
+
+
+func set_speed(frame_time: float):
+	if is_running:
+		apply_speed(run_speed, acceleration * frame_time)
+	else:
+		if applied_speed > walk_speed:
+			apply_speed(walk_speed, -acceleration * frame_time)
+		else:
+			apply_speed(walk_speed, acceleration * frame_time)
+
+
+func apply_speed(max_speed: float, apply_accel: float):
+	if applied_speed >= max_speed:
+		applied_speed = max_speed
+	else:
+		applied_speed += apply_accel
 
 
 func reset_combo():
@@ -74,10 +93,12 @@ func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
 	reset_combo()
-	set_speed()
+	set_is_running()
 
 
 func _physics_process(delta : float) -> void:
+	set_speed(delta)
+	
 	if is_attacking && !can_attack_move:
 		direction = Vector3.ZERO
 	else:
@@ -85,7 +106,7 @@ func _physics_process(delta : float) -> void:
 	
 	if direction != Vector3.ZERO:
 		if not is_dashing:
-			if applied_speed == run_speed:
+			if applied_speed >= run_speed:
 				running.emit()
 			else:
 				walking.emit()

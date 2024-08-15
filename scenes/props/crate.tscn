@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvs1xcg0yjlxv"]
+
+[ext_resource type="PackedScene" uid="uid://co7mw48qs41dx" path="res://assets/lukkys props/containers/crate.glb" id="1_e8afg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mokc2"]
+
+[node name="crate" instance=ExtResource("1_e8afg")]
+
+[node name="RigidBody3D" type="RigidBody3D" parent="." index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_mokc2")
