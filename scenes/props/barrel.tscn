@@ -13,3 +13,8 @@ radius = 0.41
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.485088, 0)
 shape = SubResource("CylinderShape3D_ivmg1")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="2"]
+vertices = PackedVector3Array(-0.188188, 0, -0.519075, 0.52301, 0, -0.377964, 0.596387, 0, 0.276789, 0.263366, 0, 0.570299, -0.515565, 0, 0.502566, -0.575, 0, -0.2)
+affect_navigation_mesh = true
+avoidance_enabled = false

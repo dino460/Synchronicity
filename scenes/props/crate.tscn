@@ -11,3 +11,8 @@
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_mokc2")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="2"]
+vertices = PackedVector3Array(-0.589238, 0, -0.655075, 0.661659, 0, -0.635324, 0.602406, 0, 0.602406, -0.648491, 0, 0.635324)
+affect_navigation_mesh = true
+avoidance_enabled = false

@@ -59,6 +59,9 @@ far = 100.0
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+radius = 0.8
+
 [connection signal="attack_light" from="." to="AnimationHandler" method="_on_player_attack_light"]
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_player_dashing"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_player_idling"]
