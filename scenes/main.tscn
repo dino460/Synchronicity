@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=17 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Texture2D" uid="uid://bup7t2v40s3iw" path="res://assets/lukkys textures/brick_dark_color_corrected.png" id="2_gqjc7"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
-[ext_resource type="Script" path="res://scripts/test_npc.gd" id="5_xya3a"]
+[ext_resource type="Script" path="res://scripts/npc/test_npc.gd" id="5_xya3a"]
+[ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="6_6askm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(25, 1, 25)
@@ -70,6 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
 shape = SubResource("BoxShape3D_7h77l")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="SubViewportContainer/SubViewport/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0252132, -4.76837e-07, 0.00361061)
 navigation_mesh = SubResource("NavigationMesh_t33e6")
 
 [node name="Obstacles" type="Node3D" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
@@ -147,3 +149,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96957, 9.53674e-07, 2.6262
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/Tg3"]
 mesh = SubResource("SphereMesh_qq8p3")
+
+[node name="Timer" type="Timer" parent="."]
+script = ExtResource("6_6askm")
+full_day_time = 10
