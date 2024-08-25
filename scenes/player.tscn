@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://bylwa0aplfyax"]
+[gd_scene load_steps=10 format=3 uid="uid://bylwa0aplfyax"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_br4xa"]
 [ext_resource type="Script" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
 [ext_resource type="Script" path="res://scripts/player/input_handler.gd" id="3_imqgc"]
+[ext_resource type="PackedScene" uid="uid://odpovh6l2sev" path="res://assets/SELS low poly char/Low-Poly-Base.blend.blend" id="4_w6got"]
 [ext_resource type="Script" path="res://scripts/player/camera_controller.gd" id="5_lu2e7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
-radius = 0.536
-height = 2.08458
+radius = 0.407304
+height = 3.09256
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_h5i45"]
 
@@ -37,6 +38,7 @@ shape = SubResource("CapsuleShape3D_sv48k")
 [node name="MeshPivot" type="Node3D" parent="."]
 
 [node name="TmpMesh3D" type="MeshInstance3D" parent="MeshPivot"]
+visible = false
 mesh = SubResource("CapsuleMesh_h5i45")
 skeleton = NodePath("../..")
 
@@ -44,6 +46,9 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.787466, 0, 0, 0, 0.309196, 0, 0, 0, 0.378234, 0, 0.532833, -0.442347)
 mesh = SubResource("BoxMesh_yq6du")
 surface_material_override/0 = SubResource("StandardMaterial3D_1cl5e")
+
+[node name="Low-Poly-Base_blend" parent="MeshPivot" instance=ExtResource("4_w6got")]
+transform = Transform3D(-1.8, 0, -2.71792e-07, 0, 1.8, 0, 2.71792e-07, 0, -1.8, 0, -1.54558, 0)
 
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("5_lu2e7")
@@ -58,9 +63,6 @@ far = 100.0
 
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
-radius = 0.8
 
 [connection signal="attack_light" from="." to="AnimationHandler" method="_on_player_attack_light"]
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_player_dashing"]
