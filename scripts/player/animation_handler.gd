@@ -93,6 +93,7 @@ func play_animation():
 # Called on the end of an animation to enable chaining them into a combo
 # DO NOT FORGET TO ADD THIS TO A METHOD TRACK
 func enable_combo():
+	print("huh")
 	is_attacking = false
 	can_combo.emit()
 

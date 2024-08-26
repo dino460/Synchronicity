@@ -35,6 +35,8 @@ func get_speed() -> float:
 
 
 func _ready():
+	scheduler = get_tree().get_root().get_node("Main/Scheduler")
+	print(scheduler)
 	# Make sure to not await during _ready.
 	current_target = home
 	call_deferred("actor_setup")
