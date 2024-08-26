@@ -21,7 +21,6 @@ albedo_color = Color(0.839216, 0, 0.12549, 1)
 script = ExtResource("1_br4xa")
 walk_speed = 4.0
 run_speed = 10.0
-acceleration = 6.0
 dash_speed = 20.0
 dash_time = 0.5
 smooth_speed = 20.0

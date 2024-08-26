@@ -1,5 +1,7 @@
 extends Timer
 
+class_name Scheduler
+
 @export var full_day_time : float = 600.0
 @export var sun_up_time_proportion : float = 0.5
 

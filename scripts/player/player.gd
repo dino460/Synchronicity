@@ -20,7 +20,6 @@ signal attack_light(weapon: Weapon, current_combo_value: float)
 @export var walk_speed    : float = 3.3
 
 @export var run_speed     : float = 18.0
-@export var acceleration  : float = 2.0
 @export var is_running    : bool  = false
 @export var run_is_toggle : bool  = false
 
@@ -64,21 +63,11 @@ func set_is_running():
 				is_running = false
 
 
-func set_speed(frame_time: float):
+func set_speed():
 	if is_running:
-		apply_speed(run_speed, acceleration * frame_time)
+		applied_speed = run_speed
 	else:
-		if applied_speed > walk_speed:
-			apply_speed(walk_speed, -acceleration * frame_time)
-		else:
-			apply_speed(walk_speed, acceleration * frame_time)
-
-
-func apply_speed(max_speed: float, apply_accel: float):
-	if applied_speed >= max_speed:
-		applied_speed = max_speed
-	else:
-		applied_speed += apply_accel
+		applied_speed = walk_speed
 
 
 func reset_combo():
@@ -97,7 +86,7 @@ func _process(_delta : float) -> void:
 
 
 func _physics_process(delta : float) -> void:
-	set_speed(delta)
+	set_speed()
 	
 	if is_attacking && !can_attack_move:
 		direction = Vector3.ZERO

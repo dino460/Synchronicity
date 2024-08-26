@@ -1,9 +1,7 @@
 extends Node
 
-#@onready var animator = $"../MeshPivot/Viking_Female/AnimationPlayer"
-#@onready var animator = $"../MeshPivot/LowPolyCharacter/AnimationPlayer"
-#@onready var current_weapon : Weapon = $"../MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D/Sword"
-#@onready var current_weapon : Weapon = $"../MeshPivot/LowPolyCharacter/rig/Skeleton3D/BoneAttachment3D/Sword"
+@onready var animator = $"../MeshPivot/Low-Poly-Base_blend/AnimationPlayer"
+
 
 signal dash_ended
 signal attack_ended
@@ -29,15 +27,15 @@ func _on_player_idling():
 
 func _on_player_walking():
 	wanted_state = State.WALK
-	animation_speed = 0.7
+	animation_speed = 5.0
 	check_wanted_state()
-#	play_animation()
+	play_animation()
 
 func _on_player_running():
 	wanted_state = State.RUN
-	animation_speed = 1.0
+	animation_speed = 8.0
 	check_wanted_state()
-#	play_animation()
+	play_animation()
 
 func _on_player_dashing(dash_time):
 	wanted_state = State.DASH
@@ -63,21 +61,20 @@ func check_wanted_state():
 		current_state = wanted_state
 
 
-#func play_animation():
-#	there_is_animation_playing = true
-#	var next_animation_name : String = ""
+func play_animation():
+	there_is_animation_playing = true
 #
-#	match current_state:
+	match current_state:
 #		State.IDLE:
 #			#animator.play("Idle", -1, 1.0, false)
 #			next_animation_name = "idle_" + current_weapon.type
 #
-#		State.WALK:
-#			#animator.play("Walk", -1, 1.0, false)
+		State.WALK:
+			animator.play("walk", -1, animation_speed, false)
 #			next_animation_name = "walk_" + current_weapon.type
 #
-#		State.RUN:
-#			#animator.play("Run", -1, 1.0, false)
+		State.RUN:
+			animator.play("run", -1, animation_speed, false)
 #			next_animation_name = "run_" + current_weapon.type
 #
 #		State.DASH:
@@ -90,7 +87,7 @@ func check_wanted_state():
 #				#animator.play(current_weapon.light_attack_animations[combo_value], -1, animation_speed, false)
 #				next_animation_name = current_weapon.light_attack_animations[combo_value]
 #
-#	animator.play(next_animation_name, -1, animation_speed, false)
+	#animator.play(next_animation_name, -1, animation_speed, false)
 
 
 # Called on the end of an animation to enable chaining them into a combo
