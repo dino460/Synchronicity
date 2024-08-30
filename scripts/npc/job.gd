@@ -3,11 +3,14 @@ extends Node3D
 class_name Job
 
 @export var timer : Timer
-## Minimum percentage of time this work expects its NPCs to stay.
-@export var job_time_min_proportion : float
+## Minimum amount of time this work expects its NPCs to stay.
+## From 0 to 24.
+@export var min_work_amount : float
 ## The latest time an NPC would want to arrive at this job.
-## From 1 to 24.
+## From 0 to 24.
 @export var time_want_to_arrive_job : float
+@export var max_late_amount : float
+@export var max_worker_distance : float
 @export var is_at_job : bool = false
 
 func _ready() -> void:
