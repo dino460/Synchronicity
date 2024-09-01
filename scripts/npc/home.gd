@@ -16,8 +16,8 @@ func _ready() -> void:
 	timer = get_child(0)
 	timer.one_shot = true
 
-func _physics_process(_delta: float) -> void:
-	if not timer.is_stopped():
-		print("\n---- AT HOME ----")
-		print(timer.time_left)
-		print()
+#func _physics_process(_delta: float) -> void:
+	#if not timer.is_stopped():
+		#print("\n---- AT HOME ----")
+		#print(timer.time_left)
+		#print()

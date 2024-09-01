@@ -60,52 +60,44 @@ func time_to_get_to_target() -> float:
 	return position.distance_to(current_target.position) / get_speed()
 
 func want_to_go_to_job() -> bool:
-	# 0 <-> full_day_time
 	var corrected_job_arrive_time = (job.time_want_to_arrive_job / 24.0) * scheduler.full_day_time
-	# 0 <-> full_day_time
 	var current_time = scheduler.full_day_time - scheduler.time_left
-	# 0 <-> N
 	var time_to_get_to_job = position.distance_to(job.position) / get_speed()
-	# -N <-> M
 	var late_time = current_time - corrected_job_arrive_time + time_to_get_to_job
 	
 	var job_lateness_correction = 1.0 + (late_time * emotions.being_late_importance / job.max_late_amount)
 	var weight = emotions.job_love  + job_lateness_correction
 	
 	
-	print(name)
-	print("time to get to job: ", time_to_get_to_job)
-	print("late time: ", late_time)
-	print("job weight: ", weight)
+	#print(name)
+	#print("time to get to job: ", time_to_get_to_job)
+	#print("late time: ", late_time)
+	#print("job weight: ", weight)
 	
 	weight /= (1.0 - emotions.home_love) if not home.timer.is_stopped() else (1.0 - emotions.home_love) / 2.0
 	
-	print("weight: ", weight)
+	#print("weight: ", weight)
 		
-	print()
+	#print()
 	return weight >= emotions.go_to_job_thresshold
 	
 func want_to_go_to_home() -> bool:
-	# 0 <-> full_day_time
 	var corrected_home_arrive_time = (home.time_want_to_arrive_home / 24.0) * scheduler.full_day_time
-	# 0 <-> full_day_time
 	var current_time = scheduler.full_day_time - scheduler.time_left
-	# 0 <-> N
 	var time_to_get_to_home = position.distance_to(home.position) / get_speed()
-	# -N <-> M
 	var late_time = current_time - corrected_home_arrive_time + time_to_get_to_home
 	
 	var home_lateness_correction = 1.0 + (late_time * emotions.being_late_importance / home.max_late_amount)
 	var weight = emotions.job_love  + home_lateness_correction
 	
-	print("late time: ", late_time)
-	print("job weight: ", weight)
+	#print("late time: ", late_time)
+	#print("job weight: ", weight)
 	
 	weight /= (1.0 - emotions.job_love) if not job.timer.is_stopped() else (1.0 - emotions.job_love) / 2.0
 	
-	print("weight: ", weight)
+	#print("weight: ", weight)
 	
-	print()
+	#print()
 	return weight >= emotions.go_to_home_thresshold
 
 func _physics_process(_delta):

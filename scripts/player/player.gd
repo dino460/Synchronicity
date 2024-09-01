@@ -1,6 +1,5 @@
 extends CharacterBody3D
 
-
 # Get references to nodes
 # Removes get_node call each time the node is referenced 
 @onready var combo_timer_ref  = $ComboCooldownTimer

@@ -1,5 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=34 format=3 uid="uid://divk0ab7tgtd0"]
 
+[ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Texture2D" uid="uid://bup7t2v40s3iw" path="res://assets/lukkys textures/brick_dark_color_corrected.png" id="2_gqjc7"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
@@ -104,6 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 stretch_shrink = 5
+script = ExtResource("1_g8fm3")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
@@ -168,6 +170,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.0261803)
+light_energy = 1.91
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]

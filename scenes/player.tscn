@@ -5073,10 +5073,19 @@ libraries = {
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("5_lu2e7")
 rotation_speed = 3.0
+vertical_up_corretion = 1.25
+vertical_down_corretion = 0.75
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.848049, 0.52992, 0, -0.52992, 0.848049, 0, 6.5, 10)
+[node name="Camera3D - Orthogonal" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.848049, 0.52992, 0, -0.52992, 0.848049, 0, 6.75, 10)
 projection = 1
+current = true
+size = 15.0
+near = 0.4
+far = 100.0
+
+[node name="Camera3D - Perspective" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 6)
 size = 15.0
 near = 0.4
 far = 100.0
