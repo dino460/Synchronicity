@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=27 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -6,10 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="5_0r3gc"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
-[ext_resource type="Script" path="res://scripts/npc/test_npc.gd" id="5_xya3a"]
 [ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="6_6askm"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
-[ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="7_cuf0l"]
 [ext_resource type="Script" path="res://scripts/npc/emotions.gd" id="8_a4n64"]
 [ext_resource type="Script" path="res://scripts/npc/home.gd" id="8_jn8p6"]
 [ext_resource type="Script" path="res://scripts/npc/job.gd" id="9_ex4b4"]
@@ -60,14 +58,6 @@ adjustment_saturation = 1.19
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_kq36g"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7e201"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_on5fn"]
-albedo_color = Color(0.866621, 0.109422, 0.545174, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_0ckwo"]
-material = SubResource("StandardMaterial3D_on5fn")
-
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkigc"]
@@ -75,12 +65,6 @@ albedo_color = Color(0, 0.693455, 0.60667, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
 material = SubResource("StandardMaterial3D_rkigc")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ilsic"]
-albedo_color = Color(0.879577, 0, 0.521454, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_qq8p3"]
-material = SubResource("StandardMaterial3D_ilsic")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1oipj"]
 albedo_color = Color(0.293485, 0.352648, 1, 1)
@@ -179,23 +163,10 @@ camera_attributes = SubResource("CameraAttributesPhysical_kq36g")
 
 [node name="NPCs" type="Node" parent="SubViewportContainer/SubViewport"]
 
-[node name="NPC-TEST" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("movement_targets")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45979, 1.27432, 6.08559)
-script = ExtResource("5_xya3a")
-movement_targets = [NodePath("../../Targets/Tg2"), NodePath("../../Targets/Tg3"), NodePath("../../Targets/Tg1")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-TEST"]
-shape = SubResource("CapsuleShape3D_7e201")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-TEST"]
-mesh = SubResource("CapsuleMesh_0ckwo")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-TEST"]
-
 [node name="NPC-SMART" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("emotions", "job", "home")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08682, 1.27432, -1.15931)
 script = ExtResource("7_80dul")
-age = 27
+current_age = null
 cycles_to_next_age = null
 emotions = NodePath("Emotions")
 job = NodePath("../../Targets/WORK")
@@ -205,9 +176,10 @@ has_worked_today = null
 
 [node name="Emotions" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("8_a4n64")
-go_to_job_thresshold = 0.4
-go_to_home_thresshold = 0.35
-being_late_importance = 0.12
+go_to_job_thresshold = 0.86
+go_to_home_thresshold = 0.72
+job_late_importance = 0.56
+home_late_importance = 0.62
 home_love = 0.6
 job_love = 0.55
 
@@ -220,46 +192,14 @@ mesh = SubResource("CapsuleMesh_kmggu")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 
-[node name="NPC-SMART2" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home") instance=ExtResource("7_cuf0l")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5114, 1.27432, 1.49077)
-cycles_to_next_age = null
-job = NodePath("../../Targets/WORK2")
-home = NodePath("../../Targets/HOME2")
-work_time_this_day = null
-has_worked_today = null
-
-[node name="Emotions" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART2" index="0"]
-go_to_job_thresshold = 0.47
-go_to_home_thresshold = 0.4
-being_late_importance = 0.3
-home_love = 0.33
-job_love = 0.42
-
 [node name="Targets" type="Node3D" parent="SubViewportContainer/SubViewport"]
-
-[node name="Tg1" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.33125, 9.53674e-07, 5.40319)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/Tg1"]
-mesh = SubResource("SphereMesh_qq8p3")
-
-[node name="Tg2" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.15973, 9.53674e-07, -10.4386)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/Tg2"]
-mesh = SubResource("SphereMesh_qq8p3")
-
-[node name="Tg3" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96957, 9.53674e-07, 2.62629)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/Tg3"]
-mesh = SubResource("SphereMesh_qq8p3")
 
 [node name="HOME" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
 script = ExtResource("8_jn8p6")
 min_home_amount = 8.0
 time_want_to_arrive_home = 21.0
+max_late_amount = 1.0
 
 [node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/HOME"]
 
@@ -271,6 +211,7 @@ transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 11.2268, 0.
 script = ExtResource("8_jn8p6")
 min_home_amount = 9.0
 time_want_to_arrive_home = 21.0
+max_late_amount = 0.5
 
 [node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/HOME2"]
 
@@ -303,8 +244,7 @@ max_worker_distance = 15.0
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/WORK2"]
 mesh = SubResource("SphereMesh_ejm8f")
 
-[node name="Scheduler" type="Timer" parent="."]
+[node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("6_6askm")
-full_day_time = 20.0
-
-[editable path="SubViewportContainer/SubViewport/NPCs/NPC-SMART2"]
+full_day_time = 60.0
+npc_holder = NodePath(".")

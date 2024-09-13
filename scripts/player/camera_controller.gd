@@ -25,12 +25,12 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	update_target_rotation()
-	
+
 	if not is_equal_approx(self.rotation.y, target_rotation):
 		self.rotation.y = lerp_angle(self.rotation.y, target_rotation, delta * rotation_speed)
 	else:
 		self.rotation.y = target_rotation
-	
+
 	if not is_equal_approx(orthogonal_camera_ref.position.y, vertical_target):
 		orthogonal_camera_ref.position.y = lerpf(orthogonal_camera_ref.position.y, vertical_target, delta * vertical_speed)
 	else:
@@ -49,9 +49,7 @@ func update_target_rotation():
 func update_vertical_target():
 	var mesh_forward = Vector3(mesh_pivot_ref.transform.basis.z)
 	var this_forward = Vector3(self.transform.basis.z)
-	
-	print(mesh_forward.angle_to(this_forward), " ", mesh_forward, " ", this_forward)
-	
+
 	if mesh_forward.angle_to(this_forward) < 0.8:
 		vertical_target = vertical_base_target + vertical_up_corretion
 	elif mesh_forward.angle_to(this_forward) > 2.3:
