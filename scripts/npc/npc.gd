@@ -7,7 +7,8 @@ const base_run_multiplier : float = 2.3
 
 @export var scheduler : Scheduler
 
-@export var age      : int
+@export var current_age        : int
+@export var cycles_to_next_age : int
 @export var emotions : Emotions
 
 @export var job                : Job
@@ -25,14 +26,14 @@ var navigation_enabled : bool = false
 
 
 func mod_by_age() -> float:
-	return minf(maxf((-sin(age / 31.85) * log(age / 100.0)) + 0.05, 0.5), 1.0)
+	return minf(maxf((-sin(current_age / 31.85) * log(current_age / 100.0)) + 0.05, 0.5), 1.0)
 
 func get_move_speed() -> float:
 	return base_move_speed * mod_by_age()
-	
+
 func get_run_speed() -> float:
 	return get_move_speed() * base_run_multiplier
-	
+
 func get_speed() -> float:
 	return get_run_speed() if is_running else get_move_speed()
 
@@ -60,43 +61,51 @@ func time_to_get_to_target() -> float:
 	return position.distance_to(current_target.position) / get_speed()
 
 func want_to_go_to_job() -> bool:
+    # Translates job arrive time from 24 hour value to game time
 	var corrected_job_arrive_time = (job.time_want_to_arrive_job / 24.0) * scheduler.full_day_time
-	var current_time = scheduler.full_day_time - scheduler.time_left
+	# Calculates time to get to work through distance and movement spedd
 	var time_to_get_to_job = position.distance_to(job.position) / get_speed()
-	var late_time = current_time - corrected_job_arrive_time + time_to_get_to_job
-	
-	var job_lateness_correction = 1.0 + (late_time * emotions.being_late_importance / job.max_late_amount)
+	# Calculates how late in game time the npc will be
+	var late_time = scheduler.get_current_time() - corrected_job_arrive_time + time_to_get_to_job
+
+	# Adjusts the late time to a percentage of the maximum lateness value
+	# After that, ajusts it by the lateness importance
+	# Lastly, applies it to 1.0 for further correction
+	var job_lateness_correction = 1.0 + (emotions.job_late_importance * late_time / job.max_late_amount)
+
+	# Adds job love to lanetness correction
+	# Should yiedl a value close to 1.0 (preferably smaller) when not yet late
+	# Yields a value explodingly larger than 1.0 when late
 	var weight = emotions.job_love  + job_lateness_correction
-	
-	
+
 	#print(name)
 	#print("time to get to job: ", time_to_get_to_job)
 	#print("late time: ", late_time)
 	#print("job weight: ", weight)
-	
-	weight /= (1.0 - emotions.home_love) if not home.timer.is_stopped() else (1.0 - emotions.home_love) / 2.0
-	
+
+	weight /= (1.0 + (2.0 * emotions.home_love)) if not home.timer.is_stopped() else (1.0 + emotions.home_love)
+
 	#print("weight: ", weight)
-		
+
 	#print()
 	return weight >= emotions.go_to_job_thresshold
-	
+
 func want_to_go_to_home() -> bool:
 	var corrected_home_arrive_time = (home.time_want_to_arrive_home / 24.0) * scheduler.full_day_time
 	var current_time = scheduler.full_day_time - scheduler.time_left
 	var time_to_get_to_home = position.distance_to(home.position) / get_speed()
 	var late_time = current_time - corrected_home_arrive_time + time_to_get_to_home
-	
-	var home_lateness_correction = 1.0 + (late_time * emotions.being_late_importance / home.max_late_amount)
+
+	var home_lateness_correction = 1.0 + (late_time * emotions.job_late_importance / home.max_late_amount)
 	var weight = emotions.job_love  + home_lateness_correction
-	
+
 	#print("late time: ", late_time)
 	#print("job weight: ", weight)
-	
+
 	weight /= (1.0 - emotions.job_love) if not job.timer.is_stopped() else (1.0 - emotions.job_love) / 2.0
-	
+
 	#print("weight: ", weight)
-	
+
 	#print()
 	return weight >= emotions.go_to_home_thresshold
 
@@ -111,7 +120,7 @@ func _physics_process(_delta):
 				print("got at job - starting timer")
 				job.is_at_job = true
 				job.timer.start(scheduler.full_day_time * job.min_work_amount / 24.0)
-		
+
 		if home.is_at_home and want_to_go_to_job() and not has_worked_today:
 			print("at home - timer stopped")
 			current_target = job
@@ -127,7 +136,7 @@ func _physics_process(_delta):
 			print("\n=======================\nTime worked today: ", work_time_this_day, "\n=======================\n")
 			job.timer.stop()
 			set_movement_target()
-		
+
 		return
 
 	var current_agent_position: Vector3 = global_position

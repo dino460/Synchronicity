@@ -9,7 +9,8 @@ class_name Emotions
 
 # TODO: document what the hell this emotions mean
 
-@export var being_late_importance : float
+@export var job_late_importance : float
+@export var home_late_importance : float
 
 @export var home_love : float
 @export var job_love : float

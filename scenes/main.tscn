@@ -196,9 +196,12 @@ mesh = SubResource("CapsuleMesh_0ckwo")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08682, 1.27432, -1.15931)
 script = ExtResource("7_80dul")
 age = 27
+cycles_to_next_age = null
 emotions = NodePath("Emotions")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
+work_time_this_day = null
+has_worked_today = null
 
 [node name="Emotions" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("8_a4n64")
@@ -219,8 +222,11 @@ mesh = SubResource("CapsuleMesh_kmggu")
 
 [node name="NPC-SMART2" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home") instance=ExtResource("7_cuf0l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5114, 1.27432, 1.49077)
+cycles_to_next_age = null
 job = NodePath("../../Targets/WORK2")
 home = NodePath("../../Targets/HOME2")
+work_time_this_day = null
+has_worked_today = null
 
 [node name="Emotions" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART2" index="0"]
 go_to_job_thresshold = 0.47
