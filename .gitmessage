@@ -1,0 +1,7 @@
+[<version>] <TYPE> :: <scope>
+<short description> (max 50 chars)
+Body:
+<detailed description of changes made in commit> (keep it snappy)
+Footer:
+<other commentaries and notes>
+from: [<old-version>]
