@@ -166,7 +166,7 @@ camera_attributes = SubResource("CameraAttributesPhysical_kq36g")
 [node name="NPC-SMART" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("emotions", "job", "home")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08682, 1.27432, -1.15931)
 script = ExtResource("7_80dul")
-current_age = null
+current_age = 25
 cycles_to_next_age = null
 emotions = NodePath("Emotions")
 job = NodePath("../../Targets/WORK")

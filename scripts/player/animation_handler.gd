@@ -45,7 +45,7 @@ func _on_player_dashing(dash_time):
 
 func _on_player_attack_light(weapon: Weapon, current_combo_value):
 	wanted_state = State.ATTACK_LIGHT
-	
+
 #	current_weapon = weapon
 	combo_value = current_combo_value
 	animation_speed = 1.0 / weapon.light_attack_time
@@ -93,14 +93,13 @@ func play_animation():
 # Called on the end of an animation to enable chaining them into a combo
 # DO NOT FORGET TO ADD THIS TO A METHOD TRACK
 func enable_combo():
-	print("huh")
 	is_attacking = false
 	can_combo.emit()
 
 
 func _on_animation_player_animation_finished(anim_name):
 	there_is_animation_playing = false
-	
+
 	if anim_name == "Roll":
 		dash_ended.emit()
 #	elif anim_name in current_weapon.light_attack_animations or anim_name in current_weapon.heavy_attack_animations:
