@@ -1,20 +1,26 @@
 extends Node
 
+class_name AnimationHandler
+
 @onready var animator = $"../MeshPivot/Low-Poly-Base_blend/AnimationPlayer"
 
 
 signal dash_ended
 signal attack_ended
-signal can_combo
 
-enum State {IDLE, WALK, RUN, DASH, ATTACK_LIGHT, ATTACK_HEAVY, HURT}
+# Attack names refer the direction of the attack, or where the attack ends
+# So, for example, an ATTACK_UP starts down and arcs upwards,
+# while and ATTACK_LEFT starts on the right side and ends on the left
+enum State {IDLE, WALK, RUN, DASH, ATTACK_UP, ATTACK_DOWN, ATTACK_LEFT, ATTACK_RIGHT, HURT}
 var current_state : State = State.IDLE
 var wanted_state  : State = State.IDLE
 
 var there_is_animation_playing : bool  = false
 var is_attacking               : bool  = false
+var on_combo                   : bool  = false
 var animation_speed            : float = 1.0
-var combo_value                : int   = 0
+
+var last_attack_state : State;
 
 var interruptable_states = [State.IDLE, State.WALK, State.RUN]
 
@@ -43,22 +49,29 @@ func _on_player_dashing(dash_time):
 	check_wanted_state()
 #	play_animation()
 
-func _on_player_attack_light(weapon: Weapon, current_combo_value):
-	wanted_state = State.ATTACK_LIGHT
-
+func _on_player_attack_up(weapon: Weapon, was_attacking):
+	wanted_state = State.ATTACK_UP
+	on_combo = was_attacking
 #	current_weapon = weapon
-	combo_value = current_combo_value
-	animation_speed = 1.0 / weapon.light_attack_time
-	check_wanted_state()
+	if check_wanted_state():
+		if weapon.is_preferred_attack(last_attack_state, wanted_state):
+			# Do something damage and animation speed related some day
+			pass
+		animation_speed = 1.0 / weapon.up_attack_time
+		last_attack_state = wanted_state
 #	play_animation()
 
 
-func check_wanted_state():
+func check_wanted_state() -> bool:
 	if current_state not in interruptable_states:
 		if not there_is_animation_playing:
 			current_state = wanted_state
+			return true
+		else:
+			return false
 	else:
 		current_state = wanted_state
+		return true
 
 
 func play_animation():
@@ -94,7 +107,6 @@ func play_animation():
 # DO NOT FORGET TO ADD THIS TO A METHOD TRACK
 func enable_combo():
 	is_attacking = false
-	can_combo.emit()
 
 
 func _on_animation_player_animation_finished(anim_name):
@@ -105,7 +117,3 @@ func _on_animation_player_animation_finished(anim_name):
 #	elif anim_name in current_weapon.light_attack_animations or anim_name in current_weapon.heavy_attack_animations:
 #		is_attacking = false
 #		attack_ended.emit()
-
-
-func _on_combo_cooldown_timer_timeout():
-	combo_value = 0

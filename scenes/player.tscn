@@ -5093,15 +5093,14 @@ far = 100.0
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="attack_light" from="." to="AnimationHandler" method="_on_player_attack_light"]
+[connection signal="attack_up" from="." to="AnimationHandler" method="_on_player_attack_up"]
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_player_dashing"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_player_idling"]
 [connection signal="running" from="." to="AnimationHandler" method="_on_player_running"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
 [connection signal="attack_ended" from="AnimationHandler" to="." method="_on_animation_handler_attack_ended"]
-[connection signal="can_combo" from="AnimationHandler" to="." method="_on_animation_handler_can_combo"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="dash_performed" from="InputHandler" to="." method="_on_input_handler_dash_performed"]
-[connection signal="light_attack_performed" from="InputHandler" to="." method="_on_input_handler_light_attack_performed"]
+[connection signal="up_attack_performed" from="InputHandler" to="." method="_on_input_handler_up_attack_performed"]
 [connection signal="timeout" from="ComboCooldownTimer" to="." method="_on_combo_cooldown_timer_timeout"]
 [connection signal="timeout" from="ComboCooldownTimer" to="AnimationHandler" method="_on_combo_cooldown_timer_timeout"]
