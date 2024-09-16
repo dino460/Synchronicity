@@ -36,7 +36,9 @@ sky_material = SubResource("PhysicalSkyMaterial_pwylq")
 
 [sub_resource type="Environment" id="Environment_xso02"]
 background_mode = 2
+background_energy_multiplier = 2.25
 sky = SubResource("Sky_wkxqu")
+ambient_light_source = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
@@ -133,7 +135,7 @@ transform = Transform3D(0.988268, 0, 0.152727, 0, 1, 0, -0.152727, 0, 0.988268, 
 mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(0.998531, 0.0083236, 0.0535333, -0.0384395, 0.805164, 0.591805, -0.0381771, -0.592994, 0.804301, 0, 0, 0)
+transform = Transform3D(0.998531, 0.00832351, 0.0535331, -0.0539043, 0.251516, 0.96635, -0.005421, -0.967818, 0.251595, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
@@ -144,6 +146,7 @@ environment = SubResource("Environment_xso02")
 [node name="NPC-SMART" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("emotions", "job", "home")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08682, 1.27432, -1.15931)
 script = ExtResource("7_80dul")
+npc_name = "NPC_37"
 current_age = 25
 emotions = NodePath("Emotions")
 job = NodePath("../../Targets/WORK")
@@ -181,10 +184,17 @@ max_late_amount = 2.0
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/HOME"]
 mesh = SubResource("SphereMesh_0suxt")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Targets/HOME"]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
+light_color = Color(4.62055e-06, 0.720069, 0.970503, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375
+
 [node name="WORK" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
 script = ExtResource("9_ex4b4")
-min_work_amount = 8.0
 time_want_to_arrive_job = 10.0
 max_late_amount = 1.0
 max_worker_distance = 10.0
@@ -193,6 +203,14 @@ max_worker_distance = 10.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/WORK"]
 mesh = SubResource("SphereMesh_ejm8f")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Targets/WORK"]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.576, 0)
+light_color = Color(0, 0.800927, 0.184589, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375
 
 [node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
 
@@ -203,7 +221,9 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("npc_holder")]
+[node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("sun", "npc_holder")]
+one_shot = true
 script = ExtResource("6_6askm")
 full_day_time = 60.0
-npc_holder = NodePath(".")
+sun = NodePath("../SubViewportContainer/SubViewport/DirectionalLight3D")
+npc_holder = NodePath("../SubViewportContainer/SubViewport/NPCs")

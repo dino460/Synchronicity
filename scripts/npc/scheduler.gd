@@ -10,15 +10,14 @@ class_name Scheduler
 @export var sun : DirectionalLight3D
 
 @export var npc_holder : Node
-var npc_list : Array[NPC]
 
 
 func _ready() -> void:
-	for npc in npc_holder.get_children():
-		npc_list.append(npc.get_script())
 
 	is_sun_up = true
 	wait_time = full_day_time
+	one_shot = true
+	print_rich("[color=yellow] DAY START [/color]")
 	start()
 
 func _process(_delta: float) -> void:
@@ -27,8 +26,10 @@ func _process(_delta: float) -> void:
 	rotate_sun()
 
 	if is_stopped():
-		for npc in npc_list:
+		print_rich("[color=red][b] DAY OVER [/b][/color]")
+		for npc in npc_holder.get_children():
 			npc.reset_has_worked_today()
+			print(npc.name)
 
 		start()
 

@@ -33,7 +33,7 @@ func _on_player_idling():
 
 func _on_player_walking():
 	wanted_state = State.WALK
-	animation_speed = 4.0
+	animation_speed = 3.8
 	check_wanted_state()
 	play_animation()
 

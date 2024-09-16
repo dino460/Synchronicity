@@ -5,6 +5,9 @@ class_name NPC
 const base_move_speed : float = 8.0
 const base_run_multiplier : float = 2.3
 
+@export var npc_name : String
+@export var id : int
+
 @export var scheduler : Scheduler
 
 @export var current_age        : int
@@ -129,7 +132,7 @@ func _physics_process(_delta):
 				print_rich("[color=yellow][i]got at job - starting timer[/i][/color]")
 				print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
 				job.is_at_job = true
-				job.timer.start(scheduler.full_day_time * job.min_work_amount / 24.0)
+				job.timer.start(scheduler.full_day_time * job.expected_work_amount / 24.0)
 
 		if home.is_at_home and want_to_go_to_job() and not has_worked_today:
 			print_rich("[color=red][b]at home - timer stopped[/b][/color]")
@@ -150,7 +153,7 @@ func _physics_process(_delta):
 			has_worked_today = true
 			current_target = home
 			job.is_at_job = false
-			work_time_this_day = job.min_work_amount - (job.timer.time_left * 24 / scheduler.full_day_time)
+			work_time_this_day = job.expected_work_amount - (job.timer.time_left * 24 / scheduler.full_day_time)
 			print_rich("\n[color=green]==================================================[/color]")
 			print_rich("[color=green]==================================================[/color]\n")
 			print_rich("[color=green]Time worked today: [/color]", work_time_this_day)
