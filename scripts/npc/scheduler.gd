@@ -40,7 +40,7 @@ func _process(_delta: float) -> void:
 func rotate_sun():
 	if sun != null:
 		sun.rotation_degrees = Vector3(
-			(time_left / full_day_time) * 360.0,
+			((time_left + (full_day_time / 3.0)) / full_day_time) * 360.0,
 			sun.rotation_degrees.y,
 			sun.rotation_degrees.z
 		)

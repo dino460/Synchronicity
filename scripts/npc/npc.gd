@@ -40,7 +40,6 @@ func get_speed() -> float:
 
 func _ready():
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
-	print(scheduler)
 	# Make sure to not await during _ready.
 	current_target = home
 	call_deferred("actor_setup")
@@ -80,19 +79,11 @@ func want_to_go_to_job() -> bool:
 	# Yields a value explodingly larger than 1.0 when late
 	var weight = emotions.job_love  + job_lateness_correction
 
-	# print(name, " --- AT HOME")
-	#print("time to get to job: ", time_to_get_to_job)
-	# print("late time: ", late_time)
-	#print("job weight: ", weight)
-
 	# Divides the calculated weight by either 1.0 + double the home love or just 1.0 + home love
 	# As the correction value is always between 1.0 and 2.0, it reduces the weight value
 	# The final weight should be usually smaller than 1.0 when not late, getting closer and eventually surpassing it
 	weight /= (1.0 + (2.0 * emotions.home_love)) if not home.timer.is_stopped() else (1.0 + emotions.home_love)
 
-	# print("weight: ", weight)
-
-	# print()
 	# Checks if calculated weight surpases relevant thresshold
 	# Applies a small random value for some spice
 	return weight + randf_range(-0.03, 0.03) >= emotions.go_to_job_thresshold
@@ -117,19 +108,11 @@ func want_to_go_to_home() -> bool:
 	# Yields a value explodingly larger than 1.0 when late
 	var weight = emotions.home_love  + home_lateness_correction
 
-	print(name, " --- AT JOB")
-	#print("time to get to job: ", time_to_get_to_job)
-	print("late time: ", late_time)
-	#print("job weight: ", weight)
-
 	# Divides the calculated weight by either 1.0 + double the job love or just 1.0 + job love
 	# As the correction value is always between 1.0 and 2.0, it reduces the weight value
 	# The final weight should be usually smaller than 1.0 when not late, getting closer and eventually surpassing it
 	weight /= (1.0 + (2.0 * (emotions.job_love + job.timer.time_left))) if not job.timer.is_stopped() else (1.0 + emotions.job_love)
 
-	print("weight: ", weight)
-
-	print()
 	# Checks if calculated weight surpases relevant thresshold
 	# Applies a small random value for some spice
 	return weight + randf_range(-0.03, 0.03)>= emotions.go_to_home_thresshold
@@ -139,21 +122,31 @@ func _physics_process(_delta):
 		if not home.is_at_home and not job.is_at_job:
 			if current_target == home:
 				print_rich("[color=yellow][i]got at home - starting timer[/i][/color]")
+				print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
 				home.is_at_home = true
 				home.timer.start(scheduler.full_day_time * home.min_home_amount / 24.0)
 			elif current_target == job:
 				print_rich("[color=yellow][i]got at job - starting timer[/i][/color]")
+				print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
 				job.is_at_job = true
 				job.timer.start(scheduler.full_day_time * job.min_work_amount / 24.0)
 
 		if home.is_at_home and want_to_go_to_job() and not has_worked_today:
 			print_rich("[color=red][b]at home - timer stopped[/b][/color]")
+			print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
 			current_target = job
 			home.is_at_home = false
+			var home_time_this_day = home.min_home_amount - (home.timer.time_left * 24 / scheduler.full_day_time)
+			print_rich("\n[color=green]==================================================[/color]")
+			print_rich("[color=green]==================================================[/color]\n")
+			print_rich("[color=green]Time home today: [/color]", home_time_this_day)
+			print_rich("\n[color=green]==================================================[/color]")
+			print_rich("[color=green]==================================================[/color]\n")
 			home.timer.stop()
 			set_movement_target()
 		elif job.is_at_job and want_to_go_to_home():
 			print_rich("[color=red][b]at job - timer stopped[/b][/color]")
+			print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
 			has_worked_today = true
 			current_target = home
 			job.is_at_job = false

@@ -10,9 +10,9 @@ signal dash_performed
 
 
 func _process(_delta):
-	if Input.is_action_just_pressed("attack_light"):
+	if Input.is_action_just_pressed("attack_up"):
 		up_attack_performed.emit()
-	elif Input.is_action_just_pressed("attack_heavy"):
+	elif Input.is_action_just_pressed("attack_down"):
 		down_attack_performed.emit()
 	elif Input.is_action_just_pressed("player_dash"):
 		dash_performed.emit()

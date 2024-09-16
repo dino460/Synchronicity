@@ -1,12 +1,12 @@
-[gd_scene load_steps=27 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=26 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Texture2D" uid="uid://bup7t2v40s3iw" path="res://assets/lukkys textures/brick_dark_color_corrected.png" id="2_gqjc7"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
-[ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="5_0r3gc"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="6_6askm"]
+[ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="6_vqehm"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
 [ext_resource type="Script" path="res://scripts/npc/emotions.gd" id="8_a4n64"]
 [ext_resource type="Script" path="res://scripts/npc/home.gd" id="8_jn8p6"]
@@ -28,35 +28,15 @@ size = Vector2(75, 75)
 vertices = PackedVector3Array(-37, 0.5, -2, -5.25, 0.5, -2, -5, 0.5, -3.75, -5, 0.5, -37, -37, 0.5, -37, -3, 0.5, -4.25, 4.25, 0.5, -5.25, 4.25, 0.5, -6.5, 4.75, 0.5, -7, 6.5, 0.5, -37, -4.5, 0.5, -4.25, 6.5, 0.5, -7.25, 7.75, 0.5, -6.75, 7.75, 0.5, -5.75, 37, 0.5, -5.75, 37, 0.5, -37, 7.25, 0.5, 2, 7.75, 0.5, 3, 8.5, 0.5, 3, 7.5, 0.5, -4, 6.5, 0.5, -3.5, 6.5, 0.5, 2, 8.75, 0.5, 4, 37, 0.5, 4, 5.5, 0.5, -3.5, 5.25, 0.5, -4.5, -1.75, 0.5, -3.25, -1.75, 0.5, -1.5, -2.25, 0.5, -1.25, 5.25, 0.5, 3, -2.75, 2, -2.25, -3.75, 1.75, -3.25, -3.75, 2, -2.5, -4.25, 2, -2.25, 4.5, 0.5, 4.5, 5, 0.5, 4.25, -4.75, 0.5, -0.75, 4.5, 0.5, 6.5, 5.5, 0.5, 37, -37, 0.5, 37, 5.5, 0.5, 6.75, 8.25, 0.5, 5.5, 7, 0.5, 5.25, 6.5, 0.5, 6.75, 37, 0.5, 37)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(7, 6, 5), PackedInt32Array(7, 5, 8), PackedInt32Array(8, 5, 10), PackedInt32Array(8, 10, 3), PackedInt32Array(8, 3, 9), PackedInt32Array(3, 10, 2), PackedInt32Array(9, 11, 8), PackedInt32Array(14, 13, 12), PackedInt32Array(12, 11, 14), PackedInt32Array(14, 11, 9), PackedInt32Array(14, 9, 15), PackedInt32Array(17, 16, 18), PackedInt32Array(18, 16, 20), PackedInt32Array(18, 20, 19), PackedInt32Array(16, 21, 20), PackedInt32Array(18, 19, 22), PackedInt32Array(22, 19, 13), PackedInt32Array(22, 13, 23), PackedInt32Array(23, 13, 14), PackedInt32Array(25, 24, 6), PackedInt32Array(6, 24, 26), PackedInt32Array(26, 24, 27), PackedInt32Array(20, 21, 24), PackedInt32Array(24, 21, 29), PackedInt32Array(24, 29, 27), PackedInt32Array(27, 29, 28), PackedInt32Array(26, 5, 6), PackedInt32Array(32, 31, 30), PackedInt32Array(33, 32, 30), PackedInt32Array(35, 34, 29), PackedInt32Array(29, 34, 28), PackedInt32Array(0, 1, 36), PackedInt32Array(34, 37, 28), PackedInt32Array(28, 37, 36), PackedInt32Array(37, 38, 36), PackedInt32Array(36, 38, 0), PackedInt32Array(0, 38, 39), PackedInt32Array(37, 40, 38), PackedInt32Array(43, 42, 41), PackedInt32Array(41, 22, 23), PackedInt32Array(38, 40, 43), PackedInt32Array(41, 23, 43), PackedInt32Array(43, 23, 38), PackedInt32Array(38, 23, 44)]
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_w38yq"]
-turbidity = 19.85
-night_sky = ExtResource("5_0r3gc")
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pwylq"]
+night_sky = ExtResource("6_vqehm")
 
-[sub_resource type="Sky" id="Sky_ayhun"]
-sky_material = SubResource("PhysicalSkyMaterial_w38yq")
+[sub_resource type="Sky" id="Sky_wkxqu"]
+sky_material = SubResource("PhysicalSkyMaterial_pwylq")
 
-[sub_resource type="Environment" id="Environment_4t3x5"]
+[sub_resource type="Environment" id="Environment_xso02"]
 background_mode = 2
-background_color = Color(0.737255, 0.85098, 0.827451, 1)
-sky = SubResource("Sky_ayhun")
-ambient_light_source = 3
-ambient_light_color = Color(0.83284, 0.497491, 0.366514, 1)
-ssao_enabled = true
-ssao_radius = 1.7
-ssao_intensity = 3.75
-sdfgi_use_occlusion = true
-sdfgi_cascades = 2
-sdfgi_max_distance = 51.2
-fog_density = 0.0375
-volumetric_fog_density = 0.1008
-volumetric_fog_albedo = Color(0.808998, 0.808998, 0.808998, 1)
-volumetric_fog_emission = Color(0.339762, 0.262636, 0.21987, 1)
-volumetric_fog_temporal_reprojection_enabled = false
-adjustment_brightness = 1.37
-adjustment_contrast = 1.29
-adjustment_saturation = 1.19
-
-[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_kq36g"]
+sky = SubResource("Sky_wkxqu")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
@@ -153,13 +133,11 @@ transform = Transform3D(0.988268, 0, 0.152727, 0, 1, 0, -0.152727, 0, 0.988268, 
 mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.0261803)
-light_energy = 1.91
+transform = Transform3D(0.998531, 0.0083236, 0.0535333, -0.0384395, 0.805164, 0.591805, -0.0381771, -0.592994, 0.804301, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
-environment = SubResource("Environment_4t3x5")
-camera_attributes = SubResource("CameraAttributesPhysical_kq36g")
+environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="SubViewportContainer/SubViewport"]
 
@@ -167,12 +145,9 @@ camera_attributes = SubResource("CameraAttributesPhysical_kq36g")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08682, 1.27432, -1.15931)
 script = ExtResource("7_80dul")
 current_age = 25
-cycles_to_next_age = null
 emotions = NodePath("Emotions")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
-work_time_this_day = null
-has_worked_today = null
 
 [node name="Emotions" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("8_a4n64")
@@ -197,33 +172,21 @@ mesh = SubResource("CapsuleMesh_kmggu")
 [node name="HOME" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
 script = ExtResource("8_jn8p6")
-min_home_amount = 8.0
-time_want_to_arrive_home = 21.0
-max_late_amount = 1.0
+min_home_amount = 10.0
+time_want_to_arrive_home = 20.0
+max_late_amount = 2.0
 
 [node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/HOME"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/HOME"]
 mesh = SubResource("SphereMesh_0suxt")
 
-[node name="HOME2" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 11.2268, 0.133089, 1.75917)
-script = ExtResource("8_jn8p6")
-min_home_amount = 9.0
-time_want_to_arrive_home = 21.0
-max_late_amount = 0.5
-
-[node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/HOME2"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/HOME2"]
-mesh = SubResource("SphereMesh_0suxt")
-
 [node name="WORK" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
 script = ExtResource("9_ex4b4")
 min_work_amount = 8.0
-time_want_to_arrive_job = 15.0
-max_late_amount = 2.0
+time_want_to_arrive_job = 10.0
+max_late_amount = 1.0
 max_worker_distance = 10.0
 
 [node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/WORK"]
@@ -231,18 +194,14 @@ max_worker_distance = 10.0
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/WORK"]
 mesh = SubResource("SphereMesh_ejm8f")
 
-[node name="WORK2" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -9.70898, 0.133088, -1.89684)
-script = ExtResource("9_ex4b4")
-min_work_amount = 6.0
-time_want_to_arrive_job = 15.0
-max_late_amount = 2.0
-max_worker_distance = 15.0
+[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
 
-[node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/WORK2"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/WORK2"]
-mesh = SubResource("SphereMesh_ejm8f")
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61151, 2.99291, 3.95771)
+light_energy = 5.133
+shadow_enabled = true
+omni_range = 7.648
+omni_attenuation = 0.765
 
 [node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("6_6askm")
