@@ -1,4 +1,4 @@
-extends Node3D
+extends Landmark
 
 class_name Job
 
@@ -16,8 +16,6 @@ class_name Job
 @export var max_worker_distance : float
 @export var is_at_job : bool = false
 
-@export var reputations : Array[Reputation]
-
 func _ready() -> void:
 	timer = get_child(0)
 	timer.one_shot = true
@@ -27,3 +25,8 @@ func _ready() -> void:
 		#print("\n---- AT JOB ----")
 		#print(timer.time_left)
 		#print()
+
+func get_npc_want(npc : NPC) -> float:
+	var base_want = super(npc)
+
+	return base_want

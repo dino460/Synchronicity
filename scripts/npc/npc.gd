@@ -13,6 +13,7 @@ const base_run_multiplier : float = 2.3
 @export var current_age        : int
 @export var cycles_to_next_age : int
 @export var emotions : Emotions
+@export var personality : Personality
 
 @export var job                : Job
 @export var home               : Home
