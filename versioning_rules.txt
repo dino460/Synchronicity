@@ -11,4 +11,4 @@ VERSIONING RULES:
             α => alpha   -> early production, main features not fully implemented and unsuitable for proper play
             β => beta    -> pre-release, main major features functional, may lack some minor features
             χ => release -> full release, ready for roll-out and distribution
-            ν => nightly -> early unstable feature complete test builds, may contain new test minor features and/or fixes
+            ν => nightly -> early unstable feature complete test builds, may contain new minor test features and/or fixes
