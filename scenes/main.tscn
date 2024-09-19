@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=30 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://scripts/npc/home.gd" id="8_jn8p6"]
 [ext_resource type="Script" path="res://scripts/npc/personality.gd" id="9_cj51m"]
 [ext_resource type="Script" path="res://scripts/npc/job.gd" id="9_ex4b4"]
+[ext_resource type="Script" path="res://scripts/npc/landmark.gd" id="11_octe2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
@@ -49,11 +50,17 @@ albedo_color = Color(0, 0.693455, 0.60667, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
 material = SubResource("StandardMaterial3D_rkigc")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1oipj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rijab"]
 albedo_color = Color(0.293485, 0.352648, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_0suxt"]
-material = SubResource("StandardMaterial3D_1oipj")
+material = SubResource("StandardMaterial3D_rijab")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdso1"]
+albedo_color = Color(0.858904, 0, 0.160098, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
+material = SubResource("StandardMaterial3D_vdso1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34hwy"]
 albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)
@@ -145,15 +152,21 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="SubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "emotions", "job", "home")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.08682, 1.27432, -1.15931)
+[node name="NPC-SMART" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("emotions", "personality", "job", "home", "points_of_interest")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23009, 1.27432, 5.31106)
 script = ExtResource("7_80dul")
 npc_name = "NPC_37"
-scheduler = NodePath("../../../../Scheduler")
+id = null
+timers = null
 current_age = 25
+cycles_to_next_age = null
 emotions = NodePath("Emotions")
+personality = NodePath("Personality")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
+points_of_interest = [NodePath("../../Targets/POI")]
+work_time_this_day = null
+has_worked_today = null
 
 [node name="Emotions" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("8_a4n64")
@@ -184,8 +197,7 @@ script = ExtResource("8_jn8p6")
 min_home_amount = 10.0
 time_want_to_arrive_home = 20.0
 max_late_amount = 2.0
-
-[node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/HOME"]
+landmark_name = "Home"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/HOME"]
 mesh = SubResource("SphereMesh_0suxt")
@@ -198,14 +210,28 @@ shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
 
+[node name="POI" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -6.276, 0.133089, -4.60975)
+script = ExtResource("11_octe2")
+landmark_name = "Test Landmark"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/POI"]
+mesh = SubResource("SphereMesh_abj4j")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Targets/POI"]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
+light_color = Color(1, 0.47973, 0.467837, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375
+
 [node name="WORK" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
 script = ExtResource("9_ex4b4")
-time_want_to_arrive_job = 10.0
 max_late_amount = 1.0
 max_worker_distance = 10.0
-
-[node name="Timer" type="Timer" parent="SubViewportContainer/SubViewport/Targets/WORK"]
+landmark_name = "Work"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/WORK"]
 mesh = SubResource("SphereMesh_ejm8f")
@@ -222,6 +248,20 @@ omni_attenuation = 0.375
 
 [node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61151, 2.99291, 3.95771)
+light_energy = 5.133
+shadow_enabled = true
+omni_range = 7.648
+omni_attenuation = 0.765
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.34791, 2.99291, -2.24874)
+light_energy = 5.133
+shadow_enabled = true
+omni_range = 7.648
+omni_attenuation = 0.765
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.54987, 2.99291, -5.15791)
 light_energy = 5.133
 shadow_enabled = true
 omni_range = 7.648

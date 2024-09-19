@@ -25,6 +25,10 @@ window/vsync/vsync_mode=0
 
 import/fbx/enabled=false
 
+[global_group]
+
+Persist="Group for all Nodes that must have their data saved "
+
 [input]
 
 player_move_forward={

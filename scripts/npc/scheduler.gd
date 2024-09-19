@@ -6,14 +6,15 @@ class_name Scheduler
 @export var sun_up_time_proportion : float = 0.5
 
 @export var is_sun_up : bool = false
-
 @export var sun : DirectionalLight3D
 
 @export var npc_holder : Node
 
+@export var next_available_id : int = 1
+
 
 func _ready() -> void:
-
+	add_to_group("persist")
 	is_sun_up = true
 	wait_time = full_day_time
 	one_shot = true
@@ -29,7 +30,6 @@ func _process(_delta: float) -> void:
 		print_rich("[color=red][b] DAY OVER [/b][/color]")
 		for npc in npc_holder.get_children():
 			npc.reset_has_worked_today()
-			print(npc.name)
 
 		start()
 
@@ -48,3 +48,9 @@ func rotate_sun():
 
 func get_current_time() -> float:
 	return full_day_time - time_left
+
+func request_id() -> int:
+	var id = next_available_id
+	next_available_id += 1
+
+	return id
