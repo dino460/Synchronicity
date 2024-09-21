@@ -20,11 +20,27 @@ func _ready() -> void:
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 
 func get_npc_want(npc : NPC, is_at_job : bool) -> float:
-	var time_to_get_to_job = scheduler.full_day_time * time_want_to_arrive / 24.0
-	var lateness = scheduler.get_current_time() - time_to_arrive(npc) + time_to_get_to_job
-	var lateness_weight = lateness * (lateness * npc.personality.mind) if not is_at_job else 1.0
-	print_rich("[color=yellow]%f[/color]" % lateness_weight)
-	return super(npc, is_at_job) + lateness_weight
+	var time_want_to_arrive_corrected = scheduler.full_day_time * time_want_to_arrive / 24.0
+	var lateness = scheduler.get_current_time() + time_to_arrive(npc) - time_want_to_arrive_corrected
+	var lateness_weight = 1.0 if is_at_job else lateness * npc.personality.mind
+	var time_weight : float
+
+	var in_game_time_want_to_arrive = (scheduler.full_day_time * time_want_to_arrive / 24.0)
+	var in_game_time_want_to_stop = (scheduler.full_day_time * (time_want_to_arrive + (expected_work_amount * min_work_accepted)) / 24.0)
+	# scheduler.get_current_time() / (scheduler.full_day_time * time_want_to_arrive / 24.0)
+	# print(scheduler.get_current_time())
+	# print(in_game_time_want_to_stop)
+	# print(in_game_time_want_to_arrive)
+	# print(lateness)
+	if scheduler.get_current_time() > in_game_time_want_to_stop:
+		time_weight = in_game_time_want_to_arrive / (scheduler.get_current_time() * pow(npc.personality.mind, 2))
+	elif scheduler.get_current_time() >= in_game_time_want_to_arrive:
+		time_weight = scheduler.time_left / (sqrt(npc.personality.mind) * scheduler.full_day_time)
+	else:
+		print("---")
+		time_weight = pow(npc.personality.soul, 2) * scheduler.get_current_time() / scheduler.full_day_time
+
+	return super(npc, is_at_job) + lateness_weight + time_weight
 
 func save():
 	var super_save = super()

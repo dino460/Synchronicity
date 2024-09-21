@@ -18,7 +18,7 @@ func get_npc_want(npc : NPC, _is_at_landmark : bool) -> float:
 	var loyalty_weight = npc.personality.loyalty * npc_reputation_here
 	var avoidance_weight = npc.personality.aggression / npc_reputation_here
 
-	return randomness + ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight))
+	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight))
 
 func get_npc_reputation(npc_id : int) -> float:
 	for rep in reputations:

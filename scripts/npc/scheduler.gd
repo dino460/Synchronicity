@@ -18,7 +18,7 @@ func _ready() -> void:
 	is_sun_up = true
 	wait_time = full_day_time
 	one_shot = true
-	print_rich("[color=yellow] DAY START [/color]")
+	print_rich("[color=yellow][b] DAY START [/b][/color]")
 	start()
 
 func _process(_delta: float) -> void:
@@ -33,10 +33,11 @@ func _process(_delta: float) -> void:
 
 		start()
 
-# func _physics_process(_delta: float) -> void:
-# 	print("TIME: ", get_current_time() * 24 / full_day_time)
-# 	print("TIME LEFT: ", time_left * 24 / full_day_time)
-# 	print()
+func _physics_process(_delta: float) -> void:
+	var hours : int = get_current_time() * 24 / full_day_time
+	var minutes : int = ((get_current_time() * 24 / full_day_time) - hours) * 60
+
+	print_rich("> [color=green][i]%d:%d --- %f[/i][/color] <" % [hours, minutes, get_current_time()])
 
 func rotate_sun():
 	if sun != null:

@@ -156,17 +156,12 @@ environment = SubResource("Environment_xso02")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23009, 1.27432, 5.31106)
 script = ExtResource("7_80dul")
 npc_name = "NPC_37"
-id = null
-timers = null
 current_age = 25
-cycles_to_next_age = null
 emotions = NodePath("Emotions")
 personality = NodePath("Personality")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/POI")]
-work_time_this_day = null
-has_worked_today = null
 
 [node name="Emotions" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("8_a4n64")
@@ -229,6 +224,9 @@ omni_attenuation = 0.375
 [node name="WORK" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
 script = ExtResource("9_ex4b4")
+expected_work_amount = 8.0
+min_work_accepted = 0.9
+time_want_to_arrive = 10.0
 max_late_amount = 1.0
 max_worker_distance = 10.0
 landmark_name = "Work"

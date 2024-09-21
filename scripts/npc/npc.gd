@@ -36,6 +36,7 @@ var is_at_home : bool = false
 var is_at_job : bool = false
 
 var is_doing_stuff : bool = false
+var is_moving_about : bool = false
 
 
 func mod_by_age() -> float:
@@ -146,18 +147,23 @@ func choose_target():
 	# print_rich(current_target.name, " ", targets_to_choose[targets_to_choose.keys()[0]])
 
 	for landmark in targets_to_choose:
+		print_rich(landmark.name, " ", targets_to_choose[landmark])
 		if targets_to_choose[landmark] > targets_to_choose[current_target]:
-			print_rich(landmark.name, " ", targets_to_choose[landmark])
+			print_rich("[color=red][b][i]%s :: %f[/i][/b][/color]" % [landmark.name, targets_to_choose[landmark]])
 			current_target = landmark
-
-	print_rich(">>> [color=red][b] %s [/b][/color]" % current_target.landmark_name)
 
 func _process(delta: float) -> void:
 	for timer in timers:
-		# print(timers[timer])
-		timers[timer] += delta
+		if is_doing_stuff:
+			# print(timers[timer])
+			timers[timer] += delta
 
 func _physics_process(_delta):
+	if current_target != null:
+		print_rich(">>> want go: [color=red][b] %s [/b][/color]" % current_target.landmark_name)
+	if current_location != null:
+		print_rich(">>> I am at: [color=red][b] %s [/b][/color]" % current_location.landmark_name)
+
 	if navigation_agent.is_navigation_finished() && navigation_enabled && not is_doing_stuff:
 		add_visit()
 		current_location = current_target
@@ -165,8 +171,8 @@ func _physics_process(_delta):
 
 		timers[current_location] = 0.0
 
-		choose_target()
-		set_movement_target()
+		# choose_target()
+		# set_movement_target()
 
 		# if not is_at_home and not is_at_job:
 		# 	if current_target == home:
@@ -210,11 +216,13 @@ func _physics_process(_delta):
 
 		return
 
-	choose_target()
 
-	if current_target != current_location and is_doing_stuff:
-		set_movement_target()
-		is_doing_stuff = false
+	if is_doing_stuff:
+		choose_target()
+
+		if current_location != current_target:
+			set_movement_target()
+			is_doing_stuff = false
 
 	var current_agent_position: Vector3 = global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
@@ -244,7 +252,7 @@ func add_visit():
 	visits.append(Visit.new(current_location))
 
 func get_landmark_timer(landmark : Node3D) -> float:
-	if timers.is_empty() or not timers.has(landmark):
+	if not timers.has(landmark):
 		return 1.0
 
 	return timers[landmark]
