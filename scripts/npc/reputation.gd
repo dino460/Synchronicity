@@ -7,4 +7,4 @@ class_name Reputation
 
 func _init(new_npc_id : int) -> void:
 	npc_id = new_npc_id
-	reputation_here = 1
+	reputation_here = 1.0

@@ -10,6 +10,7 @@ const base_run_multiplier : float = 2.3
 
 # @export var scheduler : Scheduler
 @export var timers : Dictionary
+@export var scheduler : Scheduler
 
 @export var current_age        : int
 @export var cycles_to_next_age : int
@@ -55,7 +56,8 @@ func get_speed() -> float:
 func _ready():
 	add_to_group("persist")
 	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
-	id = get_tree().get_root().get_node("Main/Scheduler").request_id()
+	scheduler = get_tree().get_root().get_node("Main/Scheduler")
+	id = scheduler.request_id()
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
@@ -137,15 +139,15 @@ func choose_target():
 	var targets_to_choose : Dictionary
 
 	for landmark in points_of_interest:
-		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark) / get_landmark_timer(landmark)
-	targets_to_choose[home] = home.get_npc_want(self, current_location == home) / get_landmark_timer(home)
-	targets_to_choose[job] = job.get_npc_want(self, current_location == job) / get_landmark_timer(job)
+		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark) / sqrt(get_landmark_timer(landmark, false))
+	targets_to_choose[home] = home.get_npc_want(self, current_location == home) / sqrt(get_landmark_timer(home, false))
+	targets_to_choose[job] = job.get_npc_want(self, has_worked_today) / sqrt(get_landmark_timer(job, false))
 	# targets_to_choose.erase(current_location)
 
 	current_target = targets_to_choose.keys()[0]
 
 	# print_rich(current_target.name, " ", targets_to_choose[targets_to_choose.keys()[0]])
-
+	print(has_worked_today)
 	for landmark in targets_to_choose:
 		print_rich(landmark.name, " ", targets_to_choose[landmark])
 		if targets_to_choose[landmark] > targets_to_choose[current_target]:
@@ -157,6 +159,8 @@ func _process(delta: float) -> void:
 		if is_doing_stuff:
 			# print(timers[timer])
 			timers[timer] += delta
+			if get_landmark_timer(job, true) >= job.expected_work_amount * scheduler.full_day_time / 24.0:
+				has_worked_today = true
 
 func _physics_process(_delta):
 	if current_target != null:
@@ -221,6 +225,9 @@ func _physics_process(_delta):
 		choose_target()
 
 		if current_location != current_target:
+			timers.erase(current_location)
+			if current_location == job:
+				has_worked_today = true
 			set_movement_target()
 			is_doing_stuff = false
 
@@ -251,8 +258,8 @@ func add_visit():
 
 	visits.append(Visit.new(current_location))
 
-func get_landmark_timer(landmark : Node3D) -> float:
+func get_landmark_timer(landmark : Node3D, receive_zero : bool) -> float:
 	if not timers.has(landmark):
-		return 1.0
+		return 0.0 if receive_zero else 1.0
 
 	return timers[landmark]
