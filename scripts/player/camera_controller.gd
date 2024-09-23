@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 	else:
 		orthogonal_camera_ref.position.y = vertical_target
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	update_vertical_target()
 	pass
 

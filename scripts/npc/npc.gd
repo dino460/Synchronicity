@@ -139,9 +139,9 @@ func choose_target():
 	var targets_to_choose : Dictionary
 
 	for landmark in points_of_interest:
-		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark) / sqrt(get_landmark_timer(landmark, false))
-	targets_to_choose[home] = home.get_npc_want(self, current_location == home) / sqrt(get_landmark_timer(home, false))
-	targets_to_choose[job] = job.get_npc_want(self, has_worked_today) / sqrt(get_landmark_timer(job, false))
+		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, 0.0) / sqrt(get_landmark_timer(landmark, false))
+	targets_to_choose[home] = home.get_npc_want(self, current_location == home, 0.0) / sqrt(get_landmark_timer(home, false))
+	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, 0.0) / sqrt(get_landmark_timer(job, false))
 	# targets_to_choose.erase(current_location)
 
 	current_target = targets_to_choose.keys()[0]
@@ -159,8 +159,10 @@ func _process(delta: float) -> void:
 		if is_doing_stuff:
 			# print(timers[timer])
 			timers[timer] += delta
-			if get_landmark_timer(job, true) >= job.expected_work_amount * scheduler.full_day_time / 24.0:
-				has_worked_today = true
+			if not has_worked_today:
+				has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+			# if get_landmark_timer(job, true) >= job.expected_work_time * scheduler.full_day_time / 24.0:
+			# 	has_worked_today = true
 
 func _physics_process(_delta):
 	if current_target != null:

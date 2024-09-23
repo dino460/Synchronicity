@@ -10,7 +10,7 @@ func _ready():
 	add_to_group("persist")
 	id = get_tree().get_root().get_node("Main/Scheduler").request_id()
 
-func get_npc_want(npc : NPC, _is_at_landmark : bool) -> float:
+func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> float:
 	var npc_reputation_here = get_npc_reputation(npc.id)
 	var randomness = (npc.personality.chaos * randf_range(-1.0, 1.0))
 
@@ -18,7 +18,7 @@ func get_npc_want(npc : NPC, _is_at_landmark : bool) -> float:
 	var loyalty_weight = npc.personality.loyalty * npc_reputation_here
 	var avoidance_weight = npc.personality.aggression / npc_reputation_here
 
-	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight))
+	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight)) + interference
 
 func get_npc_reputation(npc_id : int) -> float:
 	for rep in reputations:
