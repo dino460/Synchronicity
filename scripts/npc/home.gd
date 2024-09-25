@@ -41,9 +41,3 @@ func get_npc_want(npc : NPC, is_at_home : bool, interference : float) -> float:
 		leave_weight = scheduler.get_current_time() * npc.personality.loyalty / (time_want_to_arrive * get_npc_reputation(npc.id) * npc.personality.aggression)
 
 	return super(npc, is_at_home, interference) + lateness_weight - leave_weight
-
-#func _physics_process(_delta: float) -> void:
-	#if not timer.is_stopped():
-		#print("\n---- AT HOME ----")
-		#print(timer.time_left)
-		#print()
