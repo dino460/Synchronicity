@@ -5,6 +5,8 @@ class_name Landmark
 @export var id : int
 @export var landmark_name : String
 @export var reputations : Array[Reputation]
+@export var radius_of_influence : float
+@export var area_max_influence : float
 
 func _ready():
 	add_to_group("persist")
@@ -14,7 +16,7 @@ func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> fl
 	var npc_reputation_here = get_npc_reputation(npc.id)
 	var randomness = (npc.personality.chaos * randf_range(-1.0, 1.0))
 
-	var distance_weight = npc.personality.energy / npc.position.distance_to(self.position)
+	var distance_weight = npc.personality.energy * influence_by_distance(npc.position.distance_to(self.position))
 	var loyalty_weight = npc.personality.loyalty * npc_reputation_here
 	var avoidance_weight = npc.personality.aggression / npc_reputation_here
 
@@ -30,6 +32,11 @@ func get_npc_reputation(npc_id : int) -> float:
 
 func time_to_arrive(npc : NPC) -> float:
 	return npc.position.distance_to(self.position) / npc.get_speed()
+
+func influence_by_distance(distance : float) -> float:
+	if distance <= radius_of_influence:
+		return area_max_influence
+	return area_max_influence / exp(distance - radius_of_influence)
 
 func save():
 	var save_dict = {

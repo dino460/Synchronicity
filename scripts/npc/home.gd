@@ -29,7 +29,6 @@ func get_npc_want(npc : NPC, is_at_home : bool, interference : float) -> float:
 
 	if time_can_leave > 23.999:
 		time_can_leave -= 24.0
-		print(time_can_leave)
 
 		if ((scheduler.get_current_time() >= expected_home_time and scheduler.get_current_time() >= time_can_leave) or
 			(scheduler.get_current_time() <= expected_home_time and scheduler.get_current_time() <= time_can_leave)):
@@ -37,10 +36,8 @@ func get_npc_want(npc : NPC, is_at_home : bool, interference : float) -> float:
 		else:
 			leave_weight = scheduler.get_current_time() * npc.personality.loyalty / (time_want_to_arrive * get_npc_reputation(npc.id) * npc.personality.aggression)
 	elif scheduler.get_current_time() >= expected_home_time and scheduler.get_current_time() <= time_can_leave:
-		print(time_can_leave)
 		leave_weight = -(get_npc_reputation(npc.id) * npc.personality.aggression / npc.personality.loyalty)
 	else:
-		print(time_can_leave)
 		leave_weight = scheduler.get_current_time() * npc.personality.loyalty / (time_want_to_arrive * get_npc_reputation(npc.id) * npc.personality.aggression)
 
 	return super(npc, is_at_home, interference) + lateness_weight - leave_weight

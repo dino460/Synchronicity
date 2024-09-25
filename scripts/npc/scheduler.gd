@@ -9,6 +9,7 @@ class_name Scheduler
 @export var sun : DirectionalLight3D
 
 @export var npc_holder : Node
+@export var clock_label : Label
 
 @export var next_available_id : int = 1
 
@@ -23,6 +24,9 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	is_sun_up = false if time_left <= (full_day_time * sun_up_time_proportion) else true
+	var hours : int = get_current_time() * 24 / full_day_time
+	var minutes : int = ((get_current_time() * 24 / full_day_time) - hours) * 60
+	clock_label.text = "%d:%d --- %f" % [hours, minutes, get_current_time()]
 
 	rotate_sun()
 
@@ -32,12 +36,6 @@ func _process(_delta: float) -> void:
 			npc.reset_has_worked_today()
 
 		start()
-
-func _physics_process(_delta: float) -> void:
-	var hours : int = get_current_time() * 24 / full_day_time
-	var minutes : int = ((get_current_time() * 24 / full_day_time) - hours) * 60
-
-	print_rich("> [color=green][i]%d:%d --- %f[/i][/color] <" % [hours, minutes, get_current_time()])
 
 func rotate_sun():
 	if sun != null:

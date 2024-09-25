@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=31 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -81,6 +81,14 @@ albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_ejm8f"]
 material = SubResource("StandardMaterial3D_34hwy")
+
+[sub_resource type="SystemFont" id="SystemFont_ju7ma"]
+font_names = PackedStringArray("FiraCode Nerd Font Mono")
+
+[sub_resource type="LabelSettings" id="LabelSettings_113qa"]
+font = SubResource("SystemFont_ju7ma")
+font_size = 30
+font_color = Color(0.926528, 0, 0, 1)
 
 [node name="Main" type="Node"]
 
@@ -166,7 +174,7 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" type="CharacterBody3D" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("personality", "job", "home", "points_of_interest", "label")]
+[node name="NPC-SMART" type="CharacterBody3D" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("personality", "job", "home", "points_of_interest")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23009, 1.27432, 5.31106)
 script = ExtResource("7_80dul")
 npc_name = "NPC_37"
@@ -175,7 +183,6 @@ personality = NodePath("Personality")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/POI"), NodePath("../../Targets/POI2")]
-label = NodePath("../../../../SubViewportContainer/SubViewport/Label3D")
 
 [node name="Personality" type="Node" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("9_cj51m")
@@ -206,6 +213,8 @@ expected_home_time = 8.0
 time_want_to_arrive = 20.0
 max_lateness = 2.0
 landmark_name = "Home"
+radius_of_influence = 5.0
+area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/HOME"]
 mesh = SubResource("SphereMesh_0suxt")
@@ -222,6 +231,8 @@ omni_attenuation = 0.375
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -6.276, 0.133089, -4.60975)
 script = ExtResource("11_octe2")
 landmark_name = "Statue"
+radius_of_influence = 3.0
+area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/POI"]
 mesh = SubResource("SphereMesh_abj4j")
@@ -238,6 +249,8 @@ omni_attenuation = 0.375
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.13519, 0.133089, 9.25756)
 script = ExtResource("11_octe2")
 landmark_name = "Fountain"
+radius_of_influence = 2.0
+area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/POI2"]
 mesh = SubResource("SphereMesh_abj4j")
@@ -259,6 +272,7 @@ time_want_to_arrive = 10.0
 max_lateness = 1.0
 max_worker_distance = 10.0
 landmark_name = "Work"
+area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/WORK"]
 mesh = SubResource("SphereMesh_ejm8f")
@@ -294,11 +308,12 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("sun", "npc_holder")]
+[node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label")]
 script = ExtResource("6_6askm")
 full_day_time = 60.0
 sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPCs")
+clock_label = NodePath("../SubViewportContainer/SubViewport/Label")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 offset_right = 40.0
@@ -307,10 +322,8 @@ offset_bottom = 40.0
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
 
-[node name="Label3D" type="Label3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.54831, 0)
-billboard = 1
-shaded = true
-text = "NPC TEST TEXT"
-font_size = 222
-outline_size = 57
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "18:0 --- 45.000 "
+label_settings = SubResource("LabelSettings_113qa")

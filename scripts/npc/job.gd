@@ -18,6 +18,7 @@ class_name Job
 func _ready() -> void:
 	super()
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
+	radius_of_influence = max_worker_distance
 
 func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : float) -> float:
 	var time_want_to_arrive_corrected = (scheduler.full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc)
