@@ -8,19 +8,19 @@ const base_run_multiplier : float = 2.3
 @export var npc_name : String
 @export var id : int
 
-# @export var scheduler : Scheduler
 @export var timers : Dictionary
 @export var scheduler : Scheduler
 
 @export var current_age        : int
 @export var cycles_to_next_age : int
-@export var emotions : Emotions
 @export var personality : Personality
 
 @export var job                : Job
 @export var home               : Home
 @export var visits             : Array[Visit]
 @export var points_of_interest : Array[Landmark]
+
+@export var label : Label3D
 
 @export var work_time_this_day : float = 0.0
 @export var has_worked_today : bool = false
@@ -147,14 +147,15 @@ func choose_target():
 	current_target = targets_to_choose.keys()[0]
 
 	# print_rich(current_target.name, " ", targets_to_choose[targets_to_choose.keys()[0]])
-	print(has_worked_today)
+	# print(has_worked_today)
 	for landmark in targets_to_choose:
-		print_rich(landmark.name, " ", targets_to_choose[landmark])
+		print_rich(landmark.landmark_name, " ", targets_to_choose[landmark])
 		if targets_to_choose[landmark] > targets_to_choose[current_target]:
-			print_rich("[color=red][b][i]%s :: %f[/i][/b][/color]" % [landmark.name, targets_to_choose[landmark]])
+			print_rich("[color=red][b][i]%s :: %f[/i][/b][/color]" % [landmark.landmark_name, targets_to_choose[landmark]])
 			current_target = landmark
 
 func _process(delta: float) -> void:
+	label.position = Vector3(self.position.x, self.position.y + 5.0, self.position.z)
 	for timer in timers:
 		if is_doing_stuff:
 			# print(timers[timer])
@@ -176,50 +177,6 @@ func _physics_process(_delta):
 		is_doing_stuff = true
 
 		timers[current_location] = 0.0
-
-		# choose_target()
-		# set_movement_target()
-
-		# if not is_at_home and not is_at_job:
-		# 	if current_target == home:
-		# 		print_rich("[color=yellow][i]got at home - starting timer[/i][/color]")
-		# 		print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
-		# 		home.is_at_home = true
-		# 		home.timer.start(scheduler.full_day_time * home.min_home_amount / 24.0)
-		# 	elif current_target == job:
-		# 		print_rich("[color=yellow][i]got at job - starting timer[/i][/color]")
-		# 		print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
-		# 		job.is_at_job = true
-		# 		job.timer.start(scheduler.full_day_time * job.expected_work_amount / 24.0)
-
-		# if is_at_home and want_to_go_to_job() and not has_worked_today:
-		# 	print_rich("[color=red][b]at home - timer stopped[/b][/color]")
-		# 	print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
-		# 	current_target = job
-		# 	is_at_home = false
-		# 	var home_time_this_day = home.min_home_amount - (home.timer.time_left * 24 / scheduler.full_day_time)
-		# 	print_rich("\n[color=green]==================================================[/color]")
-		# 	print_rich("[color=green]==================================================[/color]\n")
-		# 	print_rich("[color=green]Time home today: [/color]", home_time_this_day)
-		# 	print_rich("\n[color=green]==================================================[/color]")
-		# 	print_rich("[color=green]==================================================[/color]\n")
-		# 	home.timer.stop()
-		# 	set_movement_target()
-		# elif is_at_job and want_to_go_to_home():
-		# 	print_rich("[color=red][b]at job - timer stopped[/b][/color]")
-		# 	print_rich(24 * (scheduler.full_day_time - scheduler.time_left) / scheduler.full_day_time)
-		# 	has_worked_today = true
-		# 	current_target = home
-		# 	is_at_job = false
-		# 	work_time_this_day = job.expected_work_amount - (job.timer.time_left * 24 / scheduler.full_day_time)
-		# 	print_rich("\n[color=green]==================================================[/color]")
-		# 	print_rich("[color=green]==================================================[/color]\n")
-		# 	print_rich("[color=green]Time worked today: [/color]", work_time_this_day)
-		# 	print_rich("\n[color=green]==================================================[/color]")
-		# 	print_rich("[color=green]==================================================[/color]\n")
-		# 	job.timer.stop()
-		# 	set_movement_target()
-
 		return
 
 

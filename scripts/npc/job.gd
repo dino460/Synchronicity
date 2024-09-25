@@ -26,23 +26,14 @@ func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : f
 	var time_weight : float
 
 	var in_game_time_want_to_stop = (scheduler.full_day_time * (time_want_to_arrive + expected_work_time) / 24.0)
-	# scheduler.get_current_time() / (scheduler.full_day_time * time_want_to_arrive / 24.0)
-	# print(scheduler.get_current_time())
-	# print(in_game_time_want_to_arrive)
-	# print(lateness)
 	if scheduler.get_current_time() > in_game_time_want_to_stop:
-		print("get out of job")
 		var time_left = scheduler.time_left if scheduler.time_left > 0.0 else 0.1
 		time_weight = -1 * in_game_time_want_to_stop / (time_left * sqrt(npc.personality.mind))
 	elif scheduler.get_current_time() >= time_want_to_arrive_corrected:
-		print("should be at job")
 		time_weight = scheduler.time_left / (sqrt(npc.personality.mind) * scheduler.full_day_time)
 	else:
-		print("not at job")
 		time_weight = pow(npc.personality.soul, 2) * scheduler.get_current_time() / scheduler.full_day_time
 
-	print(time_weight)
-	print(lateness_weight)
 	return super(npc, is_working_or_need_to_work, interference) + lateness_weight + time_weight
 
 func save():

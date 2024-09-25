@@ -94,7 +94,7 @@ attack_down={
 
 [rendering]
 
-driver/threads/thread_model=2
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=4
 anti_aliasing/screen_space_roughness_limiter/enabled=false
+occlusion_culling/use_occlusion_culling=true

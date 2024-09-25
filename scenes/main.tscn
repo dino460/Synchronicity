@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=29 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="6_6askm"]
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="6_vqehm"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
-[ext_resource type="Script" path="res://scripts/npc/emotions.gd" id="8_a4n64"]
 [ext_resource type="Script" path="res://scripts/npc/home.gd" id="8_jn8p6"]
 [ext_resource type="Script" path="res://scripts/npc/personality.gd" id="9_cj51m"]
 [ext_resource type="Script" path="res://scripts/npc/job.gd" id="9_ex4b4"]
@@ -85,7 +84,7 @@ material = SubResource("StandardMaterial3D_34hwy")
 
 [node name="Main" type="Node"]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="Main SubViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,98 +95,89 @@ stretch = true
 stretch_shrink = 5
 script = ExtResource("1_g8fm3")
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Main SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(200, 125)
 render_target_update_mode = 4
 
-[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_ywxjf")]
+[node name="Player" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, 0)
 walk_speed = 3.0
 run_speed = 15.0
 
-[node name="Ground" type="StaticBody3D" parent="SubViewportContainer/SubViewport"]
+[node name="Ground" type="StaticBody3D" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/Ground"]
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
 shape = SubResource("BoxShape3D_7h77l")
 
-[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Ground"]
+[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
 mesh = SubResource("PlaneMesh_ip3kr")
 skeleton = NodePath("../NavigationRegion3D")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="SubViewportContainer/SubViewport/Ground"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0252132, -4.76837e-07, 0.00361061)
 navigation_mesh = SubResource("NavigationMesh_t33e6")
 
-[node name="Obstacles" type="Node3D" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
+[node name="Obstacles" type="Node3D" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0832579, 0)
 
-[node name="barrel" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
+[node name="barrel" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
 transform = Transform3D(1.4325, 0, 0.0247292, 0, 1.43271, 0, -0.0247292, 0, 1.4325, -3.50812, 0, -2.18966)
 
-[node name="barrel2" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
+[node name="barrel2" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
 transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, -4.64089, 0, -1.85844)
 
-[node name="barrel5" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
+[node name="barrel5" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
 transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, 6.59368, 0, 3.27875)
 
-[node name="barrel4" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
+[node name="barrel4" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
 transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, 6.58978, 0, -6.0063)
 
-[node name="barrel3" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
+[node name="barrel3" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
 transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, -4.27544, -0.0529132, -2.93333)
 
-[node name="crate" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+[node name="crate" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.964026, 0, 0.265808, 0, 1, 0, -0.265808, 0, 0.964026, 6.35588, 9.53674e-07, -4.77352)
 
-[node name="crate3" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+[node name="crate3" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.997597, 0, -0.0692864, 0, 1, 0, 0.0692864, 0, 0.997597, 5.65414, 9.53674e-07, 5.52138)
 
-[node name="crate4" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+[node name="crate4" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.941206, 0, -0.337835, 0, 1, 0, 0.337835, 0, 0.941206, 6.10795, 9.53674e-07, 4.45124)
 
-[node name="crate5" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+[node name="crate5" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.941206, 0, -0.337835, 0, 1, 0, 0.337835, 0, 0.941206, 7.48576, 9.53674e-07, 4.1531)
 
-[node name="crate2" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+[node name="crate2" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.988268, 0, 0.152727, 0, 1, 0, -0.152727, 0, 0.988268, 5.49786, 0.00691527, -5.77781)
 
-[node name="Ground Mesh" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
+[node name="Ground Mesh" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)
 mesh = SubResource("PlaneMesh_ip3kr")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport"]
 transform = Transform3D(0.896574, -0.11613, -0.427398, 0.442861, 0.22326, 0.868348, -0.00542101, -0.967817, 0.251596, 0, 0, 0)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_xso02")
 
-[node name="NPCs" type="Node" parent="SubViewportContainer/SubViewport"]
+[node name="NPCs" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" type="CharacterBody3D" parent="SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("emotions", "personality", "job", "home", "points_of_interest")]
+[node name="NPC-SMART" type="CharacterBody3D" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("personality", "job", "home", "points_of_interest", "label")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23009, 1.27432, 5.31106)
 script = ExtResource("7_80dul")
 npc_name = "NPC_37"
 current_age = 25
-emotions = NodePath("Emotions")
 personality = NodePath("Personality")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
-points_of_interest = [NodePath("../../Targets/POI")]
+points_of_interest = [NodePath("../../Targets/POI"), NodePath("../../Targets/POI2")]
+label = NodePath("../../../../SubViewportContainer/SubViewport/Label3D")
 
-[node name="Emotions" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
-script = ExtResource("8_a4n64")
-go_to_job_thresshold = 0.86
-go_to_home_thresshold = 0.72
-job_late_importance = 0.56
-home_late_importance = 0.62
-home_love = 0.6
-job_love = 0.55
-
-[node name="Personality" type="Node" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+[node name="Personality" type="Node" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("9_cj51m")
 aggression = 0.4
 loyalty = 0.8
@@ -198,18 +188,18 @@ body = 0.6
 mind = 0.7
 soul = 0.8
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 shape = SubResource("CapsuleShape3D_372vt")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00998974, -0.0188441, -0.00345898)
 mesh = SubResource("CapsuleMesh_kmggu")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 
-[node name="Targets" type="Node3D" parent="SubViewportContainer/SubViewport"]
+[node name="Targets" type="Node3D" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="HOME" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
+[node name="HOME" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
 script = ExtResource("8_jn8p6")
 expected_home_time = 8.0
@@ -217,10 +207,10 @@ time_want_to_arrive = 20.0
 max_lateness = 2.0
 landmark_name = "Home"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/HOME"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/HOME"]
 mesh = SubResource("SphereMesh_0suxt")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Targets/HOME"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/HOME"]
 transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
 light_color = Color(4.62055e-06, 0.720069, 0.970503, 1)
 light_energy = 4.75
@@ -228,15 +218,15 @@ shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
 
-[node name="POI" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
+[node name="POI" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -6.276, 0.133089, -4.60975)
 script = ExtResource("11_octe2")
-landmark_name = "Test Landmark"
+landmark_name = "Statue"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/POI"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/POI"]
 mesh = SubResource("SphereMesh_abj4j")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Targets/POI"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/POI"]
 transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
 light_color = Color(1, 0.47973, 0.467837, 1)
 light_energy = 4.75
@@ -244,7 +234,23 @@ shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
 
-[node name="WORK" type="Node3D" parent="SubViewportContainer/SubViewport/Targets"]
+[node name="POI2" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.13519, 0.133089, 9.25756)
+script = ExtResource("11_octe2")
+landmark_name = "Fountain"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/POI2"]
+mesh = SubResource("SphereMesh_abj4j")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/POI2"]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
+light_color = Color(1, 0.47973, 0.467837, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375
+
+[node name="WORK" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
 script = ExtResource("9_ex4b4")
 expected_work_time = 8.0
@@ -254,10 +260,10 @@ max_lateness = 1.0
 max_worker_distance = 10.0
 landmark_name = "Work"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Targets/WORK"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/WORK"]
 mesh = SubResource("SphereMesh_ejm8f")
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Targets/WORK"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/WORK"]
 transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.576, 0)
 light_color = Color(0, 0.800927, 0.184589, 1)
 light_energy = 4.75
@@ -265,23 +271,23 @@ shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
 
-[node name="Node" type="Node" parent="SubViewportContainer/SubViewport"]
+[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61151, 2.99291, 3.95771)
 light_energy = 5.133
 shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
+[node name="OmniLight3D2" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75829, 2.99291, -2.10811)
 light_energy = 5.133
 shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="OmniLight3D3" type="OmniLight3D" parent="SubViewportContainer/SubViewport/Node"]
+[node name="OmniLight3D3" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.54987, 2.99291, -5.15791)
 light_energy = 5.133
 shadow_enabled = true
@@ -291,5 +297,20 @@ omni_attenuation = 0.765
 [node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("sun", "npc_holder")]
 script = ExtResource("6_6askm")
 full_day_time = 60.0
-sun = NodePath("../SubViewportContainer/SubViewport/DirectionalLight3D")
-npc_holder = NodePath("../SubViewportContainer/SubViewport/NPCs")
+sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
+npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPCs")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+
+[node name="Label3D" type="Label3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.54831, 0)
+billboard = 1
+shaded = true
+text = "NPC TEST TEXT"
+font_size = 222
+outline_size = 57
