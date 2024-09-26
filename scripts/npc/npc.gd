@@ -25,6 +25,8 @@ const base_run_multiplier : float = 2.3
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 
+@export var test_label : Label
+
 var current_target   : Node3D
 var current_location : Node3D
 
@@ -84,13 +86,18 @@ func choose_target():
 	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, 0.0) / sqrt(get_landmark_timer(job, false))
 
 	current_target = targets_to_choose.keys()[0]
-
+	var text : String = ""
 	# print_rich(current_target.name, " ", targets_to_choose[targets_to_choose.keys()[0]])
+	# text += current_target.name + " : " + targets_to_choose[targets_to_choose.keys()[0]] + "\n"
 	for landmark in targets_to_choose:
 		# print_rich(landmark.landmark_name, " ", targets_to_choose[landmark])
+		text += str(landmark.landmark_name, " : ", targets_to_choose[landmark], "\n")
 		if targets_to_choose[landmark] > targets_to_choose[current_target]:
 			# print_rich("[color=red][b][i]%s :: %f[/i][/b][/color]" % [landmark.landmark_name, targets_to_choose[landmark]])
 			current_target = landmark
+
+	if test_label != null:
+		test_label.text = text
 
 func _process(delta: float) -> void:
 	for timer in timers:

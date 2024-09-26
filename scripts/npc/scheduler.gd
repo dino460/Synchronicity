@@ -26,7 +26,8 @@ func _process(_delta: float) -> void:
 	is_sun_up = false if time_left <= (full_day_time * sun_up_time_proportion) else true
 	var hours : int = get_current_time() * 24 / full_day_time
 	var minutes : int = ((get_current_time() * 24 / full_day_time) - hours) * 60
-	clock_label.text = "%d:%d --- %f" % [hours, minutes, get_current_time()]
+	if clock_label != null:
+		clock_label.text = "%d:%d --- %f" % [hours, minutes, get_current_time()]
 
 	rotate_sun()
 
