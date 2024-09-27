@@ -191,7 +191,7 @@ personality = NodePath("Personality")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
-test_label = NodePath("../../../../SubViewportContainer/SubViewport/Weights Label")
+test_label = NodePath("../../../../UI SubViewportContainer/SubViewport/Weights Label")
 
 [node name="Personality" type="Node" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("9_cj51m")
@@ -258,7 +258,7 @@ omni_attenuation = 0.375
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.13519, 0.133089, 9.25756)
 script = ExtResource("11_octe2")
 landmark_name = "Fountain"
-radius_of_influence = 4.0
+radius_of_influence = 3.0
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/FOUNTAIN"]
@@ -322,9 +322,9 @@ script = ExtResource("6_6askm")
 full_day_time = 60.0
 sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPCs")
-clock_label = NodePath("../SubViewportContainer/SubViewport/Clock Label")
+clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="UI SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -332,19 +332,19 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="UI SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
-[node name="Clock Label" type="Label" parent="SubViewportContainer/SubViewport"]
+[node name="Clock Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
 offset_right = 296.0
 offset_bottom = 38.0
 text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_113qa")
 
-[node name="Weights Label" type="Label" parent="SubViewportContainer/SubViewport"]
+[node name="Weights Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

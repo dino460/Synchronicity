@@ -117,20 +117,13 @@ func _physics_process(_delta):
 		add_visit()
 		current_location = current_target
 		is_doing_stuff = true
+		is_moving_about = false
 
 		timers[current_location] = 0.0
 		return
 
-
-	if is_doing_stuff:
-		choose_target()
-
-		if current_location != current_target:
-			timers.erase(current_location)
-			if current_location == job:
-				has_worked_today = true
-			set_movement_target()
-			is_doing_stuff = false
+	check_for_path_while_doing_stuff()
+	check_for_path_while_moving()
 
 	var current_agent_position: Vector3 = global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
@@ -167,3 +160,20 @@ func get_landmark_timer(landmark : Node3D, receive_zero : bool) -> float:
 
 func scan_for_new_landmarks():
 	pass
+
+func check_for_path_while_doing_stuff():
+	if is_doing_stuff:
+		choose_target()
+		if current_location != current_target:
+			timers.erase(current_location)
+			if current_location == job:
+				has_worked_today = true
+			set_movement_target()
+			is_doing_stuff = false
+			is_moving_about = true
+
+func check_for_path_while_moving():
+	if is_moving_about:
+		choose_target()
+		if current_location != current_target:
+			set_movement_target()
