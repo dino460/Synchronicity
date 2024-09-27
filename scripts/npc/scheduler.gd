@@ -49,6 +49,12 @@ func rotate_sun():
 func get_current_time() -> float:
 	return full_day_time - time_left
 
+func get_current_time_24() -> String:
+	var hours : int = get_current_time() * 24 / full_day_time
+	var minutes : int = ((get_current_time() * 24 / full_day_time) - hours) * 60
+
+	return "%d:%d" % [hours, minutes]
+
 func request_id() -> int:
 	var id = next_available_id
 	next_available_id += 1

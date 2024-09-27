@@ -20,6 +20,8 @@ const base_run_multiplier : float = 2.3
 @export var visits             : Array[Visit]
 @export var points_of_interest : Array[Landmark]
 
+@export var average_poi_distance : float
+
 @export var work_time_this_day : float = 0.0
 @export var has_worked_today : bool = false
 
@@ -58,6 +60,9 @@ func _ready():
 	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
+
+	calculate_average_poi_distance()
+	print(average_poi_distance)
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
@@ -114,12 +119,15 @@ func _physics_process(_delta):
 	# 	print_rich(">>> I am at: [color=red][b] %s [/b][/color]" % current_location.landmark_name)
 
 	if navigation_agent.is_navigation_finished() && navigation_enabled && not is_doing_stuff:
+		calculate_average_poi_distance()
 		add_visit()
 		current_location = current_target
 		is_doing_stuff = true
 		is_moving_about = false
 
 		timers[current_location] = 0.0
+
+		print_rich("[color=cyan]Arrived at [b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
 		return
 
 	check_for_path_while_doing_stuff()
@@ -177,3 +185,8 @@ func check_for_path_while_moving():
 		choose_target()
 		if current_location != current_target:
 			set_movement_target()
+
+func calculate_average_poi_distance():
+	for poi in points_of_interest:
+		average_poi_distance += self.position.distance_to(poi.position)
+	average_poi_distance /= points_of_interest.size()

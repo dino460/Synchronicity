@@ -258,7 +258,7 @@ omni_attenuation = 0.375
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.13519, 0.133089, 9.25756)
 script = ExtResource("11_octe2")
 landmark_name = "Fountain"
-radius_of_influence = 3.0
+radius_of_influence = 5.0
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/FOUNTAIN"]

@@ -21,7 +21,8 @@ func _ready() -> void:
 	radius_of_influence = max_worker_distance
 
 func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : float) -> float:
-	var time_want_to_arrive_corrected = (scheduler.full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc)
+	var excess_poi_visit_time_correction = npc.points_of_interest.size() * npc.average_poi_distance * npc.personality.energy * npc.personality.bravery / npc.get_speed()
+	var time_want_to_arrive_corrected = (scheduler.full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc) - excess_poi_visit_time_correction
 	var lateness = scheduler.get_current_time() - time_want_to_arrive_corrected
 	var lateness_weight = 0.0 if is_working_or_need_to_work else lateness * npc.personality.mind
 	var time_weight : float
