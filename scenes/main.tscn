@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=29 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -7,9 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="6_6askm"]
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="6_vqehm"]
-[ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
+[ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="7_k2sie"]
 [ext_resource type="Script" path="res://scripts/npc/home.gd" id="8_jn8p6"]
-[ext_resource type="Script" path="res://scripts/npc/personality.gd" id="9_cj51m"]
 [ext_resource type="Script" path="res://scripts/npc/job.gd" id="9_ex4b4"]
 [ext_resource type="Script" path="res://scripts/npc/landmark.gd" id="11_octe2"]
 
@@ -55,14 +54,6 @@ glow_bloom = 0.1
 adjustment_enabled = true
 adjustment_contrast = 0.87
 adjustment_saturation = 1.21
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkigc"]
-albedo_color = Color(0, 0.693455, 0.60667, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
-material = SubResource("StandardMaterial3D_rkigc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rijab"]
 albedo_color = Color(0.293485, 0.352648, 1, 1)
@@ -122,6 +113,8 @@ walk_speed = 3.0
 run_speed = 15.0
 
 [node name="Ground" type="StaticBody3D" parent="Main SubViewportContainer/SubViewport"]
+collision_layer = 1057
+collision_mask = 1057
 
 [node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
@@ -182,36 +175,12 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" type="CharacterBody3D" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("personality", "job", "home", "points_of_interest", "test_label")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23009, 1.27432, 5.31106)
-script = ExtResource("7_80dul")
-npc_name = "NPC_37"
-current_age = 25
-personality = NodePath("Personality")
+[node name="NPC-SMART" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home", "points_of_interest", "test_label") instance=ExtResource("7_k2sie")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152149, 1.01774, 2.35255)
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
-points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
+points_of_interest = [NodePath("../../Targets/FOUNTAIN"), NodePath("../../Targets/WORK")]
 test_label = NodePath("../../../../UI SubViewportContainer/SubViewport/Weights Label")
-
-[node name="Personality" type="Node" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
-script = ExtResource("9_cj51m")
-aggression = 0.4
-loyalty = 0.8
-bravery = 0.5
-chaos = 0.3
-energy = 0.7
-body = 0.6
-mind = 0.7
-soul = 0.8
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
-shape = SubResource("CapsuleShape3D_372vt")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00998974, -0.0188441, -0.00345898)
-mesh = SubResource("CapsuleMesh_kmggu")
-
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 
 [node name="Targets" type="Node3D" parent="Main SubViewportContainer/SubViewport"]
 

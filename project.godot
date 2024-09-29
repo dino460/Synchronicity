@@ -92,6 +92,12 @@ attack_down={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Player"
+3d_physics/layer_6="NPC"
+3d_physics/layer_11="Ambient"
+
 [rendering]
 
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4
