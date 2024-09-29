@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://djjrue350v5uh"]
+
+[ext_resource type="Script" path="res://scripts/npc/job.gd" id="1_h1gmx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34hwy"]
+albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_ejm8f"]
+material = SubResource("StandardMaterial3D_34hwy")
+
+[node name="WORK" type="Node3D"]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
+script = ExtResource("1_h1gmx")
+expected_work_time = 8.0
+min_work_time_accepted = 0.9
+time_want_to_arrive = 10.0
+max_lateness = 1.0
+max_worker_distance = 10.0
+landmark_name = "Work"
+area_max_influence = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ejm8f")
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.576, 0)
+light_color = Color(0, 0.800927, 0.184589, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375

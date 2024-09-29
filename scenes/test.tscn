@@ -1,3 +1,105 @@
-[gd_scene format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene load_steps=13 format=3 uid="uid://flkg36ogpfcu"]
 
-[node name="Test" type="Node3D"]
+[ext_resource type="Script" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
+[ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_x07qc"]
+[ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
+[ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwulq"]
+albedo_texture = ExtResource("1_x07qc")
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
+material = SubResource("StandardMaterial3D_fwulq")
+size = Vector2(100, 100)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_knv0t"]
+vertices = PackedVector3Array(-49.5222, 0.392384, -49.6994, -49.5222, 0.392384, 49.3006, 49.4778, 0.392384, 49.3006, 49.4778, 0.392384, -49.6994)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="SystemFont" id="SystemFont_ju7ma"]
+font_names = PackedStringArray("FiraCode Nerd Font Mono")
+
+[sub_resource type="LabelSettings" id="LabelSettings_v26lh"]
+font = SubResource("SystemFont_ju7ma")
+font_size = 30
+font_color = Color(0.926528, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_6govk"]
+font_names = PackedStringArray("FiraCode Nerd Font Mono")
+
+[sub_resource type="LabelSettings" id="LabelSettings_vmv3x"]
+font = SubResource("SystemFont_6govk")
+font_size = 20
+font_color = Color(0.926528, 0, 0, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("4_t1xvl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
+
+[node name="Node" type="Node" parent="." node_paths=PackedStringArray("label")]
+script = ExtResource("1_mlvqa")
+number_of_npcs_to_spawn = 1
+world_size = 10
+label = NodePath("../UI SubViewportContainer/SubViewport/Weights Label")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+collision_layer = 1057
+collision_mask = 1057
+
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
+shape = SubResource("BoxShape3D_7h77l")
+
+[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
+mesh = SubResource("PlaneMesh_ip3kr")
+skeleton = NodePath("../NavigationRegion3D")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Ground"]
+transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0252132, -4.76837e-07, 0.00361061)
+navigation_mesh = SubResource("NavigationMesh_knv0t")
+
+[node name="Ground Mesh" type="MeshInstance3D" parent="Ground/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)
+mesh = SubResource("PlaneMesh_ip3kr")
+
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
+npc_holder = NodePath("../Node")
+clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
+
+[node name="UI SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="UI SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1000, 625)
+render_target_update_mode = 4
+
+[node name="Clock Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
+offset_right = 296.0
+offset_bottom = 38.0
+text = "18:0 --- 45.000 "
+label_settings = SubResource("LabelSettings_v26lh")
+
+[node name="Weights Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -111.0
+offset_bottom = 38.0
+grow_horizontal = 0
+text = "test to test test size"
+label_settings = SubResource("LabelSettings_vmv3x")
+horizontal_alignment = 2

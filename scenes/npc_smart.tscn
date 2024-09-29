@@ -11,14 +11,13 @@ albedo_color = Color(0, 0.693455, 0.60667, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
 material = SubResource("StandardMaterial3D_rkigc")
 
-[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("personality", "points_of_interest")]
+[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("personality")]
 collision_layer = 32
 collision_mask = 1056
 script = ExtResource("1_p1mm1")
 npc_name = "NPC_37"
 current_age = 25
 personality = NodePath("Personality")
-points_of_interest = [null, null]
 
 [node name="Personality" type="Node" parent="."]
 script = ExtResource("2_iwygw")

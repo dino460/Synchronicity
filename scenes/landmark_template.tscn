@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://hn6mx63b5xth"]
+
+[ext_resource type="Script" path="res://scripts/npc/landmark.gd" id="1_3c8dl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdso1"]
+albedo_color = Color(0.858904, 0, 0.160098, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
+material = SubResource("StandardMaterial3D_vdso1")
+
+[node name="LANDMARK" type="Node3D"]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.13519, 0.133089, 9.25756)
+script = ExtResource("1_3c8dl")
+landmark_name = "landmark"
+radius_of_influence = 5.0
+area_max_influence = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_abj4j")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
+light_color = Color(1, 0.47973, 0.467837, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375

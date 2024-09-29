@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbow8vjepuo2f"]
+
+[ext_resource type="Script" path="res://scripts/npc/home.gd" id="1_v73gd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rijab"]
+albedo_color = Color(0.293485, 0.352648, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0suxt"]
+material = SubResource("StandardMaterial3D_rijab")
+
+[node name="HOME" type="Node3D"]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
+script = ExtResource("1_v73gd")
+expected_home_time = 8.0
+time_want_to_arrive = 20.0
+max_lateness = 2.0
+landmark_name = "Home"
+radius_of_influence = 5.0
+area_max_influence = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_0suxt")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
+light_color = Color(4.62055e-06, 0.720069, 0.970503, 1)
+light_energy = 4.75
+shadow_enabled = true
+omni_range = 5.73
+omni_attenuation = 0.375

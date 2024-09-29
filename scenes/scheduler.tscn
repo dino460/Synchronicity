@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr4wsdpcjwklo"]
+
+[ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="1_e74sc"]
+
+[node name="Scheduler" type="Timer" node_paths=PackedStringArray("sun", "npc_holder", "clock_label")]
+script = ExtResource("1_e74sc")
+full_day_time = 60.0
+sun = NodePath("")
+npc_holder = NodePath("")
+clock_label = NodePath("")

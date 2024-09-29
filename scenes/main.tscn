@@ -1,16 +1,18 @@
-[gd_scene load_steps=29 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=30 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="3_tjny0"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
-[ext_resource type="Script" path="res://scripts/npc/scheduler.gd" id="6_6askm"]
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="6_vqehm"]
-[ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="7_k2sie"]
-[ext_resource type="Script" path="res://scripts/npc/home.gd" id="8_jn8p6"]
-[ext_resource type="Script" path="res://scripts/npc/job.gd" id="9_ex4b4"]
+[ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
+[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
+[ext_resource type="Script" path="res://scripts/npc/personality.gd" id="9_cj51m"]
+[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="10_bp8n5"]
+[ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_ijmam"]
 [ext_resource type="Script" path="res://scripts/npc/landmark.gd" id="11_octe2"]
+[ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
@@ -55,11 +57,13 @@ adjustment_enabled = true
 adjustment_contrast = 0.87
 adjustment_saturation = 1.21
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rijab"]
-albedo_color = Color(0.293485, 0.352648, 1, 1)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_0suxt"]
-material = SubResource("StandardMaterial3D_rijab")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkigc"]
+albedo_color = Color(0, 0.693455, 0.60667, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
+material = SubResource("StandardMaterial3D_rkigc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdso1"]
 albedo_color = Color(0.858904, 0, 0.160098, 1)
@@ -67,25 +71,19 @@ albedo_color = Color(0.858904, 0, 0.160098, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
 material = SubResource("StandardMaterial3D_vdso1")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34hwy"]
-albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_ejm8f"]
-material = SubResource("StandardMaterial3D_34hwy")
-
-[sub_resource type="SystemFont" id="SystemFont_ju7ma"]
+[sub_resource type="SystemFont" id="SystemFont_3u5ke"]
 font_names = PackedStringArray("FiraCode Nerd Font Mono")
 
 [sub_resource type="LabelSettings" id="LabelSettings_113qa"]
-font = SubResource("SystemFont_ju7ma")
+font = SubResource("SystemFont_3u5ke")
 font_size = 30
 font_color = Color(0.926528, 0, 0, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_6govk"]
+[sub_resource type="SystemFont" id="SystemFont_t4jp0"]
 font_names = PackedStringArray("FiraCode Nerd Font Mono")
 
 [sub_resource type="LabelSettings" id="LabelSettings_kgmxm"]
-font = SubResource("SystemFont_6govk")
+font = SubResource("SystemFont_t4jp0")
 font_size = 20
 font_color = Color(0.926528, 0, 0, 1)
 
@@ -175,35 +173,43 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home", "points_of_interest", "test_label") instance=ExtResource("7_k2sie")]
+[node name="NPC-SMART" type="CharacterBody3D" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "personality", "job", "home", "points_of_interest", "test_label")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152149, 1.01774, 2.35255)
+collision_layer = 32
+collision_mask = 1056
+script = ExtResource("7_80dul")
+npc_name = "NPC_37"
+scheduler = NodePath("../../../../Scheduler")
+current_age = 25
+personality = NodePath("Personality")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
-points_of_interest = [NodePath("../../Targets/FOUNTAIN"), NodePath("../../Targets/WORK")]
+points_of_interest = [NodePath("../../Targets/FOUNTAIN"), NodePath("../../Targets/STATUE")]
 test_label = NodePath("../../../../UI SubViewportContainer/SubViewport/Weights Label")
+
+[node name="Personality" type="Node" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+script = ExtResource("9_cj51m")
+aggression = 0.4
+loyalty = 0.8
+bravery = 0.5
+chaos = 0.3
+energy = 0.7
+body = 0.6
+mind = 0.7
+soul = 0.8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+shape = SubResource("CapsuleShape3D_372vt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00998974, -0.0188441, -0.00345898)
+mesh = SubResource("CapsuleMesh_kmggu")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Main SubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 
 [node name="Targets" type="Node3D" parent="Main SubViewportContainer/SubViewport"]
 
-[node name="HOME" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
-script = ExtResource("8_jn8p6")
-expected_home_time = 8.0
-time_want_to_arrive = 20.0
-max_lateness = 2.0
-landmark_name = "Home"
-radius_of_influence = 5.0
-area_max_influence = 1.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/HOME"]
-mesh = SubResource("SphereMesh_0suxt")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/HOME"]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
-light_color = Color(4.62055e-06, 0.720069, 0.970503, 1)
-light_energy = 4.75
-shadow_enabled = true
-omni_range = 5.73
-omni_attenuation = 0.375
+[node name="HOME" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("8_4n6l4")]
 
 [node name="STATUE" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -6.276, 0.133089, -4.60975)
@@ -223,45 +229,10 @@ shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
 
-[node name="FOUNTAIN" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.13519, 0.133089, 9.25756)
-script = ExtResource("11_octe2")
+[node name="FOUNTAIN" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_ijmam")]
 landmark_name = "Fountain"
-radius_of_influence = 5.0
-area_max_influence = 1.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/FOUNTAIN"]
-mesh = SubResource("SphereMesh_abj4j")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/FOUNTAIN"]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
-light_color = Color(1, 0.47973, 0.467837, 1)
-light_energy = 4.75
-shadow_enabled = true
-omni_range = 5.73
-omni_attenuation = 0.375
-
-[node name="WORK" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
-script = ExtResource("9_ex4b4")
-expected_work_time = 8.0
-min_work_time_accepted = 0.9
-time_want_to_arrive = 10.0
-max_lateness = 1.0
-max_worker_distance = 10.0
-landmark_name = "Work"
-area_max_influence = 1.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Targets/WORK"]
-mesh = SubResource("SphereMesh_ejm8f")
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="Main SubViewportContainer/SubViewport/Targets/WORK"]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.576, 0)
-light_color = Color(0, 0.800927, 0.184589, 1)
-light_energy = 4.75
-shadow_enabled = true
-omni_range = 5.73
-omni_attenuation = 0.375
+[node name="WORK" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_bp8n5")]
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
@@ -286,9 +257,7 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" type="Timer" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label")]
-script = ExtResource("6_6askm")
-full_day_time = 60.0
+[node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("12_bvghk")]
 sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
@@ -323,3 +292,5 @@ grow_horizontal = 0
 text = "test to test test size"
 label_settings = SubResource("LabelSettings_kgmxm")
 horizontal_alignment = 2
+
+[editable path="Main SubViewportContainer/SubViewport/Targets/HOME"]

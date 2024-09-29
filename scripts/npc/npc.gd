@@ -54,15 +54,15 @@ func get_run_speed() -> float:
 func get_speed() -> float:
 	return get_run_speed() if is_running else get_move_speed()
 
-
 func _ready():
+	print("npc")
 	add_to_group("persist")
+	personality = get_child(0)
 	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
 
 	calculate_average_poi_distance()
-	print(average_poi_distance)
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
@@ -187,6 +187,10 @@ func check_for_path_while_moving():
 			set_movement_target()
 
 func calculate_average_poi_distance():
+	if points_of_interest.size() <= 0:
+		average_poi_distance = 0.0
+		return
+
 	for poi in points_of_interest:
 		average_poi_distance += self.position.distance_to(poi.position)
 	average_poi_distance /= points_of_interest.size()
