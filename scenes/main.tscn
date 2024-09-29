@@ -17,13 +17,13 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwulq"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jdr04"]
 albedo_texture = ExtResource("3_tjny0")
 uv1_scale = Vector3(0.4, 0.4, 0.4)
 uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
-material = SubResource("StandardMaterial3D_fwulq")
+material = SubResource("StandardMaterial3D_jdr04")
 size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
@@ -36,13 +36,13 @@ ground_color = Color(0.294793, 0.227868, 0.147204, 1)
 energy_multiplier = 1.18
 night_sky = ExtResource("6_vqehm")
 
-[sub_resource type="Sky" id="Sky_wkxqu"]
+[sub_resource type="Sky" id="Sky_dnvjr"]
 sky_material = SubResource("PhysicalSkyMaterial_pwylq")
 
 [sub_resource type="Environment" id="Environment_xso02"]
 background_mode = 2
 background_energy_multiplier = 2.25
-sky = SubResource("Sky_wkxqu")
+sky = SubResource("Sky_dnvjr")
 ambient_light_source = 3
 tonemap_mode = 2
 tonemap_exposure = 0.9
@@ -59,17 +59,17 @@ adjustment_saturation = 1.21
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkigc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ud8a3"]
 albedo_color = Color(0, 0.693455, 0.60667, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
-material = SubResource("StandardMaterial3D_rkigc")
+material = SubResource("StandardMaterial3D_ud8a3")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vdso1"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cgdyp"]
 albedo_color = Color(0.858904, 0, 0.160098, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
-material = SubResource("StandardMaterial3D_vdso1")
+material = SubResource("StandardMaterial3D_cgdyp")
 
 [sub_resource type="SystemFont" id="SystemFont_3u5ke"]
 font_names = PackedStringArray("FiraCode Nerd Font Mono")

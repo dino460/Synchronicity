@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene load_steps=14 format=3 uid="uid://flkg36ogpfcu"]
 
 [ext_resource type="Script" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
+[ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_ukkpv"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_x07qc"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
-size = Vector3(100, 1, 100)
+size = Vector3(200, 1, 200)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwulq"]
 albedo_texture = ExtResource("1_x07qc")
@@ -15,10 +16,10 @@ uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
 material = SubResource("StandardMaterial3D_fwulq")
-size = Vector2(100, 100)
+size = Vector2(200, 200)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_knv0t"]
-vertices = PackedVector3Array(-49.5222, 0.392384, -49.6994, -49.5222, 0.392384, 49.3006, 49.4778, 0.392384, 49.3006, 49.4778, 0.392384, -49.6994)
+vertices = PackedVector3Array(-99.5222, 0.392384, -99.6994, -99.5222, 0.392384, 99.3006, 99.4778, 0.392384, 99.3006, 99.4778, 0.392384, -99.6994)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="SystemFont" id="SystemFont_ju7ma"]
@@ -39,38 +40,56 @@ font_color = Color(0.926528, 0, 0, 1)
 
 [node name="Main" type="Node3D"]
 
-[node name="Player" parent="." instance=ExtResource("4_t1xvl")]
+[node name="Main SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 5
+script = ExtResource("1_ukkpv")
+
+[node name="SubViewport" type="SubViewport" parent="Main SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(200, 125)
+render_target_update_mode = 4
+
+[node name="Player" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("4_t1xvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
-[node name="Node" type="Node" parent="." node_paths=PackedStringArray("label")]
+[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 1
-world_size = 10
-label = NodePath("../UI SubViewportContainer/SubViewport/Weights Label")
+number_of_npcs_to_spawn = 50
+world_size = 25
+npc_holder = NodePath("../NPC HOLDER")
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[node name="NPC HOLDER" type="Node" parent="Main SubViewportContainer/SubViewport"]
+
+[node name="Ground" type="StaticBody3D" parent="Main SubViewportContainer/SubViewport"]
 collision_layer = 1057
 collision_mask = 1057
 
-[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
 shape = SubResource("BoxShape3D_7h77l")
 
-[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="Ground"]
+[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
 mesh = SubResource("PlaneMesh_ip3kr")
 skeleton = NodePath("../NavigationRegion3D")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Ground"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Main SubViewportContainer/SubViewport/Ground"]
 transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0252132, -4.76837e-07, 0.00361061)
 navigation_mesh = SubResource("NavigationMesh_knv0t")
 
-[node name="Ground Mesh" type="MeshInstance3D" parent="Ground/NavigationRegion3D"]
+[node name="Ground Mesh" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)
 mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
-npc_holder = NodePath("../Node")
+npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPC HOLDER")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
 
 [node name="UI SubViewportContainer" type="SubViewportContainer" parent="."]

@@ -137,6 +137,7 @@ func _physics_process(_delta):
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
 	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
+
 	move_and_slide()
 
 func reset_has_worked_today():

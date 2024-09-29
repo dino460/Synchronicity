@@ -2,7 +2,8 @@ extends Node
 
 @export var number_of_npcs_to_spawn : int
 @export var world_size : int
-@export var label : Label
+@export var npc_holder : Node
+# @export var label : Label
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,6 +26,6 @@ func _ready() -> void:
 		new_npc_instance.position = pos
 		new_npc_instance.job = new_job_instance
 		new_npc_instance.home = new_home_instance
-		new_npc_instance.test_label = label
+		# new_npc_instance.test_label = label
 		print(new_npc_instance.job)
-		add_child(new_npc_instance)
+		npc_holder.add_child(new_npc_instance)
