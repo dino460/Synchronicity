@@ -13,10 +13,12 @@ class_name Scheduler
 
 @export var next_available_id : int = 1
 
+@export var number_of_groups : int = 5
 var process_groups = []
 var thread_group : Array[Thread] = []
-var number_of_groups : int = 5
 var current_group : int = 0
+
+var frame_counter : int
 
 
 func _ready() -> void:
@@ -31,7 +33,7 @@ func _ready() -> void:
 		var thread = Thread.new()
 		process_groups[i] = arr
 		thread_group[i] = thread
-		thread_group[i].start(run_process_group.bind(i))
+		thread_group[i].start(run_process_group.bind(i, thread))
 
 	print_rich("[color=yellow][b] DAY START [/b][/color]")
 	start()
@@ -53,14 +55,22 @@ func _process(_delta: float) -> void:
 		start()
 
 func _physics_process(_delta: float) -> void:
-	for i in number_of_groups:
-		if not thread_group[i].is_alive():
-			var thread = Thread.new()
-			thread.start(restart_thread.bind(i))
-	current_group += 1
+	if not thread_group[frame_counter].is_alive():
+		var thread = Thread.new()
+		# thread.start(restart_thread.bind(i))
+		thread_group[frame_counter] = thread
+		thread_group[frame_counter].start(run_process_group.bind(frame_counter, thread))
 
-	if current_group >= number_of_groups:
-		current_group = 0
+	# for i in number_of_groups:
+	# 	if not thread_group[i].is_alive():
+	# 		var thread = Thread.new()
+	# 		# thread.start(restart_thread.bind(i))
+	# 		thread_group[i] = thread
+	# 		thread_group[i].start(run_process_group.bind(i, thread))
+
+	frame_counter += 1
+	if frame_counter >= number_of_groups:
+		frame_counter = 0
 
 func rotate_sun():
 	if sun != null:
@@ -91,9 +101,13 @@ func request_group() -> int:
 func bind_callable_to_group(group : int, callable : Callable):
 	process_groups[group].push_back(callable)
 
-func run_process_group(group : int):
+func run_process_group(group : int, thread : Thread):
 	for process in process_groups[group]:
 		process.call_deferred()
+	call_deferred("wait_thread", thread)
+
+func wait_thread(thread : Thread):
+	thread.wait_to_finish()
 
 func restart_thread(thread_num : int):
 	thread_group[thread_num].wait_to_finish()
