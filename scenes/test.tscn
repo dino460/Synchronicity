@@ -1,13 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene load_steps=17 format=3 uid="uid://flkg36ogpfcu"]
 
 [ext_resource type="Script" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
-[ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_ukkpv"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_x07qc"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]
+[ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="4_u8e0t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
-size = Vector3(200, 1, 200)
+size = Vector3(1000, 1, 1000)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwulq"]
 albedo_texture = ExtResource("1_x07qc")
@@ -16,11 +16,38 @@ uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
 material = SubResource("StandardMaterial3D_fwulq")
-size = Vector2(200, 200)
+size = Vector2(1000, 1000)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_knv0t"]
-vertices = PackedVector3Array(-99.5222, 0.392384, -99.6994, -99.5222, 0.392384, 99.3006, 99.4778, 0.392384, 99.3006, 99.4778, 0.392384, -99.6994)
+vertices = PackedVector3Array(-499.522, 0.392384, -499.699, -499.522, 0.392384, 499.301, 499.478, 0.392384, 499.301, 499.478, 0.392384, -499.699)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_phknx"]
+turbidity = 0.0
+ground_color = Color(0.294793, 0.227868, 0.147204, 1)
+energy_multiplier = 1.18
+night_sky = ExtResource("4_u8e0t")
+
+[sub_resource type="Sky" id="Sky_dnvjr"]
+sky_material = SubResource("PhysicalSkyMaterial_phknx")
+
+[sub_resource type="Environment" id="Environment_0jq3o"]
+background_mode = 2
+background_energy_multiplier = 2.25
+sky = SubResource("Sky_dnvjr")
+ambient_light_source = 3
+tonemap_mode = 2
+tonemap_exposure = 0.9
+tonemap_white = 1.45
+ssao_radius = 1.8
+ssao_intensity = 2.5
+ssao_power = 2.35375
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.1
+adjustment_enabled = true
+adjustment_contrast = 0.87
+adjustment_saturation = 1.21
 
 [sub_resource type="SystemFont" id="SystemFont_ju7ma"]
 font_names = PackedStringArray("FiraCode Nerd Font Mono")
@@ -48,22 +75,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-stretch_shrink = 5
-script = ExtResource("1_ukkpv")
 
 [node name="SubViewport" type="SubViewport" parent="Main SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(200, 125)
+size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
 [node name="Player" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("4_t1xvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
-[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
+[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder", "label")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 50
-world_size = 25
+number_of_npcs_to_spawn = 300
+world_size = 300
 npc_holder = NodePath("../NPC HOLDER")
+label = NodePath("../../../UI SubViewportContainer/SubViewport/Weights Label")
 
 [node name="NPC HOLDER" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
@@ -88,7 +114,15 @@ navigation_mesh = SubResource("NavigationMesh_knv0t")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)
 mesh = SubResource("PlaneMesh_ip3kr")
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport"]
+transform = Transform3D(0.896574, -0.11613, -0.427398, 0.442861, 0.22326, 0.868348, -0.00542101, -0.967817, 0.251596, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_0jq3o")
+
+[node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
+sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPC HOLDER")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
 

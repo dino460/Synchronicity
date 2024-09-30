@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://mkhk0i0eskjt"]
 
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
-[ext_resource type="Script" path="res://scripts/npc/personality.gd" id="2_iwygw"]
+[ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 

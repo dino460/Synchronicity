@@ -8,10 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="6_vqehm"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
-[ext_resource type="Script" path="res://scripts/npc/personality.gd" id="9_cj51m"]
+[ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="9_cj51m"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="10_bp8n5"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_ijmam"]
-[ext_resource type="Script" path="res://scripts/npc/landmark.gd" id="11_octe2"]
+[ext_resource type="Script" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
@@ -36,13 +36,13 @@ ground_color = Color(0.294793, 0.227868, 0.147204, 1)
 energy_multiplier = 1.18
 night_sky = ExtResource("6_vqehm")
 
-[sub_resource type="Sky" id="Sky_dnvjr"]
+[sub_resource type="Sky" id="Sky_t0t0v"]
 sky_material = SubResource("PhysicalSkyMaterial_pwylq")
 
 [sub_resource type="Environment" id="Environment_xso02"]
 background_mode = 2
 background_energy_multiplier = 2.25
-sky = SubResource("Sky_dnvjr")
+sky = SubResource("Sky_t0t0v")
 ambient_light_source = 3
 tonemap_mode = 2
 tonemap_exposure = 0.9

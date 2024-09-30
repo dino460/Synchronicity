@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://djjrue350v5uh"]
 
-[ext_resource type="Script" path="res://scripts/npc/job.gd" id="1_h1gmx"]
+[ext_resource type="Script" path="res://scripts/npc/landmarks/job.gd" id="1_h1gmx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34hwy"]
 albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)

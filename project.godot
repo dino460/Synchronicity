@@ -98,6 +98,12 @@ attack_down={
 3d_physics/layer_6="NPC"
 3d_physics/layer_11="Ambient"
 
+[physics]
+
+2d/run_on_separate_thread=true
+3d/run_on_separate_thread=true
+3d/physics_engine="GodotPhysics3D"
+
 [rendering]
 
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=4

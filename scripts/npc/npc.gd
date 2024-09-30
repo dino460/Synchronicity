@@ -7,6 +7,7 @@ const base_run_multiplier : float = 2.3
 
 @export var npc_name : String
 @export var id : int
+var process_group : int
 
 @export var timers : Dictionary
 @export var scheduler : Scheduler
@@ -55,20 +56,20 @@ func get_speed() -> float:
 	return get_run_speed() if is_running else get_move_speed()
 
 func _ready():
-	print("npc")
 	add_to_group("persist")
 	personality = get_child(0)
 	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
-
+	process_group = scheduler.request_group()
+	scheduler.call_deferred("bind_callable_to_group", process_group, run_pathfinding_logic)
 	calculate_average_poi_distance()
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
 func actor_setup():
 	choose_target()
-	navigation_agent.debug_enabled = true
+	# navigation_agent.debug_enabled = true
 	# Wait for the first physics frame so the NavigationServer can sync.
 	await get_tree().physics_frame
 
@@ -118,7 +119,12 @@ func _physics_process(_delta):
 	# if current_location != null:
 	# 	print_rich(">>> I am at: [color=red][b] %s [/b][/color]" % current_location.landmark_name)
 
+	if current_location != current_target:
+		position += velocity * _delta
+
+func run_pathfinding_logic():
 	if navigation_agent.is_navigation_finished() && navigation_enabled && not is_doing_stuff:
+		# print(path_timer)
 		calculate_average_poi_distance()
 		add_visit()
 		current_location = current_target
@@ -126,8 +132,7 @@ func _physics_process(_delta):
 		is_moving_about = false
 
 		timers[current_location] = 0.0
-
-		print_rich("[color=cyan]Arrived at [b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+		# print_rich("[color=cyan]Arrived at [b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
 		return
 
 	check_for_path_while_doing_stuff()
@@ -137,8 +142,6 @@ func _physics_process(_delta):
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
 	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
-
-	move_and_slide()
 
 func reset_has_worked_today():
 	has_worked_today = false
