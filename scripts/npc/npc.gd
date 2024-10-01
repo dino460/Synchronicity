@@ -30,8 +30,9 @@ var process_group : int
 
 @export var test_label : Label
 
-var current_target   : Node3D
-var current_location : Node3D
+var current_target   : Landmark
+var current_location : Landmark
+var last_location : Landmark
 
 var is_running : bool = false
 var navigation_enabled : bool = false
@@ -68,7 +69,7 @@ func _ready():
 	call_deferred("actor_setup")
 
 func actor_setup():
-	choose_target()
+	choose_target(false)
 	# navigation_agent.debug_enabled = true
 	# Wait for the first physics frame so the NavigationServer can sync.
 	await get_tree().physics_frame
@@ -79,31 +80,6 @@ func actor_setup():
 func set_movement_target():
 	navigation_agent.set_target_position(current_target.position)
 	navigation_enabled = true
-
-func time_to_get_to_target() -> float:
-	return position.distance_to(current_target.position) / get_speed()
-
-func choose_target():
-	var targets_to_choose : Dictionary
-
-	for landmark in points_of_interest:
-		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, 0.0) / sqrt(get_landmark_timer(landmark, false))
-	targets_to_choose[home] = home.get_npc_want(self, current_location == home, 0.0) / sqrt(get_landmark_timer(home, false))
-	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, 0.0) / sqrt(get_landmark_timer(job, false))
-
-	current_target = targets_to_choose.keys()[0]
-	var text : String = ""
-	# print_rich(current_target.name, " ", targets_to_choose[targets_to_choose.keys()[0]])
-	# text += current_target.name + " : " + targets_to_choose[targets_to_choose.keys()[0]] + "\n"
-	for landmark in targets_to_choose:
-		# print_rich(landmark.landmark_name, " ", targets_to_choose[landmark])
-		text += str(landmark.landmark_name, " : ", targets_to_choose[landmark], "\n")
-		if targets_to_choose[landmark] > targets_to_choose[current_target]:
-			# print_rich("[color=red][b][i]%s :: %f[/i][/b][/color]" % [landmark.landmark_name, targets_to_choose[landmark]])
-			current_target = landmark
-
-	if test_label != null:
-		test_label.text = text
 
 func _process(delta: float) -> void:
 	for timer in timers:
@@ -132,7 +108,7 @@ func run_pathfinding_logic():
 		is_moving_about = false
 
 		timers[current_location] = 0.0
-		# print_rich("[color=cyan]Arrived at [b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+		print_rich("[color=cyan]Arrived at [b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
 		return
 
 	check_for_path_while_doing_stuff()
@@ -142,6 +118,58 @@ func run_pathfinding_logic():
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
 	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
+
+func check_for_path_while_doing_stuff():
+	if is_doing_stuff:
+		choose_target(false)
+		if current_location != current_target:
+			timers.erase(current_location)
+			if current_location == job:
+				has_worked_today = true
+			set_movement_target()
+			last_location = current_location
+			is_doing_stuff = false
+			is_moving_about = true
+
+func check_for_path_while_moving():
+	if is_moving_about:
+		choose_target(true)
+		if current_location != current_target:
+			set_movement_target()
+
+func time_to_get_to_target() -> float:
+	return position.distance_to(current_target.position) / get_speed()
+
+func choose_target(is_moving : bool):
+	var targets_to_choose : Dictionary
+
+	if last_location == null:
+		last_location = home
+
+	for landmark in points_of_interest:
+		var interference = 0.0
+		if has_worked_today and scheduler.get_current_time() <= (scheduler.full_day_time * home.time_want_to_arrive / 24.0):
+			interference = personality.bravery + personality.energy
+		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, interference) / get_landmark_timer(landmark, false)
+	targets_to_choose[home] = home.get_npc_want(self, current_location == home, 0.0) / get_landmark_timer(home, false)
+	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, 0.0) / get_landmark_timer(job, false)
+
+	if is_moving:
+		targets_to_choose[last_location] /= 10.0
+
+	current_target = targets_to_choose.keys()[0]
+	var text : String = ""
+	# print_rich(current_target.name, " ", targets_to_choose[targets_to_choose.keys()[0]])
+	# text += current_target.name + " : " + targets_to_choose[targets_to_choose.keys()[0]] + "\n"
+	for landmark in targets_to_choose:
+		# print_rich(landmark.landmark_name, " ", targets_to_choose[landmark])
+		text += str(landmark.landmark_name, " : ", targets_to_choose[landmark], "\n")
+		if targets_to_choose[landmark] > targets_to_choose[current_target]:
+			# print_rich("[color=red][b][i]%s :: %f[/i][/b][/color]" % [landmark.landmark_name, targets_to_choose[landmark]])
+			current_target = landmark
+
+	if test_label != null:
+		test_label.text = text
 
 func reset_has_worked_today():
 	has_worked_today = false
@@ -172,23 +200,6 @@ func get_landmark_timer(landmark : Node3D, receive_zero : bool) -> float:
 
 func scan_for_new_landmarks():
 	pass
-
-func check_for_path_while_doing_stuff():
-	if is_doing_stuff:
-		choose_target()
-		if current_location != current_target:
-			timers.erase(current_location)
-			if current_location == job:
-				has_worked_today = true
-			set_movement_target()
-			is_doing_stuff = false
-			is_moving_about = true
-
-func check_for_path_while_moving():
-	if is_moving_about:
-		choose_target()
-		if current_location != current_target:
-			set_movement_target()
 
 func calculate_average_poi_distance():
 	if points_of_interest.size() <= 0:

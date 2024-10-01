@@ -27,8 +27,9 @@ material = SubResource("StandardMaterial3D_jdr04")
 size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
-vertices = PackedVector3Array(-37.0222, 0.392384, -1.94941, -5.77222, 0.392384, -1.94941, -5.52222, 0.392384, -3.69941, -4.27222, 0.392384, -4.19941, -4.27222, 0.392384, -37.1994, -37.0222, 0.392384, -37.1994, -3.27222, 0.392384, -3.94941, 4.47778, 0.392384, -5.19941, 4.47778, 0.392384, -6.94941, 6.47778, 0.392384, -37.1994, 6.72778, 0.392384, -7.19941, 7.72778, 0.392384, -6.94941, 7.72778, 0.392384, -5.94941, 36.9778, 0.392384, -5.94941, 36.9778, 0.392384, -37.1994, 7.22778, 0.392384, 2.05059, 7.72778, 0.392384, 3.05059, 8.47778, 0.392384, 3.05059, 7.47778, 0.392384, -3.94941, 6.47778, 0.392384, -3.44941, 6.47778, 0.392384, 2.05059, 8.72778, 0.392384, 4.05059, 36.9778, 0.392384, 4.05059, 5.72778, 0.392384, -3.44941, 5.47778, 0.392384, 2.80059, -2.27222, 0.392384, -1.44941, -3.02222, 0.392384, -0.949409, -2.27222, 0.392384, -2.94941, -4.02222, 1.89238, -2.94941, -4.52222, 1.89238, -2.94941, -4.77222, 1.89238, -2.19941, -4.77222, 1.89238, -1.69941, -3.27222, 1.89238, -1.94941, 4.47778, 0.392384, 4.55059, 4.47778, 0.392384, 6.30059, -5.52222, 0.392384, -0.699409, 5.97778, 0.392384, 36.8006, -37.0222, 0.392384, 36.8006, 5.97778, 0.392384, 6.80059, 8.22778, 0.392384, 5.30059, 6.97778, 0.392384, 5.30059, 6.72778, 0.392384, 6.55059, 36.9778, 0.392384, 36.8006)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(2, 0, 3), PackedInt32Array(3, 0, 4), PackedInt32Array(4, 0, 5), PackedInt32Array(8, 7, 6), PackedInt32Array(6, 3, 8), PackedInt32Array(8, 3, 4), PackedInt32Array(8, 4, 9), PackedInt32Array(9, 10, 8), PackedInt32Array(13, 12, 11), PackedInt32Array(11, 10, 13), PackedInt32Array(13, 10, 9), PackedInt32Array(13, 9, 14), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 19), PackedInt32Array(17, 19, 18), PackedInt32Array(15, 20, 19), PackedInt32Array(17, 18, 21), PackedInt32Array(21, 18, 12), PackedInt32Array(21, 12, 22), PackedInt32Array(22, 12, 13), PackedInt32Array(23, 19, 20), PackedInt32Array(20, 24, 23), PackedInt32Array(23, 24, 7), PackedInt32Array(7, 24, 25), PackedInt32Array(25, 24, 26), PackedInt32Array(27, 6, 7), PackedInt32Array(25, 27, 7), PackedInt32Array(29, 28, 30), PackedInt32Array(30, 28, 31), PackedInt32Array(31, 28, 32), PackedInt32Array(26, 24, 33), PackedInt32Array(33, 34, 26), PackedInt32Array(26, 34, 35), PackedInt32Array(34, 36, 35), PackedInt32Array(35, 36, 0), PackedInt32Array(0, 36, 37), PackedInt32Array(34, 38, 36), PackedInt32Array(0, 1, 35), PackedInt32Array(41, 40, 39), PackedInt32Array(39, 21, 22), PackedInt32Array(36, 38, 41), PackedInt32Array(39, 22, 41), PackedInt32Array(41, 22, 36), PackedInt32Array(36, 22, 42)]
+vertices = PackedVector3Array(6.72778, 0.392384, -1.19941, 7.72778, 0.392384, -1.19941, 7.72778, 0.392384, -2.69941, 6.72778, 0.392384, -3.19941, 5.72778, 0.392384, -2.94941, -0.0222244, 0.392384, -1.44941, 3.72778, 0.392384, -5.44941, 3.72778, 0.392384, -6.69941, -2.02222, 0.392384, -1.19941, -0.272224, 0.392384, -0.949409, -36.5222, 0.392384, 1.30059, -3.02222, 0.392384, -0.199409, 3.97778, 0.392384, -0.199409, 4.97778, 0.392384, 0.800591, 0.977776, 0.392384, -1.44941, 2.22778, 0.392384, -0.199409, 4.47778, 0.392384, -7.44941, 6.47778, 0.392384, -36.6994, -36.5222, 0.392384, -36.6994, 6.47778, 0.392384, -7.69941, -3.27222, 0.392384, 1.30059, 7.47778, 0.392384, -7.69941, 9.47778, 0.392384, -4.69941, 36.4778, 0.392384, -4.69941, 36.4778, 0.392384, -36.6994, 9.22778, 0.392384, -0.199409, 9.22778, 0.392384, -3.69941, 9.22778, 0.392384, 0.800591, 36.4778, 0.392384, 0.800591, 9.72778, 0.392384, 2.30059, 8.97778, 0.392384, 3.05059, 9.22778, 0.392384, 3.55059, 36.4778, 0.392384, 3.55059, 9.72778, 0.392384, 1.30059, 3.97778, 0.392384, 6.30059, 3.97778, 0.392384, 4.55059, 3.22778, 0.392384, 4.55059, 2.47778, 0.392384, 3.55059, 0.477776, 0.392384, 2.80059, -2.27222, 0.392384, 3.30059, -3.27222, 0.392384, 2.30059, -36.5222, 0.392384, 36.3006, 5.97778, 0.392384, 36.3006, 4.72778, 0.392384, 7.05059, 5.97778, 0.392384, 7.30059, 8.22778, 0.392384, 5.80059, 7.22778, 0.392384, 5.80059, 7.22778, 0.392384, 6.55059, 9.22778, 0.392384, 4.80059, 36.4778, 0.392384, 36.3006)
+polygons = [PackedInt32Array(3, 2, 4), PackedInt32Array(4, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 8), PackedInt32Array(5, 9, 8), PackedInt32Array(8, 11, 10), PackedInt32Array(12, 0, 13), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 0), PackedInt32Array(0, 14, 4), PackedInt32Array(4, 14, 6), PackedInt32Array(7, 8, 16), PackedInt32Array(16, 8, 17), PackedInt32Array(17, 8, 10), PackedInt32Array(17, 10, 18), PackedInt32Array(17, 19, 16), PackedInt32Array(11, 20, 10), PackedInt32Array(6, 14, 5), PackedInt32Array(21, 19, 17), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 17), PackedInt32Array(23, 17, 24), PackedInt32Array(2, 26, 1), PackedInt32Array(1, 26, 25), PackedInt32Array(25, 22, 27), PackedInt32Array(27, 22, 23), PackedInt32Array(27, 23, 28), PackedInt32Array(25, 26, 22), PackedInt32Array(30, 29, 31), PackedInt32Array(31, 29, 32), PackedInt32Array(33, 27, 28), PackedInt32Array(33, 28, 29), PackedInt32Array(29, 28, 32), PackedInt32Array(36, 35, 34), PackedInt32Array(36, 34, 37), PackedInt32Array(37, 34, 38), PackedInt32Array(38, 34, 39), PackedInt32Array(10, 20, 40), PackedInt32Array(40, 39, 10), PackedInt32Array(10, 39, 41), PackedInt32Array(41, 39, 42), PackedInt32Array(34, 43, 39), PackedInt32Array(39, 43, 42), PackedInt32Array(42, 43, 44), PackedInt32Array(47, 46, 45), PackedInt32Array(48, 31, 32), PackedInt32Array(45, 48, 32), PackedInt32Array(47, 45, 32), PackedInt32Array(44, 47, 42), PackedInt32Array(42, 47, 49), PackedInt32Array(49, 47, 32)]
+agent_radius = 1.0
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pwylq"]
 turbidity = 0.0
@@ -106,7 +107,7 @@ size = Vector2i(200, 125)
 render_target_update_mode = 4
 
 [node name="Player" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("1_ywxjf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, -1.76201)
 walk_speed = 3.0
 run_speed = 15.0
 
@@ -131,10 +132,10 @@ navigation_mesh = SubResource("NavigationMesh_t33e6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0832579, 0)
 
 [node name="barrel" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
-transform = Transform3D(1.4325, 0, 0.0247292, 0, 1.43271, 0, -0.0247292, 0, 1.4325, -3.50812, 0, -2.18966)
+transform = Transform3D(1.4325, 0, 0.0247292, 0, 1.43271, 0, -0.0247292, 0, 1.4325, -0.415831, 0, 1.11673)
 
 [node name="barrel2" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
-transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, -4.64089, 0, -1.85844)
+transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, -1.60614, 0, 1.50082)
 
 [node name="barrel5" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
 transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, 6.59368, 0, 3.27875)
@@ -143,7 +144,7 @@ transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, 6.59368, 0,
 transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, 6.58978, 0, -6.0063)
 
 [node name="barrel3" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
-transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, -4.27544, -0.0529132, -2.93333)
+transform = Transform3D(1.43271, 0, 0, 0, 1.43271, 0, 0, 0, 1.43271, -1.24069, -0.0529132, 0.42593)
 
 [node name="crate" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.964026, 0, 0.265808, 0, 1, 0, -0.265808, 0, 0.964026, 6.35588, 9.53674e-07, -4.77352)
@@ -153,6 +154,36 @@ transform = Transform3D(0.997597, 0, -0.0692864, 0, 1, 0, 0.0692864, 0, 0.997597
 
 [node name="crate4" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.941206, 0, -0.337835, 0, 1, 0, 0.337835, 0, 0.941206, 6.10795, 9.53674e-07, 4.45124)
+
+[node name="crate6" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 5.38046, 1.43135e-06, 3.1648)
+
+[node name="crate7" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 4.17146, 1.43135e-06, 2.80509)
+
+[node name="crate8" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 3.63445, 1.43135e-06, 1.68927)
+
+[node name="crate9" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 2.31028, 1.43135e-06, 1.62074)
+
+[node name="crate10" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 1.26539, 1.43135e-06, 1.30798)
+
+[node name="crate11" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.53694, 1.43135e-06, 0.367163)
+
+[node name="crate12" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 6.38945, 1.43135e-06, 2.07218)
+
+[node name="crate13" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 7.90706, 1.43135e-06, 1.93768)
+
+[node name="crate14" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 7.50656, 1.43135e-06, 0.563255)
+
+[node name="crate15" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 7.59719, -4.84288e-07, -4.52623)
 
 [node name="crate5" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.941206, 0, -0.337835, 0, 1, 0, 0.337835, 0, 0.941206, 7.48576, 9.53674e-07, 4.1531)
@@ -174,7 +205,7 @@ environment = SubResource("Environment_xso02")
 [node name="NPCs" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
 [node name="NPC-SMART" type="CharacterBody3D" parent="Main SubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "personality", "job", "home", "points_of_interest", "test_label")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152149, 1.01774, 2.35255)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152149, 1.01774, 4.38211)
 collision_layer = 32
 collision_mask = 1056
 script = ExtResource("7_80dul")
@@ -210,9 +241,10 @@ mesh = SubResource("CapsuleMesh_kmggu")
 [node name="Targets" type="Node3D" parent="Main SubViewportContainer/SubViewport"]
 
 [node name="HOME" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("8_4n6l4")]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -1.54608, 0.13309, 13.2987)
 
 [node name="STATUE" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -6.276, 0.133089, -4.60975)
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
 script = ExtResource("11_octe2")
 landmark_name = "Statue"
 radius_of_influence = 3.0
@@ -230,9 +262,11 @@ omni_range = 5.73
 omni_attenuation = 0.375
 
 [node name="FOUNTAIN" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_ijmam")]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.69707, 0.146206, 7.51348)
 landmark_name = "Fountain"
 
 [node name="WORK" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_bp8n5")]
+time_want_to_arrive = 8.0
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
