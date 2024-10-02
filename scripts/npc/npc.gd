@@ -23,8 +23,9 @@ var process_group : int
 
 @export var average_poi_distance : float
 
-@export var work_time_this_day : float = 0.0
 @export var has_worked_today : bool = false
+var work_time_this_day : float = 0.0
+var active_time_this_day : float = 0.0
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 
@@ -39,6 +40,10 @@ var navigation_enabled : bool = false
 
 var is_at_home : bool = false
 var is_at_job : bool = false
+
+var want_to_sleep : bool = false
+var time_want_to_sleep : float = 0.0
+var sleep_counter : float = 0.0
 
 var is_doing_stuff : bool = false
 var is_moving_about : bool = false
@@ -82,6 +87,16 @@ func set_movement_target():
 	navigation_enabled = true
 
 func _process(delta: float) -> void:
+	if want_to_sleep and current_location == home:
+		sleep_counter += delta
+		# print(sleep_counter)
+		if sleep_counter >= time_want_to_sleep:
+			want_to_sleep = false
+			time_want_to_sleep = 0.0
+			sleep_counter = 0.0
+	elif not want_to_sleep and is_moving_about:
+		active_time_this_day += delta
+
 	for timer in timers:
 		if is_doing_stuff:
 			# print(timers[timer])
@@ -99,6 +114,9 @@ func _physics_process(_delta):
 		position += velocity * _delta
 
 func run_pathfinding_logic():
+	if want_to_sleep:
+		return
+
 	if navigation_agent.is_navigation_finished() && navigation_enabled && not is_doing_stuff:
 		# print(path_timer)
 		calculate_average_poi_distance()
@@ -108,7 +126,17 @@ func run_pathfinding_logic():
 		is_moving_about = false
 
 		timers[current_location] = 0.0
-		print_rich("[color=cyan]Arrived at [b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+		if current_location == job:
+			print_rich("[color=cyan]Arrived at [/color][color=red][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+		elif current_location == home:
+			if has_worked_today:
+				want_to_sleep = (work_time_this_day + active_time_this_day) / scheduler.full_day_time > personality.mind * personality.energy
+				time_want_to_sleep = max(3.0, min(100.0, work_time_this_day + active_time_this_day))
+				print(time_want_to_sleep)
+				print(active_time_this_day)
+			print_rich("[color=cyan]Arrived at [/color][color=green][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+		else:
+			print_rich("[color=cyan]Arrived at [/color][color=yellow][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
 		return
 
 	check_for_path_while_doing_stuff()
@@ -123,9 +151,11 @@ func check_for_path_while_doing_stuff():
 	if is_doing_stuff:
 		choose_target(false)
 		if current_location != current_target:
-			timers.erase(current_location)
 			if current_location == job:
+				work_time_this_day = timers[current_location]
 				has_worked_today = true
+				print(work_time_this_day * 24.0 / scheduler.full_day_time)
+			timers.erase(current_location)
 			set_movement_target()
 			last_location = current_location
 			is_doing_stuff = false
@@ -148,11 +178,14 @@ func choose_target(is_moving : bool):
 
 	for landmark in points_of_interest:
 		var interference = 0.0
+
 		if has_worked_today and scheduler.get_current_time() <= (scheduler.full_day_time * home.time_want_to_arrive / 24.0):
-			interference = personality.bravery + personality.energy
-		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, interference) / get_landmark_timer(landmark, false)
-	targets_to_choose[home] = home.get_npc_want(self, current_location == home, 0.0) / get_landmark_timer(home, false)
-	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, 0.0) / get_landmark_timer(job, false)
+			interference += personality.bravery + personality.energy
+
+		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, interference + generate_interference()) / get_landmark_timer(landmark, false)
+
+	targets_to_choose[home] = home.get_npc_want(self, current_location == home, generate_interference()) / get_landmark_timer(home, false)
+	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, generate_interference()) / get_landmark_timer(job, false)
 
 	if is_moving:
 		targets_to_choose[last_location] /= 10.0
@@ -170,6 +203,9 @@ func choose_target(is_moving : bool):
 
 	if test_label != null:
 		test_label.text = text
+
+func generate_interference() -> float:
+	return randf_range(0.0, 1.0) * min(0.3, personality.chaos * exp(-randf_range(0.0, 2.0)) / (sqrt(scheduler.full_day_time / 100)))
 
 func reset_has_worked_today():
 	has_worked_today = false

@@ -14,7 +14,6 @@ func _ready():
 
 func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> float:
 	var npc_reputation_here = get_npc_reputation(npc.id)
-	var randomness = (npc.personality.chaos * randf_range(-1.0, 1.0))
 
 	var distance_weight = npc.personality.energy * influence_by_distance(npc.position.distance_to(self.position))
 	var loyalty_weight = npc.personality.loyalty * npc_reputation_here

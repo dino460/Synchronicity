@@ -5084,12 +5084,6 @@ size = 15.0
 near = 0.4
 far = 100.0
 
-[node name="Camera3D - Perspective" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 5, 6)
-size = 15.0
-near = 0.4
-far = 100.0
-
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true
 

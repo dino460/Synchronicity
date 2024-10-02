@@ -196,7 +196,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199
 mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport"]
-transform = Transform3D(0.896574, -0.11613, -0.427398, 0.442861, 0.22326, 0.868348, -0.00542101, -0.967817, 0.251596, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.999999, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
@@ -246,7 +246,7 @@ transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -1.54608, 0
 [node name="STATUE" type="Node3D" parent="Main SubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
 script = ExtResource("11_octe2")
-landmark_name = "Statue"
+landmark_name = "Sttu"
 radius_of_influence = 3.0
 area_max_influence = 1.0
 
@@ -263,7 +263,7 @@ omni_attenuation = 0.375
 
 [node name="FOUNTAIN" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_ijmam")]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.69707, 0.146206, 7.51348)
-landmark_name = "Fountain"
+landmark_name = "Fntn"
 
 [node name="WORK" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_bp8n5")]
 time_want_to_arrive = 8.0
@@ -292,6 +292,9 @@ omni_range = 7.648
 omni_attenuation = 0.765
 
 [node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("12_bvghk")]
+full_day_time = 120.0
+sun_up_time = 5.0
+sun_down_time = 20.0
 sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
@@ -326,5 +329,3 @@ grow_horizontal = 0
 text = "test to test test size"
 label_settings = SubResource("LabelSettings_kgmxm")
 horizontal_alignment = 2
-
-[editable path="Main SubViewportContainer/SubViewport/Targets/HOME"]

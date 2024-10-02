@@ -3,7 +3,8 @@ extends Timer
 class_name Scheduler
 
 @export var full_day_time : float = 600.0
-@export var sun_up_time_proportion : float = 0.5
+@export var sun_up_time : float
+@export var sun_down_time : float
 
 @export var is_sun_up : bool = false
 @export var sun : DirectionalLight3D
@@ -39,7 +40,8 @@ func _ready() -> void:
 	start()
 
 func _process(_delta: float) -> void:
-	is_sun_up = false if time_left <= (full_day_time * sun_up_time_proportion) else true
+	is_sun_up = true if get_current_time() >= (sun_up_time * full_day_time / 24.0) and get_current_time() < (sun_down_time * full_day_time / 24.0) else false
+
 	var hours : int = get_current_time() * 24 / full_day_time
 	var minutes : int = ((get_current_time() * 24 / full_day_time) - hours) * 60
 	if clock_label != null:
@@ -57,16 +59,8 @@ func _process(_delta: float) -> void:
 func _physics_process(_delta: float) -> void:
 	if not thread_group[frame_counter].is_alive():
 		var thread = Thread.new()
-		# thread.start(restart_thread.bind(i))
 		thread_group[frame_counter] = thread
 		thread_group[frame_counter].start(run_process_group.bind(frame_counter, thread))
-
-	# for i in number_of_groups:
-	# 	if not thread_group[i].is_alive():
-	# 		var thread = Thread.new()
-	# 		# thread.start(restart_thread.bind(i))
-	# 		thread_group[i] = thread
-	# 		thread_group[i].start(run_process_group.bind(i, thread))
 
 	frame_counter += 1
 	if frame_counter >= number_of_groups:
@@ -74,8 +68,13 @@ func _physics_process(_delta: float) -> void:
 
 func rotate_sun():
 	if sun != null:
+		var sun_x_rotation : float
+		var light_time = (sun_down_time - sun_up_time) * full_day_time / 24.0
+		sun_x_rotation = ((-get_current_time() + (sun_up_time * full_day_time / 24.0)) / (2 * light_time)) * 360.0
+
 		sun.rotation_degrees = Vector3(
-			((time_left + (full_day_time / 3.0)) / full_day_time) * 360.0,
+			# ((time_left + (full_day_time / 3.0)) / full_day_time) * 360.0,
+			sun_x_rotation,
 			sun.rotation_degrees.y,
 			sun.rotation_degrees.z
 		)
