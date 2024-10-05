@@ -4,7 +4,7 @@ class_name Landmark
 
 @export var id : int
 @export var landmark_name : String
-@export var reputations : Array[Reputation]
+@export var reputations = {}
 @export var radius_of_influence : float
 @export var area_max_influence : float
 
@@ -22,12 +22,9 @@ func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> fl
 	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight)) + interference
 
 func get_npc_reputation(npc_id : int) -> float:
-	for rep in reputations:
-		if rep.npc_id == npc_id:
-			return rep.reputation_here
-
-	reputations.append(Reputation.new(npc_id))
-	return 1.0
+	if not reputations.has(npc_id):
+		reputations[npc_id] = 1.0
+	return reputations[npc_id]
 
 func time_to_arrive(npc : NPC) -> float:
 	return npc.position.distance_to(self.position) / npc.get_speed()

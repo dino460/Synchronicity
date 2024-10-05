@@ -84,12 +84,11 @@ render_target_update_mode = 4
 [node name="Player" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("4_t1xvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
-[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder", "label")]
+[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("1_mlvqa")
 number_of_npcs_to_spawn = 1000
-world_size = 1000
+world_size = 1000.0
 npc_holder = NodePath("../NPC HOLDER")
-label = NodePath("../../../UI SubViewportContainer/SubViewport/Weights Label")
 
 [node name="NPC HOLDER" type="Node" parent="Main SubViewportContainer/SubViewport"]
 
@@ -123,10 +122,11 @@ environment = SubResource("Environment_0jq3o")
 
 [node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
 full_day_time = 20.0
+sun_up_time = 6.0
+sun_down_time = 18.0
 sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPC HOLDER")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
-number_of_groups = 10
 
 [node name="UI SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15

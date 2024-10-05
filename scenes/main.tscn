@@ -27,9 +27,9 @@ material = SubResource("StandardMaterial3D_jdr04")
 size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
-vertices = PackedVector3Array(6.72778, 0.392384, -1.19941, 7.72778, 0.392384, -1.19941, 7.72778, 0.392384, -2.69941, 6.72778, 0.392384, -3.19941, 5.72778, 0.392384, -2.94941, -0.0222244, 0.392384, -1.44941, 3.72778, 0.392384, -5.44941, 3.72778, 0.392384, -6.69941, -2.02222, 0.392384, -1.19941, -0.272224, 0.392384, -0.949409, -36.5222, 0.392384, 1.30059, -3.02222, 0.392384, -0.199409, 3.97778, 0.392384, -0.199409, 4.97778, 0.392384, 0.800591, 0.977776, 0.392384, -1.44941, 2.22778, 0.392384, -0.199409, 4.47778, 0.392384, -7.44941, 6.47778, 0.392384, -36.6994, -36.5222, 0.392384, -36.6994, 6.47778, 0.392384, -7.69941, -3.27222, 0.392384, 1.30059, 7.47778, 0.392384, -7.69941, 9.47778, 0.392384, -4.69941, 36.4778, 0.392384, -4.69941, 36.4778, 0.392384, -36.6994, 9.22778, 0.392384, -0.199409, 9.22778, 0.392384, -3.69941, 9.22778, 0.392384, 0.800591, 36.4778, 0.392384, 0.800591, 9.72778, 0.392384, 2.30059, 8.97778, 0.392384, 3.05059, 9.22778, 0.392384, 3.55059, 36.4778, 0.392384, 3.55059, 9.72778, 0.392384, 1.30059, 3.97778, 0.392384, 6.30059, 3.97778, 0.392384, 4.55059, 3.22778, 0.392384, 4.55059, 2.47778, 0.392384, 3.55059, 0.477776, 0.392384, 2.80059, -2.27222, 0.392384, 3.30059, -3.27222, 0.392384, 2.30059, -36.5222, 0.392384, 36.3006, 5.97778, 0.392384, 36.3006, 4.72778, 0.392384, 7.05059, 5.97778, 0.392384, 7.30059, 8.22778, 0.392384, 5.80059, 7.22778, 0.392384, 5.80059, 7.22778, 0.392384, 6.55059, 9.22778, 0.392384, 4.80059, 36.4778, 0.392384, 36.3006)
-polygons = [PackedInt32Array(3, 2, 4), PackedInt32Array(4, 2, 0), PackedInt32Array(0, 2, 1), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 8), PackedInt32Array(5, 9, 8), PackedInt32Array(8, 11, 10), PackedInt32Array(12, 0, 13), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 0), PackedInt32Array(0, 14, 4), PackedInt32Array(4, 14, 6), PackedInt32Array(7, 8, 16), PackedInt32Array(16, 8, 17), PackedInt32Array(17, 8, 10), PackedInt32Array(17, 10, 18), PackedInt32Array(17, 19, 16), PackedInt32Array(11, 20, 10), PackedInt32Array(6, 14, 5), PackedInt32Array(21, 19, 17), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 17), PackedInt32Array(23, 17, 24), PackedInt32Array(2, 26, 1), PackedInt32Array(1, 26, 25), PackedInt32Array(25, 22, 27), PackedInt32Array(27, 22, 23), PackedInt32Array(27, 23, 28), PackedInt32Array(25, 26, 22), PackedInt32Array(30, 29, 31), PackedInt32Array(31, 29, 32), PackedInt32Array(33, 27, 28), PackedInt32Array(33, 28, 29), PackedInt32Array(29, 28, 32), PackedInt32Array(36, 35, 34), PackedInt32Array(36, 34, 37), PackedInt32Array(37, 34, 38), PackedInt32Array(38, 34, 39), PackedInt32Array(10, 20, 40), PackedInt32Array(40, 39, 10), PackedInt32Array(10, 39, 41), PackedInt32Array(41, 39, 42), PackedInt32Array(34, 43, 39), PackedInt32Array(39, 43, 42), PackedInt32Array(42, 43, 44), PackedInt32Array(47, 46, 45), PackedInt32Array(48, 31, 32), PackedInt32Array(45, 48, 32), PackedInt32Array(47, 45, 32), PackedInt32Array(44, 47, 42), PackedInt32Array(42, 47, 49), PackedInt32Array(49, 47, 32)]
-agent_radius = 1.0
+vertices = PackedVector3Array(7.47778, 0.392384, -1.44941, 7.47778, 0.392384, -2.44941, 6.72778, 0.392384, -2.94941, 5.22778, 0.392384, -2.94941, 6.22778, 0.392384, -1.19941, 3.97778, 0.392384, -0.449409, 4.97778, 0.392384, 0.300591, 5.72778, 0.392384, 0.0505905, -3.02222, 0.392384, -0.699409, -2.02222, 0.392384, -1.44941, 3.97778, 0.392384, -7.44941, 6.47778, 0.392384, -36.4494, -36.2722, 0.392384, -36.4494, -36.2722, 0.392384, 1.30059, 6.47778, 0.392384, -7.94941, 0.977776, 0.392384, -1.69941, 3.47778, 0.392384, -5.44941, 2.72778, 0.392384, -0.199409, -3.52222, 0.392384, 1.30059, 7.97778, 0.392384, -7.69941, 9.72778, 0.392384, -4.69941, 36.2278, 0.392384, -4.69941, 36.2278, 0.392384, -36.4494, 8.72778, 0.392384, -1.19941, 8.72778, 0.392384, -2.69941, 9.72778, 0.392384, 0.800591, 36.2278, 0.392384, 0.800591, 9.97778, 0.392384, 2.30059, 9.47778, 0.392384, 3.30059, 36.2278, 0.392384, 3.55059, 2.72778, 0.392384, 4.55059, 2.47778, 0.392384, 3.80059, 1.47778, 0.392384, 3.30059, 3.72778, 0.392384, 6.30059, 3.72778, 0.392384, 4.80059, 4.22778, 0.392384, 7.05059, -2.77222, 0.392384, 3.30059, 5.97778, 0.392384, 36.0506, -36.2722, 0.392384, 36.0506, 5.97778, 0.392384, 7.55059, -3.52222, 0.392384, 2.30059, 9.22778, 0.392384, 5.30059, 7.47778, 0.392384, 6.05059, 6.97778, 0.392384, 7.30059, 36.2278, 0.392384, 36.0506)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 4), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(10, 11, 14), PackedInt32Array(16, 15, 10), PackedInt32Array(10, 15, 9), PackedInt32Array(17, 15, 5), PackedInt32Array(5, 15, 4), PackedInt32Array(4, 15, 3), PackedInt32Array(3, 15, 16), PackedInt32Array(8, 18, 13), PackedInt32Array(21, 20, 19), PackedInt32Array(14, 11, 19), PackedInt32Array(19, 11, 22), PackedInt32Array(19, 22, 21), PackedInt32Array(1, 24, 0), PackedInt32Array(0, 24, 23), PackedInt32Array(24, 20, 23), PackedInt32Array(23, 20, 25), PackedInt32Array(25, 20, 21), PackedInt32Array(25, 21, 26), PackedInt32Array(29, 28, 27), PackedInt32Array(25, 26, 27), PackedInt32Array(27, 26, 29), PackedInt32Array(32, 31, 30), PackedInt32Array(30, 34, 33), PackedInt32Array(32, 30, 33), PackedInt32Array(33, 35, 32), PackedInt32Array(32, 35, 36), PackedInt32Array(35, 37, 36), PackedInt32Array(36, 37, 13), PackedInt32Array(13, 37, 38), PackedInt32Array(35, 39, 37), PackedInt32Array(13, 18, 40), PackedInt32Array(13, 40, 36), PackedInt32Array(42, 41, 43), PackedInt32Array(43, 41, 29), PackedInt32Array(43, 29, 37), PackedInt32Array(37, 29, 44), PackedInt32Array(41, 28, 29), PackedInt32Array(37, 39, 43)]
+agent_radius = 1.24
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pwylq"]
 turbidity = 0.0
@@ -55,6 +55,7 @@ glow_enabled = true
 glow_normalized = true
 glow_bloom = 0.1
 adjustment_enabled = true
+adjustment_brightness = 0.94
 adjustment_contrast = 0.87
 adjustment_saturation = 1.21
 
@@ -266,6 +267,7 @@ transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.69707, 0
 landmark_name = "Fntn"
 
 [node name="WORK" parent="Main SubViewportContainer/SubViewport/Targets" instance=ExtResource("10_bp8n5")]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -8.57848)
 time_want_to_arrive = 8.0
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport"]
@@ -292,7 +294,7 @@ omni_range = 7.648
 omni_attenuation = 0.765
 
 [node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("12_bvghk")]
-full_day_time = 120.0
+full_day_time = 30.0
 sun_up_time = 5.0
 sun_down_time = 20.0
 sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")

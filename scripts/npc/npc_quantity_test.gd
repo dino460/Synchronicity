@@ -1,25 +1,25 @@
 extends Node
 
 @export var number_of_npcs_to_spawn : int
-@export var world_size : int
+@export var world_size : float
 @export var npc_holder : Node
-@export var label : Label
+# @export var label : Label
 
 func _ready() -> void:
-	var counter : float = 0.0
+	var counter : int = 0
 	var start : float = -world_size / 2.0
 	var spacing : float = world_size / number_of_npcs_to_spawn
 
 	for i in number_of_npcs_to_spawn:
 		var new_home_scene = preload("res://scenes/home_template.tscn")
 		var new_home_instance = new_home_scene.instantiate()
-		var pos = Vector3(15.0, 0.0, start + (counter * spacing))
+		var pos = Vector3(15.0, 0.2, start + (counter * spacing))
 		new_home_instance.position = pos
 		add_child(new_home_instance)
 
 		var new_job_scene = preload("res://scenes/work_template.tscn")
 		var new_job_instance = new_job_scene.instantiate()
-		pos = Vector3(-15.0, 0.0, start + (counter * spacing))
+		pos = Vector3(-15.0, 0.2, start + (counter * spacing))
 		new_job_instance.position = pos
 		add_child(new_job_instance)
 
@@ -29,7 +29,7 @@ func _ready() -> void:
 		new_npc_instance.position = pos
 		new_npc_instance.job = new_job_instance
 		new_npc_instance.home = new_home_instance
-		new_npc_instance.test_label = label
+		# new_npc_instance.test_label = label
 		npc_holder.add_child(new_npc_instance)
 
-		counter += 1.0
+		counter += 1

@@ -5,6 +5,9 @@ class_name NPC
 const base_move_speed : float = 8.0
 const base_run_multiplier : float = 2.3
 
+enum State {DOING_STUFF, MOVING_ABOUT, SLEEPING}
+var current_state : State = State.DOING_STUFF
+
 @export var npc_name : String
 @export var id : int
 var process_group : int
@@ -18,14 +21,15 @@ var process_group : int
 
 @export var job                : Job
 @export var home               : Home
-@export var visits             : Array[Visit]
+@export var visits             : Dictionary
 @export var points_of_interest : Array[Landmark]
 
 @export var average_poi_distance : float
 
 @export var has_worked_today : bool = false
 var work_time_this_day : float = 0.0
-var active_time_this_day : float = 0.0
+var moving_about_time_this_day : float = 0.0
+var awake_time_this_day : float = 0.0
 
 @onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
 
@@ -42,11 +46,11 @@ var is_at_home : bool = false
 var is_at_job : bool = false
 
 var want_to_sleep : bool = false
-var time_want_to_sleep : float = 0.0
+var sleep_amount_wanted : float = 0.0
 var sleep_counter : float = 0.0
 
-var is_doing_stuff : bool = false
-var is_moving_about : bool = false
+# var is_doing_stuff : bool = false
+# var is_moving_about : bool = false
 
 
 func mod_by_age() -> float:
@@ -74,7 +78,7 @@ func _ready():
 	call_deferred("actor_setup")
 
 func actor_setup():
-	choose_target(false)
+	choose_target()
 	# navigation_agent.debug_enabled = true
 	# Wait for the first physics frame so the NavigationServer can sync.
 	await get_tree().physics_frame
@@ -89,16 +93,22 @@ func set_movement_target():
 func _process(delta: float) -> void:
 	if want_to_sleep and current_location == home:
 		sleep_counter += delta
-		# print(sleep_counter)
-		if sleep_counter >= time_want_to_sleep:
+		current_state = State.SLEEPING
+
+		if sleep_counter >= sleep_amount_wanted:
+			print("AWAKE | ", scheduler.get_current_time_24())
 			want_to_sleep = false
-			time_want_to_sleep = 0.0
+			sleep_amount_wanted = 0.0
 			sleep_counter = 0.0
-	elif not want_to_sleep and is_moving_about:
-		active_time_this_day += delta
+			awake_time_this_day = 0.0
+			current_state = State.DOING_STUFF
+	elif not want_to_sleep and current_state == State.MOVING_ABOUT:
+		moving_about_time_this_day += delta
+	else:
+		awake_time_this_day += delta
 
 	for timer in timers:
-		if is_doing_stuff:
+		if current_state == State.DOING_STUFF:
 			# print(timers[timer])
 			timers[timer] += delta
 			if not has_worked_today:
@@ -117,26 +127,28 @@ func run_pathfinding_logic():
 	if want_to_sleep:
 		return
 
-	if navigation_agent.is_navigation_finished() && navigation_enabled && not is_doing_stuff:
-		# print(path_timer)
+	if navigation_agent.is_navigation_finished() && navigation_enabled && current_state != State.DOING_STUFF:
 		calculate_average_poi_distance()
-		add_visit()
+		# add_visit()
 		current_location = current_target
-		is_doing_stuff = true
-		is_moving_about = false
+		# is_doing_stuff = true
+		# is_moving_about = false
+		current_state = State.DOING_STUFF
 
 		timers[current_location] = 0.0
+
 		if current_location == job:
-			print_rich("[color=cyan]Arrived at [/color][color=red][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+			# print_rich("[color=cyan]Arrived at [/color][color=red][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+			pass
 		elif current_location == home:
 			if has_worked_today:
-				want_to_sleep = (work_time_this_day + active_time_this_day) / scheduler.full_day_time > personality.mind * personality.energy
-				time_want_to_sleep = max(3.0, min(100.0, work_time_this_day + active_time_this_day))
-				print(time_want_to_sleep)
-				print(active_time_this_day)
-			print_rich("[color=cyan]Arrived at [/color][color=green][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
-		else:
-			print_rich("[color=cyan]Arrived at [/color][color=yellow][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+				want_to_sleep = ((work_time_this_day * 0.15) + moving_about_time_this_day + (awake_time_this_day / 2.0)) / scheduler.full_day_time > personality.mind * personality.energy
+				sleep_amount_wanted = max(4.0 * scheduler.full_day_time / 24.0, min(7.0 * scheduler.full_day_time / 24.0, work_time_this_day + moving_about_time_this_day))
+				# print(sleep_amount_wanted)
+				# print(moving_about_time_this_day)
+			# print_rich("[color=cyan]Arrived at [/color][color=green][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
+		# else:
+			# print_rich("[color=cyan]Arrived at [/color][color=yellow][b]%s[/b][/color] | %s" % [current_location.landmark_name, scheduler.get_current_time_24()])
 		return
 
 	check_for_path_while_doing_stuff()
@@ -148,29 +160,30 @@ func run_pathfinding_logic():
 	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
 
 func check_for_path_while_doing_stuff():
-	if is_doing_stuff:
-		choose_target(false)
+	if current_state == State.DOING_STUFF:
+		choose_target()
 		if current_location != current_target:
 			if current_location == job:
 				work_time_this_day = timers[current_location]
 				has_worked_today = true
-				print(work_time_this_day * 24.0 / scheduler.full_day_time)
+				# print(work_time_this_day * 24.0 / scheduler.full_day_time)
 			timers.erase(current_location)
 			set_movement_target()
 			last_location = current_location
-			is_doing_stuff = false
-			is_moving_about = true
+			# is_doing_stuff = false
+			# is_moving_about = true
+			current_state = State.MOVING_ABOUT
 
 func check_for_path_while_moving():
-	if is_moving_about:
-		choose_target(true)
+	if current_state == State.MOVING_ABOUT:
+		choose_target()
 		if current_location != current_target:
 			set_movement_target()
 
 func time_to_get_to_target() -> float:
 	return position.distance_to(current_target.position) / get_speed()
 
-func choose_target(is_moving : bool):
+func choose_target():
 	var targets_to_choose : Dictionary
 
 	if last_location == null:
@@ -182,12 +195,12 @@ func choose_target(is_moving : bool):
 		if has_worked_today and scheduler.get_current_time() <= (scheduler.full_day_time * home.time_want_to_arrive / 24.0):
 			interference += personality.bravery + personality.energy
 
-		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, interference + generate_interference()) / get_landmark_timer(landmark, false)
+		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, interference + generate_interference()) / sqrt(get_landmark_timer(landmark, false))
 
-	targets_to_choose[home] = home.get_npc_want(self, current_location == home, generate_interference()) / get_landmark_timer(home, false)
-	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, generate_interference()) / get_landmark_timer(job, false)
+	targets_to_choose[home] = home.get_npc_want(self, current_location == home, generate_interference()) / sqrt(get_landmark_timer(home, false))
+	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, generate_interference()) / sqrt(get_landmark_timer(job, false))
 
-	if is_moving:
+	if current_state == State.MOVING_ABOUT:
 		targets_to_choose[last_location] /= 10.0
 
 	current_target = targets_to_choose.keys()[0]
@@ -217,16 +230,11 @@ func get_visit_by_landmark(landmark : Landmark) -> int:
 
 	return 0
 
-func add_visit():
-	if current_location == current_target:
-		return
-
-	for visit in visits:
-		if visit.landmark == current_target:
-			visit.number_of_visits += 1
-			return
-
-	visits.append(Visit.new(current_location))
+func add_visit(visited_landmark : Landmark):
+	if not visits.has(visited_landmark):
+		visits[visited_landmark] = 1
+	else:
+		visits[visited_landmark] += 1
 
 func get_landmark_timer(landmark : Node3D, receive_zero : bool) -> float:
 	if not timers.has(landmark):
