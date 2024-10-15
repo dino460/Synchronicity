@@ -25,11 +25,20 @@ var last_attack_state : State;
 var interruptable_states = [State.IDLE, State.WALK, State.RUN]
 
 
+func _ready() -> void:
+	remove_animation_interpolation()
+
+func remove_animation_interpolation():
+	for anim in animator.get_animation_list():
+		for track in animator.get_animation(anim).get_track_count():
+			animator.get_animation(anim).track_set_interpolation_type(track, Animation.INTERPOLATION_NEAREST)
+
+
 func _on_player_idling():
 	wanted_state = State.IDLE
-	animation_speed = 0.3
+	animation_speed = 3.0
 	check_wanted_state()
-#	play_animation()
+	play_animation()
 
 func _on_player_walking():
 	wanted_state = State.WALK
@@ -78,8 +87,8 @@ func play_animation():
 	there_is_animation_playing = true
 #
 	match current_state:
-#		State.IDLE:
-#			#animator.play("Idle", -1, 1.0, false)
+		State.IDLE:
+			animator.play("idle", -1, animation_speed, false)
 #			next_animation_name = "idle_" + current_weapon.type
 #
 		State.WALK:
