@@ -20,14 +20,14 @@ Now everything should be working properly!
 ## Features
 
 For now, the game is quite barebones and totally in an Alpha state of affairs. In the future, I may add a section explaining each one more carefully, since some can get complicated. For now, these are the main features and their implementation state:
-- [x] **Basic movement**: The player character does move around using WASD or the Left Analog Stick on a controller (and it runs with SHIFT). $`[{\color{lightgreen}85\%}]`$
+- [x] **Basic movement**: The player character moves around using WASD or the Left Analog Stick on a controller (and it runs with SHIFT, quite neat). Still needs a bit of polishing. $`[{\color{lightgreen}85\%}]`$
 - [ ] **Directional Combat**: My weird custom combat system has some parts somewhat implemented. Migration from the old FromSoft-like combat is still being done. Currently nothing works, but the back-end has methods, signals and tie-ins with the animation system. $`[{\color{red}12\%}]`$
 - [ ] **Animation System**: Similar to the combat system, it's half-done, and is easily breakable. $`[{\color{orange}33\%}]`$
 - [X] **Day Cycle**: Day cycles with custom durations and custom dusk and dawn times. $`[{\color{green}100\%}]`$
 - [ ] **NPC System**: A complex mess of weights and checks and arbitrary math that I'll one day explain in a section of its own. It's actually half-working half-well. Still missing interaction between NPCs, combat and doing stuff other than moving around. But the moving around is quite neat and works real nice. $`[{\color{yellow}46\%}]`$
-- [ ] **Story**: Lol. There's nothing here. I thought of some stuff, but programming, art and animations is consuming most of my time currently. One day... one day... $`[{\color{red}0.000001\%}]`$
+- [ ] **Story**: Lol. There's nothing here. I thought of some stuff, but programming, art and animations are currently consuming most of my time. One day... one day... $`[{\color{red}0.000001\%}]`$
 
-*PS: Percentage values are arbitrary and merely ment to give and idea on how much/little progress has been made)*
+<sub>*PS: Percentage values are arbitrary and merely ment to give an idea on how much/little progress has been made)*</sub>
 
 ## Configuration
 
@@ -37,7 +37,7 @@ I'll explain them on a later date.
 
 ## Contributing
 
-For now just do whatever pleases you, though I recommend either leaving an Issue or forking. Since I'm quite limited on time it may take a while for me to address any pull-requests. I'll try my best to keep an eye on any contributions, though.
+Either leave an issue (really appreciate it) or do a Pull Request. The latter will almost definitely stay gathering dust for a while, as I test and review everything carefully (and I'm slow). The former will 100% help me keep track of bugs and problems I'll be continuously keeping an eye on while developing.
 
 ## Links
 
@@ -47,14 +47,11 @@ Some usefull/important links:
 - Issue tracker: https://github.com/dino460/Synchronicity/issues
 - Related projects:
   - SNIS: https://github.com/dino460/scheduled-npc-interaction-system
-  	- Legacy A* modification I was developing in Rust to serve as the pathfinding for the game. in the end, it didn't prove itself quite what I wanted or needed, but it helped me understand a little better how pathfinding works.
+  	- Legacy A* modification I was developing in Rust to serve as the pathfinding for the game. In the end, it didn't prove itself quite what I wanted or needed, but it helped me understand a little better how pathfinding works.
 
 ## Licensing
 
-All rights reserved. That said, you may clone, run, compile, play with, modify and fork this code. Do whatever you please, just don't sell anything I make without my consent.
-
-The intention behind having this open repo is so that people can have their hands on shaping my game through testing and more informed feedback, and also to allow those that cannot buy it (when I eventually start distributing it) to still play it.
-
-I'm still working on a proper license, similar to how [Aseprite](https://github.com/aseprite/aseprite) does theirs.
-
-I'm trusting you, bro.
+This program is distributed under ~~three different~~ one license~~s~~:
+1. Source code and official releases/binaries are distributed under the [End-User License Agreement for Synchronicity (EULA)](https://github.com/dino460/Synchronicity/blob/godot-remake/EULA.txt). Please keep in mind that Godot related modules/libraries in the source code and/or releases/binaries are distributed under the [MIT License as defined by the Godot Engine](https://godotengine.org/license/). Third-party software bundled with the Godot distribution may follow different licenses not compatible with Godot's MIT License. For those, refer to [this file](https://github.com/dino460/Synchronicity/blob/godot-remake/GODOT_COPYRIGHT.txt).
+2. ~~Steam releases will one day happen. When that happens, they will folow Steam's Subscriber Agreement. For now, I'mfocusing on other stuff.~~
+3. ~~Itch.io releases will one day happen. When that happens, they will folow their own license. For now, this repo is all I have.~~
