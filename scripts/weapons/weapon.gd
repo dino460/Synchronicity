@@ -4,8 +4,7 @@ class_name Weapon
 
 @export var type : String
 
-@export var up_attack_animations : Array
-@export var down_attack_animations : Array
+@export var attack_animations : Dictionary
 
 @export var up_attack_time : float
 @export var down_attack_time : float

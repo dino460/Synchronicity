@@ -12,7 +12,7 @@ signal idling
 signal walking
 signal running
 signal dashing(dash_time: float)
-signal attack_up(weapon: Weapon, is_attacking: bool)
+signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
 @export_group("Movement Properties")
 @export var applied_speed : float = 0.0
@@ -37,7 +37,7 @@ var direction       : Vector3 = Vector3.ZERO
 @export_group("Combat Properties")
 @export var is_attacking        : bool = false
 
-#var weapon: Weapon
+@export var weapon: Weapon
 #@onready var weapon : Weapon = $MeshPivot/LowPolyCharacter/rig/Skeleton3D/BoneAttachment3D/Sword
 
 func _ready():
@@ -123,7 +123,7 @@ func _on_animation_handler_attack_ended():
 func _on_input_handler_up_attack_performed():
 	if not is_dashing:
 		combo_timer_ref.stop()
-#		attack_up.emit(weapon, is_attacking)
+		attack.emit(AnimationHandler.AnimationState.ATTACK_UP, weapon, is_attacking)
 		is_attacking = true
 
 
