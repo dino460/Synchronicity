@@ -21,20 +21,24 @@ func _ready() -> void:
 	radius_of_influence = max_worker_distance
 
 func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : float) -> float:
+	var scheduler_current_time = scheduler.get_current_time()
+	var scheduler_time_left = scheduler.time_left
+	var scheduler_full_day_time = scheduler.full_day_time
+
 	var excess_poi_visit_time_correction = npc.points_of_interest.size() * npc.average_poi_distance * npc.personality.energy * npc.personality.bravery / npc.get_speed()
-	var time_want_to_arrive_corrected = (scheduler.full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc) - excess_poi_visit_time_correction
-	var lateness = scheduler.get_current_time() - time_want_to_arrive_corrected
+	var time_want_to_arrive_corrected = (scheduler_full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc) - excess_poi_visit_time_correction
+	var lateness = scheduler_current_time - time_want_to_arrive_corrected
 	var lateness_weight = 0.0 if is_working_or_need_to_work else lateness * npc.personality.mind
 	var time_weight : float
 
-	var in_game_time_want_to_stop = (scheduler.full_day_time * (time_want_to_arrive + expected_work_time) / 24.0)
-	if scheduler.get_current_time() > in_game_time_want_to_stop:
-		var time_left = scheduler.time_left if scheduler.time_left > 0.0 else 0.1
+	var in_game_time_want_to_stop = (scheduler_full_day_time * (time_want_to_arrive + expected_work_time) / 24.0)
+	if scheduler_current_time > in_game_time_want_to_stop:
+		var time_left = scheduler_time_left if scheduler_time_left > 0.0 else 0.1
 		time_weight = -1 * in_game_time_want_to_stop / (time_left * sqrt(npc.personality.mind))
-	elif scheduler.get_current_time() >= time_want_to_arrive_corrected:
-		time_weight = scheduler.time_left / (sqrt(npc.personality.mind) * scheduler.full_day_time)
+	elif scheduler_current_time >= time_want_to_arrive_corrected:
+		time_weight = scheduler_time_left / (sqrt(npc.personality.mind) * scheduler_full_day_time)
 	else:
-		time_weight = pow(npc.personality.soul, 2) * scheduler.get_current_time() / scheduler.full_day_time
+		time_weight = pow(npc.personality.soul, 2) * scheduler.get_current_time() / scheduler_full_day_time
 
 	return super(npc, is_working_or_need_to_work, interference) + lateness_weight + time_weight
 

@@ -74,6 +74,8 @@ func _ready():
 	process_group = scheduler.request_group()
 	scheduler.call_deferred("bind_callable_to_group", process_group, run_pathfinding_logic)
 	calculate_average_poi_distance()
+	if last_location == null:
+		last_location = home
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
@@ -160,25 +162,34 @@ func run_pathfinding_logic():
 	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
 
 func check_for_path_while_doing_stuff():
-	if current_state == State.DOING_STUFF:
-		choose_target()
-		if current_location != current_target:
-			if current_location == job:
-				work_time_this_day = timers[current_location]
-				has_worked_today = true
-				# print(work_time_this_day * 24.0 / scheduler.full_day_time)
-			timers.erase(current_location)
-			set_movement_target()
-			last_location = current_location
-			# is_doing_stuff = false
-			# is_moving_about = true
-			current_state = State.MOVING_ABOUT
+	if current_state != State.DOING_STUFF:
+		return
+
+	choose_target()
+	if current_location == current_target:
+		return
+
+	if current_location == job:
+		work_time_this_day = timers[current_location]
+		has_worked_today = true
+		# print(work_time_this_day * 24.0 / scheduler.full_day_time)
+
+	timers.erase(current_location)
+	set_movement_target()
+	last_location = current_location
+	# is_doing_stuff = false
+	# is_moving_about = true
+	current_state = State.MOVING_ABOUT
 
 func check_for_path_while_moving():
-	if current_state == State.MOVING_ABOUT:
-		choose_target()
-		if current_location != current_target:
-			set_movement_target()
+	if current_state != State.MOVING_ABOUT:
+		return
+
+	choose_target()
+	if current_location == current_target:
+		return
+
+	set_movement_target()
 
 func time_to_get_to_target() -> float:
 	return position.distance_to(current_target.position) / get_speed()
@@ -189,12 +200,11 @@ func choose_target():
 	if last_location == null:
 		last_location = home
 
+	var interference = 0.0
+	if has_worked_today and scheduler.get_current_time() <= (scheduler.full_day_time * home.time_want_to_arrive / 24.0):
+		interference = personality.bravery + personality.energy
+
 	for landmark in points_of_interest:
-		var interference = 0.0
-
-		if has_worked_today and scheduler.get_current_time() <= (scheduler.full_day_time * home.time_want_to_arrive / 24.0):
-			interference += personality.bravery + personality.energy
-
 		targets_to_choose[landmark] = landmark.get_npc_want(self, current_location == landmark, interference + generate_interference()) / sqrt(get_landmark_timer(landmark, false))
 
 	targets_to_choose[home] = home.get_npc_want(self, current_location == home, generate_interference()) / sqrt(get_landmark_timer(home, false))
