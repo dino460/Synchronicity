@@ -12,7 +12,7 @@ extends Node3D
 
 
 @onready var mesh_pivot_ref : Node3D = $"../MeshPivot"
-@onready var orthogonal_camera_ref = $"Camera3D - Orthogonal"
+@onready var environment_camera_ref = $"EnvironmentCamera3D"
 
 var is_rotating : bool = false
 var target_rotation : float = 0.0
@@ -31,10 +31,10 @@ func _process(delta: float) -> void:
 	else:
 		self.rotation.y = target_rotation
 
-	if not is_equal_approx(orthogonal_camera_ref.position.y, vertical_target):
-		orthogonal_camera_ref.position.y = lerpf(orthogonal_camera_ref.position.y, vertical_target, delta * vertical_speed)
+	if not is_equal_approx(environment_camera_ref.position.y, vertical_target):
+		environment_camera_ref.position.y = lerpf(environment_camera_ref.position.y, vertical_target, delta * vertical_speed)
 	else:
-		orthogonal_camera_ref.position.y = vertical_target
+		environment_camera_ref.position.y = vertical_target
 
 func _physics_process(_delta: float) -> void:
 	update_vertical_target()
