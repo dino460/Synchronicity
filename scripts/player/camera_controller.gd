@@ -3,6 +3,7 @@ extends Node3D
 @export_group("Rotation properties", "rotation_")
 @export var rotation_speed :  float = 2.0
 @export var rotation_angle :  float = 60.0
+@export var snap_rotation : bool = false
 
 @export_group("Vertical properties", "vertical_")
 @export var vertical_speed          :  float = 2.0
@@ -26,7 +27,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	update_target_rotation()
 
-	if not is_equal_approx(self.rotation.y, target_rotation):
+	if not is_equal_approx(self.rotation.y, target_rotation) and not snap_rotation:
 		self.rotation.y = lerp_angle(self.rotation.y, target_rotation, delta * rotation_speed)
 	else:
 		self.rotation.y = target_rotation

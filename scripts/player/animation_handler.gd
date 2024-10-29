@@ -66,7 +66,7 @@ func _on_player_attack(animation_direction: AnimationState, weapon: Weapon, was_
 		if weapon.is_preferred_attack(last_attack_state, wanted_state):
 			# Do something damage and animation speed related some day
 			pass
-		animation_speed = 8.0 #1.0 / weapon.up_attack_time
+		animation_speed = 5.0 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
 	play_animation(weapon.attack_animations[wanted_state])
 
@@ -88,15 +88,15 @@ func play_animation(animation_name : String = ""):
 #
 	match current_state:
 		AnimationState.IDLE:
-			animator.play("idle", -1, animation_speed, false)
+			animator.play("idle", 0.1, animation_speed, false)
 #			next_animation_name = "idle_" + current_weapon.type
 #
 		AnimationState.WALK:
-			animator.play("walk", -1, animation_speed, false)
+			animator.play("walk", 0.1, animation_speed, false)
 #			next_animation_name = "walk_" + current_weapon.type
 #
 		AnimationState.RUN:
-			animator.play("run", -1, animation_speed, false)
+			animator.play("run", 0.1, animation_speed, false)
 #			next_animation_name = "run_" + current_weapon.type
 #
 #		AnimationState.DASH:
@@ -106,7 +106,7 @@ func play_animation(animation_name : String = ""):
 		AnimationState.ATTACK_UP:
 			if !is_attacking:
 				is_attacking = true
-				animator.play(animation_name, -1, animation_speed, false)
+				animator.play(animation_name, 0.1, animation_speed, false)
 				# next_animation_name = current_weapon.light_attack_animations[combo_value]
 #
 	#animator.play(next_animation_name, -1, animation_speed, false)
@@ -116,6 +116,12 @@ func play_animation(animation_name : String = ""):
 # DO NOT FORGET TO ADD THIS TO A METHOD TRACK
 func enable_combo():
 	is_attacking = false
+
+
+func end_attack():
+	is_attacking = false
+	attack_ended.emit()
+	check_wanted_state()
 
 
 func _on_animation_player_animation_finished(anim_name):

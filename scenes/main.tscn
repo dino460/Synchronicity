@@ -1,11 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=31 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="3_tjny0"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
-[ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="6_vqehm"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
 [ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="9_cj51m"]
@@ -36,7 +35,6 @@ agent_radius = 1.24
 turbidity = 0.0
 ground_color = Color(0.294793, 0.227868, 0.147204, 1)
 energy_multiplier = 1.18
-night_sky = ExtResource("6_vqehm")
 
 [sub_resource type="Sky" id="Sky_yalbf"]
 sky_material = SubResource("PhysicalSkyMaterial_pwylq")
@@ -74,6 +72,9 @@ albedo_color = Color(0.858904, 0, 0.160098, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
 material = SubResource("StandardMaterial3D_2604s")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_rukhp"]
+viewport_path = NodePath("EnvironmentSubViewportContainer/SubViewport")
+
 [sub_resource type="SystemFont" id="SystemFont_3u5ke"]
 font_names = PackedStringArray("FiraCode Nerd Font Mono")
 
@@ -90,9 +91,6 @@ font = SubResource("SystemFont_t4jp0")
 font_size = 20
 font_color = Color(0.926528, 0, 0, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rukhp"]
-viewport_path = NodePath("EnvironmentSubViewportContainer/SubViewport")
-
 [node name="Main" type="Node"]
 
 [node name="EnvironmentSubViewportContainer" type="SubViewportContainer" parent="."]
@@ -107,6 +105,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 script = ExtResource("1_g8fm3")
+minimum_pixelation = 3
 
 [node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer"]
 handle_input_locally = false
@@ -120,7 +119,6 @@ render_target_update_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, -1.76201)
 walk_speed = 3.0
 run_speed = 15.0
-run_is_toggle = true
 
 [node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 collision_layer = 1057
@@ -207,6 +205,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199
 mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.679262, 0.733896, 0, -0.733896, 0.679262, 0, 0, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport"]
@@ -302,14 +301,31 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("12_bvghk")]
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label") instance=ExtResource("12_bvghk")]
 sun_up_time = 5.0
 sun_down_time = 20.0
-sun = NodePath("../EnvironmentSubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
 
+[node name="Control" type="Control" parent="." node_paths=PackedStringArray("viewport")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("14_cns07")
+viewport = NodePath("../EnvironmentSubViewportContainer/SubViewport")
+pixel_movement = false
+sub_pixel_movement_at_integer_scale = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+texture_filter = 1
+texture = SubResource("ViewportTexture_rukhp")
+centered = false
+
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -321,7 +337,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1000, 625)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="Clock Label" type="Label" parent="UISubViewportContainer/UISubViewport"]
 offset_right = 296.0
@@ -339,19 +355,3 @@ grow_horizontal = 0
 text = "test to test test size"
 label_settings = SubResource("LabelSettings_kgmxm")
 horizontal_alignment = 2
-
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("viewport")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_cns07")
-viewport = NodePath("../EnvironmentSubViewportContainer/SubViewport")
-sub_pixel_movement_at_integer_scale = false
-
-[node name="Sprite2D" type="Sprite2D" parent="Control"]
-texture_filter = 1
-texture = SubResource("ViewportTexture_rukhp")
-centered = false

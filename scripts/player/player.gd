@@ -8,6 +8,8 @@ extends CharacterBody3D
 
 @onready var input_handler_ref : InputHandler = $InputHandler
 
+@onready var skeleton_ref : Skeleton3D = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"
+
 signal idling
 signal walking
 signal running
@@ -35,10 +37,12 @@ var direction       : Vector3 = Vector3.ZERO
 @export var smooth_speed : float = 2.0
 
 @export_group("Combat Properties")
-@export var is_attacking        : bool = false
+@export var attack_movement_speed : float = 10.0
+@export var weapon                : Weapon
+var is_attacking                  : bool = false
+var should_attack_move            : bool = false
+var last_direction_normalized     : Vector3 = Vector3.UP
 
-@export var weapon: Weapon
-#@onready var weapon : Weapon = $MeshPivot/LowPolyCharacter/rig/Skeleton3D/BoneAttachment3D/Sword
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
@@ -61,7 +65,9 @@ func set_is_running():
 
 
 func set_speed():
-	if is_running:
+	if is_attacking:
+		applied_speed = attack_movement_speed
+	elif is_running:
 		applied_speed = run_speed
 	else:
 		applied_speed = walk_speed
@@ -79,10 +85,14 @@ func _process(_delta : float) -> void:
 func _physics_process(delta : float) -> void:
 	set_speed()
 
-	if is_attacking:
-		direction = Vector3.ZERO
-	else:
+	if not is_attacking:
 		direction = input_handler_ref.get_player_direction_this_frame()
+		if direction != Vector3.ZERO:
+			last_direction_normalized = direction.normalized()
+	elif should_attack_move:
+		direction = last_direction_normalized
+	else:
+		direction = Vector3.ZERO
 
 	if direction != Vector3.ZERO:
 		if not is_dashing:
@@ -102,8 +112,6 @@ func _physics_process(delta : float) -> void:
 	target_velocity.x = direction.x * applied_speed
 	target_velocity.z = direction.z * applied_speed
 
-	# Something is making player bump
-	# Disabling gravity makes it work
 	if not is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	else:
@@ -112,6 +120,9 @@ func _physics_process(delta : float) -> void:
 	velocity = target_velocity
 	move_and_slide()
 
+
+func stop_attack_movement():
+	should_attack_move = false
 
 func _on_animation_handler_dash_ended():
 	is_dashing = false
@@ -125,6 +136,7 @@ func _on_input_handler_up_attack_performed():
 		combo_timer_ref.stop()
 		attack.emit(AnimationHandler.AnimationState.ATTACK_UP, weapon, is_attacking)
 		is_attacking = true
+		should_attack_move = true
 
 
 func _on_input_handler_dash_performed():
