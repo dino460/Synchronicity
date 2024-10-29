@@ -106,6 +106,7 @@ grow_vertical = 2
 stretch = true
 script = ExtResource("1_g8fm3")
 minimum_pixelation = 3
+pixelation_correction = 4
 
 [node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer"]
 handle_input_locally = false

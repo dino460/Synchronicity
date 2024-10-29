@@ -1,6 +1,7 @@
 extends SubViewportContainer
 
-@export var minimum_pixelation : int = 5
+@export var minimum_pixelation    : int = 5
+@export var pixelation_correction : int = 5
 
 
 func _ready() -> void:
@@ -11,5 +12,5 @@ func _ready() -> void:
 func _change_pixelation_by_resolution():
 	var current_res = mini(DisplayServer.window_get_size().x, DisplayServer.window_get_size().y)
 
-	stretch_shrink = max(minimum_pixelation, 5 * current_res / 1080)
+	stretch_shrink = max(minimum_pixelation, pixelation_correction * current_res / 1080)
 	pass
