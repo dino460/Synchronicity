@@ -133,7 +133,6 @@ func _on_animation_handler_attack_ended():
 	is_attacking = false
 	can_combo = false
 	should_attack_move = false
-	print("----------------------------")
 #	combo_timer_ref.start(weapon.combo_wait_time)
 
 func _on_input_handler_up_attack_performed():
@@ -143,7 +142,6 @@ func _on_input_handler_up_attack_performed():
 		is_attacking = true
 		should_attack_move = true
 		can_combo = false
-		print("============================")
 
 
 func _on_input_handler_dash_performed():
@@ -155,4 +153,3 @@ func _on_input_handler_dash_performed():
 
 func _on_animation_handler_enable_combo():
 	can_combo = true
-	print("!!!!!!!!")

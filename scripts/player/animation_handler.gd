@@ -23,8 +23,17 @@ var animation_speed            : float = 1.0
 
 var last_attack_state : AnimationState;
 
-var interruptable_states = [AnimationState.IDLE, AnimationState.WALK, AnimationState.RUN]
-var attack_states = [AnimationState.ATTACK_UP, AnimationState.ATTACK_DOWN, AnimationState.ATTACK_LEFT, AnimationState.ATTACK_RIGHT]
+# var interruptable_states = [
+# 	AnimationState.IDLE,
+# 	AnimationState.WALK,
+# 	AnimationState.RUN
+# ]
+var attack_states = [
+	AnimationState.ATTACK_UP,
+	AnimationState.ATTACK_DOWN,
+	AnimationState.ATTACK_LEFT,
+	AnimationState.ATTACK_RIGHT
+]
 
 
 func _ready() -> void:
@@ -40,55 +49,43 @@ func _on_player_idling():
 	wanted_state = AnimationState.IDLE
 	animation_speed = 3.0
 	check_wanted_state()
-	play_animation()
+	play_animation("idle")
 
 func _on_player_walking():
 	wanted_state = AnimationState.WALK
 	animation_speed = 3.8
 	check_wanted_state()
-	play_animation()
+	play_animation("walk")
 
 func _on_player_running():
 	wanted_state = AnimationState.RUN
 	animation_speed = 8.0
 	check_wanted_state()
-	play_animation()
+	play_animation("run")
 
 func _on_player_dashing(dash_time):
 	wanted_state = AnimationState.DASH
 	animation_speed = 1.0 / dash_time
 	check_wanted_state()
-#	play_animation()
+#	play_animation("dash")
 
 func _on_player_attack(animation_direction: AnimationState, weapon: Weapon, was_attacking):
 	wanted_state = animation_direction
 	on_combo = was_attacking
-#	current_weapon = weapon
+	# current_weapon = weapon
 	if check_wanted_state():
 		if weapon.is_preferred_attack(last_attack_state, wanted_state):
 			# Do something damage and animation speed related some day
 			pass
 		animation_speed = 5.0 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
-	print(">>> WHY <<<")
 	play_animation(weapon.attack_animations[wanted_state])
 
-func _physics_process(_delta: float) -> void:
-	print(is_attacking)
-
 func check_wanted_state() -> bool:
-	# if current_state not in interruptable_states:
-	# 	if not there_is_animation_playing:
-	# 		current_state = wanted_state
-	# 		return true
-	# 	else:
-	# 		return false
-	# elif current_state in attack_states and is_attacking:
-	# 	return false
-	# else:
-	# 	current_state = wanted_state
-	# 	return true
-	if (current_state not in interruptable_states and there_is_animation_playing) or (current_state in attack_states and is_attacking):
+	# var check_for_anim_interrupt := current_state not in interruptable_states and there_is_animation_playing
+	var check_for_attack_interrupt := current_state in attack_states and is_attacking
+
+	if check_for_attack_interrupt:
 		return false
 	else:
 		current_state = wanted_state
@@ -100,17 +97,17 @@ func play_animation(animation_name : String = ""):
 	match current_state:
 		AnimationState.IDLE:
 			is_attacking = false
-			animator.play("idle", 0.1, animation_speed, false)
+			animator.play(animation_name, 0.1, animation_speed, false)
 #			next_animation_name = "idle_" + current_weapon.type
 #
 		AnimationState.WALK:
 			is_attacking = false
-			animator.play("walk", 0.1, animation_speed, false)
+			animator.play(animation_name, 0.1, animation_speed, false)
 #			next_animation_name = "walk_" + current_weapon.type
 #
 		AnimationState.RUN:
 			is_attacking = false
-			animator.play("run", 0.1, animation_speed, false)
+			animator.play(animation_name, 0.1, animation_speed, false)
 #			next_animation_name = "run_" + current_weapon.type
 #
 #		AnimationState.DASH:
@@ -119,7 +116,6 @@ func play_animation(animation_name : String = ""):
 #
 		AnimationState.ATTACK_UP:
 			if not is_attacking:
-				print("here")
 				is_attacking = true
 				animator.stop()
 				animator.play(animation_name, 0.1, animation_speed, false)
