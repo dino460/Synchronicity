@@ -114,10 +114,11 @@ func play_animation(animation_name : String = ""):
 #			#animator.play("Roll", -1, animation_speed, false)
 #			next_animation_name = "roll_" + current_weapon.type
 #
-		AnimationState.ATTACK_UP:
+		AnimationState.ATTACK_UP, AnimationState.ATTACK_DOWN, AnimationState.ATTACK_LEFT, AnimationState.ATTACK_RIGHT:
 			if not is_attacking:
 				is_attacking = true
 				animator.stop()
+				print(animation_name)
 				animator.play(animation_name, 0.1, animation_speed, false)
 				# next_animation_name = current_weapon.light_attack_animations[combo_value]
 #

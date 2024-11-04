@@ -124,7 +124,6 @@ func _physics_process(delta : float) -> void:
 
 func stop_attack_movement():
 	should_attack_move = false
-	can_combo = true
 
 func _on_animation_handler_dash_ended():
 	is_dashing = false
@@ -135,14 +134,19 @@ func _on_animation_handler_attack_ended():
 	should_attack_move = false
 #	combo_timer_ref.start(weapon.combo_wait_time)
 
-func _on_input_handler_up_attack_performed():
+func do_attack(attack_state : AnimationHandler.AnimationState):
 	if not is_dashing and ((not is_attacking) or can_combo):
-		combo_timer_ref.stop()
-		attack.emit(AnimationHandler.AnimationState.ATTACK_UP, weapon, is_attacking)
+		print(attack_state)
+		attack.emit(attack_state, weapon, is_attacking)
 		is_attacking = true
 		should_attack_move = true
 		can_combo = false
 
+func _on_input_handler_up_attack_performed():
+	do_attack(AnimationHandler.AnimationState.ATTACK_UP)
+
+func _on_input_handler_down_attack_performed() -> void:
+	do_attack(AnimationHandler.AnimationState.ATTACK_DOWN)
 
 func _on_input_handler_dash_performed():
 	if not is_dashing and not direction == Vector3.ZERO:
