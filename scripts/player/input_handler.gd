@@ -14,6 +14,10 @@ func _process(_delta):
 		up_attack_performed.emit()
 	elif Input.is_action_just_pressed("attack_down"):
 		down_attack_performed.emit()
+	elif Input.is_action_just_pressed("attack_left"):
+		left_attack_performed.emit()
+	elif Input.is_action_just_pressed("attack_right"):
+		right_attack_performed.emit()
 	elif Input.is_action_just_pressed("player_dash"):
 		dash_performed.emit()
 

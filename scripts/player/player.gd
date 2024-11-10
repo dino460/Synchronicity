@@ -136,7 +136,6 @@ func _on_animation_handler_attack_ended():
 
 func do_attack(attack_state : AnimationHandler.AnimationState):
 	if not is_dashing and ((not is_attacking) or can_combo):
-		print(attack_state)
 		attack.emit(attack_state, weapon, is_attacking)
 		is_attacking = true
 		should_attack_move = true
@@ -148,12 +147,18 @@ func _on_input_handler_up_attack_performed():
 func _on_input_handler_down_attack_performed() -> void:
 	do_attack(AnimationHandler.AnimationState.ATTACK_DOWN)
 
+func _on_input_handler_left_attack_performed() -> void:
+	do_attack(AnimationHandler.AnimationState.ATTACK_LEFT)
+
+func _on_input_handler_right_attack_performed() -> void:
+	print("Not ready yet")
+	# do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT)
+
 func _on_input_handler_dash_performed():
 	if not is_dashing and not direction == Vector3.ZERO:
 		is_dashing = true
 		applied_speed = dash_speed
 		dashing.emit(dash_time)
-
 
 func _on_animation_handler_enable_combo():
 	can_combo = true

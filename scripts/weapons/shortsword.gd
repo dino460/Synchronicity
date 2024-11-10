@@ -5,6 +5,8 @@ func _ready():
 	# up_attack_time = 1.5
 	attack_animations[AnimationHandler.AnimationState.ATTACK_UP] = "attack_up_shortsword"
 	attack_animations[AnimationHandler.AnimationState.ATTACK_DOWN] = "attack_down_shortsword"
+	attack_animations[AnimationHandler.AnimationState.ATTACK_LEFT] = "attack_left_shortsword"
+	# attack_animations[AnimationHandler.AnimationState.ATTACK_RIGHT] = "attack_right_shortsword"
 
 	preferred_attack_stream.append_array([
 		PreferredNextAttack.new(AnimationHandler.AnimationState.ATTACK_UP, AnimationHandler.AnimationState.ATTACK_DOWN),

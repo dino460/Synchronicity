@@ -74,9 +74,9 @@ func _on_player_attack(animation_direction: AnimationState, weapon: Weapon, was_
 	on_combo = was_attacking
 	# current_weapon = weapon
 	if check_wanted_state():
-		if weapon.is_preferred_attack(last_attack_state, wanted_state):
-			# Do something damage and animation speed related some day
-			pass
+		# if weapon.is_preferred_attack(last_attack_state, wanted_state):
+		# 	# Do something damage and animation speed related some day
+		# 	pass
 		animation_speed = 5.0 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
 	play_animation(weapon.attack_animations[wanted_state])
@@ -118,7 +118,6 @@ func play_animation(animation_name : String = ""):
 			if not is_attacking:
 				is_attacking = true
 				animator.stop()
-				print(animation_name)
 				animator.play(animation_name, 0.1, animation_speed, false)
 				# next_animation_name = current_weapon.light_attack_animations[combo_value]
 #
