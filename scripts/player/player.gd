@@ -151,8 +151,7 @@ func _on_input_handler_left_attack_performed() -> void:
 	do_attack(AnimationHandler.AnimationState.ATTACK_LEFT)
 
 func _on_input_handler_right_attack_performed() -> void:
-	print("Not ready yet")
-	# do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT)
+	do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT)
 
 func _on_input_handler_dash_performed():
 	if not is_dashing and not direction == Vector3.ZERO:
