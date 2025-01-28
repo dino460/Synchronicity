@@ -77,7 +77,7 @@ func _on_player_attack(animation_direction: AnimationState, weapon: Weapon, was_
 		# if weapon.is_preferred_attack(last_attack_state, wanted_state):
 		# 	# Do something damage and animation speed related some day
 		# 	pass
-		animation_speed = 4.0 #1.0 / weapon.up_attack_time
+		animation_speed = 5.5 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
 	play_animation(weapon.attack_animations[wanted_state])
 
