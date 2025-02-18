@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=32 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="3_tjny0"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
+[ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
 [ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="9_cj51m"]
@@ -249,6 +250,9 @@ mesh = SubResource("CapsuleMesh_kmggu")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 
+[node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" instance=ExtResource("6_mfdyr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13348, -4.13876)
+
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("8_4n6l4")]
@@ -265,7 +269,7 @@ area_max_influence = 1.0
 mesh = SubResource("SphereMesh_abj4j")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE"]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57619, 0)
 light_color = Color(1, 0.47973, 0.467837, 1)
 light_energy = 4.75
 shadow_enabled = true

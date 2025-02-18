@@ -39,14 +39,16 @@ var direction       : Vector3 = Vector3.ZERO
 @export_group("Combat Properties")
 @export var attack_movement_speed : float = 10.0
 @export var weapon                : Weapon
+var weapon_collider               : Area3D
 var is_attacking                  : bool = false
 var should_attack_move            : bool = false
 var can_combo 					  : bool = false
 var last_direction_normalized     : Vector3 = Vector3.UP
-
+var damaged_enemies_this_attack   : Array = []
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
+	weapon_collider = weapon.get_child(0)
 	pass
 
 
@@ -84,6 +86,13 @@ func _process(_delta : float) -> void:
 
 
 func _physics_process(delta : float) -> void:
+	if is_attacking:
+		var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
+		if not damaged_enemies_this_attack.has(hit_enemies):
+			print(hit_enemies)
+			damaged_enemies_this_attack.append(hit_enemies)
+	elif damaged_enemies_this_attack.size() > 0:
+		damaged_enemies_this_attack.clear()
 	set_speed()
 
 	if not is_attacking:

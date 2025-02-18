@@ -67,13 +67,16 @@ func get_speed() -> float:
 
 func _ready():
 	add_to_group("persist")
+	
 	personality = get_child(0)
-	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
 	process_group = scheduler.request_group()
+	
 	scheduler.call_deferred("bind_callable_to_group", process_group, run_pathfinding_logic)
+	
 	calculate_average_poi_distance()
+	
 	if last_location == null:
 		last_location = home
 	# Make sure to not await during _ready.
@@ -89,6 +92,9 @@ func actor_setup():
 	set_movement_target()
 
 func set_movement_target():
+	if current_target == null:
+		return
+		
 	navigation_agent.set_target_position(current_target.position)
 	navigation_enabled = true
 
@@ -195,6 +201,9 @@ func time_to_get_to_target() -> float:
 	return position.distance_to(current_target.position) / get_speed()
 
 func choose_target():
+	if home == null or job == null:
+		return
+		
 	var targets_to_choose : Dictionary
 
 	if last_location == null:
