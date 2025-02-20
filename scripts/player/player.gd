@@ -91,6 +91,10 @@ func _physics_process(delta : float) -> void:
 		if not damaged_enemies_this_attack.has(hit_enemies):
 			print(hit_enemies)
 			damaged_enemies_this_attack.append(hit_enemies)
+			for enemy in hit_enemies:
+				if enemy.has_method("take_damage"):
+					enemy.take_damage(weapon.attack_damage)
+					print(weapon.attack_damage)
 	elif damaged_enemies_this_attack.size() > 0:
 		damaged_enemies_this_attack.clear()
 	set_speed()

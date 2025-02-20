@@ -49,6 +49,8 @@ var want_to_sleep : bool = false
 var sleep_amount_wanted : float = 0.0
 var sleep_counter : float = 0.0
 
+@export var stats : CharacterStats
+
 # var is_doing_stuff : bool = false
 # var is_moving_about : bool = false
 
@@ -67,16 +69,16 @@ func get_speed() -> float:
 
 func _ready():
 	add_to_group("persist")
-	
+
 	personality = get_child(0)
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
 	process_group = scheduler.request_group()
-	
+
 	scheduler.call_deferred("bind_callable_to_group", process_group, run_pathfinding_logic)
-	
+
 	calculate_average_poi_distance()
-	
+
 	if last_location == null:
 		last_location = home
 	# Make sure to not await during _ready.
@@ -94,7 +96,7 @@ func actor_setup():
 func set_movement_target():
 	if current_target == null:
 		return
-		
+
 	navigation_agent.set_target_position(current_target.position)
 	navigation_enabled = true
 
@@ -203,7 +205,7 @@ func time_to_get_to_target() -> float:
 func choose_target():
 	if home == null or job == null:
 		return
-		
+
 	var targets_to_choose : Dictionary
 
 	if last_location == null:
@@ -272,3 +274,7 @@ func calculate_average_poi_distance():
 	for poi in points_of_interest:
 		average_poi_distance += self.position.distance_to(poi.position)
 	average_poi_distance /= points_of_interest.size()
+
+func take_damage(damage : int):
+	stats.health -= damage
+	print("OUCH")

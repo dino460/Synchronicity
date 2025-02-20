@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://mkhk0i0eskjt"]
+[gd_scene load_steps=7 format=3 uid="uid://mkhk0i0eskjt"]
 
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
 [ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
+[ext_resource type="Script" path="res://scripts/character_stats.gd" id="3_kkvfd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
@@ -11,13 +12,14 @@ albedo_color = Color(0, 0.693455, 0.60667, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
 material = SubResource("StandardMaterial3D_rkigc")
 
-[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("personality")]
+[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("personality", "stats")]
 collision_layer = 32
 collision_mask = 1056
 script = ExtResource("1_p1mm1")
 npc_name = "NPC_37"
 current_age = 25
 personality = NodePath("Personality")
+stats = NodePath("Stats")
 
 [node name="Personality" type="Node" parent="."]
 script = ExtResource("2_iwygw")
@@ -29,6 +31,10 @@ energy = 0.7
 body = 0.6
 mind = 0.7
 soul = 0.8
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("3_kkvfd")
+constitution = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_372vt")

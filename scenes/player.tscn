@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=4 uid="uid://bylwa0aplfyax"]
+[gd_scene load_steps=18 format=4 uid="uid://bylwa0aplfyax"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_br4xa"]
 [ext_resource type="Script" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
 [ext_resource type="Script" path="res://scripts/player/input_handler.gd" id="3_imqgc"]
+[ext_resource type="Script" path="res://scripts/character_stats.gd" id="4_dcvbl"]
 [ext_resource type="Script" path="res://scripts/player/sound_handler.gd" id="4_n1gxj"]
 [ext_resource type="PackedScene" uid="uid://odpovh6l2sev" path="res://assets/SELS low poly char/Low-Poly-Base.blend.blend" id="4_pdx7r"]
 [ext_resource type="Script" path="res://scripts/player/camera_controller.gd" id="5_lu2e7"]
@@ -67,6 +68,9 @@ script = ExtResource("2_u5517")
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("3_imqgc")
+
+[node name="PlayerStats" type="Node" parent="."]
+script = ExtResource("4_dcvbl")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." node_paths=PackedStringArray("audio_stream_player")]
 script = ExtResource("4_n1gxj")
@@ -371,7 +375,6 @@ bones/145/scale = Vector3(1, 1, 1)
 bones/146/rotation = Quaternion(0.100465, -0.0952011, -0.0292976, 0.989942)
 bones/146/scale = Vector3(1, 1, 1)
 bones/147/rotation = Quaternion(0.0842606, -0.000226357, 0.0026762, 0.99644)
-bones/147/scale = Vector3(1, 1, 1)
 bones/148/rotation = Quaternion(0.26464, -3.18407e-05, -0.00506441, 0.964334)
 bones/148/scale = Vector3(1, 0.999999, 1)
 bones/149/rotation = Quaternion(-0.154756, 0.545273, 0.258269, 0.78232)
@@ -381,7 +384,6 @@ bones/151/scale = Vector3(1, 1, 1)
 bones/152/rotation = Quaternion(0.100465, -0.0952011, -0.0292976, 0.989942)
 bones/152/scale = Vector3(1, 1, 1)
 bones/153/rotation = Quaternion(0.0842606, -0.000226357, 0.0026762, 0.99644)
-bones/153/scale = Vector3(1, 1, 1)
 bones/154/rotation = Quaternion(0.26464, -3.18407e-05, -0.00506441, 0.964334)
 bones/154/scale = Vector3(1, 0.999999, 1)
 bones/155/rotation = Quaternion(0.100465, -0.0952012, -0.0292976, 0.989942)
@@ -417,13 +419,11 @@ bones/182/position = Vector3(-6.57639e-08, 0.0516876, -6.56705e-09)
 bones/182/rotation = Quaternion(0.124337, -0.0596904, 0.015846, 0.990316)
 bones/182/scale = Vector3(1, 1, 1)
 bones/183/rotation = Quaternion(0.180515, 0.00319409, -0.0174015, 0.983413)
-bones/183/scale = Vector3(1, 1, 1)
 bones/184/rotation = Quaternion(0.108069, -0.000220445, 0.0372163, 0.993447)
 bones/185/position = Vector3(-6.57639e-08, 0.0516876, -6.56705e-09)
 bones/185/rotation = Quaternion(0.124337, -0.0596904, 0.015846, 0.990316)
 bones/185/scale = Vector3(1, 1, 1)
 bones/186/rotation = Quaternion(0.180515, 0.00319409, -0.0174015, 0.983413)
-bones/186/scale = Vector3(1, 1, 1)
 bones/187/rotation = Quaternion(0.108069, -0.000220445, 0.0372163, 0.993447)
 bones/188/position = Vector3(-1.579e-08, 0.0516874, -2.67699e-08)
 bones/188/rotation = Quaternion(0.124337, -0.0596904, 0.0158461, 0.990316)
@@ -565,7 +565,6 @@ bones/290/rotation = Quaternion(9.19448e-07, 1.09279e-06, 2.1531e-07, 1)
 bones/291/rotation = Quaternion(-0.0671234, -5.7492e-10, 0.997745, 8.6091e-09)
 bones/291/scale = Vector3(1, 1, 1)
 bones/293/rotation = Quaternion(5.79748e-08, -2.04891e-08, 2.28174e-07, 1)
-bones/293/scale = Vector3(1, 1, 1)
 bones/294/position = Vector3(-2.7039e-08, 0.0509591, 1.10561e-07)
 bones/294/rotation = Quaternion(0.100465, 0.0952011, 0.0292977, 0.989942)
 bones/295/rotation = Quaternion(-0.154756, -0.545274, -0.258269, 0.78232)
@@ -663,7 +662,6 @@ bones/357/rotation = Quaternion(2.51224e-07, 1.73226e-07, -4.97792e-07, 1)
 bones/358/rotation = Quaternion(-0.157904, -1.55149e-07, 0.987454, 4.11216e-07)
 bones/358/scale = Vector3(1, 1, 1)
 bones/360/rotation = Quaternion(-2.39583e-07, 3.84171e-09, 3.75963e-07, 1)
-bones/360/scale = Vector3(1, 1, 1)
 bones/361/position = Vector3(3.32588e-08, 0.0441441, 2.14454e-08)
 bones/361/rotation = Quaternion(0.0604959, 0.109616, -0.0204985, 0.99192)
 bones/361/scale = Vector3(1, 1, 1)
@@ -715,7 +713,7 @@ layers = 2
 mesh = SubResource("ArrayMesh_ewgnx")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D" index="1"]
-transform = Transform3D(-0.918287, 0.110169, 0.380279, -0.235099, -0.924561, -0.29986, 0.318555, -0.364761, 0.874913, 0.244699, 0.805649, -0.211648)
+transform = Transform3D(-0.918287, 0.110169, 0.380279, -0.235099, -0.924561, -0.29986, 0.318556, -0.364761, 0.874913, 0.244699, 0.805649, -0.211648)
 bone_name = "hand_ik.L"
 bone_idx = 373
 
