@@ -100,6 +100,9 @@ func request_group() -> int:
 func bind_callable_to_group(group : int, callable : Callable):
 	process_groups[group].push_back(callable)
 
+func unbind_callable_from_group(group : int, callable : Callable):
+	process_groups[group].erase(callable)
+
 func run_process_group(group : int, thread : Thread):
 	for process in process_groups[group]:
 		process.call_deferred()

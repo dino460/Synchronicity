@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=33 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
 [ext_resource type="Script" path="res://scripts/npc/npc.gd" id="7_80dul"]
+[ext_resource type="Script" path="res://scripts/character_stats.gd" id="8_1nkjs"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
 [ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="9_cj51m"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="10_bp8n5"]
@@ -216,7 +217,7 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" type="CharacterBody3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "personality", "job", "home", "points_of_interest", "test_label")]
+[node name="NPC-SMART" type="CharacterBody3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "personality", "job", "home", "points_of_interest", "test_label", "stats")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.152149, 1.01774, 4.38211)
 collision_layer = 32
 collision_mask = 1056
@@ -229,6 +230,7 @@ job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/FOUNTAIN"), NodePath("../../Targets/STATUE")]
 test_label = NodePath("../../../../UISubViewportContainer/UISubViewport/Weights Label")
+stats = NodePath("Stats")
 
 [node name="Personality" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 script = ExtResource("9_cj51m")
@@ -240,6 +242,10 @@ energy = 0.7
 body = 0.6
 mind = 0.7
 soul = 0.8
+
+[node name="Stats" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+script = ExtResource("8_1nkjs")
+constitution = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 shape = SubResource("CapsuleShape3D_372vt")

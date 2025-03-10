@@ -153,6 +153,7 @@ func do_attack(attack_state : AnimationHandler.AnimationState):
 		is_attacking = true
 		should_attack_move = true
 		can_combo = false
+		damaged_enemies_this_attack.clear()
 
 func _on_input_handler_up_attack_performed():
 	do_attack(AnimationHandler.AnimationState.ATTACK_UP)

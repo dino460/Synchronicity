@@ -14,6 +14,6 @@ var max_health : int
 ## Determines maximum health.
 @export var constitution : int
 
-func _init():
+func _ready():
 	max_health = log(constitution)
 	health = max_health

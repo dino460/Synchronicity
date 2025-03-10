@@ -5,7 +5,7 @@ class_name NPC
 const base_move_speed : float = 8.0
 const base_run_multiplier : float = 2.3
 
-enum State {DOING_STUFF, MOVING_ABOUT, SLEEPING}
+enum State {DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD}
 var current_state : State = State.DOING_STUFF
 
 @export var npc_name : String
@@ -84,6 +84,9 @@ func _ready():
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
+	print(stats.health)
+	print(stats.constitution)
+
 func actor_setup():
 	choose_target()
 	# navigation_agent.debug_enabled = true
@@ -134,6 +137,12 @@ func _physics_process(_delta):
 		position += velocity * _delta
 
 func run_pathfinding_logic():
+	if current_state == State.DEAD:
+		current_target = null
+		velocity = Vector3.ZERO
+		navigation_enabled = false
+		scheduler.call_deferred("unbind_callable_from_group", process_group, run_pathfinding_logic)
+		return
 	if want_to_sleep:
 		return
 
@@ -277,4 +286,6 @@ func calculate_average_poi_distance():
 
 func take_damage(damage : int):
 	stats.health -= damage
-	print("OUCH")
+	print(stats.health)
+	if stats.health <= 0:
+		current_state = State.DEAD
