@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://mkhk0i0eskjt"]
 
-[ext_resource type="Script" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
-[ext_resource type="Script" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
-[ext_resource type="Script" path="res://scripts/character_stats.gd" id="3_kkvfd"]
+[ext_resource type="Script" uid="uid://cguddavepqt3l" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
+[ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
+[ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="3_kkvfd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 

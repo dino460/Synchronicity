@@ -1,7 +1,7 @@
 [gd_scene load_steps=18 format=3 uid="uid://flkg36ogpfcu"]
 
-[ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_8maks"]
-[ext_resource type="Script" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
+[ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_8maks"]
+[ext_resource type="Script" uid="uid://b4dfmkk7jnilp" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_x07qc"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]

@@ -1,15 +1,15 @@
 [gd_scene load_steps=18 format=4 uid="uid://bylwa0aplfyax"]
 
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_br4xa"]
-[ext_resource type="Script" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
-[ext_resource type="Script" path="res://scripts/player/input_handler.gd" id="3_imqgc"]
-[ext_resource type="Script" path="res://scripts/character_stats.gd" id="4_dcvbl"]
-[ext_resource type="Script" path="res://scripts/player/sound_handler.gd" id="4_n1gxj"]
+[ext_resource type="Script" uid="uid://4owdwe56mk1c" path="res://scripts/player/player.gd" id="1_br4xa"]
+[ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
+[ext_resource type="Script" uid="uid://c6xpmb6n5khgv" path="res://scripts/player/input_handler.gd" id="3_imqgc"]
+[ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="4_dcvbl"]
+[ext_resource type="Script" uid="uid://bf6xxqwl5s3ix" path="res://scripts/player/sound_handler.gd" id="4_n1gxj"]
 [ext_resource type="PackedScene" uid="uid://odpovh6l2sev" path="res://assets/SELS low poly char/Low-Poly-Base.blend.blend" id="4_pdx7r"]
-[ext_resource type="Script" path="res://scripts/player/camera_controller.gd" id="5_lu2e7"]
+[ext_resource type="Script" uid="uid://bxwyl803tcyaq" path="res://scripts/player/camera_controller.gd" id="5_lu2e7"]
 [ext_resource type="ArrayMesh" uid="uid://51k0sxqscsj1" path="res://assets/Sting-Sword-lowpoly.obj" id="5_syepo"]
-[ext_resource type="Script" path="res://scripts/weapons/shortsword.gd" id="6_1qs7o"]
-[ext_resource type="Script" path="res://scripts/player/camera_3d_texel_snap.gd" id="6_h03v3"]
+[ext_resource type="Script" uid="uid://c4bdfbjq5tji3" path="res://scripts/weapons/shortsword.gd" id="6_1qs7o"]
+[ext_resource type="Script" uid="uid://dnw0t7mqkslfx" path="res://scripts/player/camera_3d_texel_snap.gd" id="6_h03v3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
 radius = 0.407304
