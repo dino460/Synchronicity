@@ -51,8 +51,8 @@ _surfaces = [{
 blend_shape_mode = 0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5ur8s"]
-radius = 0.0575991
-height = 0.469048
+radius = 0.07
+height = 0.66
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_br4xa")
@@ -570,7 +570,6 @@ bones/290/rotation = Quaternion(9.33753e-07, 1.09853e-06, 2.3308e-07, 1)
 bones/291/rotation = Quaternion(-0.0671233, -3.41662e-09, 0.997745, -4.65007e-09)
 bones/291/scale = Vector3(1, 1, 1)
 bones/293/rotation = Quaternion(-4.1618e-07, 1.12876e-08, 3.3889e-07, 1)
-bones/293/scale = Vector3(1, 1, 1)
 bones/294/position = Vector3(-7.12537e-05, 0.0503578, -1.09114e-05)
 bones/294/rotation = Quaternion(0.100465, 0.0952012, 0.0292975, 0.989942)
 bones/295/rotation = Quaternion(-0.154756, -0.545274, -0.258269, 0.78232)
@@ -668,7 +667,6 @@ bones/357/rotation = Quaternion(2.62661e-07, 1.77734e-07, -4.90672e-07, 1)
 bones/358/rotation = Quaternion(-0.157904, -1.55149e-07, 0.987454, 4.11216e-07)
 bones/358/scale = Vector3(1, 1, 1)
 bones/360/rotation = Quaternion(-1.6314e-07, -2.66824e-09, -2.20977e-07, 1)
-bones/360/scale = Vector3(1, 1, 1)
 bones/361/position = Vector3(-3.71075e-08, 0.0441441, -3.55522e-08)
 bones/361/rotation = Quaternion(0.0604962, 0.109616, -0.0204987, 0.99192)
 bones/361/scale = Vector3(1, 1, 1)
@@ -724,7 +722,7 @@ layers = 2
 mesh = SubResource("ArrayMesh_ewgnx")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D" index="1"]
-transform = Transform3D(-0.96516, 0.257962, -0.0438497, -0.224356, -0.902088, -0.368649, -0.134654, -0.345967, 0.928534, 0.478828, 0.822898, 0.0308882)
+transform = Transform3D(-0.96516, 0.257962, -0.0438496, -0.224356, -0.902088, -0.368648, -0.134653, -0.345966, 0.928534, 0.478828, 0.822898, 0.0308879)
 bone_name = "hand_ik.L"
 bone_idx = 373
 
@@ -740,7 +738,7 @@ collision_layer = 32
 collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword/Area3D"]
-transform = Transform3D(1, -1.17869e-08, -4.97516e-08, 1.49012e-08, -0.177308, 0.984156, -2.98023e-08, -0.984156, -0.177308, 6.10945e-05, 0.121321, 0.252002)
+transform = Transform3D(1, -1.17869e-08, -4.97516e-08, 1.49012e-08, -0.177308, 0.984156, -2.98023e-08, -0.984156, -0.177308, 6.10942e-05, 0.10785, 0.189035)
 shape = SubResource("CapsuleShape3D_5ur8s")
 
 [node name="Sting-sword-lowpoly" type="MeshInstance3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword"]

@@ -286,6 +286,7 @@ func calculate_average_poi_distance():
 
 func take_damage(damage : int):
 	stats.health -= damage
-	print(stats.health)
 	if stats.health <= 0:
+		stats.health = 0
 		current_state = State.DEAD
+	print(stats.health)

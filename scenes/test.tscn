@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene load_steps=18 format=3 uid="uid://flkg36ogpfcu"]
 
+[ext_resource type="Script" path="res://scripts/handle_pixelation.gd" id="1_8maks"]
 [ext_resource type="Script" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_x07qc"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
@@ -75,6 +76,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+script = ExtResource("1_8maks")
+minimum_pixelation = 3
+pixelation_correction = 4
 
 [node name="SubViewport" type="SubViewport" parent="Main SubViewportContainer"]
 handle_input_locally = false
@@ -120,11 +124,10 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_0jq3o")
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label") instance=ExtResource("3_r78pc")]
 full_day_time = 20.0
 sun_up_time = 6.0
 sun_down_time = 18.0
-sun = NodePath("../Main SubViewportContainer/SubViewport/DirectionalLight3D")
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPC HOLDER")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
 
@@ -149,6 +152,7 @@ text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_v26lh")
 
 [node name="Weights Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

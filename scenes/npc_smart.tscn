@@ -34,7 +34,7 @@ soul = 0.8
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("3_kkvfd")
-constitution = 10
+constitution = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_372vt")

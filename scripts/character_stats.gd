@@ -15,5 +15,5 @@ var max_health : int
 @export var constitution : int
 
 func _ready():
-	max_health = log(constitution)
+	max_health = constitution * log(constitution) + 10
 	health = max_health
