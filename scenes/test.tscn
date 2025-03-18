@@ -90,7 +90,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 500
+number_of_npcs_to_spawn = 250
 world_size = 1000.0
 npc_holder = NodePath("../NPC HOLDER")
 

@@ -72,8 +72,6 @@ func _physics_process(_delta: float) -> void:
 func stop_npc_animation():
 	for npc in npc_holder.get_children():
 		npc.is_in_frustum = player_ref.get_node("CameraPivot/EnvironmentCamera3D").is_position_in_frustum(npc.position)
-		if not npc.is_in_frustum:
-			npc.animator.stop()
 
 func rotate_sun():
 	if sun != null:

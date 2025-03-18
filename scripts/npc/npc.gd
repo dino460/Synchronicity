@@ -89,9 +89,6 @@ func _ready():
 	# Make sure to not await during _ready.
 	call_deferred("actor_setup")
 
-	print(stats.health)
-	print(stats.constitution)
-
 func actor_setup():
 	choose_target()
 	# navigation_agent.debug_enabled = true
@@ -137,6 +134,8 @@ func _process(delta: float) -> void:
 			animator.play("NPC/walk", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
 		else:
 			animator.play("NPC/idle", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
+	else:
+		animator.stop()
 
 func _physics_process(delta):
 	if current_target != null:
