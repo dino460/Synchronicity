@@ -52,6 +52,7 @@ var sleep_counter : float = 0.0
 
 @export var stats : CharacterStats
 
+var is_in_frustum : bool = true
 @onready var mesh_pivot_ref = $MeshPivot
 @onready var animator = $"MeshPivot/Low-Poly-Base_blend/AnimationPlayer" #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
 
@@ -131,19 +132,19 @@ func _process(delta: float) -> void:
 			if not has_worked_today:
 				has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
+	if is_in_frustum:
+		if current_state == State.MOVING_ABOUT:
+			animator.play("NPC/walk", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
+		else:
+			animator.play("NPC/idle", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
+
 func _physics_process(delta):
 	if current_target != null:
 		direction = (navigation_agent.get_next_path_position() - position).normalized()
-	# 	print_rich(">>> want go: [color=red][b] %s [/b][/color]" % current_target.landmark_name)
-	# if current_location != null:
-	# 	print_rich(">>> I am at: [color=red][b] %s [/b][/color]" % current_location.landmark_name)
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-direction.x, -direction.z), delta * 20.0)
 
 	if current_location != current_target:
 		position += velocity * delta
-		animator.play("walk", 0.1, 3.8, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
-	else:
-		animator.play("idle", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
 
 func run_pathfinding_logic():
 	if current_state == State.DEAD:
