@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://mkhk0i0eskjt"]
+[gd_scene load_steps=8 format=3 uid="uid://mkhk0i0eskjt"]
 
 [ext_resource type="Script" uid="uid://cguddavepqt3l" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
 [ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
 [ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="3_kkvfd"]
+[ext_resource type="PackedScene" uid="uid://odpovh6l2sev" path="res://assets/SELS low poly char/Low-Poly-Base.blend.blend" id="4_ou1rx"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
 
@@ -44,3 +45,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00998974, -0.0188441, -0.0
 mesh = SubResource("CapsuleMesh_kmggu")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="MeshPivot" type="Node3D" parent="."]
+
+[node name="Low-Poly-Base_blend" parent="MeshPivot" instance=ExtResource("4_ou1rx")]
+transform = Transform3D(-1.8, 0, -1.57361e-07, 0, 1.8, 0, 1.57361e-07, 0, -1.8, 0, -1.546, 0)

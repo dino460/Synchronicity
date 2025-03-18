@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=34 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="8_1nkjs"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
 [ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="9_cj51m"]
+[ext_resource type="PackedScene" uid="uid://odpovh6l2sev" path="res://assets/SELS low poly char/Low-Poly-Base.blend.blend" id="9_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="10_bp8n5"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_ijmam"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
@@ -61,6 +62,7 @@ adjustment_contrast = 0.87
 adjustment_saturation = 1.21
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_372vt"]
+height = 3.10364
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_80w3b"]
 albedo_color = Color(0, 0.693455, 0.60667, 1)
@@ -248,13 +250,20 @@ script = ExtResource("8_1nkjs")
 constitution = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.957768, 0)
 shape = SubResource("CapsuleShape3D_372vt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00998974, -0.0188441, -0.00345898)
+visible = false
 mesh = SubResource("CapsuleMesh_kmggu")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+
+[node name="MeshPivot" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART"]
+
+[node name="Low-Poly-Base_blend" parent="EnvironmentSubViewportContainer/SubViewport/NPCs/NPC-SMART/MeshPivot" instance=ExtResource("9_jbj1t")]
+transform = Transform3D(-1.8, 0, -1.57361e-07, 0, 1.8, 0, 1.57361e-07, 0, -1.8, 0, -0.536717, 0)
 
 [node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" instance=ExtResource("6_mfdyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13348, -4.13876)
