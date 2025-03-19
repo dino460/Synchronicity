@@ -54,12 +54,10 @@ var sleep_counter : float = 0.0
 
 var is_in_frustum : bool = true
 @onready var mesh_pivot_ref = $MeshPivot
-@onready var animator = $"MeshPivot/Low-Poly-Base_blend/AnimationPlayer" #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
-# ADD RAGDOLL WHEN WITH FINAL MODEL
-# @export var physical_bone_sim : SkeletonModifier3D
 
-# var is_doing_stuff : bool = false
-# var is_moving_about : bool = false
+signal idling
+signal walking
+signal death
 
 
 func mod_by_age() -> float:
@@ -77,7 +75,9 @@ func get_speed() -> float:
 func _ready():
 	add_to_group("persist")
 
-	personality = get_child(0)
+	get_node("AnimationHandler").caller_prefix = "NPC/"
+
+	personality = get_node("Personality")
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
 	process_group = scheduler.request_group()
@@ -131,16 +131,6 @@ func _process(delta: float) -> void:
 			if not has_worked_today:
 				has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
-	if is_in_frustum:
-		if current_state == State.DEAD:
-			animator.play("NPC/death", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
-		elif current_state == State.MOVING_ABOUT:
-			animator.play("NPC/walk", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
-		else:
-			animator.play("NPC/idle", 0.1, 3.0, false) #! MOVE ANIMATION CODE TO DEDICATED SCRIPT
-	else:
-		animator.stop()
-
 func _physics_process(delta):
 	if current_target != null:
 		direction = (navigation_agent.get_next_path_position() - position).normalized()
@@ -148,6 +138,13 @@ func _physics_process(delta):
 
 	if current_location != current_target:
 		position += velocity * delta
+
+	if current_state == State.DEAD:
+		pass
+	elif current_state == State.MOVING_ABOUT:
+		walking.emit()
+	else:
+		idling.emit()
 
 func run_pathfinding_logic():
 	if current_state == State.DEAD:
@@ -302,7 +299,5 @@ func take_damage(damage : int):
 	if stats.health <= 0:
 		stats.health = 0
 		current_state = State.DEAD
-
-		# REENABLE RAGDOLL WHEN FINAL MODEL IS READY
-		# physical_bone_sim.physical_bones_start_simulation()
+		death.emit()
 	print(stats.health)

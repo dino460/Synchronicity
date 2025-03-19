@@ -2,8 +2,7 @@ extends Node
 
 class_name AnimationHandler
 
-@onready var animator = $"../MeshPivot/Low-Poly-Base_blend/AnimationPlayer"
-
+@export var animator : AnimationPlayer
 
 signal dash_ended
 signal attack_ended
@@ -12,14 +11,15 @@ signal enable_combo
 # Attack names refer the direction of the attack, or where the attack ends
 # So, for example, an ATTACK_UP starts down and arcs upwards,
 # while and ATTACK_LEFT starts on the right side and ends on the left
-enum AnimationState {IDLE, WALK, RUN, DASH, ATTACK_UP, ATTACK_DOWN, ATTACK_LEFT, ATTACK_RIGHT, HURT}
+enum AnimationState {IDLE, WALK, RUN, DASH, ATTACK_UP, ATTACK_DOWN, ATTACK_LEFT, ATTACK_RIGHT, HURT, DEAD}
 var current_state : AnimationState = AnimationState.IDLE
 var wanted_state  : AnimationState = AnimationState.IDLE
 
+var caller_prefix              : String = ""
 var there_is_animation_playing : bool  = false
 var is_attacking               : bool  = false
 var on_combo                   : bool  = false
-var animation_speed            : float = 1.0
+var is_in_frustum              : bool  = false
 
 var last_attack_state : AnimationState;
 
@@ -45,31 +45,33 @@ func remove_animation_interpolation():
 			animator.get_animation(anim).track_set_interpolation_type(track, Animation.INTERPOLATION_NEAREST)
 
 
-func _on_player_idling():
+func _on_idling():
 	wanted_state = AnimationState.IDLE
-	animation_speed = 3.0
 	check_wanted_state()
-	play_animation("idle")
+	play_animation("idle", 3.0)
 
-func _on_player_walking():
+func _on_walking():
 	wanted_state = AnimationState.WALK
-	animation_speed = 3.8
 	check_wanted_state()
-	play_animation("walk")
+	play_animation("walk", 3.8)
 
-func _on_player_running():
+func _on_running():
 	wanted_state = AnimationState.RUN
-	animation_speed = 8.0
 	check_wanted_state()
-	play_animation("run")
+	play_animation("run", 8.0)
 
-func _on_player_dashing(dash_time):
+func _on_dashing(dash_time):
 	wanted_state = AnimationState.DASH
-	animation_speed = 1.0 / dash_time
+	# animation_speed = 1.0 / dash_time
 	check_wanted_state()
 #	play_animation("dash")
 
-func _on_player_attack(animation_direction: AnimationState, weapon: Weapon, was_attacking):
+func _on_death() -> void:
+	current_state = AnimationState.DEAD
+	wanted_state = AnimationState.DEAD
+	play_animation("death", 1.0)
+
+func _on_attack(animation_direction: AnimationState, weapon: Weapon, was_attacking):
 	wanted_state = animation_direction
 	on_combo = was_attacking
 	# current_weapon = weapon
@@ -77,9 +79,9 @@ func _on_player_attack(animation_direction: AnimationState, weapon: Weapon, was_
 		# if weapon.is_preferred_attack(last_attack_state, wanted_state):
 		# 	# Do something damage and animation speed related some day
 		# 	pass
-		animation_speed = 5.5 #1.0 / weapon.up_attack_time
+		# animation_speed = 5.5 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
-	play_animation(weapon.attack_animations[wanted_state])
+	play_animation(weapon.attack_animations[wanted_state], 5.5)
 
 func check_wanted_state() -> bool:
 	# var check_for_anim_interrupt := current_state not in interruptable_states and there_is_animation_playing
@@ -91,38 +93,19 @@ func check_wanted_state() -> bool:
 		current_state = wanted_state
 		return true
 
-func play_animation(animation_name : String = ""):
+func play_animation(animation_name : String = "", animation_speed : float = 1.0):
 	there_is_animation_playing = true
-#
-	match current_state:
-		AnimationState.IDLE:
-			is_attacking = false
-			animator.play(animation_name, 0.1, animation_speed, false)
-#			next_animation_name = "idle_" + current_weapon.type
-#
-		AnimationState.WALK:
-			is_attacking = false
-			animator.play(animation_name, 0.1, animation_speed, false)
-#			next_animation_name = "walk_" + current_weapon.type
-#
-		AnimationState.RUN:
-			is_attacking = false
-			animator.play(animation_name, 0.1, animation_speed, false)
-#			next_animation_name = "run_" + current_weapon.type
-#
-#		AnimationState.DASH:
-#			#animator.play("Roll", -1, animation_speed, false)
-#			next_animation_name = "roll_" + current_weapon.type
-#
-		AnimationState.ATTACK_UP, AnimationState.ATTACK_DOWN, AnimationState.ATTACK_LEFT, AnimationState.ATTACK_RIGHT:
-			if not is_attacking:
-				is_attacking = true
-				animator.stop()
-				animator.play(animation_name, 0.1, animation_speed, false)
-				# next_animation_name = current_weapon.light_attack_animations[combo_value]
-#
-	#animator.play(next_animation_name, -1, animation_speed, false)
+	animation_name = caller_prefix + animation_name
 
+	if is_attacking:
+		return
+	elif current_state in attack_states:
+		is_attacking = true
+		animator.stop()
+	else:
+		is_attacking = false
+
+	animator.play(animation_name, 0.1, animation_speed, false)
 
 # Called on the end of an animation to enable chaining them into a combo
 # DO NOT FORGET TO ADD THIS TO A METHOD TRACK
@@ -142,6 +125,3 @@ func _on_animation_player_animation_finished(anim_name):
 
 	if anim_name == "Roll":
 		dash_ended.emit()
-#	elif anim_name in current_weapon.light_attack_animations or anim_name in current_weapon.heavy_attack_animations:
-#		is_attacking = false
-#		attack_ended.emit()
