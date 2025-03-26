@@ -58,6 +58,7 @@ var is_in_frustum : bool = true
 signal idling
 signal walking
 signal death
+signal stop_animations
 
 
 func mod_by_age() -> float:
@@ -139,12 +140,14 @@ func _physics_process(delta):
 	if current_location != current_target:
 		position += velocity * delta
 
-	if current_state == State.DEAD:
-		pass
-	elif current_state == State.MOVING_ABOUT:
-		walking.emit()
-	else:
-		idling.emit()
+	if is_in_frustum:
+		if current_state == State.DEAD:
+			pass
+		elif current_state == State.MOVING_ABOUT:
+			walking.emit()
+		else:
+			idling.emit()
+
 
 func run_pathfinding_logic():
 	if current_state == State.DEAD:

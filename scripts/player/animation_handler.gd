@@ -19,7 +19,6 @@ var caller_prefix              : String = ""
 var there_is_animation_playing : bool  = false
 var is_attacking               : bool  = false
 var on_combo                   : bool  = false
-var is_in_frustum              : bool  = false
 
 var last_attack_state : AnimationState;
 
@@ -82,6 +81,7 @@ func _on_attack(animation_direction: AnimationState, weapon: Weapon, was_attacki
 		# animation_speed = 5.5 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
 	play_animation(weapon.attack_animations[wanted_state], 5.5)
+
 
 func check_wanted_state() -> bool:
 	# var check_for_anim_interrupt := current_state not in interruptable_states and there_is_animation_playing

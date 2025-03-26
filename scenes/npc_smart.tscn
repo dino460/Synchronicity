@@ -5110,4 +5110,5 @@ libraries = {
 
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
+[connection signal="stop_animations" from="." to="AnimationHandler" method="_on_stop_animations"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
