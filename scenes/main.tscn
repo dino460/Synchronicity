@@ -207,7 +207,7 @@ environment = SubResource("Environment_xso02")
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43745, 2.13348, -0.033567)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43745, 2.13348, -1.75753)
 scheduler = NodePath("../../../../Scheduler")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")

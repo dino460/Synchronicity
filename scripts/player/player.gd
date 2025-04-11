@@ -1,4 +1,4 @@
-extends CharacterBody3D
+extends Entity
 
 # Get references to nodes
 # Removes get_node call each time the node is referenced
@@ -92,8 +92,8 @@ func _physics_process(delta : float) -> void:
 			print(hit_enemies)
 			damaged_enemies_this_attack.append(hit_enemies)
 			for enemy in hit_enemies: #Applies damage to enemies
-				if enemy.has_method("take_damage"):
-					enemy.take_damage(weapon.attack_damage)
+				if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
+					enemy.take_damage(weapon.attack_damage, self)
 					print(weapon.attack_damage)
 	elif damaged_enemies_this_attack.size() > 0:
 		damaged_enemies_this_attack.clear() # Clears the list of damaged enemies if not attacking

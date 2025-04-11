@@ -1321,7 +1321,7 @@ soul = 0.8
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("3_kkvfd")
-constitution = 1
+constitution = 10
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animator")]
 script = ExtResource("4_y33ke")
@@ -5108,6 +5108,8 @@ libraries = {
 &"NPC": SubResource("AnimationLibrary_v7n6u")
 }
 
+[connection signal="damage_taken" from="." to="." method="_on_damage_taken"]
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
+[connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
