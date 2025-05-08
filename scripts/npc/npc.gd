@@ -153,7 +153,7 @@ func _physics_process(delta):
 		look_direction = (current_attack_target.position - position).normalized()
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
 
-	if current_location != current_target or (current_state == State.FIGHTING and self.position.distance_squared_to(current_attack_target.position) >= 5):
+	if (current_location != current_target and current_target != null) or (current_state == State.FIGHTING and self.position.distance_squared_to(current_attack_target.position) >= 5):
 		position += velocity * delta
 
 	if is_in_frustum:
