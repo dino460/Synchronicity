@@ -59,9 +59,8 @@ var is_at_home : bool = false
 
 @export_group("NPC Movement")
 var is_running         : bool = false
-var direction          : Vector3 = Vector3.ZERO
+var look_direction          : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
-var is_resting         : bool = false
 
 @export_group("NPC Combat")
 var attack_targets : Dictionary[Entity, int]
@@ -118,12 +117,13 @@ func set_movement_target(target_position : Vector3):
 	navigation_enabled = true
 
 func _process(delta: float) -> void:
-	if want_to_sleep and current_location == home:
+	if current_state == State.DEAD:
+		pass
+	elif want_to_sleep and current_location == home:
 		sleep_counter += delta
 		current_state = State.SLEEPING
 		if sleep_counter >= sleep_amount_wanted:
 			reset_sleep()
-
 	elif not want_to_sleep and current_state == State.MOVING_ABOUT:
 		moving_about_time_this_day += delta
 	else:
@@ -142,16 +142,18 @@ func _process(delta: float) -> void:
 		# 	timers[timer] += delta
 		# 	if not has_worked_today:
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
-	if current_attack_target != null and attack_targets.size() > 0:
+	if current_attack_target != null and attack_targets.size() > 0 and current_state != State.DEAD:
 		if attack_targets[current_attack_target] >= 0: # Change this to a significant amount of damage (use Personality)
 			current_state = State.FIGHTING
 
 func _physics_process(delta):
-	if current_target != null or current_state == State.FIGHTING:
-		direction = (navigation_agent.get_next_path_position() - position).normalized()
-	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-direction.x, -direction.z), delta * 20.0)
+	if current_target != null:
+		look_direction = (navigation_agent.get_next_path_position() - position).normalized()
+	elif current_state == State.FIGHTING:
+		look_direction = (current_attack_target.position - position).normalized()
+	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
 
-	if current_location != current_target and not is_resting:
+	if current_location != current_target or (current_state == State.FIGHTING and self.position.distance_squared_to(current_attack_target.position) >= 5):
 		position += velocity * delta
 
 	if is_in_frustum:
@@ -164,15 +166,23 @@ func _physics_process(delta):
 
 func run_pathfinding_logic():
 	if current_state == State.DEAD:
+		print("NPC is dead")
 		current_target = null
 		velocity = Vector3.ZERO
 		navigation_enabled = false
-		scheduler.call_deferred("unbind_callable_from_group", process_group, run_pathfinding_logic)
+		scheduler.call_deferred("unbind_callable_from_group", process_group, self.run_pathfinding_logic)
 		return
-	if want_to_sleep:
+	elif want_to_sleep and current_state != State.FIGHTING:
 		return
 
-	if navigation_agent.is_navigation_finished() and navigation_enabled and current_state != State.DOING_STUFF and current_state != State.FIGHTING:
+	var is_allowed_state = not (current_state == State.DEAD or current_state == State.DOING_STUFF)
+
+	if navigation_agent.is_navigation_finished() and navigation_enabled and is_allowed_state:
+		if current_state == State.FIGHTING:
+			if self.position.distance_squared_to(current_attack_target.position) >= 5:
+				handle_combat()
+			return
+
 		calculate_average_poi_distance()
 		# add_visit()
 		current_location = current_target
@@ -199,7 +209,6 @@ func run_pathfinding_logic():
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
 	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
-	print(velocity)
 
 func handle_combat():
 	set_movement_target(current_attack_target.position)
@@ -301,6 +310,7 @@ func calculate_average_poi_distance():
 	average_poi_distance /= points_of_interest.size()
 
 func _on_trigger_death() -> void:
+	print("NPC died")
 	current_state = State.DEAD
 	death.emit()
 
