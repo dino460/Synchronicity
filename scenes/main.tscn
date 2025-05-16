@@ -213,9 +213,6 @@ job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
 
-[node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" instance=ExtResource("6_mfdyr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13348, -4.13876)
-
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("8_4n6l4")]

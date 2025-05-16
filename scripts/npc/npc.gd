@@ -9,7 +9,7 @@ signal idling
 signal walking
 signal death
 
-enum State {DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING}
+enum State {DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING_CHASE, FIGHTING_CLOSE}
 var current_state : State = State.DOING_STUFF
 
 @export var test_label : Label
@@ -142,24 +142,31 @@ func _process(delta: float) -> void:
 		# 	timers[timer] += delta
 		# 	if not has_worked_today:
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+
+	## Checks if has attack target and if target list is empty
 	if current_attack_target != null and attack_targets.size() > 0 and current_state != State.DEAD:
+		## Checks if cumulated damage is above threshold
 		if attack_targets[current_attack_target] >= 0: # Change this to a significant amount of damage (use Personality)
-			current_state = State.FIGHTING
+			## Cheks if enemy is close enough for close combat or if should be chased
+			if self.position.distance_squared_to(current_attack_target.position) >= 5.0:
+				current_state = State.FIGHTING_CHASE
+			else:
+				current_state = State.FIGHTING_CLOSE
 
 func _physics_process(delta):
 	if current_target != null:
 		look_direction = (navigation_agent.get_next_path_position() - position).normalized()
-	elif current_state == State.FIGHTING:
+	elif current_state in [State.FIGHTING_CLOSE, State.FIGHTING_CHASE]:
 		look_direction = (current_attack_target.position - position).normalized()
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
 
-	if (current_location != current_target and current_target != null) or (current_state == State.FIGHTING and self.position.distance_squared_to(current_attack_target.position) >= 5):
+	if (current_location != current_target and current_target != null) or current_state == State.FIGHTING_CHASE:#or (current_state == State.FIGHTING and self.position.distance_squared_to(current_attack_target.position) >= 5):
 		position += velocity * delta
 
 	if is_in_frustum:
 		if current_state == State.DEAD:
 			pass
-		elif current_state == State.MOVING_ABOUT or current_state == State.FIGHTING:
+		elif not velocity.is_zero_approx():
 			walking.emit()
 		else:
 			idling.emit()
@@ -172,14 +179,17 @@ func run_pathfinding_logic():
 		navigation_enabled = false
 		scheduler.call_deferred("unbind_callable_from_group", process_group, self.run_pathfinding_logic)
 		return
-	elif want_to_sleep and current_state != State.FIGHTING:
+	elif want_to_sleep and current_state not in [State.FIGHTING_CHASE, State.FIGHTING_CLOSE]:
 		return
 
-	var is_allowed_state = not (current_state == State.DEAD or current_state == State.DOING_STUFF)
+	var is_allowed_state = current_state not in [State.DEAD, State.DOING_STUFF]
 
-	if navigation_agent.is_navigation_finished() and navigation_enabled and is_allowed_state:
-		if current_state == State.FIGHTING:
-			if self.position.distance_squared_to(current_attack_target.position) >= 5:
+	if (navigation_agent.is_navigation_finished() and navigation_enabled and is_allowed_state) or current_state == State.FIGHTING_CLOSE:
+		velocity = Vector3.ZERO
+		navigation_enabled = false
+
+		if current_state == State.FIGHTING_CLOSE:
+			if self.position.distance_squared_to(current_attack_target.position) >= 5.0:
 				handle_combat()
 			return
 
@@ -202,17 +212,18 @@ func run_pathfinding_logic():
 		check_for_path_while_doing_stuff()
 	elif current_state == State.MOVING_ABOUT:
 		check_for_path_while_moving()
-	elif current_state == State.FIGHTING:
+	elif current_state == State.FIGHTING_CHASE:
 		handle_combat()
 
-	var current_agent_position: Vector3 = global_position
-	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
+	if navigation_enabled:
+		var current_agent_position: Vector3 = global_position
+		var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
-	velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
+		velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
 
 func handle_combat():
-	set_movement_target(current_attack_target.position)
 	current_target = null
+	set_movement_target(current_attack_target.position)
 
 func check_for_path_while_doing_stuff():
 	choose_target()
