@@ -113,10 +113,7 @@ Some usefull/important links:
 
 [![Sychronicity](https://github-readme-stats.vercel.app/api/pin/?username=dino460&repo=Synchronicity&theme=dark)](https://github.com/dino460/Synchronicity) 
 
-- Issue tracker: https://github.com/dino460/Synchronicity/issues
-- Related projects:
-  - SNIS: https://github.com/dino460/scheduled-npc-interaction-system
-  	- Legacy A* modification I was developing in Rust to serve as the pathfinding for the game. In the end, it didn't prove itself quite what I wanted or needed, but it helped me understand a little better how pathfinding works.
+#### [Issue tracker](https://github.com/dino460/Synchronicity/issues)
 
 ## Licensing
 
