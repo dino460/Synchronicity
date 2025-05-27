@@ -26,8 +26,8 @@ material = SubResource("StandardMaterial3D_lbv16")
 size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
-vertices = PackedVector3Array(7.47778, 0.392384, -1.44941, 7.47778, 0.392384, -2.44941, 6.72778, 0.392384, -2.94941, 5.22778, 0.392384, -2.94941, 6.22778, 0.392384, -1.19941, 3.97778, 0.392384, -0.449409, 4.97778, 0.392384, 0.300591, 5.72778, 0.392384, 0.0505905, -3.02222, 0.392384, -0.699409, -2.02222, 0.392384, -1.44941, 3.97778, 0.392384, -7.44941, 6.47778, 0.392384, -36.4494, -36.2722, 0.392384, -36.4494, -36.2722, 0.392384, 1.30059, 6.47778, 0.392384, -7.94941, 0.977776, 0.392384, -1.69941, 3.47778, 0.392384, -5.44941, 2.72778, 0.392384, -0.199409, -3.52222, 0.392384, 1.30059, 7.97778, 0.392384, -7.69941, 9.72778, 0.392384, -4.69941, 36.2278, 0.392384, -4.69941, 36.2278, 0.392384, -36.4494, 8.72778, 0.392384, -1.19941, 8.72778, 0.392384, -2.69941, 9.72778, 0.392384, 0.800591, 36.2278, 0.392384, 0.800591, 9.97778, 0.392384, 2.30059, 9.47778, 0.392384, 3.30059, 36.2278, 0.392384, 3.55059, 2.72778, 0.392384, 4.55059, 2.47778, 0.392384, 3.80059, 1.47778, 0.392384, 3.30059, 3.72778, 0.392384, 6.30059, 3.72778, 0.392384, 4.80059, 4.22778, 0.392384, 7.05059, -2.77222, 0.392384, 3.30059, 5.97778, 0.392384, 36.0506, -36.2722, 0.392384, 36.0506, 5.97778, 0.392384, 7.55059, -3.52222, 0.392384, 2.30059, 9.22778, 0.392384, 5.30059, 7.47778, 0.392384, 6.05059, 6.97778, 0.392384, 7.30059, 36.2278, 0.392384, 36.0506)
-polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(6, 5, 7), PackedInt32Array(7, 5, 4), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(11, 8, 13), PackedInt32Array(11, 13, 12), PackedInt32Array(10, 11, 14), PackedInt32Array(16, 15, 10), PackedInt32Array(10, 15, 9), PackedInt32Array(17, 15, 5), PackedInt32Array(5, 15, 4), PackedInt32Array(4, 15, 3), PackedInt32Array(3, 15, 16), PackedInt32Array(8, 18, 13), PackedInt32Array(21, 20, 19), PackedInt32Array(14, 11, 19), PackedInt32Array(19, 11, 22), PackedInt32Array(19, 22, 21), PackedInt32Array(1, 24, 0), PackedInt32Array(0, 24, 23), PackedInt32Array(24, 20, 23), PackedInt32Array(23, 20, 25), PackedInt32Array(25, 20, 21), PackedInt32Array(25, 21, 26), PackedInt32Array(29, 28, 27), PackedInt32Array(25, 26, 27), PackedInt32Array(27, 26, 29), PackedInt32Array(32, 31, 30), PackedInt32Array(30, 34, 33), PackedInt32Array(32, 30, 33), PackedInt32Array(33, 35, 32), PackedInt32Array(32, 35, 36), PackedInt32Array(35, 37, 36), PackedInt32Array(36, 37, 13), PackedInt32Array(13, 37, 38), PackedInt32Array(35, 39, 37), PackedInt32Array(13, 18, 40), PackedInt32Array(13, 40, 36), PackedInt32Array(42, 41, 43), PackedInt32Array(43, 41, 29), PackedInt32Array(43, 29, 37), PackedInt32Array(37, 29, 44), PackedInt32Array(41, 28, 29), PackedInt32Array(37, 39, 43)]
+vertices = PackedVector3Array(6.47778, 0.198737, -1.19941, 7.47778, 0.198737, -1.44941, 7.47778, 0.198737, -2.44941, 6.72778, 0.198737, -2.94941, 0.977776, 0.198737, -1.69941, 3.47778, 0.198737, -5.44941, 3.97778, 0.198737, -7.44941, -2.02222, 0.198737, -1.44941, 5.22778, 0.198737, -2.94941, 4.72778, 0.198737, 0.300591, 5.47778, 0.198737, 0.300591, -36.2722, 0.198737, 1.30059, -3.77222, 0.198737, 1.30059, -3.02222, 0.198737, -0.699409, 6.47778, 0.198737, -36.4494, -36.2722, 0.198737, -36.4494, 6.47778, 0.198737, -7.94941, 7.97778, 0.198737, -7.69941, 9.72778, 0.198737, -4.69941, 36.2278, 0.198737, -4.69941, 36.2278, 0.198737, -36.4494, 8.72778, 0.198737, -2.69941, 9.47778, 0.198737, -0.449409, 9.97778, 0.198737, 1.80059, 36.2278, 0.198737, 1.80059, -1.27222, 0.198737, 4.55059, 0.477776, 0.198737, 3.80059, 0.727776, 0.198737, 3.05059, -2.52222, 0.198737, 3.55059, -3.27222, 0.198737, 3.05059, -1.52222, 0.198737, 6.55059, 1.22778, 0.198737, 11.5506, 1.97778, 0.198737, 10.3006, -0.0222244, 0.198737, 9.30059, 2.97778, 0.198737, 36.0506, 1.72778, 0.198737, 13.8006, 1.22778, 0.198737, 13.0506, -36.2722, 0.198737, 36.0506, 2.97778, 0.198737, 14.0506, 4.22778, 0.198737, 7.05059, 3.97778, 0.198737, 6.30059, 3.47778, 0.198737, 6.55059, 3.47778, 0.198737, 7.05059, 4.22778, 0.198737, 7.30059, 8.97778, 0.198737, 5.55059, 7.47778, 0.198737, 6.05059, 6.97778, 0.198737, 7.30059, 7.72778, 0.198737, 9.05059, 6.47778, 0.198737, 8.05059, 5.72778, 0.198737, 7.55059, 4.47778, 0.198737, 8.55059, 7.72778, 0.198737, 11.3006, 36.2278, 0.198737, 11.3006, 7.22778, 0.198737, 12.0506, 4.72778, 0.198737, 13.0506, 4.47778, 0.198737, 13.8006, 36.2278, 0.198737, 36.0506)
+polygons = [PackedInt32Array(2, 1, 3), PackedInt32Array(3, 1, 0), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(10, 9, 0), PackedInt32Array(0, 9, 8), PackedInt32Array(0, 8, 3), PackedInt32Array(13, 12, 11), PackedInt32Array(7, 13, 6), PackedInt32Array(6, 13, 14), PackedInt32Array(14, 13, 11), PackedInt32Array(14, 11, 15), PackedInt32Array(9, 4, 8), PackedInt32Array(8, 4, 5), PackedInt32Array(6, 14, 16), PackedInt32Array(19, 18, 17), PackedInt32Array(16, 14, 17), PackedInt32Array(17, 14, 20), PackedInt32Array(17, 20, 19), PackedInt32Array(2, 21, 1), PackedInt32Array(1, 21, 22), PackedInt32Array(22, 18, 23), PackedInt32Array(23, 18, 24), PackedInt32Array(24, 18, 19), PackedInt32Array(22, 21, 18), PackedInt32Array(26, 25, 27), PackedInt32Array(27, 25, 28), PackedInt32Array(29, 11, 12), PackedInt32Array(28, 25, 29), PackedInt32Array(29, 25, 30), PackedInt32Array(33, 32, 31), PackedInt32Array(34, 36, 35), PackedInt32Array(33, 31, 36), PackedInt32Array(30, 33, 36), PackedInt32Array(30, 36, 29), PackedInt32Array(29, 36, 34), PackedInt32Array(29, 34, 11), PackedInt32Array(11, 34, 37), PackedInt32Array(35, 38, 34), PackedInt32Array(43, 42, 39), PackedInt32Array(39, 42, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(45, 44, 46), PackedInt32Array(46, 44, 47), PackedInt32Array(47, 48, 46), PackedInt32Array(43, 39, 50), PackedInt32Array(50, 39, 49), PackedInt32Array(50, 49, 48), PackedInt32Array(44, 23, 51), PackedInt32Array(51, 23, 24), PackedInt32Array(51, 24, 52), PackedInt32Array(51, 47, 44), PackedInt32Array(48, 49, 46), PackedInt32Array(54, 53, 55), PackedInt32Array(55, 53, 34), PackedInt32Array(34, 38, 55), PackedInt32Array(53, 51, 34), PackedInt32Array(34, 51, 52), PackedInt32Array(34, 52, 56)]
 agent_radius = 1.24
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pwylq"]
@@ -168,6 +168,111 @@ transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 3.
 
 [node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 2.31028, 1.43135e-06, 1.62074)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, -0.866279, 1.00291, 0.372704)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 1.40536, -0.00935543, -1.87375)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate9/crate11/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.0818167, 0, -0.996648, 0, 1, 0, 0.996648, 0, 0.0818167, 1.56956, -0.634522, 1.53633)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, -0.866279, 1.00291, 0.372704)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 1.40536, -0.00935543, -1.87375)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate9/crate11/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-0.525071, 0, -0.851059, 0, 1, 0, 0.851059, 0, -0.525071, 3.95958, 1.45286e-06, -1.47121)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, -0.866279, 1.00291, 0.372704)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 1.40536, -0.00935543, -1.87375)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate9/crate11/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-0.00881386, 0, -0.999961, 0, 1, 0, 0.999961, 0, -0.00881386, -4.07005, 1.43051e-06, 0.184648)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, -0.866279, 1.00291, 0.372704)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 1.40536, -0.00935543, -1.87375)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9/crate11" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.924739, 0, 0.380602, 0, 1, 0, -0.380602, 0, 0.924739, 0.418561, -0.00288463, -1.05429)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/crate9/crate10/crate10/crate10/crate9/crate11/crate10" instance=ExtResource("5_d76mp")]
+transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 0.00732756, 1.00291, -0.00314236)
 
 [node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(0.80421, 0, -0.594346, 0, 1, 0, 0.594346, 0, 0.80421, 1.26539, 1.43135e-06, 1.30798)

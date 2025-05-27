@@ -2,15 +2,20 @@ extends Entity
 
 class_name NPC
 
-const base_move_speed     : float = 3.3
-const base_run_multiplier : float = 2.3
+const base_move_speed     : float = 3.5
+const base_run_multiplier : float = 2.67
 
 signal idling
 signal walking
 signal death
+signal running
+signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
-enum State {DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING_CHASE, FIGHTING_CLOSE}
+enum State { DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING, FIGHTING_CHASE, FIGHTING_CLOSE }
 var current_state : State = State.DOING_STUFF
+
+enum CombatState { NONE, SEARCHING, CHASING, CLOSE, ATTACKING }
+var current_combat_state : CombatState = CombatState.NONE
 
 @export var test_label : Label
 
@@ -48,7 +53,8 @@ var sleep_amount_wanted : float = 0.0
 var sleep_counter       : float = 0.0
 
 @export_group("NPC Navigation")
-@onready var navigation_agent: NavigationAgent3D = $NavigationAgent3D
+@onready var navigation_agent : NavigationAgent3D = $NavigationAgent3D
+@export  var look_origin      : Node3D
 
 var current_target   : Landmark
 var current_location : Landmark
@@ -59,12 +65,21 @@ var is_at_home : bool = false
 
 @export_group("NPC Movement")
 var is_running         : bool = false
-var look_direction          : Vector3 = Vector3.ZERO
+var look_direction     : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
 
 @export_group("NPC Combat")
-var attack_targets : Dictionary[Entity, int]
+var attack_targets        : Dictionary[Entity, int]
 var current_attack_target : Entity
+var can_see_attack_target : bool = false
+var search_area_position  : Vector3 = Vector3.ZERO
+
+@export var damage_threshold   : float = 0.0
+@export var attack_distance    : float = 5.0
+@export var follow_look_angle  : float = 0.349055556
+@export var field_of_view      : float = -0.35
+@export var search_radius      : float = 5.0
+@export var run_mult_threshold : float = 1.8
 
 @export_group("NPC Rendering")
 @onready var mesh_pivot_ref = $MeshPivot
@@ -74,14 +89,14 @@ var is_in_frustum : bool = true
 func mod_by_age() -> float:
 	return minf(maxf((-sin(current_age / 31.85) * log(current_age / 100.0)) + 0.05, 0.5), 1.0)
 
-func get_move_speed() -> float:
+func get_walk_speed() -> float:
 	return base_move_speed * mod_by_age()
 
 func get_run_speed() -> float:
-	return get_move_speed() * base_run_multiplier
+	return get_walk_speed() * base_run_multiplier
 
 func get_speed() -> float:
-	return get_run_speed() if is_running else get_move_speed()
+	return get_run_speed() if is_running else get_walk_speed()
 
 func _ready():
 	add_to_group("persist")
@@ -118,7 +133,7 @@ func set_movement_target(target_position : Vector3):
 
 func _process(delta: float) -> void:
 	if current_state == State.DEAD:
-		pass
+		return
 	elif want_to_sleep and current_location == home:
 		sleep_counter += delta
 		current_state = State.SLEEPING
@@ -144,30 +159,65 @@ func _process(delta: float) -> void:
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
 	## Checks if has attack target and if target list is empty
-	if current_attack_target != null and attack_targets.size() > 0 and current_state != State.DEAD:
+	if current_attack_target != null and not attack_targets.is_empty() and current_state != State.DEAD:
 		## Checks if cumulated damage is above threshold
-		if attack_targets[current_attack_target] >= 0: # Change this to a significant amount of damage (use Personality)
+		if attack_targets[current_attack_target] >= damage_threshold:
 			## Cheks if enemy is close enough for close combat or if should be chased
-			if self.position.distance_squared_to(current_attack_target.position) >= 5.0:
-				current_state = State.FIGHTING_CHASE
+			current_state = State.FIGHTING
+			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
+			if not can_see_attack_target:
+				return
+			elif self.position.distance_squared_to(current_attack_target.position) >= attack_distance and is_allowed_state:
+				# current_state = State.FIGHTING_CHASE
+				current_combat_state = CombatState.CHASING
 			else:
-				current_state = State.FIGHTING_CLOSE
+				# current_state = State.FIGHTING_CLOSE
+				current_combat_state = CombatState.CLOSE
+
 
 func _physics_process(delta):
-	if current_target != null:
-		look_direction = (navigation_agent.get_next_path_position() - position).normalized()
-	elif current_state in [State.FIGHTING_CLOSE, State.FIGHTING_CHASE]:
-		look_direction = (current_attack_target.position - position).normalized()
+	if current_state == State.DEAD:
+		return
+
+	var attack_target_direction : Vector3 = Vector3.ZERO
+	var path_direction : Vector3 = (navigation_agent.get_next_path_position() - position).normalized()
+	var path_to_attack_target_angle : float = 0.0
+
+	if current_attack_target != null:
+		attack_target_direction = (current_attack_target.position - position).normalized()
+		path_to_attack_target_angle = attack_target_direction.normalized().angle_to(path_direction)
+
+	if current_state == State.FIGHTING and path_to_attack_target_angle < follow_look_angle:
+		look_direction = attack_target_direction
+	else:
+		look_direction = path_direction
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
 
-	if (current_location != current_target and current_target != null) or current_state == State.FIGHTING_CHASE:#or (current_state == State.FIGHTING and self.position.distance_squared_to(current_attack_target.position) >= 5):
+	if current_attack_target != null:
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(look_origin.global_position, current_attack_target.global_position, 1)
+		var	result = space_state.intersect_ray(query)
+		var is_in_field_of_view = (-mesh_pivot_ref.global_transform.basis.z).dot(attack_target_direction) > field_of_view
+		var is_in_range = position.distance_to(current_attack_target.position) < attack_distance
+
+		can_see_attack_target = result.collider == current_attack_target and is_in_field_of_view or is_in_range
+
+		is_running = current_attack_target.velocity.length() >= get_walk_speed() * run_mult_threshold
+		is_running = is_running or position.distance_to(current_attack_target.position) > attack_distance
+		is_running = is_running and can_see_attack_target
+
+	var is_allowed_state = current_combat_state in [CombatState.CHASING, CombatState.SEARCHING]
+	if (current_location != current_target and current_target != null) or is_allowed_state:
 		position += velocity * delta
 
 	if is_in_frustum:
 		if current_state == State.DEAD:
 			pass
 		elif not velocity.is_zero_approx():
-			walking.emit()
+			if is_running:
+				running.emit()
+			else:
+				walking.emit()
 		else:
 			idling.emit()
 
@@ -179,19 +229,15 @@ func run_pathfinding_logic():
 		navigation_enabled = false
 		scheduler.call_deferred("unbind_callable_from_group", process_group, self.run_pathfinding_logic)
 		return
-	elif want_to_sleep and current_state not in [State.FIGHTING_CHASE, State.FIGHTING_CLOSE]:
+	elif want_to_sleep and current_state != State.FIGHTING:
 		return
 
-	var is_allowed_state = current_state not in [State.DEAD, State.DOING_STUFF]
+	var is_allowed_state = current_state not in [State.DEAD, State.DOING_STUFF, State.FIGHTING]
 
-	if (navigation_agent.is_navigation_finished() and navigation_enabled and is_allowed_state) or current_state == State.FIGHTING_CLOSE:
+	if (navigation_agent.is_navigation_finished() and navigation_enabled and is_allowed_state):
+		print("Navigation finished")
 		velocity = Vector3.ZERO
 		navigation_enabled = false
-
-		if current_state == State.FIGHTING_CLOSE:
-			if self.position.distance_squared_to(current_attack_target.position) >= 5.0:
-				handle_combat()
-			return
 
 		calculate_average_poi_distance()
 		# add_visit()
@@ -212,18 +258,43 @@ func run_pathfinding_logic():
 		check_for_path_while_doing_stuff()
 	elif current_state == State.MOVING_ABOUT:
 		check_for_path_while_moving()
-	elif current_state == State.FIGHTING_CHASE:
+	elif current_state == State.FIGHTING:
 		handle_combat()
 
 	if navigation_enabled:
 		var current_agent_position: Vector3 = global_position
 		var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 
-		velocity = current_agent_position.direction_to(next_path_position) * get_move_speed()
+		velocity = current_agent_position.direction_to(next_path_position) * get_speed()
 
 func handle_combat():
 	current_target = null
-	set_movement_target(current_attack_target.position)
+
+	match current_combat_state:
+		CombatState.NONE:
+			if navigation_agent.is_navigation_finished():
+				current_combat_state = CombatState.SEARCHING
+				search_area_position = global_position
+
+		CombatState.SEARCHING:
+			var search_position = Vector3(search_area_position.x + randf_range(-search_radius, search_radius), search_area_position.y, search_area_position.z + randf_range(-search_radius, search_radius))
+			if navigation_agent.is_navigation_finished():
+				set_movement_target(search_position)
+				current_combat_state = CombatState.SEARCHING
+
+		CombatState.CHASING:
+			if can_see_attack_target:
+				set_movement_target(current_attack_target.position)
+			elif navigation_agent.is_navigation_finished():
+				current_combat_state = CombatState.SEARCHING
+				search_area_position = global_position
+
+		CombatState.CLOSE:
+			velocity = Vector3.ZERO
+			navigation_enabled = false
+
+		CombatState.ATTACKING:
+			pass
 
 func check_for_path_while_doing_stuff():
 	choose_target()

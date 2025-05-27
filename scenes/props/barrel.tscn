@@ -56,6 +56,7 @@ radius = 0.41
 mesh = SubResource("ArrayMesh_4socx")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." index="1"]
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.485088, 0)
