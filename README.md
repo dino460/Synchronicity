@@ -47,13 +47,13 @@ For now, the game is quite barebones and totally in an Alpha state of affairs. I
 For now, the game is quite barebones and totally in an Alpha state of affairs. Below is a table summarizing the current main features and their development progress:
 | Completeness | Feature | Description | Progress/State |
 | :---: | --- | --- | --- |
-| $`{\color{green}100\%}`$ | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations and custom dusk and dawn times | Completed & Fully Functional |
-| $`{\color{greenyellow}85\%}`$ | [Movement](#movement-system) | Normalized analog movement + running + rolling. | Base movement + sprinting done. Needs polishing |
-| $`{\color{yellow}60\%}`$ | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options |
-| $`{\color{orange}46\%}`$ | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working |
-| $`{\color{orangered}33\%}`$ | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs still don't attaack and behave really simplistically. No nuance. Heavy polishing needed.
-| $`{\color{red}0.000001\%}`$ | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority |
-| $`{\color{red}0.0\%}`$ | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton on the corner... waiting_</sub> |
+| 100% 🟢 | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations and custom dusk and dawn times | Completed & Fully Functional |
+| 85% 🟢 | [Movement](#movement-system) | Normalized analog movement + running + rolling. | Base movement + sprinting done. Needs polishing |
+| 60% 🟡 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options |
+| 46% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working |
+| 33% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs still don't attaack and behave really simplistically. No nuance. Heavy polishing needed.
+| 0.000001% 🔴 | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority |
+| 0.0% 🔴 | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton on the corner... waiting_</sub> |
 
 <sub>_**Feature**: Currently in active development. Other features are also in-development, but focus is on this one_</sub><br/>
 <sub>_PS: Percentage values are arbitrary and merely ment to give an idea on how much/little progress has been made)_<br/><br/></sub>
