@@ -14,7 +14,11 @@ class_name Scheduler
 
 @export var next_available_id : int = 1
 
-@export var number_of_groups : int = 10
+@export var number_of_groups     : int = 1
+@export var max_number_of_groups : int = 10
+@export var max_npcs_in_group    : int = 150
+var next_group : int = 0
+
 var process_groups = []
 var thread_group : Array[Thread] = []
 var current_group : int = 0
@@ -28,6 +32,14 @@ func _ready() -> void:
 	is_sun_up = true
 	wait_time = full_day_time
 	one_shot = true
+
+	## The code below is commented out because it is not needed for the current implementation.
+	## It is meant to be used with a predetermined amount of NPCs, which may not be the case when testing with 'npc_quantity_test'
+	## Should be paired, in the future, with code to dynamically adjust the number of groups based on the number of NPCs
+	# number_of_groups = max(1, min(npc_holder.get_child_count() / max_npcs_in_group, max_number_of_groups))
+	# print("NUMBER OF GROUPS:", number_of_groups)
+	number_of_groups = max_number_of_groups
+
 	process_groups.resize(number_of_groups)
 	thread_group.resize(number_of_groups)
 	for i in number_of_groups:
@@ -102,7 +114,9 @@ func request_id() -> int:
 	return id
 
 func request_group() -> int:
-	return randi_range(0, number_of_groups - 1)
+	var group_to_return = next_group
+	next_group += 1 % number_of_groups
+	return group_to_return
 
 func bind_callable_to_group(group : int, callable : Callable):
 	process_groups[group].push_back(callable)

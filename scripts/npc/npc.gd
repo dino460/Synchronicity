@@ -11,10 +11,10 @@ signal death
 signal running
 signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
-enum State { DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING, FIGHTING_CHASE, FIGHTING_CLOSE }
+enum State { DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING }
 var current_state : State = State.DOING_STUFF
 
-enum CombatState { NONE, SEARCHING, CHASING, CLOSE, ATTACKING }
+enum CombatState { NONE, SEARCHING, CHASING, CLOSE, ATTACKING, LOOKING }
 var current_combat_state : CombatState = CombatState.NONE
 
 @export var test_label : Label
@@ -69,10 +69,15 @@ var look_direction     : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
 
 @export_group("NPC Combat")
-var attack_targets        : Dictionary[Entity, int]
-var current_attack_target : Entity
-var can_see_attack_target : bool = false
-var search_area_position  : Vector3 = Vector3.ZERO
+var attack_targets_by_damage_taken : Dictionary[Entity, int]
+var current_attack_target          : Entity
+var can_see_attack_target          : bool = false
+var search_area_position           : Vector3 = Vector3.ZERO
+var wait_to_search_timer           : float = 0.0
+var needs_to_look_around           : bool = false
+var chase_reset_counter            : float = 0.0
+var chase_reset_time               : float = 0.0
+var chase_reset_base_time          : float = 0.0
 
 @export var damage_threshold   : float = 0.0
 @export var attack_distance    : float = 5.0
@@ -80,6 +85,11 @@ var search_area_position  : Vector3 = Vector3.ZERO
 @export var field_of_view      : float = -0.35
 @export var search_radius      : float = 5.0
 @export var run_mult_threshold : float = 1.8
+
+@export var max_time_to_wait : float = 2.5
+@export var min_time_to_wait : float = 1.4
+
+@export var chance_to_change_search_area : float = 0.05
 
 @export_group("NPC Rendering")
 @onready var mesh_pivot_ref = $MeshPivot
@@ -114,6 +124,9 @@ func _ready():
 
 	if last_location == null:
 		last_location = home
+
+	chase_reset_base_time = (personality.mind * (1 - personality.aggression) / (personality.energy * personality.bravery))
+	print(chase_reset_time)
 
 	call_deferred("actor_setup") # Make sure to not await during _ready.
 
@@ -159,9 +172,9 @@ func _process(delta: float) -> void:
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
 	## Checks if has attack target and if target list is empty
-	if current_attack_target != null and not attack_targets.is_empty() and current_state != State.DEAD:
+	if current_attack_target != null and not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
 		## Checks if cumulated damage is above threshold
-		if attack_targets[current_attack_target] >= damage_threshold:
+		if attack_targets_by_damage_taken[current_attack_target] >= damage_threshold:
 			## Cheks if enemy is close enough for close combat or if should be chased
 			current_state = State.FIGHTING
 			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
@@ -170,10 +183,13 @@ func _process(delta: float) -> void:
 			elif self.position.distance_squared_to(current_attack_target.position) >= attack_distance and is_allowed_state:
 				# current_state = State.FIGHTING_CHASE
 				current_combat_state = CombatState.CHASING
+				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
+				chase_reset_counter = chase_reset_time
 			else:
 				# current_state = State.FIGHTING_CLOSE
 				current_combat_state = CombatState.CLOSE
-
+				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
+				chase_reset_counter = chase_reset_time
 
 func _physics_process(delta):
 	if current_state == State.DEAD:
@@ -269,18 +285,48 @@ func run_pathfinding_logic():
 
 func handle_combat():
 	current_target = null
+	print(chase_reset_counter)
+
+	if chase_reset_counter <= 0.0:
+		attack_targets_by_damage_taken[current_attack_target] = 0
+		current_attack_target = null
+		current_state = State.DOING_STUFF
+		current_combat_state = CombatState.NONE
+		chase_reset_counter = chase_reset_time
 
 	match current_combat_state:
 		CombatState.NONE:
-			if navigation_agent.is_navigation_finished():
-				current_combat_state = CombatState.SEARCHING
-				search_area_position = global_position
+			pass
 
 		CombatState.SEARCHING:
-			var search_position = Vector3(search_area_position.x + randf_range(-search_radius, search_radius), search_area_position.y, search_area_position.z + randf_range(-search_radius, search_radius))
+			chase_reset_counter -= get_physics_process_delta_time() * scheduler.number_of_groups
+
 			if navigation_agent.is_navigation_finished():
-				set_movement_target(search_position)
-				current_combat_state = CombatState.SEARCHING
+				var change_search_area : bool = randf() < chance_to_change_search_area
+				if change_search_area:
+					print("changed search area")
+					search_area_position = global_position
+
+				current_combat_state = CombatState.LOOKING
+				needs_to_look_around = true
+				wait_to_search_timer = randf_range(min_time_to_wait, max_time_to_wait)
+
+		CombatState.LOOKING:
+			chase_reset_counter -= get_physics_process_delta_time() * scheduler.number_of_groups
+
+			velocity = Vector3.ZERO
+			navigation_enabled = false
+
+			if needs_to_look_around:
+				if wait_to_search_timer <= 0.0:
+					needs_to_look_around = false
+					var search_pos_x = search_area_position.x + randf_range(-search_radius, search_radius)
+					var search_pos_z = search_area_position.z + randf_range(-search_radius, search_radius)
+					var search_position = Vector3(search_pos_x, search_area_position.y, search_pos_z)
+					set_movement_target(search_position)
+					current_combat_state = CombatState.SEARCHING
+				else:
+					wait_to_search_timer -= get_physics_process_delta_time() * scheduler.number_of_groups
 
 		CombatState.CHASING:
 			if can_see_attack_target:
@@ -398,14 +444,15 @@ func _on_trigger_death() -> void:
 
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
 	print("taking damage: ", damage, " from ", new_attacker)
-	if attack_targets.has(new_attacker):
-		attack_targets[new_attacker] += damage
-	attack_targets[new_attacker] = damage
+	if attack_targets_by_damage_taken.has(new_attacker):
+		attack_targets_by_damage_taken[new_attacker] += damage
+	else:
+		attack_targets_by_damage_taken[new_attacker] = damage
 
 	if current_attack_target == null:
 		current_attack_target = new_attacker
 		return
-
-	for attacker in attack_targets:
-		if attack_targets[attacker] > attack_targets[current_attack_target]:
-			current_attack_target = attacker
+	else:
+		for attacker in attack_targets_by_damage_taken:
+			if attack_targets_by_damage_taken[attacker] > attack_targets_by_damage_taken[current_attack_target]:
+				current_attack_target = attacker
