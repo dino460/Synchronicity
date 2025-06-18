@@ -69,17 +69,20 @@ var look_direction     : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
 
 @export_group("NPC Combat")
-var attack_targets_by_damage_taken : Dictionary[Entity, int]
-var current_attack_target          : Entity
-var can_see_attack_target          : bool = false
-var search_area_position           : Vector3 = Vector3.ZERO
-var wait_to_search_timer           : float = 0.0
-var needs_to_look_around           : bool = false
-var chase_reset_counter            : float = 0.0
-var chase_reset_time               : float = 0.0
-var chase_reset_base_time          : float = 0.0
+var attack_targets_by_damage_taken  : Dictionary[Entity, float]
 
-@export var damage_threshold   : float = 0.0
+var current_attack_target : Entity
+var can_see_attack_target : bool = false
+var search_area_position  : Vector3 = Vector3.ZERO
+var wait_to_search_timer  : float = 0.0
+var needs_to_look_around  : bool = false
+var chase_reset_counter   : float = 0.0
+var chase_reset_time      : float = 0.0
+var chase_reset_base_time : float = 0.0
+
+@export var damage_threshold  : float = 8.0
+@export var damage_drain_rate : float = 1.4
+
 @export var attack_distance    : float = 5.0
 @export var follow_look_angle  : float = 0.349055556
 @export var field_of_view      : float = -0.35
@@ -170,6 +173,11 @@ func _process(delta: float) -> void:
 		# 	timers[timer] += delta
 		# 	if not has_worked_today:
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+
+	for entity in attack_targets_by_damage_taken:
+		attack_targets_by_damage_taken[entity] -= delta
+		if attack_targets_by_damage_taken[entity] <= 0:
+			attack_targets_by_damage_taken.erase(entity)
 
 	## Checks if has attack target and if target list is empty
 	if current_attack_target != null and not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
@@ -285,7 +293,11 @@ func run_pathfinding_logic():
 
 func handle_combat():
 	current_target = null
-	print(chase_reset_counter)
+
+	if can_see_attack_target:
+		current_combat_state = CombatState.CHASING
+		needs_to_look_around = false
+		chase_reset_counter = chase_reset_time
 
 	if chase_reset_counter <= 0.0:
 		attack_targets_by_damage_taken[current_attack_target] = 0
