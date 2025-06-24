@@ -53,7 +53,7 @@ For now, the game is quite barebones and totally in an Alpha state of affairs. B
 | 46% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working |
 | 33% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs still don't attaack and behave really simplistically. No nuance. Heavy polishing needed.
 | 0.000001% 🔴 | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority |
-| 0.0% 🔴 | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton on the corner... waiting_</sub> |
+| 0.0% 🔴 | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton in the corner... waiting_</sub> |
 
 <sub>_**Feature**: Currently in active development. Other features are also in-development, but focus is on this one_</sub><br/>
 <sub>_PS: Percentage values are arbitrary and merely ment to give an idea on how much/little progress has been made)_<br/><br/></sub>
@@ -62,25 +62,31 @@ For now, the game is quite barebones and totally in an Alpha state of affairs. B
 <summary>A further detailing of the main features and mechanics of Synchronicity</summary>
 
 ### Animation System
-> Section In-progress
+> Section is a Work In progress
+
+Synchornicity's animation system is heavily based on Godot's signal system. All NPC's and the Player Character make use of this simple system to connect the state-driven logic implemented internally by each class (npc.gd and player.gd) to the receiving methods in the AnimationHandler class. These methods then make the necessary checks for animation cancelling and call the AnimationPlayer, which will play the given animation.
+
+For base animations, such as idle, walk and run, they are implemented globally, while combat animations are handled independently with a weapon-system. This system, further detailed in the [Combat System](#combat-system) section, provides the correct animations for each weapon, along with the combo sequences and other important details about the used weapon.
 
 ### Combat System
-> Section In-progress
+> Section is a Work In progress
+
+Custom system that provides four diferent attak directions: up, down, left, and right. These are used to simulate a somewhat real-life-like sword-fighting experience.
 
 ### Day/Night Cycle
-> Section In-progress
+A simple system for defining an absolute time for a full day to last (such as 10 minutes), which is translated to the in-game simulated 24 hour time. Also provides the capability of defining custom sunrise and sunset times (for custom day/night ratios).
 
 ### Movement System
-> Section In-progress
+> Section is a Work In progress
 
 ### Scheduled NPC Interaction System
-> Section In-progress
+> Section is a Work In progress
 
 ### SFX/OST
-> Section In-progress
+> Section is a Work In (glacial) progress
 
 ### Story
-> Section In-progress
+> Section is a Work In (very, very, **_very_** slow) progress
 
 </details>
 
