@@ -73,15 +73,16 @@ var attack_targets_by_damage_taken  : Dictionary[Entity, float]
 
 var current_attack_target : Entity
 var can_see_attack_target : bool = false
-var search_area_position  : Vector3 = Vector3.ZERO
+var wants_to_look_around  : bool = false
+var is_in_attack_range    : bool = false
 var wait_to_search_timer  : float = 0.0
-var needs_to_look_around  : bool = false
 var chase_reset_counter   : float = 0.0
 var chase_reset_time      : float = 0.0
 var chase_reset_base_time : float = 0.0
+var search_area_position  : Vector3 = Vector3.ZERO
 
 @export var damage_threshold  : float = 8.0
-@export var damage_drain_rate : float = 1.4
+@export var damage_drain_rate : float = 0.4
 
 @export var attack_distance    : float = 5.0
 @export var follow_look_angle  : float = 0.349055556
@@ -174,13 +175,17 @@ func _process(delta: float) -> void:
 		# 	if not has_worked_today:
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
-	for entity in attack_targets_by_damage_taken:
-		attack_targets_by_damage_taken[entity] -= delta
-		if attack_targets_by_damage_taken[entity] <= 0:
-			attack_targets_by_damage_taken.erase(entity)
 
+	if current_attack_target == null:
+		for entity in attack_targets_by_damage_taken:
+			print(attack_targets_by_damage_taken[entity])
+			attack_targets_by_damage_taken[entity] -= delta * damage_drain_rate
+			if attack_targets_by_damage_taken[entity] <= 0:
+				attack_targets_by_damage_taken.erase(entity)
 	## Checks if has attack target and if target list is empty
-	if current_attack_target != null and not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
+	elif not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
+		is_in_attack_range = self.position.distance_squared_to(current_attack_target.position) <= attack_distance
+
 		## Checks if cumulated damage is above threshold
 		if attack_targets_by_damage_taken[current_attack_target] >= damage_threshold:
 			## Cheks if enemy is close enough for close combat or if should be chased
@@ -188,13 +193,12 @@ func _process(delta: float) -> void:
 			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
 			if not can_see_attack_target:
 				return
-			elif self.position.distance_squared_to(current_attack_target.position) >= attack_distance and is_allowed_state:
-				# current_state = State.FIGHTING_CHASE
+			elif not is_in_attack_range and is_allowed_state:
 				current_combat_state = CombatState.CHASING
 				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
 				chase_reset_counter = chase_reset_time
+				wants_to_look_around = false
 			else:
-				# current_state = State.FIGHTING_CLOSE
 				current_combat_state = CombatState.CLOSE
 				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
 				chase_reset_counter = chase_reset_time
@@ -294,17 +298,17 @@ func run_pathfinding_logic():
 func handle_combat():
 	current_target = null
 
-	if can_see_attack_target:
-		current_combat_state = CombatState.CHASING
-		needs_to_look_around = false
-		chase_reset_counter = chase_reset_time
-
-	if chase_reset_counter <= 0.0:
-		attack_targets_by_damage_taken[current_attack_target] = 0
+	if chase_reset_counter <= 0.0 or attack_targets_by_damage_taken[current_attack_target] < damage_threshold:
 		current_attack_target = null
 		current_state = State.DOING_STUFF
 		current_combat_state = CombatState.NONE
 		chase_reset_counter = chase_reset_time
+		return
+
+	# if can_see_attack_target and not is_in_attack_range:
+	# 	current_combat_state = CombatState.CHASING
+	# 	wants_to_look_around = false
+	# 	chase_reset_counter = chase_reset_time
 
 	match current_combat_state:
 		CombatState.NONE:
@@ -320,7 +324,7 @@ func handle_combat():
 					search_area_position = global_position
 
 				current_combat_state = CombatState.LOOKING
-				needs_to_look_around = true
+				wants_to_look_around = true
 				wait_to_search_timer = randf_range(min_time_to_wait, max_time_to_wait)
 
 		CombatState.LOOKING:
@@ -329,9 +333,9 @@ func handle_combat():
 			velocity = Vector3.ZERO
 			navigation_enabled = false
 
-			if needs_to_look_around:
+			if wants_to_look_around:
 				if wait_to_search_timer <= 0.0:
-					needs_to_look_around = false
+					wants_to_look_around = false
 					var search_pos_x = search_area_position.x + randf_range(-search_radius, search_radius)
 					var search_pos_z = search_area_position.z + randf_range(-search_radius, search_radius)
 					var search_position = Vector3(search_pos_x, search_area_position.y, search_pos_z)

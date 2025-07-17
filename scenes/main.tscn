@@ -331,6 +331,7 @@ radius_of_influence = 3.0
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE"]
+visible = false
 mesh = SubResource("SphereMesh_abj4j")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE"]
