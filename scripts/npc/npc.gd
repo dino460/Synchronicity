@@ -73,7 +73,6 @@ var attack_targets_by_damage_taken  : Dictionary[Entity, float]
 
 var current_attack_target : Entity
 var can_see_attack_target : bool = false
-var wants_to_look_around  : bool = false
 var is_in_attack_range    : bool = false
 var wait_to_search_timer  : float = 0.0
 var chase_reset_counter   : float = 0.0
@@ -161,29 +160,12 @@ func _process(delta: float) -> void:
 	else:
 		awake_time_this_day += delta
 
-	for timer in timers:
-		if current_state != State.DOING_STUFF:
-			continue
-		timers[timer] += delta
-		if has_worked_today:
-			continue
-		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+	call_deferred("tick_timers", delta)
 
-		# if current_state == State.DOING_STUFF:
-		# 	# print(timers[timer])
-		# 	timers[timer] += delta
-		# 	if not has_worked_today:
-		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+	call_deferred("tick_damage_taken", delta)
 
-
-	if current_attack_target == null:
-		for entity in attack_targets_by_damage_taken:
-			print(attack_targets_by_damage_taken[entity])
-			attack_targets_by_damage_taken[entity] -= delta * damage_drain_rate
-			if attack_targets_by_damage_taken[entity] <= 0:
-				attack_targets_by_damage_taken.erase(entity)
 	## Checks if has attack target and if target list is empty
-	elif not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
+	if current_attack_target != null and not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
 		is_in_attack_range = self.position.distance_squared_to(current_attack_target.position) <= attack_distance
 
 		## Checks if cumulated damage is above threshold
@@ -192,12 +174,11 @@ func _process(delta: float) -> void:
 			current_state = State.FIGHTING
 			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
 			if not can_see_attack_target:
-				return
+				pass
 			elif not is_in_attack_range and is_allowed_state:
 				current_combat_state = CombatState.CHASING
 				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
 				chase_reset_counter = chase_reset_time
-				wants_to_look_around = false
 			else:
 				current_combat_state = CombatState.CLOSE
 				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
@@ -249,6 +230,29 @@ func _physics_process(delta):
 		else:
 			idling.emit()
 
+func tick_timers(delta : float):
+	for timer in timers:
+		if current_state != State.DOING_STUFF:
+			continue
+		timers[timer] += delta
+		if has_worked_today:
+			continue
+		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+
+		# if current_state == State.DOING_STUFF:
+		# 	# print(timers[timer])
+		# 	timers[timer] += delta
+		# 	if not has_worked_today:
+		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
+
+func tick_damage_taken(delta: float):
+	for entity in attack_targets_by_damage_taken:
+		if entity == current_attack_target:
+			continue
+		attack_targets_by_damage_taken[entity] -= delta * damage_drain_rate
+		if attack_targets_by_damage_taken[entity] <= 0:
+			attack_targets_by_damage_taken.erase(entity)
+
 func run_pathfinding_logic():
 	if current_state == State.DEAD:
 		print("NPC is dead")
@@ -280,9 +284,7 @@ func run_pathfinding_logic():
 			if has_worked_today:
 				want_to_sleep = ((work_time_this_day * 0.15) + moving_about_time_this_day + (awake_time_this_day / 2.0)) / scheduler.full_day_time > personality.mind * personality.energy
 				sleep_amount_wanted = max(4.0 * scheduler.full_day_time / 24.0, min(7.0 * scheduler.full_day_time / 24.0, work_time_this_day + moving_about_time_this_day))
-		return
-
-	if current_state == State.DOING_STUFF:
+	elif current_state == State.DOING_STUFF:
 		check_for_path_while_doing_stuff()
 	elif current_state == State.MOVING_ABOUT:
 		check_for_path_while_moving()
@@ -324,7 +326,6 @@ func handle_combat():
 					search_area_position = global_position
 
 				current_combat_state = CombatState.LOOKING
-				wants_to_look_around = true
 				wait_to_search_timer = randf_range(min_time_to_wait, max_time_to_wait)
 
 		CombatState.LOOKING:
@@ -333,16 +334,14 @@ func handle_combat():
 			velocity = Vector3.ZERO
 			navigation_enabled = false
 
-			if wants_to_look_around:
-				if wait_to_search_timer <= 0.0:
-					wants_to_look_around = false
-					var search_pos_x = search_area_position.x + randf_range(-search_radius, search_radius)
-					var search_pos_z = search_area_position.z + randf_range(-search_radius, search_radius)
-					var search_position = Vector3(search_pos_x, search_area_position.y, search_pos_z)
-					set_movement_target(search_position)
-					current_combat_state = CombatState.SEARCHING
-				else:
-					wait_to_search_timer -= get_physics_process_delta_time() * scheduler.number_of_groups
+			if wait_to_search_timer <= 0.0:
+				var search_pos_x = search_area_position.x + randf_range(-search_radius, search_radius)
+				var search_pos_z = search_area_position.z + randf_range(-search_radius, search_radius)
+				var search_position = Vector3(search_pos_x, search_area_position.y, search_pos_z)
+				set_movement_target(search_position)
+				current_combat_state = CombatState.SEARCHING
+			else:
+				wait_to_search_timer -= get_physics_process_delta_time() * scheduler.number_of_groups
 
 		CombatState.CHASING:
 			if can_see_attack_target:
