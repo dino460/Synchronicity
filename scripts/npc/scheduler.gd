@@ -2,6 +2,8 @@ extends Timer
 
 class_name Scheduler
 
+@export var fps_counter : Label
+
 @export var full_day_time : float = 600.0
 @export var sun_up_time : float
 @export var sun_down_time : float
@@ -53,6 +55,8 @@ func _ready() -> void:
 	start()
 
 func _process(_delta: float) -> void:
+	fps_counter.text = str(Engine.get_frames_per_second())
+
 	is_sun_up = true if get_current_time() >= (sun_up_time * full_day_time / 24.0) and get_current_time() < (sun_down_time * full_day_time / 24.0) else false
 
 	var hours : int = get_current_time() * 24 / full_day_time

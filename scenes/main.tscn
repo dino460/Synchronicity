@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=30 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -10,8 +10,24 @@
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="10_bp8n5"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_ijmam"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
+[ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 [ext_resource type="Script" uid="uid://ciaup4miepbx5" path="res://scripts/display.gd" id="14_cns07"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8y0u"]
+render_priority = 127
+shader = ExtResource("11_trceg")
+shader_parameter/outline_mode = 2
+shader_parameter/outline_intensity = 0.002
+shader_parameter/_round = true
+shader_parameter/outline_bias = 0.3
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_trceg"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_a8y0u")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
@@ -97,7 +113,7 @@ grow_vertical = 2
 stretch = true
 script = ExtResource("1_g8fm3")
 minimum_pixelation = 3
-pixelation_correction = 4
+pixelation_correction = 3
 
 [node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer"]
 handle_input_locally = false
@@ -107,6 +123,11 @@ use_occlusion_culling = true
 audio_listener_enable_3d = true
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
+
+[node name="EdgeOutliner" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.834889, 4.95951, -0.874888)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_trceg")
 
 [node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, -1.76201)
@@ -311,12 +332,11 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
+[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home") instance=ExtResource("6_mfdyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43745, 2.13348, -1.75753)
 scheduler = NodePath("../../../../Scheduler")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
-points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
 
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
@@ -373,7 +393,8 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
+[node name="Scheduler" parent="." node_paths=PackedStringArray("fps_counter", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
+fps_counter = NodePath("../UISubViewportContainer/UISubViewport/Label")
 sun_up_time = 5.0
 sun_down_time = 20.0
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
@@ -398,7 +419,6 @@ texture = SubResource("ViewportTexture_rukhp")
 centered = false
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="."]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -410,7 +430,7 @@ stretch = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1000, 625)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="Clock Label" type="Label" parent="UISubViewportContainer/UISubViewport"]
 offset_right = 296.0
@@ -418,11 +438,11 @@ offset_bottom = 38.0
 text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_113qa")
 
-[node name="Weights Label" type="Label" parent="UISubViewportContainer/UISubViewport"]
+[node name="Label" type="Label" parent="UISubViewportContainer/UISubViewport"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -111.0
+offset_left = -271.0
 offset_bottom = 38.0
 grow_horizontal = 0
 text = "test to test test size"

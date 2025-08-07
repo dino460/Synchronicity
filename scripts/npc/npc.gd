@@ -69,10 +69,10 @@ var look_direction     : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
 
 @export_group("NPC Combat")
-var attack_targets_by_damage_taken  : Dictionary[Entity, float]
+var damage_per_aggroer  : Dictionary[Entity, float]
 
-var current_attack_target : Entity
-var can_see_attack_target : bool = false
+var current_aggro_target  : Entity
+var can_see_aggro_target  : bool = false
 var is_in_attack_range    : bool = false
 var wait_to_search_timer  : float = 0.0
 var chase_reset_counter   : float = 0.0
@@ -92,7 +92,7 @@ var search_area_position  : Vector3 = Vector3.ZERO
 @export var max_time_to_wait : float = 2.5
 @export var min_time_to_wait : float = 1.4
 
-@export var chance_to_change_search_area : float = 0.05
+@export var chance_to_change_search_area : float = 0.08
 
 @export_group("NPC Rendering")
 @onready var mesh_pivot_ref = $MeshPivot
@@ -165,23 +165,23 @@ func _process(delta: float) -> void:
 	call_deferred("tick_damage_taken", delta)
 
 	## Checks if has attack target and if target list is empty
-	if current_attack_target != null and not attack_targets_by_damage_taken.is_empty() and current_state != State.DEAD:
-		is_in_attack_range = self.position.distance_squared_to(current_attack_target.position) <= attack_distance
+	if current_aggro_target != null and not damage_per_aggroer.is_empty() and current_state != State.DEAD:
+		is_in_attack_range = self.position.distance_squared_to(current_aggro_target.position) <= attack_distance
 
 		## Checks if cumulated damage is above threshold
-		if attack_targets_by_damage_taken[current_attack_target] >= damage_threshold:
+		if damage_per_aggroer[current_aggro_target] >= damage_threshold:
 			## Cheks if enemy is close enough for close combat or if should be chased
 			current_state = State.FIGHTING
 			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
-			if not can_see_attack_target:
+			if not can_see_aggro_target:
 				pass
 			elif not is_in_attack_range and is_allowed_state:
 				current_combat_state = CombatState.CHASING
-				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
+				chase_reset_time = chase_reset_base_time + damage_per_aggroer[current_aggro_target]
 				chase_reset_counter = chase_reset_time
 			else:
 				current_combat_state = CombatState.CLOSE
-				chase_reset_time = chase_reset_base_time + attack_targets_by_damage_taken[current_attack_target]
+				chase_reset_time = chase_reset_base_time + damage_per_aggroer[current_aggro_target]
 				chase_reset_counter = chase_reset_time
 
 func _physics_process(delta):
@@ -192,8 +192,8 @@ func _physics_process(delta):
 	var path_direction : Vector3 = (navigation_agent.get_next_path_position() - position).normalized()
 	var path_to_attack_target_angle : float = 0.0
 
-	if current_attack_target != null:
-		attack_target_direction = (current_attack_target.position - position).normalized()
+	if current_aggro_target != null:
+		attack_target_direction = (current_aggro_target.position - position).normalized()
 		path_to_attack_target_angle = attack_target_direction.normalized().angle_to(path_direction)
 
 	if current_state == State.FIGHTING and path_to_attack_target_angle < follow_look_angle:
@@ -202,18 +202,18 @@ func _physics_process(delta):
 		look_direction = path_direction
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
 
-	if current_attack_target != null:
+	if current_aggro_target != null:
 		var space_state = get_world_3d().direct_space_state
-		var query = PhysicsRayQueryParameters3D.create(look_origin.global_position, current_attack_target.global_position, 1)
+		var query = PhysicsRayQueryParameters3D.create(look_origin.global_position, current_aggro_target.global_position, 1)
 		var	result = space_state.intersect_ray(query)
 		var is_in_field_of_view = (-mesh_pivot_ref.global_transform.basis.z).dot(attack_target_direction) > field_of_view
-		var is_in_range = position.distance_to(current_attack_target.position) < attack_distance
+		var is_in_range = position.distance_to(current_aggro_target.position) < attack_distance
 
-		can_see_attack_target = result.collider == current_attack_target and is_in_field_of_view or is_in_range
+		can_see_aggro_target = result.collider == current_aggro_target and is_in_field_of_view or is_in_range
 
-		is_running = current_attack_target.velocity.length() >= get_walk_speed() * run_mult_threshold
-		is_running = is_running or position.distance_to(current_attack_target.position) > attack_distance
-		is_running = is_running and can_see_attack_target
+		is_running = current_aggro_target.velocity.length() >= get_walk_speed() * run_mult_threshold
+		is_running = is_running or position.distance_to(current_aggro_target.position) > attack_distance
+		is_running = is_running and can_see_aggro_target
 
 	var is_allowed_state = current_combat_state in [CombatState.CHASING, CombatState.SEARCHING]
 	if (current_location != current_target and current_target != null) or is_allowed_state:
@@ -246,12 +246,12 @@ func tick_timers(delta : float):
 		# 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
 func tick_damage_taken(delta: float):
-	for entity in attack_targets_by_damage_taken:
-		if entity == current_attack_target:
+	for entity in damage_per_aggroer:
+		if entity == current_aggro_target:
 			continue
-		attack_targets_by_damage_taken[entity] -= delta * damage_drain_rate
-		if attack_targets_by_damage_taken[entity] <= 0:
-			attack_targets_by_damage_taken.erase(entity)
+		damage_per_aggroer[entity] -= delta * damage_drain_rate
+		if damage_per_aggroer[entity] <= 0:
+			damage_per_aggroer.erase(entity)
 
 func run_pathfinding_logic():
 	if current_state == State.DEAD:
@@ -300,14 +300,14 @@ func run_pathfinding_logic():
 func handle_combat():
 	current_target = null
 
-	if chase_reset_counter <= 0.0 or attack_targets_by_damage_taken[current_attack_target] < damage_threshold:
-		current_attack_target = null
+	if chase_reset_counter <= 0.0 or damage_per_aggroer[current_aggro_target] < damage_threshold:
+		current_aggro_target = null
 		current_state = State.DOING_STUFF
 		current_combat_state = CombatState.NONE
 		chase_reset_counter = chase_reset_time
 		return
 
-	# if can_see_attack_target and not is_in_attack_range:
+	# if can_see_aggro_target and not is_in_attack_range:
 	# 	current_combat_state = CombatState.CHASING
 	# 	wants_to_look_around = false
 	# 	chase_reset_counter = chase_reset_time
@@ -344,8 +344,8 @@ func handle_combat():
 				wait_to_search_timer -= get_physics_process_delta_time() * scheduler.number_of_groups
 
 		CombatState.CHASING:
-			if can_see_attack_target:
-				set_movement_target(current_attack_target.position)
+			if can_see_aggro_target:
+				set_movement_target(current_aggro_target.position)
 			elif navigation_agent.is_navigation_finished():
 				current_combat_state = CombatState.SEARCHING
 				search_area_position = global_position
@@ -459,15 +459,15 @@ func _on_trigger_death() -> void:
 
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
 	print("taking damage: ", damage, " from ", new_attacker)
-	if attack_targets_by_damage_taken.has(new_attacker):
-		attack_targets_by_damage_taken[new_attacker] += damage
+	if damage_per_aggroer.has(new_attacker):
+		damage_per_aggroer[new_attacker] += damage
 	else:
-		attack_targets_by_damage_taken[new_attacker] = damage
+		damage_per_aggroer[new_attacker] = damage
 
-	if current_attack_target == null:
-		current_attack_target = new_attacker
+	if current_aggro_target == null:
+		current_aggro_target = new_attacker
 		return
 	else:
-		for attacker in attack_targets_by_damage_taken:
-			if attack_targets_by_damage_taken[attacker] > attack_targets_by_damage_taken[current_attack_target]:
-				current_attack_target = attacker
+		for attacker in damage_per_aggroer:
+			if damage_per_aggroer[attacker] > damage_per_aggroer[current_aggro_target]:
+				current_aggro_target = attacker

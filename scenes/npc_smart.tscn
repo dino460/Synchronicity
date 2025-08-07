@@ -24,9 +24,11 @@ material = SubResource("StandardMaterial3D_rkigc")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y33ke"]
 resource_name = "Base"
-cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
 albedo_color = Color(0.352106, 0.37316, 1, 1)
-roughness = 0.5
+metallic = 0.5
+roughness = 0.0
 metadata/extras = {
 "luxcore": {
 "node_tree": {}
@@ -5110,7 +5112,7 @@ libraries = {
 }
 
 [node name="LookOrigin" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92647, 0)
 
 [connection signal="damage_taken" from="." to="." method="_on_damage_taken"]
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]
