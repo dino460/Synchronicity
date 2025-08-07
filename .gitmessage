@@ -1,7 +1,35 @@
-[<version>] <TYPE> :: <scope>
-<short description> (max 50 chars)
+[]  ::
+# [<version>] <TYPE> :: <scope>
+# Synchronicity v[W.X.Y.Z](greek letter)
+# 	v : decoration -> stands for "version"
+# 		W : major version/revision/rework
+# 		X : major features
+# 		Y : minor features/major bug fix
+# 		Z : minor changes/bug fixes
+# 		greek letter : denotes software/branch major state
+# 			α => alpha   -> early production, main features not fully implemented and unsuitable for proper play
+# 			β => beta    -> pre-release, main major features functional, may lack some minor features
+# 			ρ => release -> full release, ready for roll-out and distribution
+# 			ν => nightly -> early unstable feature complete test builds, may contain new minor test features and/or fixes
+# TYPE follows git conventions types (CAPITALIZED) [CHORE, FIX, FEAT, etc.]
+#	https://www.conventionalcommits.org/en/v1.0.0/
+# scope is a short discriptive title of your changes (CAPITALIZED, no period)
+# No more than 50 chars. #### 50 chars is here:  #
+
+# A more detailed discription of the commit (with period.)
+# Wrap at 75 chars. ################################## which is here:  #
+
 Body:
-<detailed description of changes made in commit> (keep it snappy)
-Footer:
-<other commentaries and notes>
-from: [<old-version>]
+# Full description of each individual change, using the bellow structure (list-like, with period.)
+# Wrap at 75 chars. ##################################### which is here:  #
+# <structure:>
+# (+) [<file name>] <addition>
+# (*) [<file name>] <change/refactoring>
+# (-) [<file name>] <removal>
+
+# Footer:
+# further thoughts, explanations, commentaries that may be pertinent to fully understanding the commit and related decisions
+# Here breaking changes should be warned as <<<BREAKING CHANGES>>> at the first line of the Footer
+
+from: []
+# to keep track of the progression
