@@ -7,10 +7,8 @@ extends SubViewportContainer
 func _ready() -> void:
 	get_viewport().connect("size_changed", _change_pixelation_by_resolution)
 	_change_pixelation_by_resolution()
-	pass
 
 func _change_pixelation_by_resolution():
 	var current_res = mini(DisplayServer.window_get_size().x, DisplayServer.window_get_size().y)
 
 	stretch_shrink = max(minimum_pixelation, pixelation_correction * current_res / 1080)
-	pass

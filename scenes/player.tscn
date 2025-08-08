@@ -762,7 +762,7 @@ vertical_down_corretion = 0.75
 transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 0, 6.75, 10)
 projection = 1
 size = 15.0
-near = 0.4
+near = 0.1
 far = 100.0
 script = ExtResource("6_h03v3")
 snap = false
@@ -781,8 +781,8 @@ attack_damage = 10.0
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_dashing"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
-[connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
+[connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
 [connection signal="attack_ended" from="AnimationHandler" to="." method="_on_animation_handler_attack_ended"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="enable_combo" from="AnimationHandler" to="." method="_on_animation_handler_enable_combo"]

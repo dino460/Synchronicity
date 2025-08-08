@@ -1301,10 +1301,11 @@ _data = {
 &"walk": ExtResource("8_xu3sh")
 }
 
-[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("personality", "look_origin", "stats")]
+[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("label_anchor", "personality", "look_origin", "stats")]
 collision_layer = 33
 collision_mask = 1057
 script = ExtResource("1_p1mm1")
+label_anchor = NodePath("LabelAnchor")
 npc_name = "NPC_37"
 current_age = 25
 personality = NodePath("Personality")
@@ -5113,6 +5114,9 @@ libraries = {
 
 [node name="LookOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92647, 0)
+
+[node name="LabelAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [connection signal="damage_taken" from="." to="." method="_on_damage_taken"]
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]

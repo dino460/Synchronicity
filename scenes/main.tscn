@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=28 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
-[ext_resource type="Script" uid="uid://ciaup4miepbx5" path="res://scripts/display.gd" id="14_cns07"]
+[ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a8y0u"]
 render_priority = 127
@@ -33,7 +33,13 @@ size = Vector2(2, 2)
 size = Vector3(75, 1, 75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbv16"]
+diffuse_mode = 3
+specular_mode = 1
 albedo_texture = ExtResource("3_tjny0")
+metallic = 0.5
+roughness = 0.0
+clearcoat = 0.29
+clearcoat_roughness = 1.0
 uv1_scale = Vector3(0.4, 0.4, 0.4)
 uv1_triplanar = true
 
@@ -79,24 +85,22 @@ albedo_color = Color(0.858904, 0, 0.160098, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
 material = SubResource("StandardMaterial3D_2604s")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_rukhp"]
-viewport_path = NodePath("EnvironmentSubViewportContainer/SubViewport")
-
-[sub_resource type="SystemFont" id="SystemFont_3u5ke"]
-font_names = PackedStringArray("FiraCode Nerd Font Mono")
-
 [sub_resource type="LabelSettings" id="LabelSettings_113qa"]
-font = SubResource("SystemFont_3u5ke")
-font_size = 30
+font = ExtResource("14_a8y0u")
+font_size = 80
 font_color = Color(0.926528, 0, 0, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_t4jp0"]
-font_names = PackedStringArray("FiraCode Nerd Font Mono")
 
 [sub_resource type="LabelSettings" id="LabelSettings_kgmxm"]
-font = SubResource("SystemFont_t4jp0")
-font_size = 20
+font = ExtResource("14_a8y0u")
+font_size = 35
 font_color = Color(0.926528, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0gito"]
+font = ExtResource("14_a8y0u")
+font_size = 40
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="Main" type="Node"]
 
@@ -106,20 +110,18 @@ clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 1.0
-offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 script = ExtResource("1_g8fm3")
 minimum_pixelation = 3
 pixelation_correction = 3
+metadata/_edit_lock_ = true
 
 [node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer"]
 handle_input_locally = false
-snap_2d_transforms_to_pixel = true
-snap_2d_vertices_to_pixel = true
 use_occlusion_culling = true
+anisotropic_filtering_level = 0
 audio_listener_enable_3d = true
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
@@ -326,14 +328,17 @@ mesh = SubResource("PlaneMesh_ip3kr")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.679262, 0.733896, 0, -0.733896, 0.679262, 0, 0, 0)
 shadow_enabled = true
+shadow_blur = 0.0
+directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport"]
 environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home") instance=ExtResource("6_mfdyr")]
+[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("thoughts_label", "scheduler", "job", "home") instance=ExtResource("6_mfdyr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43745, 2.13348, -1.75753)
+thoughts_label = NodePath("../../../../UISubViewportContainer/UISubViewport/NPC Thoughts")
 scheduler = NodePath("../../../../Scheduler")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
@@ -351,7 +356,6 @@ radius_of_influence = 3.0
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE"]
-visible = false
 mesh = SubResource("SphereMesh_abj4j")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE"]
@@ -376,8 +380,10 @@ time_want_to_arrive = 8.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61151, 2.99291, 3.95771)
 light_energy = 5.133
 shadow_enabled = true
+shadow_blur = 0.0
 omni_range = 7.648
 omni_attenuation = 0.765
+omni_shadow_mode = 0
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.75829, 2.99291, -2.10811)
@@ -393,30 +399,12 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("fps_counter", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
-fps_counter = NodePath("../UISubViewportContainer/UISubViewport/Label")
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 sun_up_time = 5.0
 sun_down_time = 20.0
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
 player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
-
-[node name="Control" type="Control" parent="." node_paths=PackedStringArray("viewport")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("14_cns07")
-viewport = NodePath("../EnvironmentSubViewportContainer/SubViewport")
-pixel_movement = false
-sub_pixel_movement_at_integer_scale = false
-
-[node name="Sprite2D" type="Sprite2D" parent="Control"]
-texture_filter = 1
-texture = SubResource("ViewportTexture_rukhp")
-centered = false
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -425,16 +413,20 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+metadata/_edit_lock_ = true
 
 [node name="UISubViewport" type="SubViewport" parent="UISubViewportContainer"]
+disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
 [node name="Clock Label" type="Label" parent="UISubViewportContainer/UISubViewport"]
-offset_right = 296.0
-offset_bottom = 38.0
+offset_left = 14.0
+offset_top = 2.0
+offset_right = 329.0
+offset_bottom = 66.0
 text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_113qa")
 
@@ -448,3 +440,24 @@ grow_horizontal = 0
 text = "test to test test size"
 label_settings = SubResource("LabelSettings_kgmxm")
 horizontal_alignment = 2
+
+[node name="NPC Thoughts" type="Label" parent="UISubViewportContainer/UISubViewport"]
+y_sort_enabled = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -93.5
+offset_right = 162.0
+offset_bottom = -51.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(141, 21)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test to test test size"
+label_settings = SubResource("LabelSettings_0gito")
+horizontal_alignment = 1
+uppercase = true

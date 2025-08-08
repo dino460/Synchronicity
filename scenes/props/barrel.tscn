@@ -5,7 +5,6 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dk2nw"]
 resource_name = "Material"
-cull_mode = 2
 diffuse_mode = 3
 specular_mode = 1
 albedo_texture = ExtResource("2_l8aas")

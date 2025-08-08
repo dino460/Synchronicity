@@ -11,6 +11,8 @@ specular_mode = 1
 albedo_texture = ExtResource("2_wxgmk")
 metallic = 0.5
 roughness = 0.0
+distance_fade_min_distance = 4.0
+distance_fade_max_distance = 8.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hjjuv"]
 _surfaces = [{

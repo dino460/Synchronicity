@@ -18,6 +18,9 @@ enum CombatState { NONE, SEARCHING, CHASING, CLOSE, ATTACKING, LOOKING }
 var current_combat_state : CombatState = CombatState.NONE
 
 @export var test_label : Label
+@export var thoughts_label : Label
+@export var label_anchor : Node3D
+var viewport : Viewport
 
 @export_group("NPC Identity")
 @export var npc_name : String
@@ -131,6 +134,8 @@ func _ready():
 	chase_reset_base_time = (personality.mind * (1 - personality.aggression) / (personality.energy * personality.bravery))
 	print(chase_reset_time)
 
+	viewport = get_viewport()
+
 	call_deferred("actor_setup") # Make sure to not await during _ready.
 
 func actor_setup():
@@ -183,6 +188,12 @@ func _process(delta: float) -> void:
 				current_combat_state = CombatState.CLOSE
 				chase_reset_time = chase_reset_base_time + damage_per_aggroer[current_aggro_target]
 				chase_reset_counter = chase_reset_time
+
+	thoughts_label.text = State.find_key(current_state) + "\n" + CombatState.find_key(current_combat_state)
+	var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
+	new_label_position *= viewport.get_parent().stretch_shrink
+	new_label_position = Vector2(new_label_position.x - (thoughts_label.size.x / 2.0), new_label_position.y - (thoughts_label.size.y / 2.0))
+	thoughts_label.position = new_label_position
 
 func _physics_process(delta):
 	if current_state == State.DEAD:
