@@ -6,15 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
-[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_4n6l4"]
-[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="10_bp8n5"]
-[ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_ijmam"]
+[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_trceg"]
+[ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8y0u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
 render_priority = 127
 shader = ExtResource("11_trceg")
 shader_parameter/outline_mode = 2
@@ -25,7 +25,7 @@ shader_parameter/outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_trceg"]
 lightmap_size_hint = Vector2i(12, 12)
-material = SubResource("ShaderMaterial_a8y0u")
+material = SubResource("ShaderMaterial_trceg")
 flip_faces = true
 size = Vector2(2, 2)
 
@@ -345,8 +345,7 @@ home = NodePath("../../Targets/HOME")
 
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("8_4n6l4")]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -1.54608, 0.13309, 13.2987)
+[node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("8_trceg")]
 
 [node name="STATUE" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
@@ -366,13 +365,9 @@ shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
 
-[node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("10_ijmam")]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.69707, 0.146206, 7.51348)
-landmark_name = "Fntn"
+[node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("10_a8y0u")]
 
-[node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("10_bp8n5")]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -8.57848)
-time_want_to_arrive = 8.0
+[node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("11_jkv2x")]
 
 [node name="Lighting" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 

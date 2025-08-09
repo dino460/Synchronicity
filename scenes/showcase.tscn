@@ -1,0 +1,746 @@
+[gd_scene load_steps=20 format=3 uid="uid://cwpoincpr5pgn"]
+
+[ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_o36fe"]
+[ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="2_6owvg"]
+[ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="2_xq7gy"]
+[ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="3_ttlna"]
+[ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_dxudb"]
+[ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_lgn12"]
+[ext_resource type="PackedScene" uid="uid://drk0ngcyttknx" path="res://assets/props/grass patch/Grass Patch.glb" id="6_lgn12"]
+[ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="6_xq7gy"]
+[ext_resource type="PackedScene" uid="uid://bxj7yf633pq62" path="res://assets/props/tree/Tree-2.glb" id="7_6owvg"]
+[ext_resource type="PackedScene" uid="uid://b2cokpp3n1n4b" path="res://assets/props/ancient ruins/ancient_ruins.glb" id="8_68wvi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a8y0u"]
+render_priority = 127
+shader = ExtResource("2_6owvg")
+shader_parameter/outline_mode = 2
+shader_parameter/outline_intensity = 0.002
+shader_parameter/_round = true
+shader_parameter/outline_bias = 0.3
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_68wvi"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_a8y0u")
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6owvg"]
+size = Vector3(75, 1, 75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbv16"]
+albedo_texture = ExtResource("3_ttlna")
+uv1_scale = Vector3(0.4, 0.4, 0.4)
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_68wvi"]
+material = SubResource("StandardMaterial3D_lbv16")
+size = Vector2(75, 75)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_vwee6"]
+agent_radius = 1.24
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
+rayleigh_coefficient = 25.7
+turbidity = 0.0
+ground_color = Color(0.294793, 0.227868, 0.147204, 1)
+energy_multiplier = 1.18
+
+[sub_resource type="Sky" id="Sky_yalbf"]
+sky_material = SubResource("PhysicalSkyMaterial_owfbn")
+
+[sub_resource type="Environment" id="Environment_8clt3"]
+background_mode = 2
+background_energy_multiplier = 2.25
+sky = SubResource("Sky_yalbf")
+ambient_light_source = 3
+tonemap_mode = 4
+tonemap_exposure = 0.9
+ssao_enabled = true
+ssao_radius = 2.01
+ssao_intensity = 1.99
+ssao_power = 1.84672
+ssil_enabled = true
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.1
+adjustment_enabled = true
+adjustment_brightness = 0.94
+adjustment_contrast = 0.87
+adjustment_saturation = 1.21
+
+[node name="Showcase" type="Node3D"]
+
+[node name="EnvironmentSubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_o36fe")
+minimum_pixelation = 3
+pixelation_correction = 4
+
+[node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer"]
+handle_input_locally = false
+snap_2d_transforms_to_pixel = true
+snap_2d_vertices_to_pixel = true
+use_occlusion_culling = true
+audio_listener_enable_3d = true
+size = Vector2i(1000, 625)
+render_target_update_mode = 4
+
+[node name="EdgeOutliner" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.834889, 4.95951, -0.874888)
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_68wvi")
+
+[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" instance=ExtResource("2_xq7gy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, -1.76201)
+walk_speed = 3.0
+run_speed = 15.0
+
+[node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport"]
+collision_layer = 1057
+collision_mask = 1057
+
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
+shape = SubResource("BoxShape3D_6owvg")
+
+[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
+mesh = SubResource("PlaneMesh_68wvi")
+skeleton = NodePath("../NavigationRegion3D")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground"]
+transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0252132, -4.76837e-07, 0.00361061)
+navigation_mesh = SubResource("NavigationMesh_vwee6")
+
+[node name="Obstacles" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0832579, 0)
+
+[node name="props" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles"]
+visible = false
+
+[node name="barrel" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/props" instance=ExtResource("4_dxudb")]
+transform = Transform3D(1.4325, 0, 0.0247292, 0, 1.43271, 0, -0.0247292, 0, 1.4325, -0.415831, 0, 1.11673)
+
+[node name="crate" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/props" instance=ExtResource("5_lgn12")]
+transform = Transform3D(0.964026, 0, 0.265808, 0, 1, 0, -0.265808, 0, 0.964026, 6.35588, 9.53674e-07, -4.77352)
+
+[node name="grass" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles"]
+visible = false
+
+[node name="Grass Patch" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37581, 0, 0, 0, 1.37581, 0, 0, 0, 1.37581, -4.37271, 0.113541, -3.62877)
+
+[node name="Grass Patch2" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11404, 0, -0.807323, 0, 1.37581, 0, 0.807323, 0, 1.11404, -1.22429, 0.113541, -3.85911)
+
+[node name="Grass Patch3" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11404, 0, -0.807323, 0, 1.37581, 0, 0.807323, 0, 1.11404, -3.21895, 0.113541, -1.57327)
+
+[node name="Grass Patch21" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11404, 0, -0.807323, 0, 1.37581, 0, 0.807323, 0, 1.11404, 0.166313, 0.113541, -2.43842)
+
+[node name="Grass Patch4" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11404, 0, -0.807323, 0, 1.37581, 0, 0.807323, 0, 1.11404, -6.54798, 0.113541, -2.04823)
+
+[node name="Grass Patch5" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11404, 0, -0.807323, 0, 1.37581, 0, 0.807323, 0, 1.11404, -6.54798, 0.113541, -2.04823)
+
+[node name="Grass Patch6" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.12024, 0, -0.798705, 0, 1.37581, 0, 0.798705, 0, -1.12024, -7.60832, 0.113541, -5.26232)
+
+[node name="Grass Patch7" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37577, 0, 0.0106136, 0, 1.37581, 0, -0.0106136, 0, -1.37577, -10.0381, 0.113541, -3.247)
+
+[node name="Grass Patch8" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37577, 0, 0.0106136, 0, 1.37581, 0, -0.0106136, 0, -1.37577, -9.74103, 0.113541, -6.26618)
+
+[node name="Grass Patch9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37577, 0, 0.0106137, 0, 1.37581, 0, -0.0106137, 0, -1.37577, -6.75468, 0.113541, -7.81206)
+
+[node name="Grass Patch10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37577, 0, 0.0106137, 0, 1.37581, 0, -0.0106137, 0, -1.37577, -6.75468, 0.113541, -7.81206)
+
+[node name="Grass Patch11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.24124, 0, 0.593451, 0, 1.37581, 0, -0.593451, 0, -1.24124, -1.01367, 0.113541, -6.34153)
+
+[node name="Grass Patch12" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.65684, 0, 1.20889, 0, 1.37581, 0, -1.20889, 0, -0.65684, -3.95349, 0.113541, -7.49176)
+
+[node name="Grass Patch13" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.65684, 0, 1.20889, 0, 1.37581, 0, -1.20889, 0, -0.65684, -1.16795, 0.113541, -8.69363)
+
+[node name="Grass Patch14" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.65684, 0, 1.20889, 0, 1.37581, 0, -1.20889, 0, -0.65684, 1.63059, 0.113541, -6.82917)
+
+[node name="Grass Patch15" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.65684, 0, 1.20889, 0, 1.37581, 0, -1.20889, 0, -0.65684, 1.63059, 0.113541, -6.82917)
+
+[node name="Grass Patch16" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.107467, 0, 1.37161, 0, 1.37581, 0, -1.37161, 0, -0.107467, 3.12915, 0.113541, -6.65623)
+
+[node name="Grass Patch17" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.717836, 0, 1.1737, 0, 1.37581, 0, -1.1737, 0, 0.717836, 2.65358, 0.113541, -9.77703)
+
+[node name="Grass Patch18" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.717837, 0, 1.1737, 0, 1.37581, 0, -1.1737, 0, 0.717837, 5.08825, 0.113541, -7.96702)
+
+[node name="Grass Patch19" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.717837, 0, 1.1737, 0, 1.37581, 0, -1.1737, 0, 0.717837, 4.87477, 0.113541, -4.61106)
+
+[node name="Grass Patch20" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.717837, 0, 1.1737, 0, 1.37581, 0, -1.1737, 0, 0.717837, 4.87477, 0.113541, -4.61106)
+
+[node name="Grass Patch22" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.30154, 0, 0.445945, 0, 1.37581, 0, -0.445945, 0, -1.30154, 3.17453, 0.113541, 2.28112)
+
+[node name="Grass Patch23" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, 0.121433, 0.113541, 1.47853)
+
+[node name="Grass Patch24" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, 2.74931, 0.113541, -0.0373722)
+
+[node name="Grass Patch25" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -0.733606, 0.113541, -0.3162)
+
+[node name="Grass Patch26" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, 5.74467, 0.113541, 1.49099)
+
+[node name="Grass Patch27" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, 5.74467, 0.113541, 1.49099)
+
+[node name="Grass Patch28" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.31864, 0, 0.392479, 0, 1.37581, 0, -0.392479, 0, 1.31864, 5.70597, 0.113541, 4.87524)
+
+[node name="Grass Patch29" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, 8.65785, 0.113541, 3.75632)
+
+[node name="Grass Patch30" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, 7.39816, 0.113541, 6.51619)
+
+[node name="Grass Patch31" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, 4.07197, 0.113541, 7.01064)
+
+[node name="Grass Patch32" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, 4.07197, 0.113541, 7.01064)
+
+[node name="Grass Patch33" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.981872, 0, -0.963738, 0, 1.37581, 0, 0.963738, 0, 0.981872, -0.882448, 0.113541, 3.75865)
+
+[node name="Grass Patch34" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, 1.52583, 0.113541, 5.79968)
+
+[node name="Grass Patch35" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -1.49889, 0.113541, 6.03378)
+
+[node name="Grass Patch36" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -3.54201, 0.113541, 3.36288)
+
+[node name="Grass Patch37" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -3.54201, 0.113541, 3.36288)
+
+[node name="Grass Patch38" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.342918, 0, -1.33239, 0, 1.37581, 0, 1.33239, 0, -0.342918, -4.90361, 0.113541, 2.71355)
+
+[node name="Grass Patch39" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -5.46527, 0.113541, 5.82001)
+
+[node name="Grass Patch40" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -7.18181, 0.113541, 3.31856)
+
+[node name="Grass Patch41" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -5.89209, 0.113541, 0.212983)
+
+[node name="Grass Patch42" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -5.89209, 0.113541, 0.212983)
+
+[node name="Grass Patch43" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.30154, 0, 0.445945, 0, 1.37581, 0, -0.445945, 0, -1.30154, -14.4785, 0.113541, -1.168)
+
+[node name="Grass Patch44" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -17.5316, 0.113541, -1.97059)
+
+[node name="Grass Patch45" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -14.9037, 0.113541, -3.48649)
+
+[node name="Grass Patch46" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -18.3866, 0.113541, -3.76532)
+
+[node name="Grass Patch47" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -11.9084, 0.113541, -1.95813)
+
+[node name="Grass Patch48" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -11.9084, 0.113541, -1.95813)
+
+[node name="Grass Patch49" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.31864, 0, 0.392479, 0, 1.37581, 0, -0.392479, 0, 1.31864, -11.947, 0.113541, 1.42612)
+
+[node name="Grass Patch50" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -8.99517, 0.113541, 0.307196)
+
+[node name="Grass Patch51" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -10.2549, 0.113541, 3.06707)
+
+[node name="Grass Patch52" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -13.5811, 0.113541, 3.56152)
+
+[node name="Grass Patch53" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -13.5811, 0.113541, 3.56152)
+
+[node name="Grass Patch54" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.981872, 0, -0.963738, 0, 1.37581, 0, 0.963738, 0, 0.981872, -18.5355, 0.113541, 0.309531)
+
+[node name="Grass Patch55" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -16.1272, 0.113541, 2.35056)
+
+[node name="Grass Patch56" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -19.1519, 0.113541, 2.58466)
+
+[node name="Grass Patch106" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -9.26248, 0.113541, 5.51628)
+
+[node name="Grass Patch107" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -12.5887, 0.113541, 6.01073)
+
+[node name="Grass Patch108" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -12.5887, 0.113541, 6.01073)
+
+[node name="Grass Patch109" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.981872, 0, -0.963738, 0, 1.37581, 0, 0.963738, 0, 0.981872, -17.5431, 0.113541, 2.75874)
+
+[node name="Grass Patch110" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -15.1348, 0.113541, 4.79977)
+
+[node name="Grass Patch111" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -18.1595, 0.113541, 5.03387)
+
+[node name="Grass Patch112" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -0.266432, 0.113541, 8.34719)
+
+[node name="Grass Patch113" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -3.59262, 0.113541, 8.84163)
+
+[node name="Grass Patch114" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -3.59262, 0.113541, 8.84163)
+
+[node name="Grass Patch115" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.981872, 0, -0.963738, 0, 1.37581, 0, 0.963738, 0, 0.981872, -8.54704, 0.113541, 5.58965)
+
+[node name="Grass Patch116" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -6.13877, 0.113541, 7.63067)
+
+[node name="Grass Patch117" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -9.16349, 0.113541, 7.86478)
+
+[node name="Grass Patch118" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -8.70335, 0.113541, -8.90366)
+
+[node name="Grass Patch119" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -12.0295, 0.113541, -8.40921)
+
+[node name="Grass Patch120" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -12.0295, 0.113541, -8.40921)
+
+[node name="Grass Patch121" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.981872, 0, -0.963738, 0, 1.37581, 0, 0.963738, 0, 0.981872, -16.984, 0.113541, -11.6612)
+
+[node name="Grass Patch122" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -14.5757, 0.113541, -9.62017)
+
+[node name="Grass Patch123" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -17.6004, 0.113541, -9.38607)
+
+[node name="Grass Patch124" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.26097, 0, 0.550277, 0, 1.37581, 0, -0.550277, 0, 1.26097, 11.3767, 0.113541, 6.31585)
+
+[node name="Grass Patch125" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.26097, 0, 0.550277, 0, 1.37581, 0, -0.550277, 0, 1.26097, 9.27811, 0.113541, 8.9434)
+
+[node name="Grass Patch126" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.26097, 0, 0.550277, 0, 1.37581, 0, -0.550277, 0, 1.26097, 9.27811, 0.113541, 8.9434)
+
+[node name="Grass Patch127" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37532, 0, -0.0368543, 0, 1.37581, 0, 0.0368543, 0, 1.37532, 3.43563, 0.113541, 9.93691)
+
+[node name="Grass Patch128" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.09202, 0, -0.836875, 0, 1.37581, 0, 0.836875, 0, 1.09202, 6.58909, 0.113541, 9.79098)
+
+[node name="Grass Patch129" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.09202, 0, -0.836875, 0, 1.37581, 0, 0.836875, 0, 1.09202, 4.53391, 0.113541, 12.0226)
+
+[node name="Grass Patch130" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.05355, 0, -0.884815, 0, 1.37581, 0, 0.884815, 0, 1.05355, 4.73219, 0.113541, 5.50088)
+
+[node name="Grass Patch131" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.05355, 0, -0.884815, 0, 1.37581, 0, 0.884815, 0, 1.05355, 1.44558, 0.113541, 4.78941)
+
+[node name="Grass Patch132" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.05355, 0, -0.884815, 0, 1.37581, 0, 0.884815, 0, 1.05355, 1.44558, 0.113541, 4.78941)
+
+[node name="Grass Patch133" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.578483, 0, -1.24829, 0, 1.37581, 0, 1.24829, 0, 0.578483, -2.04202, 0.113541, -0.00208292)
+
+[node name="Grass Patch134" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.264073, 0, -1.35023, 0, 1.37581, 0, 1.35023, 0, -0.264073, -0.509214, 0.113541, 2.75765)
+
+[node name="Grass Patch135" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.264073, 0, -1.35023, 0, 1.37581, 0, 1.35023, 0, -0.264073, -3.42187, 0.113541, 1.909)
+
+[node name="Grass Patch136" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.05355, 0, -0.884815, 0, 1.37581, 0, 0.884815, 0, 1.05355, 4.49053, 0.113541, -16.2109)
+
+[node name="Grass Patch137" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.05355, 0, -0.884815, 0, 1.37581, 0, 0.884815, 0, 1.05355, 1.20391, 0.113541, -16.9224)
+
+[node name="Grass Patch138" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.05355, 0, -0.884815, 0, 1.37581, 0, 0.884815, 0, 1.05355, 1.20391, 0.113541, -16.9224)
+
+[node name="Grass Patch139" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.578483, 0, -1.24829, 0, 1.37581, 0, 1.24829, 0, 0.578483, -2.28368, 0.113541, -21.7139)
+
+[node name="Grass Patch140" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.264073, 0, -1.35023, 0, 1.37581, 0, 1.35023, 0, -0.264073, -0.750878, 0.113541, -18.9541)
+
+[node name="Grass Patch141" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.264073, 0, -1.35023, 0, 1.37581, 0, 1.35023, 0, -0.264073, -3.66353, 0.113541, -19.8028)
+
+[node name="Grass Patch142" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346223, 0, 1.37581, 0, 0.0346223, 0, 1.37538, -4.52534, 0.113541, -24.2014)
+
+[node name="Grass Patch143" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346224, 0, 1.37581, 0, 0.0346224, 0, 1.37538, -7.53822, 0.113541, -22.7079)
+
+[node name="Grass Patch144" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346224, 0, 1.37581, 0, 0.0346224, 0, 1.37538, -7.53822, 0.113541, -22.7079)
+
+[node name="Grass Patch145" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.23069, 0, -0.615023, 0, 1.37581, 0, 0.615023, 0, 1.23069, -13.2527, 0.113541, -24.2784)
+
+[node name="Grass Patch146" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.635642, 0, -1.22017, 0, 1.37581, 0, 1.22017, 0, 0.635642, -10.3334, 0.113541, -23.077)
+
+[node name="Grass Patch147" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.635642, 0, -1.22017, 0, 1.37581, 0, 1.22017, 0, 0.635642, -13.1395, 0.113541, -21.924)
+
+[node name="Grass Patch148" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346223, 0, 1.37581, 0, 0.0346223, 0, 1.37538, 11.1439, 0.113541, -14.5172)
+
+[node name="Grass Patch149" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346224, 0, 1.37581, 0, 0.0346224, 0, 1.37538, 8.13105, 0.113541, -13.0237)
+
+[node name="Grass Patch150" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346224, 0, 1.37581, 0, 0.0346224, 0, 1.37538, 8.13105, 0.113541, -13.0237)
+
+[node name="Grass Patch151" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.23069, 0, -0.615023, 0, 1.37581, 0, 0.615023, 0, 1.23069, 2.41658, 0.113541, -14.5942)
+
+[node name="Grass Patch152" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.635642, 0, -1.22017, 0, 1.37581, 0, 1.22017, 0, 0.635642, 5.33588, 0.113541, -13.3928)
+
+[node name="Grass Patch153" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.635642, 0, -1.22017, 0, 1.37581, 0, 1.22017, 0, 0.635642, 2.52979, 0.113541, -12.2397)
+
+[node name="Grass Patch154" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346223, 0, 1.37581, 0, 0.0346223, 0, 1.37538, -7.08009, 0.113541, -18.9776)
+
+[node name="Grass Patch155" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346224, 0, 1.37581, 0, 0.0346224, 0, 1.37538, -10.093, 0.113541, -17.484)
+
+[node name="Grass Patch156" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37538, 0, -0.0346224, 0, 1.37581, 0, 0.0346224, 0, 1.37538, -10.093, 0.113541, -17.484)
+
+[node name="Grass Patch157" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.23069, 0, -0.615023, 0, 1.37581, 0, 0.615023, 0, 1.23069, -15.8074, 0.113541, -19.0545)
+
+[node name="Grass Patch158" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.635642, 0, -1.22017, 0, 1.37581, 0, 1.22017, 0, 0.635642, -12.8881, 0.113541, -17.8532)
+
+[node name="Grass Patch159" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.635642, 0, -1.22017, 0, 1.37581, 0, 1.22017, 0, 0.635642, -15.6942, 0.113541, -16.7001)
+
+[node name="Grass Patch57" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -21.195, 0.113541, -0.0862397)
+
+[node name="Grass Patch58" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -21.195, 0.113541, -0.0862397)
+
+[node name="Grass Patch59" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.342918, 0, -1.33239, 0, 1.37581, 0, 1.33239, 0, -0.342918, -22.5566, 0.113541, -0.735574)
+
+[node name="Grass Patch60" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -23.1183, 0.113541, 2.37089)
+
+[node name="Grass Patch61" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -24.8348, 0.113541, -0.130557)
+
+[node name="Grass Patch62" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -23.5451, 0.113541, -3.23614)
+
+[node name="Grass Patch63" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -23.5451, 0.113541, -3.23614)
+
+[node name="Grass Patch64" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.30154, 0, 0.445945, 0, 1.37581, 0, -0.445945, 0, -1.30154, -5.04007, 0.113541, -15.2532)
+
+[node name="Grass Patch65" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -8.09317, 0.113541, -16.0558)
+
+[node name="Grass Patch66" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -5.46528, 0.113541, -17.5717)
+
+[node name="Grass Patch67" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -8.9482, 0.113541, -17.8506)
+
+[node name="Grass Patch68" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -2.46993, 0.113541, -16.0434)
+
+[node name="Grass Patch69" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.792219, 0, 1.12483, 0, 1.37581, 0, -1.12483, 0, -0.792219, -2.46993, 0.113541, -16.0434)
+
+[node name="Grass Patch70" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.31864, 0, 0.392479, 0, 1.37581, 0, -0.392479, 0, 1.31864, -2.50863, 0.113541, -12.6591)
+
+[node name="Grass Patch71" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, 0.443249, 0.113541, -13.778)
+
+[node name="Grass Patch72" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -0.81644, 0.113541, -11.0182)
+
+[node name="Grass Patch73" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -4.14263, 0.113541, -10.5237)
+
+[node name="Grass Patch74" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.29806, 0, -0.455972, 0, 1.37581, 0, 0.455972, 0, 1.29806, -4.14263, 0.113541, -10.5237)
+
+[node name="Grass Patch75" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.981872, 0, -0.963738, 0, 1.37581, 0, 0.963738, 0, 0.981872, -9.09705, 0.113541, -13.7757)
+
+[node name="Grass Patch76" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -6.68877, 0.113541, -11.7347)
+
+[node name="Grass Patch77" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -9.71349, 0.113541, -11.5006)
+
+[node name="Grass Patch78" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -11.7566, 0.113541, -14.1715)
+
+[node name="Grass Patch79" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.229537, 0, -1.35653, 0, 1.37581, 0, 1.35653, 0, 0.229537, -11.7566, 0.113541, -14.1715)
+
+[node name="Grass Patch80" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.342918, 0, -1.33239, 0, 1.37581, 0, 1.33239, 0, -0.342918, -13.1182, 0.113541, -14.8208)
+
+[node name="Grass Patch81" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -13.6799, 0.113541, -11.7143)
+
+[node name="Grass Patch82" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -15.3964, 0.113541, -14.2158)
+
+[node name="Grass Patch83" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -14.1067, 0.113541, -17.3214)
+
+[node name="Grass Patch84" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.05952, 0, -0.877661, 0, 1.37581, 0, 0.877661, 0, -1.05952, -14.1067, 0.113541, -17.3214)
+
+[node name="Grass Patch85" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.37581, 0, -0.0042503, 0, 1.37581, 0, 0.0042503, 0, 1.37581, 12.3449, 0.11354, -0.330432)
+
+[node name="Grass Patch86" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11154, 0, -0.81076, 0, 1.37581, 0, 0.81076, 0, 1.11154, 15.494, 0.11354, -0.551054)
+
+[node name="Grass Patch87" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11154, 0, -0.81076, 0, 1.37581, 0, 0.81076, 0, 1.11154, 13.4923, 0.11354, 1.72861)
+
+[node name="Grass Patch88" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11154, 0, -0.81076, 0, 1.37581, 0, 0.81076, 0, 1.11154, 16.8802, 0.11354, 0.873928)
+
+[node name="Grass Patch89" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11154, 0, -0.81076, 0, 1.37581, 0, 0.81076, 0, 1.11154, 10.1648, 0.11354, 1.24337)
+
+[node name="Grass Patch90" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(1.11154, 0, -0.81076, 0, 1.37581, 0, 0.81076, 0, 1.11154, 10.1648, 0.11354, 1.24337)
+
+[node name="Grass Patch91" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.1227, 0, -0.79524, 0, 1.37581, 0, 0.79524, 0, -1.1227, 9.11436, 0.11354, -1.97397)
+
+[node name="Grass Patch92" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37573, 0, 0.0148636, 0, 1.37581, 0, -0.0148636, 0, -1.37573, 6.67832, 0.11354, 0.0338295)
+
+[node name="Grass Patch93" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37573, 0, 0.0148636, 0, 1.37581, 0, -0.0148636, 0, -1.37573, 6.98476, 0.11354, -2.98442)
+
+[node name="Grass Patch94" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37573, 0, 0.0148636, 0, 1.37581, 0, -0.0148636, 0, -1.37573, 9.97587, 0.11354, -4.52106)
+
+[node name="Grass Patch95" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.37573, 0, 0.0148636, 0, 1.37581, 0, -0.0148636, 0, -1.37573, 9.97587, 0.11354, -4.52106)
+
+[node name="Grass Patch96" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-1.2394, 0, 0.597283, 0, 1.37581, 0, -0.597283, 0, -1.2394, 15.7123, 0.11354, -3.0328)
+
+[node name="Grass Patch97" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.653102, 0, 1.21092, 0, 1.37581, 0, -1.21092, 0, -0.653102, 12.7761, 0.11354, -4.19212)
+
+[node name="Grass Patch98" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.653102, 0, 1.21092, 0, 1.37581, 0, -1.21092, 0, -0.653102, 15.5653, 0.11354, -5.38538)
+
+[node name="Grass Patch99" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.653102, 0, 1.21092, 0, 1.37581, 0, -1.21092, 0, -0.653102, 18.3581, 0.11354, -3.51227)
+
+[node name="Grass Patch100" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.653102, 0, 1.21092, 0, 1.37581, 0, -1.21092, 0, -0.653102, 18.3581, 0.11354, -3.51227)
+
+[node name="Grass Patch101" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(-0.103229, 0, 1.37193, 0, 1.37581, 0, -1.37193, 0, -0.103229, 19.8561, 0.11354, -3.33471)
+
+[node name="Grass Patch102" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.721459, 0, 1.17148, 0, 1.37581, 0, -1.17148, 0, 0.721459, 19.3902, 0.11354, -6.45696)
+
+[node name="Grass Patch103" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.721459, 0, 1.17148, 0, 1.37581, 0, -1.17148, 0, 0.721459, 21.8192, 0.11354, -4.63944)
+
+[node name="Grass Patch104" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.721459, 0, 1.17148, 0, 1.37581, 0, -1.17148, 0, 0.721459, 21.5954, 0.11354, -1.28416)
+
+[node name="Grass Patch105" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/grass" instance=ExtResource("6_lgn12")]
+transform = Transform3D(0.721459, 0, 1.17148, 0, 1.37581, 0, -1.17148, 0, 0.721459, 21.5954, 0.11354, -1.28416)
+
+[node name="trees" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles"]
+
+[node name="Tree-2" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(4.00796, 0.104952, 0, -0.104952, 4.00796, 0, 0, 0, 4.00933, -8.06302, 6.69531, -7.56981)
+
+[node name="Tree-6" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(1.3664, 0.194434, -3.76429, 0.225102, 3.99264, 0.287939, 3.76258, -0.309476, 1.34979, -12.1689, 6.71549, -6.16591)
+
+[node name="Tree-7" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(1.35383, 0, -3.77384, 0, 4.00933, 0, 3.77384, 0, 1.35383, 6.24966, 6.71549, -9.28314)
+
+[node name="Tree-8" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(1.35383, 0, -3.77384, 0, 4.00933, 0, 3.77384, 0, 1.35383, 5.6079, 6.71549, -0.381504)
+
+[node name="Tree-9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.0403061, 0, -4.00913, -0.12523, 4.00737, -0.00125901, 4.00717, 0.125237, 0.0402864, 11.4856, 6.71549, -5.91758)
+
+[node name="Tree-3" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.75651, 0, -1.40121, -0.0268752, 4.00859, -0.0720498, 1.40095, 0.0768989, 3.75582, 2.59511, 6.34546, -9.92646)
+
+[node name="Tree-4" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -10.3211, 6.66774, -1.34426)
+
+[node name="Tree-10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -9.08285, 6.66775, 3.30108)
+
+[node name="Tree-12" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, -14.0194, 6.66775, 0.876172)
+
+[node name="Tree-18" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -10.1808, 6.66775, 7.73914)
+
+[node name="Tree-24" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -17.0587, 6.66775, 9.73441)
+
+[node name="Tree-25" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, 6.11604, 6.66775, 12.1302)
+
+[node name="Tree-26" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, 1.99403, 6.66775, 11.1688)
+
+[node name="Tree-27" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -10.4986, 6.66775, 11.4948)
+
+[node name="Tree-28" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, 12.6665, 6.66775, 9.25835)
+
+[node name="Tree-29" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -8.16694, 6.66775, -13.0809)
+
+[node name="Tree-30" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -0.260555, 6.66775, -11.6531)
+
+[node name="Tree-19" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, -15.1173, 6.66775, 5.31423)
+
+[node name="Tree-20" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.85391, -0.288998, 1.07698, 0.271064, 4.63327, -0.043364, -1.07175, 0.132625, 3.86173, -21.0503, 6.66775, 3.67584)
+
+[node name="Tree-21" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(1.99421, -0.200165, -3.4739, 0.271064, 4.63327, -0.043364, 3.46762, -0.247069, 2.00121, -20.9054, 6.66775, -1.8222)
+
+[node name="Tree-22" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.85391, -0.288998, 1.07698, 0.271064, 4.63327, -0.043364, -1.07175, 0.132625, 3.86173, -21.0861, 6.66775, -8.09239)
+
+[node name="Tree-23" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(1.99421, -0.200165, -3.4739, 0.271064, 4.63327, -0.043364, 3.46762, -0.247069, 2.00121, -20.9412, 6.66775, -13.5904)
+
+[node name="Tree-13" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, -17.4428, 6.66775, -3.57666)
+
+[node name="Tree-14" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 13.2508, 4.91684, 0.542128)
+
+[node name="Tree-16" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 4.78403, 6.66775, 9.06287)
+
+[node name="Tree-17" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 13.0664, 4.91684, 6.06639)
+
+[node name="Tree-15" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 7.78488, 4.91684, 5.04446)
+
+[node name="Tree-5" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+transform = Transform3D(1.85348, 0, -3.55519, 0, 4.64416, 0, 3.55519, 0, 1.85348, 5.79372, 6.66775, -4.96433)
+
+[node name="structures" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles"]
+
+[node name="Sketchfab_Scene" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/structures" instance=ExtResource("8_68wvi")]
+transform = Transform3D(0.454753, 0, 0.0517241, 0, 0.457685, 0, -0.0517241, 0, 0.454753, -1.26549, -0.635948, -5.20881)
+
+[node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)
+mesh = SubResource("PlaneMesh_68wvi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.390458, 0.920621, 0, -0.920621, 0.390458, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport"]
+environment = SubResource("Environment_8clt3")
+
+[node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
+
+[node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
+
+[node name="Lighting" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61151, 2.99291, 3.95771)
+light_energy = 5.133
+shadow_enabled = true
+omni_range = 7.648
+omni_attenuation = 0.765
+
+[node name="OmniLight3D Blue" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.46115, 1.81099, -7.7254)
+light_color = Color(0.98616, 0.811432, 0.225858, 1)
+light_energy = 8.888
+light_bake_mode = 1
+shadow_enabled = true
+omni_range = 7.807
+omni_attenuation = 0.159
+
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "player_ref") instance=ExtResource("6_xq7gy")]
+sun_up_time = 5.0
+sun_down_time = 20.0
+npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
+player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
