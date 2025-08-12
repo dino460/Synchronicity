@@ -114,8 +114,6 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 script = ExtResource("1_g8fm3")
-minimum_pixelation = 3
-pixelation_correction = 3
 metadata/_edit_lock_ = true
 
 [node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer"]
