@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://bylwa0aplfyax"]
+[gd_scene load_steps=24 format=4 uid="uid://bylwa0aplfyax"]
 
 [ext_resource type="Script" uid="uid://4owdwe56mk1c" path="res://scripts/player/player.gd" id="1_br4xa"]
 [ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
@@ -22,13 +22,23 @@
 radius = 0.407304
 height = 3.09256
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkt5x"]
-resource_name = "Base"
-cull_mode = 2
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfm1y"]
+render_priority = 1
+transparency = 4
 diffuse_mode = 3
 specular_mode = 1
 metallic = 0.5
 roughness = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkt5x"]
+resource_name = "Base"
+next_pass = SubResource("StandardMaterial3D_qfm1y")
+cull_mode = 2
+no_depth_test = true
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_ewgnx"]
 resource_name = "Low-Poly-Base_blend_Mesh_001"
@@ -719,7 +729,6 @@ bones/409/rotation = Quaternion(0.00733948, -1.1691e-10, 0.0915551, 0.995773)
 bones/409/scale = Vector3(1, 1, 1)
 
 [node name="Base" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D" index="0"]
-layers = 2
 mesh = SubResource("ArrayMesh_ewgnx")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D" index="1"]

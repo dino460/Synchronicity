@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_lgn12"]
 [ext_resource type="PackedScene" uid="uid://drk0ngcyttknx" path="res://assets/props/grass patch/Grass Patch.glb" id="6_lgn12"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="6_xq7gy"]
-[ext_resource type="PackedScene" uid="uid://bxj7yf633pq62" path="res://assets/props/tree/Tree-2.glb" id="7_6owvg"]
 [ext_resource type="PackedScene" uid="uid://b2cokpp3n1n4b" path="res://assets/props/ancient ruins/ancient_ruins.glb" id="8_68wvi"]
+[ext_resource type="ArrayMesh" uid="uid://df2yxvgv38aoj" path="res://assets/props/tree/new_array_mesh.tres" id="8_vwee6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a8y0u"]
 render_priority = 127
@@ -615,89 +615,369 @@ transform = Transform3D(0.721459, 0, 1.17148, 0, 1.37581, 0, -1.17148, 0, 0.7214
 
 [node name="trees" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles"]
 
-[node name="Tree-2" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
+[node name="Tree-2" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
 transform = Transform3D(4.00796, 0.104952, 0, -0.104952, 4.00796, 0, 0, 0, 4.00933, -8.06302, 6.69531, -7.56981)
 
-[node name="Tree-6" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(1.3664, 0.194434, -3.76429, 0.225102, 3.99264, 0.287939, 3.76258, -0.309476, 1.34979, -12.1689, 6.71549, -6.16591)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-2"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-7" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(1.35383, 0, -3.77384, 0, 4.00933, 0, 3.77384, 0, 1.35383, 6.24966, 6.71549, -9.28314)
+[node name="Tree-3" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(4.00796, 0.104952, 0, -0.104952, 4.00796, 0, 0, 0, 4.00933, -8.61839, 6.69531, -1.76335)
 
-[node name="Tree-8" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(1.35383, 0, -3.77384, 0, 4.00933, 0, 3.77384, 0, 1.35383, 5.6079, 6.71549, -0.381504)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-3"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.0403061, 0, -4.00913, -0.12523, 4.00737, -0.00125901, 4.00717, 0.125237, 0.0402864, 11.4856, 6.71549, -5.91758)
+[node name="Tree-4" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.84198, 0.100606, 1.14186, -0.104952, 4.00796, 0, -1.14147, -0.0298905, 3.84329, -14.8137, 6.69531, -3.7689)
 
-[node name="Tree-3" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.75651, 0, -1.40121, -0.0268752, 4.00859, -0.0720498, 1.40095, 0.0768989, 3.75582, 2.59511, 6.34546, -9.92646)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-4"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-4" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -10.3211, 6.66774, -1.34426)
+[node name="Tree-5" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.84198, 0.100606, 1.14186, -0.104952, 4.00796, 0, -1.14147, -0.0298905, 3.84329, -13.6924, 6.69531, 1.95527)
 
-[node name="Tree-10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -9.08285, 6.66775, 3.30108)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-5"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-12" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, -14.0194, 6.66775, 0.876172)
+[node name="Tree-6" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.585703, -0.0153371, 3.96629, -0.104952, 4.00796, 0, -3.96493, -0.103825, -0.585903, 1.85252, 6.69531, -11.5953)
 
-[node name="Tree-18" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -10.1808, 6.66775, 7.73914)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-6"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-24" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -17.0587, 6.66775, 9.73441)
+[node name="Tree-7" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.585703, -0.0153371, 3.96629, -0.104952, 4.00796, 0, -3.96493, -0.103825, -0.585903, 7.67781, 6.69531, -11.8944)
 
-[node name="Tree-25" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, 6.11604, 6.66775, 12.1302)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-7"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-26" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, 1.99403, 6.66775, 11.1688)
+[node name="Tree-8" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-1.69067, -0.0442716, 3.63516, -0.104952, 4.00796, 2.13064e-09, -3.63392, -0.0951575, -1.69124, 6.59915, 6.69531, -5.47248)
 
-[node name="Tree-27" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -10.4986, 6.66775, 11.4948)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-8"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-28" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, 12.6665, 6.66775, 9.25835)
+[node name="Tree-9" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-1.69067, -0.0442716, 3.63516, -0.104952, 4.00796, 2.13064e-09, -3.63392, -0.0951575, -1.69124, 12.098, 6.69531, -7.41826)
 
-[node name="Tree-29" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -8.16694, 6.66775, -13.0809)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-9"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-30" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(0.633347, 0, 3.95899, 0.271064, 4.63326, -0.043364, -3.9497, 0.317977, 0.631861, -0.260555, 6.66775, -11.6531)
+[node name="Tree-10" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.585703, -0.0153371, 3.96629, -0.104952, 4.00796, 0, -3.96493, -0.103825, -0.585903, -12.821, 6.69531, -17.7151)
 
-[node name="Tree-19" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, -15.1173, 6.66775, 5.31423)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-10"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-20" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.85391, -0.288998, 1.07698, 0.271064, 4.63327, -0.043364, -1.07175, 0.132625, 3.86173, -21.0503, 6.66775, 3.67584)
+[node name="Tree-11" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.585703, -0.0153371, 3.96629, -0.104952, 4.00796, 0, -3.96493, -0.103825, -0.585903, -6.99568, 6.69531, -18.0142)
 
-[node name="Tree-21" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(1.99421, -0.200165, -3.4739, 0.271064, 4.63327, -0.043364, 3.46762, -0.247069, 2.00121, -20.9054, 6.66775, -1.8222)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-11"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-22" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.85391, -0.288998, 1.07698, 0.271064, 4.63327, -0.043364, -1.07175, 0.132625, 3.86173, -21.0861, 6.66775, -8.09239)
+[node name="Tree-12" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-1.69067, -0.0442716, 3.63516, -0.104952, 4.00796, 2.13064e-09, -3.63392, -0.0951575, -1.69124, -8.07435, 6.69531, -11.5923)
 
-[node name="Tree-23" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(1.99421, -0.200165, -3.4739, 0.271064, 4.63327, -0.043364, 3.46762, -0.247069, 2.00121, -20.9412, 6.66775, -13.5904)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-12"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-13" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, -17.4428, 6.66775, -3.57666)
+[node name="Tree-13" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-1.69067, -0.0442716, 3.63516, -0.104952, 4.00796, 2.13064e-09, -3.63392, -0.0951575, -1.69124, -2.5755, 6.69531, -13.5381)
 
-[node name="Tree-14" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 13.2508, 4.91684, 0.542128)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-13"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-16" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 4.78403, 6.66775, 9.06287)
+[node name="Tree-14" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-4.00602, -0.104901, -0.124817, -0.104952, 4.00796, -7.56952e-10, 0.124775, 0.00326732, -4.00739, -21.5264, 6.69531, -7.5287)
 
-[node name="Tree-17" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 13.0664, 4.91684, 6.06639)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-14"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
-[node name="Tree-15" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(3.98336, -0.308039, 0.369903, 0.271064, 4.63327, -0.043364, -0.366159, 0.0788733, 3.992, 7.78488, 4.91684, 5.04446)
+[node name="Tree-15" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-4.00602, -0.104901, -0.124817, -0.104952, 4.00796, -7.56952e-10, 0.124775, 0.00326732, -4.00739, -21.152, 6.69531, -13.3496)
 
-[node name="Tree-5" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees" instance=ExtResource("7_6owvg")]
-transform = Transform3D(1.85348, 0, -3.55519, 0, 4.64416, 0, 3.55519, 0, 1.85348, 5.79372, 6.66775, -4.96433)
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-15"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-16" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-3.80458, -0.0996262, -1.26096, -0.104952, 4.00796, -2.28595e-09, 1.26053, 0.0330081, -3.80588, -14.8973, 6.69531, -11.5379)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-16"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-17" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-3.80458, -0.0996262, -1.26096, -0.104952, 4.00796, -2.28595e-09, 1.26053, 0.0330081, -3.80588, -16.1963, 6.69531, -17.2244)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-17"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-18" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-4.00602, -0.104901, -0.124817, -0.104952, 4.00796, -7.56952e-10, 0.124775, 0.00326732, -4.00739, 9.26587, 6.69531, 5.85781)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-18"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-19" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-4.00602, -0.104901, -0.124817, -0.104952, 4.00796, -7.56952e-10, 0.124775, 0.00326732, -4.00739, 9.6402, 6.69531, 0.0368759)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-19"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-20" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-3.80458, -0.0996262, -1.26096, -0.104952, 4.00796, -2.28595e-09, 1.26053, 0.0330081, -3.80588, 15.895, 6.69531, 1.84858)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-20"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-21" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-3.80458, -0.0996262, -1.26096, -0.104952, 4.00796, -2.28595e-09, 1.26053, 0.0330081, -3.80588, 14.596, 6.69532, -3.8379)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-21"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-22" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, -0.480365, 6.69532, -24.6092)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-22"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-23" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, 5.20999, 6.69532, -23.3273)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-23"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-24" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, 2.44048, 6.69532, -17.4338)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-24"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-25" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, 8.26027, 6.69532, -17.8256)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-25"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-26" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, 13.3504, 6.69532, -20.7627)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-26"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-27" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, 19.0408, 6.69532, -19.4808)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-27"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-28" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, 16.2713, 6.69532, -13.5872)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-28"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-29" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, 22.0911, 6.69532, -13.979)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-29"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-30" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, 20.529, 6.69532, -8.09925)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-30"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-31" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, 26.2194, 6.69532, -6.81734)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-31"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-32" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, 23.4498, 6.69532, -0.923778)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-32"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-33" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, 29.2696, 6.69532, -1.31558)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-33"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-34" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, -22.2967, 6.69532, 1.46056)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-34"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-35" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.504551, 0.0132121, 3.97743, -0.104952, 4.00796, -5.79985e-10, -3.97607, -0.104117, 0.504723, -16.6063, 6.69532, 2.74247)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-35"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-36" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, -19.3758, 6.69532, 8.63603)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-36"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-37" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(-0.648737, -0.0169878, 3.95646, -0.104952, 4.00796, -1.02115e-09, -3.95511, -0.103568, -0.648959, -13.556, 6.69532, 8.24422)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-37"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-38" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.31695, 0.0868572, -2.25057, -0.104952, 4.00796, -2.46343e-10, 2.2498, 0.0589129, 3.31808, 2.38522, 6.69532, 7.12851)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-38"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-39" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.31695, 0.0868572, -2.25057, -0.104952, 4.00796, -2.46343e-10, 2.2498, 0.0589129, 3.31808, -1.33375, 6.69532, 11.6221)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-39"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-40" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.82033, 0.100039, -1.21237, -0.104952, 4.00796, -1.96669e-10, 1.21195, 0.031736, 3.82163, -5.33516, 6.69532, 6.48472)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-40"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-41" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.82033, 0.100039, -1.21237, -0.104952, 4.00796, -1.96669e-10, 1.21195, 0.031736, 3.82163, -7.62032, 6.69532, 11.8514)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-41"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-42" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.31695, 0.0868572, -2.25057, -0.104952, 4.00796, -2.46343e-10, 2.2498, 0.0589129, 3.31808, 14.8407, 6.69532, 13.4768)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-42"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-43" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.31695, 0.0868572, -2.25057, -0.104952, 4.00796, -2.46343e-10, 2.2498, 0.0589129, 3.31808, 11.1217, 6.69532, 17.9704)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-43"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-44" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.82033, 0.100039, -1.21237, -0.104952, 4.00796, -1.96669e-10, 1.21195, 0.031736, 3.82163, 7.12034, 6.69532, 12.833)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-44"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-45" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.82033, 0.100039, -1.21237, -0.104952, 4.00796, -1.96669e-10, 1.21195, 0.031736, 3.82163, 4.83517, 6.69532, 18.1997)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-45"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-46" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.31695, 0.0868572, -2.25057, -0.104952, 4.00796, -2.46343e-10, 2.2498, 0.0589129, 3.31808, 25.5487, 6.69532, 8.33731)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-46"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-47" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.31695, 0.0868572, -2.25057, -0.104952, 4.00796, -2.46343e-10, 2.2498, 0.0589129, 3.31808, 21.8298, 6.69532, 12.8309)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-47"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-48" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.82033, 0.100039, -1.21237, -0.104952, 4.00796, -1.96669e-10, 1.21195, 0.031736, 3.82163, 17.8284, 6.69532, 7.69352)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-48"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-49" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(3.82033, 0.100039, -1.21237, -0.104952, 4.00796, -1.96669e-10, 1.21195, 0.031736, 3.82163, 15.5432, 6.69532, 13.0602)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-49"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-50" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.15232, 0.00398858, -4.00643, -0.104952, 4.00796, -4.92686e-10, 4.00506, 0.104876, 0.152371, 0.0563117, 6.69532, 20.7544)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-50"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-51" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(0.15232, 0.00398858, -4.00643, -0.104952, 4.00796, -4.92686e-10, 4.00506, 0.104876, 0.152371, -5.76705, 6.69532, 20.4201)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-51"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-52" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(1.28666, 0.0336923, -3.79712, -0.104952, 4.00796, 3.17212e-09, 3.79582, 0.0993968, 1.2871, -3.9984, 6.69532, 14.153)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-52"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
+
+[node name="Tree-53" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees"]
+transform = Transform3D(1.28666, 0.0336923, -3.79712, -0.104952, 4.00796, 3.17212e-09, 3.79582, 0.0993968, 1.2871, -9.67582, 6.69532, 15.491)
+
+[node name="Node" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/trees/Tree-53"]
+mesh = ExtResource("8_vwee6")
+skeleton = NodePath("")
 
 [node name="structures" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles"]
 
