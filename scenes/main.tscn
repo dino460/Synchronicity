@@ -364,6 +364,7 @@ omni_range = 5.73
 omni_attenuation = 0.375
 
 [node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("10_a8y0u")]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.14026, 0.119066, 9.24411)
 
 [node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("11_jkv2x")]
 
