@@ -11,8 +11,8 @@ specular_mode = 1
 albedo_texture = ExtResource("2_wxgmk")
 metallic = 0.5
 roughness = 0.0
-distance_fade_min_distance = 4.0
-distance_fade_max_distance = 8.0
+proximity_fade_distance = 0.01
+distance_fade_max_distance = 6.2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hjjuv"]
 _surfaces = [{
@@ -47,6 +47,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hjjuv")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_mokc2"]
+size = Vector3(1.05, 1.05, 1.05)
 
 [node name="crate" instance=ExtResource("1_e8afg")]
 
@@ -54,13 +55,12 @@ shadow_mesh = SubResource("ArrayMesh_hjjuv")
 mesh = SubResource("ArrayMesh_5bhsw")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." index="1"]
-collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_mokc2")
 
 [node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="2"]
-vertices = PackedVector3Array(-0.589238, 0, -0.655075, 0.661659, 0, -0.635324, 0.602406, 0, 0.602406, -0.648491, 0, 0.635324)
+vertices = PackedVector3Array(-0.5, 0, -0.5, 0.5, 0, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5)
 affect_navigation_mesh = true
 avoidance_enabled = false

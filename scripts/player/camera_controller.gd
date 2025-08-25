@@ -7,7 +7,7 @@ extends Node3D
 
 @export_group("Vertical properties", "vertical_")
 @export var vertical_speed          :  float = 2.0
-@export var vertical_base_target    :  float = 6.0
+@export var vertical_base_target    :  float = 9.0
 @export var vertical_up_corretion   :  float = 0.75
 @export var vertical_down_corretion : float = 0.25
 

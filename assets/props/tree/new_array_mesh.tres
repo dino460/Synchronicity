@@ -5,16 +5,16 @@ resource_name = "mat20"
 albedo_color = Color(0.473121, 0.33183, 0.2717, 1)
 emission_enabled = true
 distance_fade_mode = 2
-distance_fade_min_distance = 7.0
-distance_fade_max_distance = 13.0
+distance_fade_min_distance = 10.0
+distance_fade_max_distance = 14.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1idvc"]
 resource_name = "mat9"
 albedo_color = Color(0.556393, 0.767376, 0.293372, 1)
 emission_enabled = true
 distance_fade_mode = 2
-distance_fade_min_distance = 7.0
-distance_fade_max_distance = 13.0
+distance_fade_min_distance = 10.0
+distance_fade_max_distance = 16.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_74jhg"]
 _surfaces = [{

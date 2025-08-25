@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cwpoincpr5pgn"]
+[gd_scene load_steps=21 format=3 uid="uid://cwpoincpr5pgn"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_o36fe"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="2_6owvg"]
@@ -40,6 +40,9 @@ size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_vwee6"]
 agent_radius = 1.24
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_68wvi"]
+size = Vector3(4.46985, 11.1754, 4.35938)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.7
@@ -983,6 +986,12 @@ skeleton = NodePath("")
 
 [node name="Sketchfab_Scene" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/structures" instance=ExtResource("8_68wvi")]
 transform = Transform3D(0.454753, 0, 0.0517241, 0, 0.457685, 0, -0.0517241, 0, 0.454753, -1.26549, -0.635948, -5.20881)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/structures/Sketchfab_Scene"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles/structures/Sketchfab_Scene/StaticBody3D"]
+transform = Transform3D(0.961875, 0, 0.273489, 0, 1, 0, -0.273489, 0, 0.961875, 0.63153, 5.12313, -4.61681)
+shape = SubResource("BoxShape3D_68wvi")
 
 [node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)

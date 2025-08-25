@@ -17,7 +17,6 @@ var current_state : State = State.DOING_STUFF
 enum CombatState { NONE, SEARCHING, CHASING, CLOSE, ATTACKING, LOOKING }
 var current_combat_state : CombatState = CombatState.NONE
 
-@export var test_label : Label
 @export var thoughts_label : Label
 @export var label_anchor : Node3D
 var viewport : Viewport
@@ -132,7 +131,6 @@ func _ready():
 		last_location = home
 
 	chase_reset_base_time = (personality.mind * (1 - personality.aggression) / (personality.energy * personality.bravery))
-	print(chase_reset_time)
 
 	viewport = get_viewport()
 

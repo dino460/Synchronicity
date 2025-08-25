@@ -58,7 +58,7 @@ _data = {
 &"walk": ExtResource("15_4ni07")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon", "raycast_holder")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.0
 run_speed = 10.0
@@ -67,8 +67,7 @@ dash_time = 0.5
 smooth_speed = 20.0
 weapon = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword")
 mat_ref = ExtResource("7_fulsm")
-max_check_width = 0.1
-min_check_width = -0.1
+raycast_holder = NodePath("MeshPivot/Raycast3DOrigins")
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animator")]
 script = ExtResource("2_u5517")
@@ -81,6 +80,7 @@ script = ExtResource("3_imqgc")
 script = ExtResource("4_dcvbl")
 
 [node name="DepthTestOrigin" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.622089, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." node_paths=PackedStringArray("audio_stream_player")]
 script = ExtResource("4_n1gxj")
@@ -746,6 +746,62 @@ libraries = {
 &"": SubResource("AnimationLibrary_l71n6")
 }
 
+[node name="Raycast3DOrigins" type="Node3D" parent="MeshPivot"]
+
+[node name="Node3D" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, -0.4)
+
+[node name="Node3D2" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, -0.4)
+
+[node name="Node3D3" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, -0.4)
+
+[node name="Node3D4" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4)
+
+[node name="Node3D5" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -0.4)
+
+[node name="Node3D6" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.4)
+
+[node name="Node3D7" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.4)
+
+[node name="Node3D8" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.4, -0.4)
+
+[node name="Node3D9" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.4, -0.4)
+
+[node name="Node3D10" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0.4)
+
+[node name="Node3D11" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.5, 0.4)
+
+[node name="Node3D12" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, -0.5, 0.4)
+
+[node name="Node3D13" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.4)
+
+[node name="Node3D14" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0.4)
+
+[node name="Node3D15" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0.4)
+
+[node name="Node3D16" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.4)
+
+[node name="Node3D17" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.4, 0.4)
+
+[node name="Node3D18" type="Node3D" parent="MeshPivot/Raycast3DOrigins"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.4, 0.4)
+
 [node name="CameraPivot" type="Node3D" parent="."]
 script = ExtResource("5_lu2e7")
 rotation_speed = 3.0
@@ -753,12 +809,14 @@ vertical_up_corretion = 1.25
 vertical_down_corretion = 0.75
 
 [node name="EnvironmentCamera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 0, 6.75, 10)
+transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 0, 9.75, 14)
 projection = 1
 size = 15.0
 near = 0.1
 far = 100.0
 script = ExtResource("6_h03v3")
+snap = false
+snap_objects = false
 
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true

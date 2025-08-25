@@ -1,5 +1,7 @@
 extends Entity
 
+class_name Player
+
 # Get references to nodes
 # Removes get_node call each time the node is referenced
 @onready var combo_timer_ref  = $ComboCooldownTimer
@@ -49,12 +51,7 @@ var damaged_enemies_this_attack   : Array = []
 
 @export_group("Rendering Properties")
 @export var mat_ref : Material
-@export var number_of_points : int = 6
-@export var max_check_height : float = 0.7
-@export var min_check_height : float = -0.5
-@export var max_check_width  : float = 0.25
-@export var min_check_width  : float = -0.25
-@export var check_distance   : float = 0.5
+@export var raycast_holder : Node3D
 
 
 func _ready():
@@ -97,28 +94,21 @@ func _process(_delta : float) -> void:
 
 
 func _physics_process(delta : float) -> void:
-	var number_of_intersections = 0
-	var space = get_world_3d().direct_space_state
-	for i in range(number_of_points):
-		var mod = 1
-		if i >= number_of_points / 2:
-			mod = -1
-		var position_to_test = Vector3(self.global_position.x + max_check_width * mod, self.global_position.y + (mod * i * max_check_height / (number_of_points / 2)), self.global_position.z)
-		var query = PhysicsRayQueryParameters3D.create(position_to_test, get_viewport().get_camera_3d().global_position - position_to_test, collision_mask, [self])
-		var result = space.intersect_ray(query)
+	var intersections : int = 0
 
-		# print((obj_ref.global_position - position_to_test).normalized())
-		if not result.is_empty():
-			# print(result)
-			number_of_intersections += 1
+	var space_state = get_world_3d().direct_space_state
+	var query  = PhysicsRayQueryParameters3D.new()
+	var camera_position = get_viewport().get_camera_3d().global_position
+	query.exclude = [self]
+	# query.hit_back_faces = true
 
-	print(number_of_intersections)
-	if number_of_intersections >= 2 * number_of_points / 3:
-		mat_ref.no_depth_test = true
-	else:
-		mat_ref.no_depth_test = false
+	for origin in raycast_holder.get_children():
+		query.from = origin.global_position
+		query.to = camera_position
+		if space_state.intersect_ray(query).size() > 0:
+			intersections += 1
 
-
+	mat_ref.no_depth_test = intersections >= raycast_holder.get_children().size() / 4.0
 
 	if is_attacking: # Collision check for attacking
 		var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
