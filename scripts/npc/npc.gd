@@ -9,7 +9,7 @@ signal idling
 signal walking
 signal death
 signal running
-signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
+# signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
 enum State { DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING }
 var current_state : State = State.DOING_STUFF
@@ -72,20 +72,19 @@ var navigation_enabled : bool = false
 
 @export_group("NPC Combat")
 var damage_per_aggroer  : Dictionary[Entity, float]
-
 var current_aggro_target  : Entity
 var can_see_aggro_target  : bool = false
-var is_in_attack_range    : bool = false
+
+@export var damage_threshold  : float = 8.0
+@export var damage_drain_rate : float = 0.4
+
+@export_subgroup("Search Parameters")
 var wait_to_search_timer  : float = 0.0
 var chase_reset_counter   : float = 0.0
 var chase_reset_time      : float = 0.0
 var chase_reset_base_time : float = 0.0
 var search_area_position  : Vector3 = Vector3.ZERO
 
-@export var damage_threshold  : float = 8.0
-@export var damage_drain_rate : float = 0.4
-
-@export var attack_distance    : float = 5.0
 @export var follow_look_angle  : float = 0.349055556
 @export var field_of_view      : float = -0.35
 @export var search_radius      : float = 5.0
@@ -95,6 +94,12 @@ var search_area_position  : Vector3 = Vector3.ZERO
 @export var min_time_to_wait : float = 1.4
 
 @export var chance_to_change_search_area : float = 0.08
+
+@export_subgroup("Fighting Parameters")
+var is_in_attack_range    : bool = false
+
+@export var weapon_attatchment : Node3D
+@export var attack_distance    : float = 5.0
 
 @export_group("NPC Rendering")
 @onready var mesh_pivot_ref = $MeshPivot
@@ -133,6 +138,8 @@ func _ready():
 	chase_reset_base_time = (personality.mind * (1 - personality.aggression) / (personality.energy * personality.bravery))
 
 	viewport = get_viewport()
+
+	weapon_attatchment = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"
 
 	call_deferred("actor_setup") # Make sure to not await during _ready.
 
@@ -360,8 +367,11 @@ func handle_combat():
 				search_area_position = global_position
 
 		CombatState.CLOSE:
+			print("CLOSE")
 			velocity = Vector3.ZERO
 			navigation_enabled = false
+			if can_see_aggro_target:
+				do_attack(AnimationHandler.AnimationState.ATTACK_LEFT, weapon_attatchment.get_children()[0])
 
 		CombatState.ATTACKING:
 			pass

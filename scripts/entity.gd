@@ -4,8 +4,15 @@ class_name Entity
 
 signal trigger_death
 signal damage_taken(int, Entity)
+signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
 @export var stats : CharacterStats
+
+var damaged_enemies_this_attack : Array = []
+
+@export var is_attacking       : bool = false
+@export var can_combo          : bool = false
+@export var should_attack_move : bool = false
 
 func take_damage(damage : int, attacker : Entity):
 	print("HP before: ", stats.health)
@@ -17,3 +24,22 @@ func take_damage(damage : int, attacker : Entity):
 	print("HP after: ", stats.health)
 	print()
 	damage_taken.emit(damage, attacker)
+
+func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
+	print(not is_attacking, " ", can_combo)
+	if (not is_attacking) or can_combo:
+		attack.emit(attack_state, weapon, is_attacking)
+		is_attacking = true
+		should_attack_move = true
+		can_combo = false
+		damaged_enemies_this_attack.clear()
+
+func damage_enemies(weapon : Weapon):
+	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
+	if not damaged_enemies_this_attack.has(hit_enemies): # Checks if new enemies are hit
+		# print(hit_enemies)
+		damaged_enemies_this_attack.append(hit_enemies)
+		for enemy in hit_enemies: #Applies damage to enemies
+			if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
+				enemy.take_damage(weapon.attack_damage, self)
+				# print(weapon.attack_damage)

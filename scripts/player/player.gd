@@ -16,7 +16,7 @@ signal idling
 signal walking
 signal running
 signal dashing(dash_time: float)
-signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
+# signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
 
 @export_group("Movement Properties")
@@ -42,12 +42,11 @@ var direction       : Vector3 = Vector3.ZERO
 @export_group("Combat Properties")
 @export var attack_movement_speed : float = 10.0
 @export var weapon                : Weapon
-var weapon_collider               : Area3D
-var is_attacking                  : bool = false
-var should_attack_move            : bool = false
-var can_combo 					  : bool = false
+# var is_attacking                  : bool = false
+# var should_attack_move            : bool = false
+# var can_combo 					  : bool = false
 var last_direction_normalized     : Vector3 = Vector3.UP
-var damaged_enemies_this_attack   : Array = []
+# var damaged_enemies_this_attack   : Array = []
 
 @export_group("Rendering Properties")
 @export var mat_ref : Material
@@ -56,7 +55,6 @@ var damaged_enemies_this_attack   : Array = []
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
-	weapon_collider = weapon.get_child(0)
 	pass
 
 
@@ -111,14 +109,15 @@ func _physics_process(delta : float) -> void:
 	mat_ref.no_depth_test = intersections >= raycast_holder.get_children().size() / 4.0
 
 	if is_attacking: # Collision check for attacking
-		var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
-		if not damaged_enemies_this_attack.has(hit_enemies): # Checks if new enemies are hit
-			# print(hit_enemies)
-			damaged_enemies_this_attack.append(hit_enemies)
-			for enemy in hit_enemies: #Applies damage to enemies
-				if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
-					enemy.take_damage(weapon.attack_damage, self)
-					# print(weapon.attack_damage)
+		damage_enemies(weapon)
+		# var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
+		# if not damaged_enemies_this_attack.has(hit_enemies): # Checks if new enemies are hit
+		# 	# print(hit_enemies)
+		# 	damaged_enemies_this_attack.append(hit_enemies)
+		# 	for enemy in hit_enemies: #Applies damage to enemies
+		# 		if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
+		# 			enemy.take_damage(weapon.attack_damage, self)
+		# 			# print(weapon.attack_damage)
 	elif damaged_enemies_this_attack.size() > 0:
 		damaged_enemies_this_attack.clear() # Clears the list of damaged enemies if not attacking
 
@@ -172,25 +171,33 @@ func _on_animation_handler_attack_ended():
 	should_attack_move = false
 #	combo_timer_ref.start(weapon.combo_wait_time)
 
-func do_attack(attack_state : AnimationHandler.AnimationState):
-	if not is_dashing and ((not is_attacking) or can_combo):
-		attack.emit(attack_state, weapon, is_attacking)
-		is_attacking = true
-		should_attack_move = true
-		can_combo = false
-		damaged_enemies_this_attack.clear()
+# func do_attack(attack_state : AnimationHandler.AnimationState):
+# 	if not is_dashing and ((not is_attacking) or can_combo):
+# 		attack.emit(attack_state, weapon, is_attacking)
+# 		is_attacking = true
+# 		should_attack_move = true
+# 		can_combo = false
+# 		damaged_enemies_this_attack.clear()
 
 func _on_input_handler_up_attack_performed():
-	do_attack(AnimationHandler.AnimationState.ATTACK_UP)
+	if is_dashing:
+		return
+	do_attack(AnimationHandler.AnimationState.ATTACK_UP, weapon)
 
 func _on_input_handler_down_attack_performed() -> void:
-	do_attack(AnimationHandler.AnimationState.ATTACK_DOWN)
+	if is_dashing:
+		return
+	do_attack(AnimationHandler.AnimationState.ATTACK_DOWN, weapon)
 
 func _on_input_handler_left_attack_performed() -> void:
-	do_attack(AnimationHandler.AnimationState.ATTACK_LEFT)
+	if is_dashing:
+		return
+	do_attack(AnimationHandler.AnimationState.ATTACK_LEFT, weapon)
 
 func _on_input_handler_right_attack_performed() -> void:
-	do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT)
+	if is_dashing:
+		return
+	do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT, weapon)
 
 func _on_input_handler_dash_performed():
 	if not is_dashing and not direction == Vector3.ZERO:

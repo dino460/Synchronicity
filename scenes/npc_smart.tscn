@@ -1,10 +1,12 @@
-[gd_scene load_steps=20 format=4 uid="uid://mkhk0i0eskjt"]
+[gd_scene load_steps=23 format=4 uid="uid://mkhk0i0eskjt"]
 
 [ext_resource type="Script" uid="uid://cguddavepqt3l" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
 [ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
 [ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="3_kkvfd"]
 [ext_resource type="Animation" uid="uid://bn10n7kchfjhg" path="res://assets/SELS low poly char/npc-animations/npc-attack_right_shortsword.res" id="4_t715a"]
 [ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="4_y33ke"]
+[ext_resource type="Script" uid="uid://c4bdfbjq5tji3" path="res://scripts/weapons/shortsword.gd" id="5_bkdre"]
+[ext_resource type="ArrayMesh" uid="uid://51k0sxqscsj1" path="res://assets/Sting-Sword-lowpoly.obj" id="6_qonak"]
 [ext_resource type="Animation" uid="uid://bucv7056ctl0j" path="res://assets/SELS low poly char/npc-animations/npc-idle.res" id="6_ypw14"]
 [ext_resource type="Animation" uid="uid://bv2q824jhpu34" path="res://assets/SELS low poly char/npc-animations/npc-run.res" id="7_y33ke"]
 [ext_resource type="Animation" uid="uid://djv1lr1n4bosy" path="res://assets/SELS low poly char/npc-animations/npc-walk.res" id="8_xu3sh"]
@@ -1288,6 +1290,10 @@ bind/408/pose = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -0.0586669, 0.846875, -0
 bind/409/name = &"thigh_ik_target.R"
 bind/409/bone = -1
 bind/409/pose = Transform3D(0.983235, 0.00134393, -0.182336, -0.182336, 0.0146169, -0.983128, 0.00134393, 0.999892, 0.0146169, 0.096045, 0.835805, -0.524047)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v7n6u"]
+radius = 0.07
+height = 0.66
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v7n6u"]
 _data = {
@@ -4711,6 +4717,31 @@ bones/409/scale = Vector3(1, 1, 1)
 mesh = SubResource("ArrayMesh_xu3sh")
 skin = SubResource("Skin_tw5v6")
 
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"]
+transform = Transform3D(-0.896316, -0.276155, -0.346924, -0.332466, 0.936235, 0.113709, 0.293401, 0.21726, -0.930975, -0.0621214, 1.51039, 0.261348)
+bone_name = "hand_ik.L"
+bone_idx = 373
+
+[node name="Shortsword" type="Node3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"]
+script = ExtResource("5_bkdre")
+up_attack_time = 0.5
+down_attack_time = 0.1
+attack_damage = 10.0
+
+[node name="Area3D" type="Area3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword"]
+transform = Transform3D(1, 8.56817e-08, -2.23517e-08, -6.79865e-08, 1, -5.96046e-08, -2.23517e-08, 7.45058e-08, 1, 0, 0, 0)
+collision_layer = 32
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword/Area3D"]
+transform = Transform3D(1, -1.17869e-08, -4.97516e-08, 1.49012e-08, -0.177308, 0.984156, -2.98023e-08, -0.984156, -0.177308, 6.10942e-05, 0.10785, 0.189035)
+shape = SubResource("CapsuleShape3D_v7n6u")
+
+[node name="Sting-sword-lowpoly" type="MeshInstance3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword"]
+transform = Transform3D(-0.00159096, -0.0318588, -6.8407e-05, -0.0166739, 0.00298794, -0.00171095, 0.00290663, -0.000297679, -0.00985231, 0.0160949, 0.100598, 0.148918)
+mesh = ExtResource("6_qonak")
+skeleton = NodePath("../../..")
+
 [node name="WGT-rig_spine_fk" type="Node3D" parent="MeshPivot/Low-Poly-Base_blend"]
 transform = Transform3D(0.124515, 0, 0, 0, -0.0316877, -0.120415, 0, 0.120415, -0.0316877, 0, 1.0132, -0.0143428)
 
@@ -5118,6 +5149,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92647, 0)
 [node name="LabelAnchor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
+[connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
 [connection signal="damage_taken" from="." to="." method="_on_damage_taken"]
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
