@@ -55,6 +55,7 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
+	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
 	pass
 
 
@@ -158,26 +159,8 @@ func _physics_process(delta : float) -> void:
 	velocity = target_velocity
 	move_and_slide()
 
-
-func stop_attack_movement():
-	should_attack_move = false
-
 func _on_animation_handler_dash_ended():
 	is_dashing = false
-
-func _on_animation_handler_attack_ended():
-	is_attacking = false
-	can_combo = false
-	should_attack_move = false
-#	combo_timer_ref.start(weapon.combo_wait_time)
-
-# func do_attack(attack_state : AnimationHandler.AnimationState):
-# 	if not is_dashing and ((not is_attacking) or can_combo):
-# 		attack.emit(attack_state, weapon, is_attacking)
-# 		is_attacking = true
-# 		should_attack_move = true
-# 		can_combo = false
-# 		damaged_enemies_this_attack.clear()
 
 func _on_input_handler_up_attack_performed():
 	if is_dashing:

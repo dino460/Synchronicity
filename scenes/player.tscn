@@ -836,7 +836,6 @@ attack_damage = 10.0
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
-[connection signal="attack_ended" from="AnimationHandler" to="." method="_on_animation_handler_attack_ended"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="enable_combo" from="AnimationHandler" to="." method="_on_animation_handler_enable_combo"]
 [connection signal="dash_performed" from="InputHandler" to="." method="_on_input_handler_dash_performed"]

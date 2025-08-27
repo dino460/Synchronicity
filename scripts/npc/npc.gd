@@ -122,6 +122,7 @@ func _ready():
 	add_to_group("persist")
 
 	get_node("AnimationHandler").caller_prefix = "NPC/"
+	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
 
 	personality = get_node("Personality")
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
@@ -175,11 +176,11 @@ func _process(delta: float) -> void:
 	call_deferred("tick_damage_taken", delta)
 
 	## Checks if has attack target and if target list is empty
-	if current_aggro_target != null and not damage_per_aggroer.is_empty() and current_state != State.DEAD:
-		is_in_attack_range = self.position.distance_squared_to(current_aggro_target.position) <= attack_distance
-
+	if current_aggro_target != null and not damage_per_aggroer.is_empty():
 		## Checks if cumulated damage is above threshold
 		if damage_per_aggroer[current_aggro_target] >= damage_threshold:
+			is_in_attack_range = self.position.distance_squared_to(current_aggro_target.position) <= attack_distance
+
 			## Cheks if enemy is close enough for close combat or if should be chased
 			current_state = State.FIGHTING
 			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
@@ -189,7 +190,7 @@ func _process(delta: float) -> void:
 				current_combat_state = CombatState.CHASING
 				chase_reset_time = chase_reset_base_time + damage_per_aggroer[current_aggro_target]
 				chase_reset_counter = chase_reset_time
-			else:
+			elif not is_attacking:
 				current_combat_state = CombatState.CLOSE
 				chase_reset_time = chase_reset_base_time + damage_per_aggroer[current_aggro_target]
 				chase_reset_counter = chase_reset_time
@@ -209,8 +210,8 @@ func _physics_process(delta):
 	var path_to_attack_target_angle : float = 0.0
 
 	if current_aggro_target != null:
-		attack_target_direction = (current_aggro_target.position - position).normalized()
-		path_to_attack_target_angle = attack_target_direction.normalized().angle_to(path_direction)
+		attack_target_direction = self.position.direction_to(current_aggro_target.position).normalized()
+		path_to_attack_target_angle = attack_target_direction.angle_to(path_direction)
 
 	if current_state == State.FIGHTING and path_to_attack_target_angle < follow_look_angle:
 		look_direction = attack_target_direction
@@ -227,13 +228,14 @@ func _physics_process(delta):
 
 		can_see_aggro_target = result.collider == current_aggro_target and is_in_field_of_view or is_in_range
 
-		is_running = current_aggro_target.velocity.length() >= get_walk_speed() * run_mult_threshold
-		is_running = is_running or position.distance_to(current_aggro_target.position) > attack_distance
+		is_running = position.distance_squared_to(current_aggro_target.position) > attack_distance
 		is_running = is_running and can_see_aggro_target
 
-	var is_allowed_state = current_combat_state in [CombatState.CHASING, CombatState.SEARCHING]
+	var is_allowed_state = current_combat_state in [CombatState.CHASING, CombatState.SEARCHING, CombatState.ATTACKING]
 	if (current_location != current_target and current_target != null) or is_allowed_state:
-		position += velocity * delta
+		velocity.y = -10.0
+		# position += velocity * delta
+		move_and_slide()
 
 	if is_in_frustum:
 		if current_state == State.DEAD:
@@ -367,14 +369,19 @@ func handle_combat():
 				search_area_position = global_position
 
 		CombatState.CLOSE:
-			print("CLOSE")
-			velocity = Vector3.ZERO
+			velocity = self.position.direction_to(current_aggro_target.position) * get_speed()
 			navigation_enabled = false
 			if can_see_aggro_target:
+				current_combat_state = CombatState.ATTACKING
 				do_attack(AnimationHandler.AnimationState.ATTACK_LEFT, weapon_attatchment.get_children()[0])
 
 		CombatState.ATTACKING:
-			pass
+			if not should_attack_move:
+				velocity = Vector3.ZERO
+				pass
+			else:
+				velocity = self.position.direction_to(current_aggro_target.position) * get_speed()
+
 
 func check_for_path_while_doing_stuff():
 	choose_target()

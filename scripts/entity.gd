@@ -26,13 +26,12 @@ func take_damage(damage : int, attacker : Entity):
 	damage_taken.emit(damage, attacker)
 
 func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
-	print(not is_attacking, " ", can_combo)
 	if (not is_attacking) or can_combo:
-		attack.emit(attack_state, weapon, is_attacking)
 		is_attacking = true
 		should_attack_move = true
 		can_combo = false
 		damaged_enemies_this_attack.clear()
+		attack.emit(attack_state, weapon, is_attacking)
 
 func damage_enemies(weapon : Weapon):
 	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
@@ -43,3 +42,11 @@ func damage_enemies(weapon : Weapon):
 			if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
 				enemy.take_damage(weapon.attack_damage, self)
 				# print(weapon.attack_damage)
+
+func stop_attack_movement():
+	should_attack_move = false
+
+func _on_animation_handler_attack_ended():
+	is_attacking = false
+	can_combo = false
+	should_attack_move = false
