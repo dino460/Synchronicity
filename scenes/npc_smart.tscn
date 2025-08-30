@@ -1316,7 +1316,6 @@ npc_name = "NPC_37"
 current_age = 25
 personality = NodePath("Personality")
 look_origin = NodePath("LookOrigin")
-attack_distance = 15.0
 stats = NodePath("Stats")
 
 [node name="Personality" type="Node" parent="."]
@@ -4719,7 +4718,7 @@ mesh = SubResource("ArrayMesh_xu3sh")
 skin = SubResource("Skin_tw5v6")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"]
-transform = Transform3D(0.560582, -0.811611, -0.164426, -0.752546, -0.416432, -0.510155, 0.345575, 0.409722, -0.844219, -0.100854, 0.883706, 0.151816)
+transform = Transform3D(0.560582, -0.811611, -0.164426, -0.752546, -0.416432, -0.510156, 0.345576, 0.409722, -0.844219, -0.100854, 0.883706, 0.151816)
 bone_name = "hand_ik.L"
 bone_idx = 373
 

@@ -720,7 +720,7 @@ bones/409/scale = Vector3(1, 1, 1)
 mesh = SubResource("ArrayMesh_ewgnx")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D" index="1"]
-transform = Transform3D(-0.896316, -0.276155, -0.346924, -0.332466, 0.936235, 0.113709, 0.293401, 0.21726, -0.930975, -0.0621214, 1.51039, 0.261348)
+transform = Transform3D(-0.896316, -0.276155, -0.346924, -0.332466, 0.936236, 0.113709, 0.293401, 0.217259, -0.930975, -0.0621215, 1.51039, 0.261348)
 bone_name = "hand_ik.L"
 bone_idx = 373
 

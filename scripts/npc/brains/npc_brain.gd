@@ -1,3 +1,3 @@
-extends Node
+extends NPC
 
 class_name NPCBrain
