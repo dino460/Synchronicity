@@ -47,12 +47,12 @@ For now, the game is quite barebones and totally in an Alpha state of affairs. I
 For now, the game is quite barebones and totally in an Alpha state of affairs. Below is a table summarizing the current main features and their development progress:
 | Completeness | Feature | Description | Progress/State |
 | :---: | --- | --- | --- |
-| 100% 🟢 | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations and custom dusk and dawn times | Completed & Fully Functional |
-| 85% 🟢 | [Movement](#movement-system) | Normalized analog movement + running + rolling. | Base movement + sprinting done. Needs polishing |
-| 60% 🟡 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options |
-| 46% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working |
-| 33% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs still don't attaack and behave really simplistically. No nuance. Heavy polishing needed.
-| 0.000001% 🔴 | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority |
+| 100% 🟢 | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations and custom dusk and dawn times | Completed & Fully Functional. |
+| 85% 🟢 | [Movement](#movement-system) | Normalized analog movement + running + rolling. | Base movement + sprinting done. Needs polishing. |
+| 60% 🟡 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options. |
+| 46% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working. Currently on a big rework of this whole system. |
+| 38% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs attack, but behave really simplistically. No nuance. Heavy polishing needed. Currently on a big rework of the NPC system.
+| 0.000001% 🔴 | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority. |
 | 0.0% 🔴 | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton in the corner... waiting_</sub> |
 
 <sub>_**Feature**: Currently in active development. Other features are also in-development, but focus is on this one_</sub><br/>
@@ -69,7 +69,7 @@ Synchornicity's animation system is heavily based on Godot's signal system. All 
 For base animations, such as idle, walk and run, they are implemented globally, while combat animations are handled independently with a weapon-system. This system, further detailed in the [Combat System](#combat-system) section, provides the correct animations for each weapon, along with the combo sequences and other important details about the used weapon.
 
 ### Combat System
-> Section is a Work In progress
+> Section is a Work In-progress
 
 Custom system that provides four diferent attak directions: up, down, left, and right. These are used to simulate a somewhat real-life-like sword-fighting experience.
 
@@ -77,16 +77,16 @@ Custom system that provides four diferent attak directions: up, down, left, and 
 A simple system for defining an absolute time for a full day to last (such as 10 minutes), which is translated to the in-game simulated 24 hour time. Also provides the capability of defining custom sunrise and sunset times (for custom day/night ratios).
 
 ### Movement System
-> Section is a Work In progress
+> Section is a Work In-progress
 
 ### Scheduled NPC Interaction System
-> Section is a Work In progress
+> Section is a Work In-progress
 
 ### SFX/OST
-> Section is a Work In (glacial) progress
+> Section is a Work In-(glacial)-progress
 
 ### Story
-> Section is a Work In (very, very, **_very_** slow) progress
+> Section is a Work In-(very, very, **_very_** slow)-progress
 
 </details>
 
