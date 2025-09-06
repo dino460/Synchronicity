@@ -726,8 +726,6 @@ bone_idx = 373
 
 [node name="Shortsword" type="Node3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"]
 script = ExtResource("6_1qs7o")
-up_attack_time = 0.5
-down_attack_time = 0.1
 attack_damage = 10.0
 
 [node name="Area3D" type="Area3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword"]
@@ -826,8 +824,6 @@ one_shot = true
 
 [node name="Shortsword" type="Node" parent="."]
 script = ExtResource("6_1qs7o")
-up_attack_time = 0.5
-down_attack_time = 0.1
 attack_damage = 10.0
 
 [connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]

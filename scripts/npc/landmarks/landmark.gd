@@ -12,6 +12,11 @@ func _ready():
 	add_to_group("persist")
 	id = get_tree().get_root().get_node("Main/Scheduler").request_id()
 
+
+func run():
+	print(landmark_name, " is running")
+
+
 func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> float:
 	var npc_reputation_here = get_npc_reputation(npc.id)
 
@@ -20,6 +25,24 @@ func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> fl
 	var avoidance_weight = npc.personality.aggression / npc_reputation_here
 
 	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight)) + interference
+
+
+func get_npc_attraction(npc_ref : NPC, _is_current_location : bool, _special_check_var : bool) -> float:
+	var npc_reputation_here = get_npc_reputation(npc_ref.id)
+
+	var distance_weight = npc_ref.personality.energy * influence_by_distance(npc_ref.position.distance_to(self.position))
+	var loyalty_weight = npc_ref.personality.loyalty * npc_reputation_here
+	var avoidance_weight = npc_ref.personality.aggression / npc_reputation_here
+
+	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc_ref) + avoidance_weight))
+
+
+func is_home() -> bool:
+	return false
+
+func is_job() -> bool:
+	return false
+
 
 func get_npc_reputation(npc_id : int) -> float:
 	if not reputations.has(npc_id):

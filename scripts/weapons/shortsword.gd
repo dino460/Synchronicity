@@ -8,6 +8,13 @@ func _ready():
 	attack_animations[AnimationHandler.AnimationState.ATTACK_LEFT] = "attack_left_shortsword"
 	attack_animations[AnimationHandler.AnimationState.ATTACK_RIGHT] = "attack_right_shortsword"
 
+	stamina_cost_per_attack = {
+		AnimationHandler.AnimationState.ATTACK_UP: 10,
+		AnimationHandler.AnimationState.ATTACK_DOWN: 10,
+		AnimationHandler.AnimationState.ATTACK_LEFT: 10,
+		AnimationHandler.AnimationState.ATTACK_RIGHT: 10
+	}
+
 	preferred_attack_stream.append_array([
 		PreferredNextAttack.new(AnimationHandler.AnimationState.ATTACK_UP, AnimationHandler.AnimationState.ATTACK_DOWN),
 		PreferredNextAttack.new(AnimationHandler.AnimationState.ATTACK_UP, AnimationHandler.AnimationState.ATTACK_LEFT),
@@ -24,9 +31,3 @@ func _ready():
 	])
 
 	pass;
-
-func is_preferred_attack(current_attack : AnimationHandler.AnimationState, next_attack : AnimationHandler.AnimationState) -> bool:
-	for preference in preferred_attack_stream:
-		if preference.this_attack == current_attack and preference.preferred_next == next_attack:
-			return true
-	return false

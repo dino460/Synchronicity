@@ -251,6 +251,24 @@ transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5
 [node name="crate71" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 4.54625)
 
+[node name="crate88" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 2.0297, 4.55621)
+
+[node name="crate89" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 2.0297, 4.55621)
+
+[node name="crate90" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 2.0297, 4.55621)
+
+[node name="crate91" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 3.10646, 4.55621)
+
+[node name="crate92" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 3.10646, 4.55621)
+
+[node name="crate93" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 3.10646, 4.55621)
+
 [node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 1.25246)
 
@@ -356,6 +374,12 @@ transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5
 [node name="crate41" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -1.09499)
 
+[node name="crate83" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -2.15082)
+
+[node name="crate84" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -1.09499)
+
 [node name="crate42" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -9.75596)
 
@@ -374,14 +398,32 @@ transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 2.
 [node name="crate47" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 2.15131, 0)
 
+[node name="crate80" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.33649, 2.15131, 0)
+
+[node name="crate81" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.14083, 2.15131, 0)
+
+[node name="crate82" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.02691, 2.15131, 0)
+
 [node name="crate48" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 2.36637)
+
+[node name="crate85" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 1.20809)
 
 [node name="crate49" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 5.77197)
 
 [node name="crate50" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 6.92534)
+
+[node name="crate86" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 3.47865)
+
+[node name="crate87" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 4.63202)
 
 [node name="crate51" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 2.15131, 0)
@@ -413,12 +455,14 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("thoughts_label", "scheduler", "job", "home") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.43745, 2.13348, -1.75753)
+[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("thoughts_label", "scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
+transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -7.43745, 2.13348, -1.75753)
 thoughts_label = NodePath("../../../../UISubViewportContainer/UISubViewport/NPC Thoughts")
+npc_name = "Lelê"
 scheduler = NodePath("../../../../Scheduler")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
+points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
 
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
