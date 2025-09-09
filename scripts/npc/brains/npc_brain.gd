@@ -14,4 +14,5 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	combat_brain.handle_combat(delta, npc)
-	print(scheduled_brain.choose_next_location(npc))
+	scheduled_brain.update_landmark_attraction(npc)
+	print(scheduled_brain.handle_schedule(npc, delta))

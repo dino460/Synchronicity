@@ -1310,12 +1310,13 @@ _data = {
 &"walk": ExtResource("8_xu3sh")
 }
 
-[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("label_anchor", "look_origin", "weapon_attatchment", "stats")]
+[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("label_anchor", "personality", "look_origin", "weapon_attatchment", "stats")]
 collision_layer = 33
 collision_mask = 1057
 script = ExtResource("1_p1mm1")
 label_anchor = NodePath("LabelAnchor")
 current_age = 25
+personality = NodePath("Personality")
 look_origin = NodePath("LookOrigin")
 weapon_attatchment = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D")
 stats = NodePath("Stats")

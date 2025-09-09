@@ -459,6 +459,7 @@ environment = SubResource("Environment_xso02")
 transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -7.43745, 2.13348, -1.75753)
 thoughts_label = NodePath("../../../../UISubViewportContainer/UISubViewport/NPC Thoughts")
 npc_name = "Lelê"
+id = 11
 scheduler = NodePath("../../../../Scheduler")
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
@@ -471,7 +472,7 @@ points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/
 [node name="STATUE" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
 script = ExtResource("11_octe2")
-landmark_name = "Sttu"
+landmark_name = "Statue"
 radius_of_influence = 3.0
 area_max_influence = 1.0
 
@@ -488,6 +489,7 @@ omni_attenuation = 0.375
 
 [node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("10_a8y0u")]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.14026, 0.119066, 9.24411)
+landmark_name = "Fountain"
 
 [node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("11_jkv2x")]
 
