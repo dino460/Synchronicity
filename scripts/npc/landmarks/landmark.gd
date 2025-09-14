@@ -14,7 +14,8 @@ func _ready():
 
 
 func run():
-	print(landmark_name, " is running")
+	# print(landmark_name, " is running")
+	pass
 
 
 func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> float:
@@ -58,7 +59,7 @@ func influence_by_distance(distance : float) -> float:
 	return area_max_influence / exp(distance - radius_of_influence)
 
 
-func attraction_by_distance(distance : float) -> float:
+func get_attraction(distance : float, _npc_ref : NPC) -> float:
 	if distance > 250:
 		return 0.0
 	return distance_lut[int(distance)]

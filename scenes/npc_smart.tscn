@@ -1310,11 +1310,12 @@ _data = {
 &"walk": ExtResource("8_xu3sh")
 }
 
-[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("label_anchor", "personality", "look_origin", "weapon_attatchment", "stats")]
+[node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("label_anchor", "npc_brain", "personality", "look_origin", "weapon_attatchment", "stats")]
 collision_layer = 33
 collision_mask = 1057
 script = ExtResource("1_p1mm1")
 label_anchor = NodePath("LabelAnchor")
+npc_brain = NodePath("MainBrain")
 current_age = 25
 personality = NodePath("Personality")
 look_origin = NodePath("LookOrigin")
@@ -1334,7 +1335,7 @@ soul = 0.8
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("3_kkvfd")
-constitution = 10
+constitution = 100
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animator")]
 script = ExtResource("4_y33ke")
@@ -1358,6 +1359,7 @@ transform = Transform3D(-1.8, 0, -1.57361e-07, 0, 1.8, 0, 1.57361e-07, 0, -1.8, 
 
 [node name="running reference" type="Node3D" parent="MeshPivot/Low-Poly-Base_blend"]
 transform = Transform3D(1.46167e-07, 1.22614, 9.80129e-15, 1.09626e-07, -3.2671e-15, -1.22614, 1.22614, -1.46167e-07, 1.09626e-07, -6.57585, -0.254973, -2.45225)
+visible = false
 
 [node name="walking reference" type="Node3D" parent="MeshPivot/Low-Poly-Base_blend"]
 transform = Transform3D(2.26115e-07, 1.89679, 1.51622e-14, 1.69586e-07, -5.05407e-15, -1.89679, 1.89679, -2.26115e-07, 1.69586e-07, -6.57585, 3.42937, 1.20105)
@@ -5171,3 +5173,4 @@ script = ExtResource("17_shrwc")
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
 [connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
+[connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_finished"]

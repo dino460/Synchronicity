@@ -12,7 +12,7 @@ signal running
 # signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
 enum State { DOING_STUFF, MOVING_ABOUT, SLEEPING, DEAD, FIGHTING }
-var current_state : State = State.DOING_STUFF
+var _current_state : State = State.DOING_STUFF
 
 enum CombatState { NONE, SEARCHING, CHASING, CLOSE, ATTACKING, LOOKING }
 var current_combat_state : CombatState = CombatState.NONE
@@ -29,6 +29,7 @@ var process_group    : int
 @export_group("NPC Scheduling")
 @export var timers    : Dictionary
 @export var scheduler : Scheduler
+@export var npc_brain : NPCBrain
 
 @export_group("NPC Characteristics")
 @export var current_age        : int
@@ -118,7 +119,75 @@ func get_run_speed() -> float:
 func get_speed() -> float:
 	return get_run_speed() if is_running else get_walk_speed()
 
-func _ready():
+
+
+func _ready() -> void:
+	add_to_group("persist")
+
+	get_node("AnimationHandler").caller_prefix = "NPC/"
+	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
+
+	personality = get_node("Personality")
+	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
+	id = scheduler.request_id()
+	process_group = scheduler.request_group()
+
+	viewport = get_viewport()
+
+	weapon_attatchment = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"
+
+# func _process(_delta: float) -> void:
+# 	if thoughts_label != null:
+# 		thoughts_label.text = State.find_key(_current_state) + "\n" + CombatState.find_key(current_combat_state)
+# 		var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
+# 		new_label_position *= viewport.get_parent().stretch_shrink
+# 		new_label_position = Vector2(new_label_position.x - (thoughts_label.size.x / 2.0), new_label_position.y - (thoughts_label.size.y / 2.0))
+# 		thoughts_label.position = new_label_position
+
+func _physics_process(delta: float) -> void:
+	var path_direction : Vector3 = (navigation_agent.get_next_path_position() - position).normalized()
+	look_direction = path_direction
+	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
+
+	if is_in_frustum:
+		# mesh_pivot_ref.visible = true
+		if npc_brain.get_current_state() == NPCBrain.State.DEAD:
+			pass
+		elif not Vector2(velocity.x, velocity.z).is_zero_approx():
+			if is_running:
+				running.emit()
+			else:
+				walking.emit()
+		else:
+			idling.emit()
+	# else:
+		# mesh_pivot_ref.visible = false # CHANGE TO FADE WHEN POSSIBLE
+
+	move_and_slide()
+
+	if navigation_agent.navigation_finished:
+		velocity = Vector3.ZERO
+
+func handle_navigation(target_position : Vector3):
+	navigation_agent.target_position = target_position
+
+	var current_agent_position: Vector3 = global_position
+	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
+	velocity = current_agent_position.direction_to(next_path_position) * get_speed()
+	velocity.y = -10.0
+
+
+func _on_navigation_finished() -> void:
+	npc_brain.arrive_at_landmark_target()
+	velocity = Vector3.ZERO
+
+
+
+
+
+
+
+func __ready():
 	add_to_group("persist")
 
 	get_node("AnimationHandler").caller_prefix = "NPC/"
@@ -158,15 +227,15 @@ func set_movement_target(target_position : Vector3):
 	navigation_agent.set_target_position(target_position)
 	navigation_enabled = true
 
-func _process(delta: float) -> void:
-	if current_state == State.DEAD:
+func __process(delta: float) -> void:
+	if _current_state == State.DEAD:
 		return
 	elif want_to_sleep and current_location == home:
 		sleep_counter += delta
-		current_state = State.SLEEPING
+		_current_state = State.SLEEPING
 		if sleep_counter >= sleep_amount_wanted:
 			reset_sleep()
-	elif not want_to_sleep and current_state == State.MOVING_ABOUT:
+	elif not want_to_sleep and _current_state == State.MOVING_ABOUT:
 		moving_about_time_this_day += delta
 	else:
 		awake_time_this_day += delta
@@ -182,7 +251,7 @@ func _process(delta: float) -> void:
 			is_in_attack_range = self.position.distance_squared_to(current_aggro_target.position) <= attack_distance
 
 			## Cheks if enemy is close enough for close combat or if should be chased
-			current_state = State.FIGHTING
+			_current_state = State.FIGHTING
 			var is_allowed_state = current_combat_state not in [ CombatState.ATTACKING, CombatState.SEARCHING ]
 			if not can_see_aggro_target:
 				pass
@@ -195,14 +264,14 @@ func _process(delta: float) -> void:
 				chase_reset_time = chase_reset_base_time + damage_per_aggroer[current_aggro_target]
 				chase_reset_counter = chase_reset_time
 
-	thoughts_label.text = State.find_key(current_state) + "\n" + CombatState.find_key(current_combat_state)
+	thoughts_label.text = State.find_key(_current_state) + "\n" + CombatState.find_key(current_combat_state)
 	var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
 	new_label_position *= viewport.get_parent().stretch_shrink
 	new_label_position = Vector2(new_label_position.x - (thoughts_label.size.x / 2.0), new_label_position.y - (thoughts_label.size.y / 2.0))
 	thoughts_label.position = new_label_position
 
-func _physics_process(delta):
-	if current_state == State.DEAD:
+func __physics_process(delta):
+	if _current_state == State.DEAD:
 		return
 
 	var attack_target_direction : Vector3 = Vector3.ZERO
@@ -213,7 +282,7 @@ func _physics_process(delta):
 		attack_target_direction = self.position.direction_to(current_aggro_target.position).normalized()
 		path_to_attack_target_angle = attack_target_direction.angle_to(path_direction)
 
-	if current_state == State.FIGHTING and path_to_attack_target_angle < follow_look_angle:
+	if _current_state == State.FIGHTING and path_to_attack_target_angle < follow_look_angle:
 		look_direction = attack_target_direction
 	else:
 		look_direction = path_direction
@@ -238,7 +307,7 @@ func _physics_process(delta):
 		move_and_slide()
 
 	if is_in_frustum:
-		if current_state == State.DEAD:
+		if _current_state == State.DEAD:
 			pass
 		elif not velocity.is_zero_approx():
 			if is_running:
@@ -250,14 +319,14 @@ func _physics_process(delta):
 
 func tick_timers(delta : float):
 	for timer in timers:
-		if current_state != State.DOING_STUFF:
+		if _current_state != State.DOING_STUFF:
 			continue
 		timers[timer] += delta
 		if has_worked_today:
 			continue
 		has_worked_today = job.has_worked_today(get_landmark_timer(job, true))
 
-		# if current_state == State.DOING_STUFF:
+		# if _current_state == State.DOING_STUFF:
 		# 	# print(timers[timer])
 		# 	timers[timer] += delta
 		# 	if not has_worked_today:
@@ -272,17 +341,17 @@ func tick_damage_taken(delta: float):
 			damage_per_aggroer.erase(entity)
 
 func run_pathfinding_logic():
-	if current_state == State.DEAD:
+	if _current_state == State.DEAD:
 		print("NPC is dead")
 		current_target = null
 		velocity = Vector3.ZERO
 		navigation_enabled = false
 		scheduler.call_deferred("unbind_callable_from_group", process_group, self.run_pathfinding_logic)
 		return
-	elif want_to_sleep and current_state != State.FIGHTING:
+	elif want_to_sleep and _current_state != State.FIGHTING:
 		return
 
-	var is_allowed_state = current_state not in [State.DEAD, State.DOING_STUFF, State.FIGHTING]
+	var is_allowed_state = _current_state not in [State.DEAD, State.DOING_STUFF, State.FIGHTING]
 
 	if (navigation_agent.is_navigation_finished() and navigation_enabled and is_allowed_state):
 		print("Navigation finished")
@@ -292,7 +361,7 @@ func run_pathfinding_logic():
 		calculate_average_poi_distance()
 		# add_visit()
 		current_location = current_target
-		current_state = State.DOING_STUFF
+		_current_state = State.DOING_STUFF
 
 		timers[current_location] = 0.0
 
@@ -302,11 +371,11 @@ func run_pathfinding_logic():
 			if has_worked_today:
 				want_to_sleep = ((work_time_this_day * 0.15) + moving_about_time_this_day + (awake_time_this_day / 2.0)) / scheduler.full_day_time > personality.mind * personality.energy
 				sleep_amount_wanted = max(4.0 * scheduler.full_day_time / 24.0, min(7.0 * scheduler.full_day_time / 24.0, work_time_this_day + moving_about_time_this_day))
-	elif current_state == State.DOING_STUFF:
+	elif _current_state == State.DOING_STUFF:
 		check_for_path_while_doing_stuff()
-	elif current_state == State.MOVING_ABOUT:
+	elif _current_state == State.MOVING_ABOUT:
 		check_for_path_while_moving()
-	elif current_state == State.FIGHTING:
+	elif _current_state == State.FIGHTING:
 		handle_combat()
 
 	if navigation_enabled:
@@ -320,7 +389,7 @@ func handle_combat():
 
 	if chase_reset_counter <= 0.0 or damage_per_aggroer[current_aggro_target] < damage_threshold:
 		current_aggro_target = null
-		current_state = State.DOING_STUFF
+		_current_state = State.DOING_STUFF
 		current_combat_state = CombatState.NONE
 		chase_reset_counter = chase_reset_time
 		return
@@ -395,7 +464,7 @@ func check_for_path_while_doing_stuff():
 	timers.erase(current_location)
 	set_movement_target(current_target.position)
 	last_location = current_location
-	current_state = State.MOVING_ABOUT
+	_current_state = State.MOVING_ABOUT
 
 func check_for_path_while_moving():
 	choose_target()
@@ -425,7 +494,7 @@ func choose_target():
 	targets_to_choose[home] = home.get_npc_want(self, current_location == home, generate_interference()) / sqrt(get_landmark_timer(home, false))
 	targets_to_choose[job] = job.get_npc_want(self, has_worked_today, generate_interference()) / sqrt(get_landmark_timer(job, false))
 
-	if current_state == State.MOVING_ABOUT:
+	if _current_state == State.MOVING_ABOUT:
 		targets_to_choose[last_location] /= 10.0
 
 	current_target = targets_to_choose.keys()[0]
@@ -445,7 +514,7 @@ func reset_sleep():
 	sleep_amount_wanted = 0.0
 	sleep_counter = 0.0
 	awake_time_this_day = 0.0
-	current_state = State.DOING_STUFF
+	_current_state = State.DOING_STUFF
 
 func get_visit_by_landmark(landmark : Landmark) -> int:
 	for visit in visits:
@@ -480,7 +549,7 @@ func calculate_average_poi_distance():
 
 func _on_trigger_death() -> void:
 	print("NPC died")
-	current_state = State.DEAD
+	_current_state = State.DEAD
 	death.emit()
 
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:

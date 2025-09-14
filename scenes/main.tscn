@@ -492,6 +492,7 @@ transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.14026, 0
 landmark_name = "Fountain"
 
 [node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("11_jkv2x")]
+work_begin_time = 8.0
 
 [node name="Lighting" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 

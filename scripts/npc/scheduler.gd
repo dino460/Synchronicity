@@ -26,6 +26,7 @@ var current_group : int = 0
 var frame_counter : int
 
 @export var player_ref : Node3D
+var camera_ref : Camera3D
 
 func _ready() -> void:
 	add_to_group("persist")
@@ -48,6 +49,8 @@ func _ready() -> void:
 		process_groups[i] = arr
 		thread_group[i] = thread
 		thread_group[i].start(run_process_group.bind(i, thread))
+
+	camera_ref = player_ref.get_node("CameraPivot/EnvironmentCamera3D")
 
 	print_rich("[color=yellow][b] DAY START [/b][/color]")
 	start()
@@ -83,7 +86,7 @@ func _physics_process(_delta: float) -> void:
 
 func stop_npc_animation():
 	for npc in npc_holder.get_children():
-		npc.is_in_frustum = player_ref.get_node("CameraPivot/EnvironmentCamera3D").is_position_in_frustum(npc.position)
+		npc.is_in_frustum = camera_ref.is_position_in_frustum(npc.position)
 
 func rotate_sun():
 	if sun != null:
