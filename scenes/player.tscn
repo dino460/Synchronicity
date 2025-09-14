@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://bylwa0aplfyax"]
+[gd_scene load_steps=22 format=4 uid="uid://bylwa0aplfyax"]
 
 [ext_resource type="Script" uid="uid://4owdwe56mk1c" path="res://scripts/player/player.gd" id="1_br4xa"]
 [ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" uid="uid://bxwyl803tcyaq" path="res://scripts/player/camera_controller.gd" id="5_lu2e7"]
 [ext_resource type="ArrayMesh" uid="uid://51k0sxqscsj1" path="res://assets/Sting-Sword-lowpoly.obj" id="5_syepo"]
 [ext_resource type="Script" uid="uid://c4bdfbjq5tji3" path="res://scripts/weapons/shortsword.gd" id="6_1qs7o"]
-[ext_resource type="Script" uid="uid://dnw0t7mqkslfx" path="res://scripts/player/camera_3d_texel_snap.gd" id="6_h03v3"]
 [ext_resource type="Material" uid="uid://djulrim2pvfcv" path="res://assets/materials/player_unshade.tres" id="7_fulsm"]
 [ext_resource type="Animation" uid="uid://gafhqtvuupnp" path="res://assets/SELS low poly char/animations/attack_down_shortsword.res" id="9_qfm1y"]
 [ext_resource type="Animation" uid="uid://cgax6v88ioswa" path="res://assets/SELS low poly char/animations/attack_left_shortsword.res" id="10_fulsm"]
@@ -815,9 +814,6 @@ projection = 1
 size = 15.0
 near = 0.1
 far = 100.0
-script = ExtResource("6_h03v3")
-snap = false
-snap_objects = false
 
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true

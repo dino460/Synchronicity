@@ -31,11 +31,15 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	combat_commands = combat_brain.handle_combat(delta, npc)
-	scheduled_brain.process_update_landmark_attraction(npc)
-	schedule_commands = scheduled_brain.handle_schedule(npc, delta)
 
 	if thoughts_label != null:
-		thoughts_label.text = scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state")) + "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
+		thoughts_label.text = ""
+		if schedule_commands.size() > 1:
+			thoughts_label.text += scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state"))
+		if combat_commands.size() > 1:
+			thoughts_label.text += "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
+
+		# thoughts_label.text =  + "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
 		var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
 		new_label_position *= viewport.get_parent().stretch_shrink
 		new_label_position = Vector2(new_label_position.x - (thoughts_label.size.x / 2.0), new_label_position.y - (thoughts_label.size.y / 2.0))
@@ -43,9 +47,12 @@ func _physics_process(delta: float) -> void:
 
 	match combat_commands.get("current_combat_state"):
 		CombatBrain.CombatState.NONE:
+			scheduled_brain.process_update_landmark_attraction(npc)
+			schedule_commands = scheduled_brain.handle_schedule(npc, delta)
+
 			match schedule_commands.get("current_task_state"):
 				ScheduledBrain.TaskState.MOVING:
-					npc.handle_navigation(schedule_commands.get("landmark_target").position)
+					npc.handle_navigation(schedule_commands.get("landmark_target").position, false)
 				# ScheduledBrain.TaskState.IDLING:
 				# 	npc.handle_navigation(schedule_commands.get("landmark_target").position)
 
@@ -53,15 +60,13 @@ func _physics_process(delta: float) -> void:
 			pass
 
 		CombatBrain.CombatState.SEARCHING:
-			npc.handle_navigation(combat_commands.get("target_position"))
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
 
 		CombatBrain.CombatState.CHASING:
-			npc.handle_navigation(combat_commands.get("target_position"))
-
-		CombatBrain.CombatState.CLOSE:
-			pass
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
 
 		CombatBrain.CombatState.ATTACKING:
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
 			npc.do_attack(combat_commands.get("converted_animation_state"), combat_commands.get("weapon"))
 
 

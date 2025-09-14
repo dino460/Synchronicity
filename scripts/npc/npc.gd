@@ -145,7 +145,7 @@ func _ready() -> void:
 # 		thoughts_label.position = new_label_position
 
 func _physics_process(delta: float) -> void:
-	var path_direction : Vector3 = (navigation_agent.get_next_path_position() - position).normalized()
+	var path_direction : Vector3 = (navigation_agent.get_next_path_position() - global_position).normalized()
 	look_direction = path_direction
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
 
@@ -168,13 +168,21 @@ func _physics_process(delta: float) -> void:
 	if navigation_agent.navigation_finished:
 		velocity = Vector3.ZERO
 
-func handle_navigation(target_position : Vector3):
+func handle_navigation(target_position : Vector3, run : bool):
+	if should_attack_move == false:
+		velocity = Vector3.ZERO
+		return
+
 	navigation_agent.target_position = target_position
+	is_running = run
 
 	var current_agent_position: Vector3 = global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
-	velocity = current_agent_position.direction_to(next_path_position) * get_speed()
+	velocity = current_agent_position.direction_to(next_path_position).normalized() * get_speed()
 	velocity.y = -10.0
+
+func enable_movement():
+	should_attack_move = true
 
 
 func _on_navigation_finished() -> void:

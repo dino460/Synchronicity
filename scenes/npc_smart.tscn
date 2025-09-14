@@ -5147,7 +5147,7 @@ libraries = {
 }
 
 [node name="LookOrigin" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92647, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.926, 0)
 
 [node name="LabelAnchor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
@@ -5158,9 +5158,10 @@ npc = NodePath("..")
 combat_brain = NodePath("../CombatBrain")
 scheduled_brain = NodePath("../SchedulerBrain")
 
-[node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("weapon_attatchment")]
+[node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("weapon_attatchment", "look_origin")]
 script = ExtResource("16_g3o3v")
 weapon_attatchment = NodePath("../MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D")
+look_origin = NodePath("../LookOrigin")
 
 [node name="SchedulerBrain" type="Node" parent="."]
 script = ExtResource("17_shrwc")

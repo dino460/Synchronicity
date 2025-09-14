@@ -2,36 +2,44 @@ extends Node3D
 
 class_name CombatBrain
 
-enum CombatState { NONE, LOOKING, SEARCHING, CHASING, CLOSE, ATTACKING }
+enum CombatState { NONE, LOOKING, SEARCHING, CHASING, ATTACKING, CLOSE }
 var current_combat_state : CombatState = CombatState.NONE
 var next_combat_state : CombatState = CombatState.NONE
 
 enum CombatDirection { NONE, UP, DOWN, LEFT, RIGHT }
 var current_combat_direction : CombatDirection = CombatDirection.LEFT
 
-@export var weapon_attatchment : Node3D
-var weapon : Weapon
-
-var damage_per_aggressor : Dictionary[Entity, float] = { null : -100000000.0}
-var current_aggressor : Entity
-@export var damage_threshold : float = 0.0
-@export var damage_dissipation : float = 0.5
-
 var attack_distance : float = 5.0
 
 var desired_velocity : Vector3
 var desired_target_position : Vector3
 
-@export var field_of_view : float = -0.35
+@export_subgroup("Weapon")
+@export var weapon_attatchment : Node3D
+var weapon : Weapon
 
+@export_subgroup("Damage Handling")
+var damage_per_aggressor : Dictionary[Entity, float] = { null : -100000000.0}
+var current_aggressor : Entity
+@export var damage_threshold : float = 0.0
+@export var damage_dissipation : float = 0.5
+
+@export_subgroup("Look & Search")
 var looking_base_time : float
 var looking_time_counter : float = 0.0
 @export var looking_time : float
 @export var looking_time_variance : float = 2.2
 
+@export var field_of_view : float = -0.35
+
 var last_known_aggressor_position : Vector3
 var search_position : Vector3
 @export var search_radius : float = 10.0
+
+@export var look_origin : Node3D
+var can_see_target : bool = false
+var could_see_target : bool = false
+
 
 func _ready() -> void:
 	weapon = weapon_attatchment.get_children()[0]
@@ -46,11 +54,10 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 	current_combat_state = next_combat_state
 
 	var target_position : Vector3
-	var velocity : Vector3
+	var run : bool = false
 
-	var converted_animation_state : AnimationHandler.AnimationState
+	var converted_animation_state : AnimationHandler.AnimationState = convert_combat_direction_to_animation_state()
 
-	tick_aggressor_damage(delta)
 	var higher_aggressor : Entity = get_higher_aggressor()
 	current_aggressor = higher_aggressor
 
@@ -59,24 +66,33 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 
 	match current_combat_state:
 		CombatState.NONE:
+			tick_aggressor_damage(delta)
+
 			if not damage_per_aggressor.is_empty() and damage_per_aggressor[higher_aggressor] >= damage_threshold:
 				next_combat_state = CombatState.CHASING
 
 		CombatState.LOOKING:
-			looking_time_counter += delta
+			run = false
+			tick_aggressor_damage(delta)
 
-			if looking_time_counter >= looking_time:
+			looking_time_counter += delta
+			if is_agressor_in_attack_range():
+				next_combat_state = CombatState.ATTACKING
+			elif can_see_aggressor(npc_ref) and could_see_target:
+				next_combat_state = CombatState.CHASING
+			elif looking_time_counter >= looking_time:
 				var search_pos_x : float = last_known_aggressor_position.x + randf_range(-search_radius, search_radius)
 				var search_pos_z : float = last_known_aggressor_position.z + randf_range(-search_radius, search_radius)
 				search_position = Vector3(search_pos_x, last_known_aggressor_position.y, search_pos_z)
 				next_combat_state = CombatState.SEARCHING
 
 		CombatState.SEARCHING:
-			if can_see_aggressor(npc_ref):
-				if is_agressor_in_attack_range(npc_ref):
-					next_combat_state = CombatState.ATTACKING
-				else:
-					next_combat_state = CombatState.CHASING
+			tick_aggressor_damage(delta)
+
+			if is_agressor_in_attack_range():
+				next_combat_state = CombatState.ATTACKING
+			elif can_see_aggressor(npc_ref) and could_see_target:
+				next_combat_state = CombatState.CHASING
 			elif npc_ref.navigation_agent.is_navigation_finished():
 				next_combat_state = CombatState.LOOKING
 				looking_time = looking_base_time + randf_range(1.0, looking_time_variance)
@@ -85,33 +101,40 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 				target_position = search_position
 
 		CombatState.CHASING:
-			if is_agressor_in_attack_range(npc_ref):
+			run = true
+
+			search_position = last_known_aggressor_position
+			target_position = current_aggressor.global_position
+			if is_agressor_in_attack_range():
 				next_combat_state = CombatState.ATTACKING
-			elif not can_see_aggressor(npc_ref):
+			elif not can_see_aggressor(npc_ref) and not could_see_target:
 				last_known_aggressor_position = current_aggressor.global_position
 				next_combat_state = CombatState.SEARCHING
-				var search_pos_x : float = last_known_aggressor_position.x + randf_range(-search_radius, search_radius)
-				var search_pos_z : float = last_known_aggressor_position.z + randf_range(-search_radius, search_radius)
-				search_position = Vector3(search_pos_x, last_known_aggressor_position.y, search_pos_z)
-			else:
-				target_position = current_aggressor.global_position
 
-		# CombatState.CLOSE:
-		# 	if can_see_aggressor(npc_ref):
-		# 		next_combat_state = CombatState.ATTACKING
-		# 	else:
-		# 		next_combat_state = CombatState.SEARCHING
+		CombatState.CLOSE:
+			if not is_agressor_in_attack_range():
+				print(self.global_position.distance_squared_to(current_aggressor.global_position))
+				run = true
+				if not can_see_aggressor(npc_ref):
+					next_combat_state = CombatState.SEARCHING
+				else:
+					next_combat_state = CombatState.CHASING
+			elif weapon.stamina_cost_per_attack.get(converted_animation_state) <= npc_ref.stats.stamina:
+				next_combat_state = CombatState.ATTACKING
 
 		CombatState.ATTACKING:
-			converted_animation_state = convert_combat_direction_to_animation_state()
-			print(converted_animation_state)
-
-			if not can_see_aggressor(npc_ref):
-				next_combat_state = CombatState.SEARCHING
-			elif not is_agressor_in_attack_range(npc_ref):
-				next_combat_state = CombatState.CHASING
-			elif weapon.stamina_cost_per_attack.get(converted_animation_state) <= npc_ref.stats.stamina:
-				velocity = npc_ref.global_position.direction_to(current_aggressor.global_position).normalized()
+			if not is_agressor_in_attack_range():
+				print(self.global_position.distance_squared_to(current_aggressor.global_position))
+				run = true
+				if not can_see_aggressor(npc_ref):
+					next_combat_state = CombatState.SEARCHING
+				else:
+					next_combat_state = CombatState.CHASING
+			elif weapon.stamina_cost_per_attack.get(converted_animation_state) >= npc_ref.stats.stamina:
+				next_combat_state = CombatState.CLOSE
+			else:
+				run = false
+				target_position = current_aggressor.global_position
 				# return {
 				# 	"current_combat_state" : current_combat_state,
 				# 	"target_position" : null,
@@ -123,9 +146,9 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 		"current_combat_state" : current_combat_state,
 		"target_position" : target_position,
 		"converted_animation_state" : converted_animation_state,
-		"velocity" : velocity,
 		"weapon" : weapon,
-	} # Returns a false signal to indicate that the NPC is not ready to attack
+		"run" : run
+	}
 
 
 func can_see_aggressor(npc_ref : NPC) -> bool:
@@ -133,17 +156,23 @@ func can_see_aggressor(npc_ref : NPC) -> bool:
 		return false
 
 	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(npc_ref.look_origin.global_position, current_aggressor.global_position, 1)
-	var	result = space_state.intersect_ray(query)
+	var query1 = PhysicsRayQueryParameters3D.create(look_origin.global_position, current_aggressor.global_position, 1)
+	var	result = space_state.intersect_ray(query1)
 
-	var direction_to_agressor : Vector3 = npc_ref.position.direction_to(current_aggressor.position).normalized()
+	var direction_to_agressor : Vector3 = npc_ref.global_position.direction_to(current_aggressor.global_position).normalized()
 	var is_in_field_of_view : bool = (-npc_ref.mesh_pivot_ref.global_transform.basis.z).dot(direction_to_agressor) > field_of_view
 
-	return result.collider == current_aggressor and is_in_field_of_view
+	if can_see_target == true:
+		could_see_target = true
+	else:
+		could_see_target = false
 
-func is_agressor_in_attack_range(npc_ref : NPC) -> bool:
-	var distance_to_agressor : float = npc_ref.position.distance_to(current_aggressor.global_position)
-	return distance_to_agressor < attack_distance
+	can_see_target = result.collider == current_aggressor and is_in_field_of_view
+	return can_see_target
+
+func is_agressor_in_attack_range() -> bool:
+	var distance_to_agressor : float = self.global_position.distance_squared_to(current_aggressor.global_position)
+	return distance_to_agressor <= attack_distance
 
 func convert_combat_direction_to_animation_state() -> AnimationHandler.AnimationState:
 	match current_combat_direction:
