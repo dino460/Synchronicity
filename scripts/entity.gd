@@ -26,6 +26,8 @@ func take_damage(damage : int, attacker : Entity):
 	damage_taken.emit(damage, attacker)
 
 func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
+	stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
+
 	if (not is_attacking) or can_combo:
 		is_attacking = true
 		should_attack_move = true
@@ -49,4 +51,4 @@ func stop_attack_movement():
 func _on_animation_handler_attack_ended():
 	is_attacking = false
 	can_combo = false
-	should_attack_move = false
+	should_attack_move = true

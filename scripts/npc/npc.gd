@@ -70,6 +70,7 @@ var is_at_home : bool = false
 var is_running         : bool = false
 var look_direction     : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
+var minimum_movement_distance : float = 1.5
 
 @export_group("NPC Combat")
 var damage_per_aggroer  : Dictionary[Entity, float]
@@ -136,6 +137,8 @@ func _ready() -> void:
 
 	weapon_attatchment = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"
 
+	should_attack_move = true
+
 # func _process(_delta: float) -> void:
 # 	if thoughts_label != null:
 # 		thoughts_label.text = State.find_key(_current_state) + "\n" + CombatState.find_key(current_combat_state)
@@ -145,9 +148,9 @@ func _ready() -> void:
 # 		thoughts_label.position = new_label_position
 
 func _physics_process(delta: float) -> void:
-	var path_direction : Vector3 = (navigation_agent.get_next_path_position() - global_position).normalized()
-	look_direction = path_direction
-	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 20.0)
+	if not navigation_agent.is_navigation_finished():
+		look_direction = (navigation_agent.get_next_path_position() - self.global_position).normalized()
+	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
 
 	if is_in_frustum:
 		# mesh_pivot_ref.visible = true
@@ -173,13 +176,19 @@ func handle_navigation(target_position : Vector3, run : bool):
 		velocity = Vector3.ZERO
 		return
 
+	if target_position.distance_to(self.global_position) < minimum_movement_distance:
+		look_direction = (target_position - self.global_position).normalized()
+		navigation_agent.target_position = self.global_position
+		velocity = Vector3.ZERO
+		return
+
 	navigation_agent.target_position = target_position
 	is_running = run
 
 	var current_agent_position: Vector3 = global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 	velocity = current_agent_position.direction_to(next_path_position).normalized() * get_speed()
-	velocity.y = -10.0
+	velocity.y = -75.0
 
 func enable_movement():
 	should_attack_move = true

@@ -13,18 +13,19 @@ var attack_distance : float = 5.0
 
 var desired_velocity : Vector3
 var desired_target_position : Vector3
+var run : bool = false
 
-@export_subgroup("Weapon")
+@export_group("Weapon")
 @export var weapon_attatchment : Node3D
 var weapon : Weapon
 
-@export_subgroup("Damage Handling")
+@export_group("Damage Handling")
 var damage_per_aggressor : Dictionary[Entity, float] = { null : -100000000.0}
 var current_aggressor : Entity
 @export var damage_threshold : float = 0.0
 @export var damage_dissipation : float = 0.5
 
-@export_subgroup("Look & Search")
+@export_group("Look & Search")
 var looking_base_time : float
 var looking_time_counter : float = 0.0
 @export var looking_time : float
@@ -34,7 +35,7 @@ var looking_time_counter : float = 0.0
 
 var last_known_aggressor_position : Vector3
 var search_position : Vector3
-@export var search_radius : float = 10.0
+@export var search_radius : float = 5.0
 
 @export var look_origin : Node3D
 var can_see_target : bool = false
@@ -54,7 +55,6 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 	current_combat_state = next_combat_state
 
 	var target_position : Vector3
-	var run : bool = false
 
 	var converted_animation_state : AnimationHandler.AnimationState = convert_combat_direction_to_animation_state()
 
@@ -89,6 +89,7 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 		CombatState.SEARCHING:
 			tick_aggressor_damage(delta)
 
+			target_position = search_position
 			if is_agressor_in_attack_range():
 				next_combat_state = CombatState.ATTACKING
 			elif can_see_aggressor(npc_ref) and could_see_target:
@@ -97,25 +98,25 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 				next_combat_state = CombatState.LOOKING
 				looking_time = looking_base_time + randf_range(1.0, looking_time_variance)
 				looking_time_counter = 0.0
-			else:
-				target_position = search_position
 
 		CombatState.CHASING:
 			run = true
 
-			search_position = last_known_aggressor_position
 			target_position = current_aggressor.global_position
 			if is_agressor_in_attack_range():
 				next_combat_state = CombatState.ATTACKING
 			elif not can_see_aggressor(npc_ref) and not could_see_target:
 				last_known_aggressor_position = current_aggressor.global_position
 				next_combat_state = CombatState.SEARCHING
+				search_position = last_known_aggressor_position
 
 		CombatState.CLOSE:
 			if not is_agressor_in_attack_range():
 				print(self.global_position.distance_squared_to(current_aggressor.global_position))
 				run = true
 				if not can_see_aggressor(npc_ref):
+					last_known_aggressor_position = current_aggressor.global_position
+					search_position = last_known_aggressor_position
 					next_combat_state = CombatState.SEARCHING
 				else:
 					next_combat_state = CombatState.CHASING
@@ -127,6 +128,8 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 				print(self.global_position.distance_squared_to(current_aggressor.global_position))
 				run = true
 				if not can_see_aggressor(npc_ref):
+					last_known_aggressor_position = current_aggressor.global_position
+					search_position = last_known_aggressor_position
 					next_combat_state = CombatState.SEARCHING
 				else:
 					next_combat_state = CombatState.CHASING

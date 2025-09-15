@@ -78,6 +78,10 @@ script = ExtResource("3_imqgc")
 [node name="PlayerStats" type="Node" parent="."]
 script = ExtResource("4_dcvbl")
 
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("4_dcvbl")
+constitution = 100
+
 [node name="DepthTestOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.622089, 0)
 
