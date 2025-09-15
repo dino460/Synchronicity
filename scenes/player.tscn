@@ -57,7 +57,7 @@ _data = {
 &"walk": ExtResource("15_4ni07")
 }
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon", "raycast_holder")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon", "raycast_holder", "stats")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.0
 run_speed = 10.0
@@ -67,6 +67,7 @@ smooth_speed = 20.0
 weapon = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword")
 mat_ref = ExtResource("7_fulsm")
 raycast_holder = NodePath("MeshPivot/Raycast3DOrigins")
+stats = NodePath("Stats")
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animator")]
 script = ExtResource("2_u5517")
@@ -80,7 +81,6 @@ script = ExtResource("4_dcvbl")
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("4_dcvbl")
-constitution = 100
 
 [node name="DepthTestOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.622089, 0)
