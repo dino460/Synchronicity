@@ -152,7 +152,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
-	print(stats.stamina)
+
 	if not navigation_agent.is_navigation_finished():
 		look_direction = (navigation_agent.get_next_path_position() - self.global_position).normalized()
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
@@ -195,8 +195,9 @@ func handle_navigation(target_position : Vector3, run : bool):
 	velocity = current_agent_position.direction_to(next_path_position).normalized() * get_speed()
 	velocity.y = -75.0
 
-func enable_movement():
-	should_attack_move = true
+func disable_pathfinding():
+	navigation_agent.target_position = self.global_position
+	velocity = Vector3.ZERO
 
 
 func _on_navigation_finished() -> void:

@@ -41,6 +41,7 @@ func _physics_process(delta: float) -> void:
 			thoughts_label.text += scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state"))
 		if combat_commands.size() > 1:
 			thoughts_label.text += "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
+			thoughts_label.text += "\n" + str(npc.stats.health)
 
 		# thoughts_label.text =  + "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
 		var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
@@ -64,13 +65,23 @@ func _physics_process(delta: float) -> void:
 
 		CombatBrain.CombatState.SEARCHING:
 			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
+			if npc.navigation_agent.distance_to_target() >= combat_brain.max_wandering_distance and not combat_brain.can_see_search_position():
+				npc.disable_pathfinding()
 
 		CombatBrain.CombatState.CHASING:
 			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
 
 		CombatBrain.CombatState.ATTACKING:
+			print("attack")
 			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
 			npc.do_attack(combat_commands.get("converted_animation_state"), combat_commands.get("weapon"))
+
+		CombatBrain.CombatState.CLOSE:
+			# print(npc.is_attacking)
+			if npc.is_attacking:
+				npc.damage_enemies(combat_commands.get("weapon"))
+			elif npc.damaged_enemies_this_attack.size() > 0:
+				npc.damaged_enemies_this_attack.clear() # Resets the list of damaged enemies if not attacking
 
 
 func arrive_at_landmark_target():

@@ -14,6 +14,7 @@ var damaged_enemies_this_attack : Array = []
 @export var can_combo          : bool = false
 @export var should_attack_move : bool = false
 
+
 func take_damage(damage : int, attacker : Entity):
 	print("HP before: ", stats.health)
 	stats.health -= damage
@@ -27,7 +28,7 @@ func take_damage(damage : int, attacker : Entity):
 
 func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
 	if (not is_attacking) or can_combo:
-		stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
+		# stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
 		is_attacking = true
 		should_attack_move = true
 		can_combo = false
@@ -37,9 +38,10 @@ func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
 func damage_enemies(weapon : Weapon):
 	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
 	if not damaged_enemies_this_attack.has(hit_enemies): # Checks if new enemies are hit
-		# print(hit_enemies)
 		damaged_enemies_this_attack.append(hit_enemies)
 		for enemy in hit_enemies: #Applies damage to enemies
+			if enemy == self:
+				continue
 			if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
 				enemy.take_damage(weapon.attack_damage, self)
 				# print(weapon.attack_damage)

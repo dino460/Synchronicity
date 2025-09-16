@@ -52,6 +52,9 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 @export var mat_ref : Material
 @export var raycast_holder : Node3D
 
+@export var debug_label : Label
+@export var label_anchor : Node3D
+
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
@@ -93,6 +96,8 @@ func _process(_delta : float) -> void:
 
 
 func _physics_process(delta : float) -> void:
+	debug_label.text = str(stats.health)
+
 	var intersections : int = 0
 
 	var space_state = get_world_3d().direct_space_state
@@ -119,8 +124,8 @@ func _physics_process(delta : float) -> void:
 		# 		if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
 		# 			enemy.take_damage(weapon.attack_damage, self)
 		# 			# print(weapon.attack_damage)
-	elif damaged_enemies_this_attack.size() > 0:
-		damaged_enemies_this_attack.clear() # Clears the list of damaged enemies if not attacking
+	# elif damaged_enemies_this_attack.size() > 0:
+	# 	damaged_enemies_this_attack.clear() # Clears the list of damaged enemies if not attacking
 
 	set_speed()
 

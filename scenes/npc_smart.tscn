@@ -18,8 +18,9 @@
 [ext_resource type="Script" uid="uid://cuqioxg75n8y3" path="res://scripts/npc/brains/combat_brain.gd" id="16_g3o3v"]
 [ext_resource type="Script" uid="uid://f0d7lpi0gjbi" path="res://scripts/npc/brains/scheduled_brain.gd" id="17_shrwc"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ou1rx"]
-height = 3.10364
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x6x7a"]
+radius = 0.407304
+height = 3.09256
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkigc"]
 albedo_color = Color(0, 0.693455, 0.60667, 1)
@@ -1311,7 +1312,7 @@ _data = {
 }
 
 [node name="NPC-SMART" type="CharacterBody3D" node_paths=PackedStringArray("label_anchor", "npc_brain", "personality", "look_origin", "weapon_attatchment", "stats")]
-collision_layer = 33
+collision_layer = 1057
 collision_mask = 1057
 script = ExtResource("1_p1mm1")
 label_anchor = NodePath("LabelAnchor")
@@ -1343,7 +1344,7 @@ animator = NodePath("../MeshPivot/Low-Poly-Base_blend/AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.957768, 0)
-shape = SubResource("CapsuleShape3D_ou1rx")
+shape = SubResource("CapsuleShape3D_x6x7a")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00998974, -0.0188441, -0.00345898)
@@ -4733,8 +4734,8 @@ attack_damage = 10.0
 
 [node name="Area3D" type="Area3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword"]
 transform = Transform3D(1, 8.56817e-08, -2.23517e-08, -6.79865e-08, 1, -5.96046e-08, -2.23517e-08, 7.45058e-08, 1, 0, 0, 0)
-collision_layer = 32
-collision_mask = 32
+collision_layer = 33
+collision_mask = 33
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword/Area3D"]
 transform = Transform3D(1, -1.17869e-08, -4.97516e-08, 1.49012e-08, -0.177308, 0.984156, -2.98023e-08, -0.984156, -0.177308, 6.10942e-05, 0.10785, 0.189035)

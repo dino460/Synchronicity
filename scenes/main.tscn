@@ -134,10 +134,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.834889, 6.07602, -0.874888)
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_trceg")
 
-[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" instance=ExtResource("1_ywxjf")]
+[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" node_paths=PackedStringArray("debug_label") instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, -1.76201)
 walk_speed = 3.0
 run_speed = 15.0
+debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
 
 [node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 collision_layer = 1057
@@ -562,6 +563,27 @@ label_settings = SubResource("LabelSettings_kgmxm")
 horizontal_alignment = 2
 
 [node name="NPC Thoughts" type="Label" parent="UISubViewportContainer/UISubViewport"]
+y_sort_enabled = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -93.5
+offset_right = 162.0
+offset_bottom = -51.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(141, 21)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test to test test size"
+label_settings = SubResource("LabelSettings_0gito")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Player Debug" type="Label" parent="UISubViewportContainer/UISubViewport"]
 y_sort_enabled = true
 anchors_preset = 8
 anchor_left = 0.5
