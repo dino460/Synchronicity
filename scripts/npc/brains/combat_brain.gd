@@ -35,7 +35,7 @@ var looking_time_counter : float = 0.0
 
 var last_known_aggressor_position : Vector3
 var search_position : Vector3
-@export var search_radius : float = 5.0
+@export var search_radius : float = 10.0
 
 @export var look_origin : Node3D
 var can_see_target : bool = false
@@ -90,6 +90,7 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 			tick_aggressor_damage(delta)
 
 			target_position = search_position
+
 			if is_agressor_in_attack_range():
 				next_combat_state = CombatState.ATTACKING
 			elif can_see_aggressor(npc_ref) and could_see_target:
@@ -107,12 +108,11 @@ func handle_combat(delta : float, npc_ref : NPC) -> Dictionary:
 				next_combat_state = CombatState.ATTACKING
 			elif not can_see_aggressor(npc_ref) and not could_see_target:
 				last_known_aggressor_position = current_aggressor.global_position
-				next_combat_state = CombatState.SEARCHING
 				search_position = last_known_aggressor_position
+				next_combat_state = CombatState.SEARCHING
 
 		CombatState.CLOSE:
 			if not is_agressor_in_attack_range():
-				print(self.global_position.distance_squared_to(current_aggressor.global_position))
 				run = true
 				if not can_see_aggressor(npc_ref):
 					last_known_aggressor_position = current_aggressor.global_position

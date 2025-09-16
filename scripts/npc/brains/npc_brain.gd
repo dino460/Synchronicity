@@ -30,6 +30,9 @@ func _ready() -> void:
 	label_anchor = npc.label_anchor
 
 func _physics_process(delta: float) -> void:
+	if npc.is_dead:
+		return
+
 	combat_commands = combat_brain.handle_combat(delta, npc)
 
 	if thoughts_label != null:

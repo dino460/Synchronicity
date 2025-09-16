@@ -1335,7 +1335,7 @@ soul = 0.8
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("3_kkvfd")
-constitution = 100
+constitution = 100.0
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animator")]
 script = ExtResource("4_y33ke")
@@ -4723,7 +4723,7 @@ mesh = SubResource("ArrayMesh_xu3sh")
 skin = SubResource("Skin_tw5v6")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"]
-transform = Transform3D(-0.896316, -0.276155, -0.346924, -0.332466, 0.936235, 0.113709, 0.293401, 0.21726, -0.930975, -0.0621214, 1.51039, 0.261348)
+transform = Transform3D(-0.896316, -0.276155, -0.346924, -0.332466, 0.936235, 0.113709, 0.293401, 0.217259, -0.930975, -0.062122, 1.51039, 0.261348)
 bone_name = "hand_ik.L"
 bone_idx = 373
 

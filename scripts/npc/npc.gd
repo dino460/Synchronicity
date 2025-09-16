@@ -21,6 +21,8 @@ var current_combat_state : CombatState = CombatState.NONE
 @export var label_anchor : Node3D
 var viewport : Viewport
 
+var is_dead : bool = false
+
 @export_group("NPC Identity")
 @export var npc_name : String
 @export var id       : int
@@ -148,6 +150,9 @@ func _ready() -> void:
 # 		thoughts_label.position = new_label_position
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+	print(stats.stamina)
 	if not navigation_agent.is_navigation_finished():
 		look_direction = (navigation_agent.get_next_path_position() - self.global_position).normalized()
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
@@ -172,7 +177,7 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector3.ZERO
 
 func handle_navigation(target_position : Vector3, run : bool):
-	if should_attack_move == false:
+	if should_attack_move == false or is_dead:
 		velocity = Vector3.ZERO
 		return
 
@@ -197,6 +202,13 @@ func enable_movement():
 func _on_navigation_finished() -> void:
 	npc_brain.arrive_at_landmark_target()
 	velocity = Vector3.ZERO
+
+func _on_trigger_death() -> void:
+	print("NPC died")
+	# _current_state = State.DEAD
+	is_dead = true
+	death.emit()
+
 
 
 
@@ -563,12 +575,6 @@ func calculate_average_poi_distance():
 	for poi in points_of_interest:
 		average_poi_distance += self.position.distance_to(poi.position)
 	average_poi_distance /= points_of_interest.size()
-
-func _on_trigger_death() -> void:
-	print("NPC died")
-	_current_state = State.DEAD
-	death.emit()
-
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
 	print("taking damage: ", damage, " from ", new_attacker)
 	if damage_per_aggroer.has(new_attacker):
