@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://mkhk0i0eskjt"]
+[gd_scene load_steps=27 format=4 uid="uid://mkhk0i0eskjt"]
 
 [ext_resource type="Script" uid="uid://cguddavepqt3l" path="res://scripts/npc/npc.gd" id="1_p1mm1"]
 [ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="2_iwygw"]
@@ -16,6 +16,7 @@
 [ext_resource type="Animation" uid="uid://dumltbjpkchmm" path="res://assets/SELS low poly char/animations/death.res" id="11_ypw14"]
 [ext_resource type="Script" uid="uid://drv1x7wdcmf56" path="res://scripts/npc/brains/npc_brain.gd" id="15_x6x7a"]
 [ext_resource type="Script" uid="uid://cuqioxg75n8y3" path="res://scripts/npc/brains/combat_brain.gd" id="16_g3o3v"]
+[ext_resource type="PackedScene" uid="uid://bywvo08rx0fh2" path="res://scenes/npc_thoughts_template.tscn" id="16_shrwc"]
 [ext_resource type="Script" uid="uid://f0d7lpi0gjbi" path="res://scripts/npc/brains/scheduled_brain.gd" id="17_shrwc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x6x7a"]
@@ -5153,11 +5154,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.926, 0)
 [node name="LabelAnchor" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
-[node name="MainBrain" type="Node" parent="." node_paths=PackedStringArray("npc", "combat_brain", "scheduled_brain")]
+[node name="MainBrain" type="Node" parent="." node_paths=PackedStringArray("npc", "combat_brain", "scheduled_brain", "label_anchor")]
 script = ExtResource("15_x6x7a")
 npc = NodePath("..")
 combat_brain = NodePath("../CombatBrain")
 scheduled_brain = NodePath("../SchedulerBrain")
+thoughts_label_template = ExtResource("16_shrwc")
+label_anchor = NodePath("../LabelAnchor")
 
 [node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("weapon_attatchment", "look_origin")]
 script = ExtResource("16_g3o3v")

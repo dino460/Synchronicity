@@ -15,7 +15,8 @@ var viewport : Viewport
 var combat_commands : Dictionary
 var schedule_commands : Dictionary
 
-@export var thoughts_label : Label
+@export var thoughts_label_template : PackedScene
+var thoughts_label : Label
 @export var label_anchor : Node3D
 
 
@@ -26,8 +27,9 @@ func _ready() -> void:
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduled_brain.setup(npc)
 	viewport = get_viewport()
-	thoughts_label = npc.thoughts_label
-	label_anchor = npc.label_anchor
+	thoughts_label = thoughts_label_template.instantiate()
+	print(get_tree().root.get_children())
+	get_tree().root.get_children()[1].get_children()[2].get_children()[0].add_child(thoughts_label)
 
 func _physics_process(delta: float) -> void:
 	if thoughts_label != null:

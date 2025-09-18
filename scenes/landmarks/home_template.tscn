@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cbow8vjepuo2f"]
 
-[ext_resource type="Script" uid="uid://cdb7tnymvulwp" path="res://scripts/npc/landmarks/home.gd" id="1_v73gd"]
+[ext_resource type="Script" uid="uid://cdb7tnymvulwp" path="res://scripts/npc/landmarks/home.gd" id="1_s3pby"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rijab"]
 albedo_color = Color(0.293485, 0.352648, 1, 1)
@@ -10,7 +10,7 @@ material = SubResource("StandardMaterial3D_rijab")
 
 [node name="HOME" type="Node3D"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
-script = ExtResource("1_v73gd")
+script = ExtResource("1_s3pby")
 expected_home_time = 8.0
 time_want_to_arrive = 20.0
 max_lateness = 2.0

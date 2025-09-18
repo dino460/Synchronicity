@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bywvo08rx0fh2"]
+
+[ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="1_s3j3x"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0gito"]
+font = ExtResource("1_s3j3x")
+font_size = 40
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="NPC Thoughts" type="Label"]
+y_sort_enabled = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -93.5
+offset_right = 162.0
+offset_bottom = -51.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(141, 21)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test to test test size"
+label_settings = SubResource("LabelSettings_0gito")
+horizontal_alignment = 1
+uppercase = true

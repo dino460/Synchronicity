@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
-[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/home_template.tscn" id="8_trceg"]
-[ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmark_template.tscn" id="10_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/work_template.tscn" id="11_jkv2x"]
+[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
+[ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
@@ -456,9 +456,17 @@ environment = SubResource("Environment_xso02")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("thoughts_label", "scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
+[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
 transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -7.43745, 2.13348, -1.75753)
-thoughts_label = NodePath("../../../../UISubViewportContainer/UISubViewport/NPC Thoughts")
+npc_name = "Lelê"
+id = 11
+scheduler = NodePath("../../../../Scheduler")
+job = NodePath("../../Targets/WORK")
+home = NodePath("../../Targets/HOME")
+points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
+
+[node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
+transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -10.4883, 2.13348, 12.3701)
 npc_name = "Lelê"
 id = 11
 scheduler = NodePath("../../../../Scheduler")
@@ -561,27 +569,6 @@ grow_horizontal = 0
 text = "test to test test size"
 label_settings = SubResource("LabelSettings_kgmxm")
 horizontal_alignment = 2
-
-[node name="NPC Thoughts" type="Label" parent="UISubViewportContainer/UISubViewport"]
-y_sort_enabled = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = -93.5
-offset_right = 162.0
-offset_bottom = -51.5
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(141, 21)
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "test to test test size"
-label_settings = SubResource("LabelSettings_0gito")
-horizontal_alignment = 1
-uppercase = true
 
 [node name="Player Debug" type="Label" parent="UISubViewportContainer/UISubViewport"]
 y_sort_enabled = true
