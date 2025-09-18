@@ -233,7 +233,7 @@ func get_predicted_aggressor_position() -> Vector3:
 	return predicted_position
 
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
-	print("taking damage: ", damage, " from ", new_attacker)
+	# print("taking damage: ", damage, " from ", new_attacker)
 	if damage_per_aggressor.has(new_attacker):
 		damage_per_aggressor[new_attacker] += damage
 	else:

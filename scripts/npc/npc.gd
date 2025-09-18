@@ -576,8 +576,9 @@ func calculate_average_poi_distance():
 	for poi in points_of_interest:
 		average_poi_distance += self.position.distance_to(poi.position)
 	average_poi_distance /= points_of_interest.size()
+
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
-	print("taking damage: ", damage, " from ", new_attacker)
+	# print("taking damage: ", damage, " from ", new_attacker)
 	if damage_per_aggroer.has(new_attacker):
 		damage_per_aggroer[new_attacker] += damage
 	else:

@@ -116,16 +116,6 @@ func _physics_process(delta : float) -> void:
 
 	if is_attacking: # Collision check for attacking
 		damage_enemies(weapon)
-		# var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
-		# if not damaged_enemies_this_attack.has(hit_enemies): # Checks if new enemies are hit
-		# 	# print(hit_enemies)
-		# 	damaged_enemies_this_attack.append(hit_enemies)
-		# 	for enemy in hit_enemies: #Applies damage to enemies
-		# 		if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
-		# 			enemy.take_damage(weapon.attack_damage, self)
-		# 			# print(weapon.attack_damage)
-	# elif damaged_enemies_this_attack.size() > 0:
-	# 	damaged_enemies_this_attack.clear() # Clears the list of damaged enemies if not attacking
 
 	set_speed()
 

@@ -8,7 +8,7 @@ signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weap
 
 @export var stats : CharacterStats
 
-var damaged_enemies_this_attack : Array = []
+var damaged_enemies_this_attack : Array
 
 @export var is_attacking       : bool = false
 @export var can_combo          : bool = false
@@ -16,15 +16,18 @@ var damaged_enemies_this_attack : Array = []
 
 
 func take_damage(damage : int, attacker : Entity):
-	print("HP before: ", stats.health)
+	# print("HP before: ", stats.health)
 	stats.health -= damage
+	damage_taken.emit(damage, attacker)
+
 	if stats.health <= 0:
+		is_attacking = false
+		should_attack_move = false
 		stats.health = 0
 		trigger_death.emit()
 		return
-	print("HP after: ", stats.health)
-	print()
-	damage_taken.emit(damage, attacker)
+	# print("HP after: ", stats.health)
+	# print()
 
 func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
 	if (not is_attacking) or can_combo:
@@ -37,14 +40,21 @@ func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
 
 func damage_enemies(weapon : Weapon):
 	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
-	if not damaged_enemies_this_attack.has(hit_enemies): # Checks if new enemies are hit
-		damaged_enemies_this_attack.append(hit_enemies)
-		for enemy in hit_enemies: #Applies damage to enemies
-			if enemy == self:
-				continue
-			if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
-				enemy.take_damage(weapon.attack_damage, self)
-				# print(weapon.attack_damage)
+	var enemies_to_damage : Array = undamaged_enemies(hit_enemies)
+	damaged_enemies_this_attack.append_array(enemies_to_damage)
+	for enemy in enemies_to_damage: #Applies damage to enemies
+		if enemy == self:
+			continue
+		if enemy.has_method("take_damage"): # Checks if enemy has take_damage method
+			enemy.take_damage(weapon.attack_damage, self)
+			# print(weapon.attack_damage)
+
+func undamaged_enemies(enemies : Array) -> Array:
+	var undamaged : Array = []
+	for enemy in enemies:
+		if not enemy in damaged_enemies_this_attack:
+			undamaged.append(enemy)
+	return undamaged
 
 func stop_attack_movement():
 	should_attack_move = false

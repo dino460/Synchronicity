@@ -68,6 +68,7 @@ func _on_dashing(dash_time):
 func _on_death() -> void:
 	current_state = AnimationState.DEAD
 	wanted_state = AnimationState.DEAD
+	is_attacking = false
 	play_animation("death", 1.0)
 
 func _on_attack(animation_direction: AnimationState, weapon: Weapon, was_attacking):
@@ -88,6 +89,8 @@ func check_wanted_state() -> bool:
 	var check_for_attack_interrupt := current_state in attack_states and is_attacking
 
 	if check_for_attack_interrupt:
+		return false
+	elif current_state == AnimationState.DEAD:
 		return false
 	else:
 		current_state = wanted_state
