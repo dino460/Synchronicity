@@ -131,7 +131,7 @@ func _ready() -> void:
 	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
 
 	personality = get_node("Personality")
-	# scheduler = get_tree().get_root().get_node("Main/Scheduler")
+	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
 	process_group = scheduler.request_group()
 
@@ -140,6 +140,8 @@ func _ready() -> void:
 	weapon_attatchment = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"
 
 	should_attack_move = true
+	navigation_agent.debug_enabled = true
+
 
 # func _process(_delta: float) -> void:
 # 	if thoughts_label != null:
@@ -173,27 +175,30 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	if navigation_agent.navigation_finished:
+	if navigation_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
 
 func handle_navigation(target_position : Vector3, run : bool):
+	var desired_velocity = Vector3.ZERO
 	if should_attack_move == false or is_dead:
-		velocity = Vector3.ZERO
+		# velocity = Vector3.ZERO
 		return
 
 	if target_position.distance_to(self.global_position) < minimum_movement_distance:
 		look_direction = (target_position - self.global_position).normalized()
 		navigation_agent.target_position = self.global_position
-		velocity = Vector3.ZERO
+		# velocity = Vector3.ZERO
 		return
+	if not target_position.is_equal_approx(navigation_agent.target_position):
+		navigation_agent.target_position = target_position
 
-	navigation_agent.target_position = target_position
 	is_running = run
 
 	var current_agent_position: Vector3 = global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
-	velocity = current_agent_position.direction_to(next_path_position).normalized() * get_speed()
-	velocity.y = -75.0
+	desired_velocity = current_agent_position.direction_to(next_path_position) * get_speed()
+	desired_velocity.y = -75.0
+	navigation_agent.velocity = desired_velocity
 
 func disable_pathfinding():
 	navigation_agent.target_position = self.global_position
@@ -209,6 +214,12 @@ func _on_trigger_death() -> void:
 	# _current_state = State.DEAD
 	is_dead = true
 	death.emit()
+
+func _on_navigation_agent_3d_velocity_computed(safe_velocity:Vector3) -> void:
+	velocity = safe_velocity
+
+
+
 
 
 

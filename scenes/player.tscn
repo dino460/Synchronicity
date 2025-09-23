@@ -833,8 +833,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_dashing"]
+[connection signal="death" from="." to="AnimationHandler" method="_on_death"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
+[connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]

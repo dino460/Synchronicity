@@ -457,7 +457,7 @@ environment = SubResource("Environment_xso02")
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -7.43745, 2.13348, -1.75753)
+transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -7.43745, 1.40603, -1.75753)
 npc_name = "Lelê"
 id = 11
 scheduler = NodePath("../../../../Scheduler")
@@ -466,7 +466,7 @@ home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
 
 [node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -10.4883, 2.13348, 12.3701)
+transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -9.05901, 2.13348, 3.5111)
 npc_name = "Lelê"
 id = 11
 scheduler = NodePath("../../../../Scheduler")
@@ -528,11 +528,12 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "navigation_region", "player_ref") instance=ExtResource("12_bvghk")]
 sun_up_time = 5.0
 sun_down_time = 20.0
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
+navigation_region = NodePath("../EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D")
 player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="."]

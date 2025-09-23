@@ -14,7 +14,7 @@ class_name Scheduler
 
 @export var next_available_id : int = 1
 
-@export var number_of_groups     : int = 1
+@export var number_of_groups     : int = 10
 @export var max_number_of_groups : int = 10
 @export var max_npcs_in_group    : int = 150
 var next_group : int = 0
@@ -39,7 +39,7 @@ func _ready() -> void:
 	## Should be paired, in the future, with code to dynamically adjust the number of groups based on the number of NPCs
 	# number_of_groups = max(1, min(npc_holder.get_child_count() / max_npcs_in_group, max_number_of_groups))
 	# print("NUMBER OF GROUPS:", number_of_groups)
-	number_of_groups = max_number_of_groups
+	# number_of_groups = max_number_of_groups
 
 	process_groups.resize(number_of_groups)
 	thread_group.resize(number_of_groups)

@@ -16,8 +16,10 @@ signal idling
 signal walking
 signal running
 signal dashing(dash_time: float)
+signal death
 # signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
+var is_dead : bool = false
 
 @export_group("Movement Properties")
 @export var applied_speed : float = 0.0
@@ -96,7 +98,11 @@ func _process(_delta : float) -> void:
 
 
 func _physics_process(delta : float) -> void:
-	debug_label.text = str(stats.health)
+	if is_dead:
+		return
+
+	if debug_label != null:
+		debug_label.text = str(stats.health)
 
 	var intersections : int = 0
 
@@ -185,3 +191,10 @@ func _on_input_handler_dash_performed():
 
 func _on_animation_handler_enable_combo():
 	can_combo = true
+
+
+func _on_trigger_death() -> void:
+	print("Player died")
+	is_dead = true
+	death.emit()
+	pass # Replace with function body.

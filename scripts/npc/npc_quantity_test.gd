@@ -11,13 +11,13 @@ func _ready() -> void:
 	var spacing : float = world_size / number_of_npcs_to_spawn
 
 	for i in number_of_npcs_to_spawn:
-		var new_home_scene = preload("res://scenes/home_template.tscn")
+		var new_home_scene = preload("res://scenes/landmarks/home_template.tscn")
 		var new_home_instance = new_home_scene.instantiate()
 		var pos = Vector3(15.0, 0.2, start + (counter * spacing))
 		new_home_instance.position = pos
 		add_child(new_home_instance)
 
-		var new_job_scene = preload("res://scenes/work_template.tscn")
+		var new_job_scene = preload("res://scenes/landmarks/work_template.tscn")
 		var new_job_instance = new_job_scene.instantiate()
 		pos = Vector3(-15.0, 0.2, start + (counter * spacing))
 		new_job_instance.position = pos

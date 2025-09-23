@@ -1353,6 +1353,7 @@ visible = false
 mesh = SubResource("CapsuleMesh_kmggu")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
 
 [node name="MeshPivot" type="Node3D" parent="."]
 
@@ -5162,13 +5163,15 @@ scheduled_brain = NodePath("../SchedulerBrain")
 thoughts_label_template = ExtResource("16_shrwc")
 label_anchor = NodePath("../LabelAnchor")
 
-[node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("weapon_attatchment", "look_origin")]
+[node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("this_npc_ref", "weapon_attatchment", "look_origin")]
 script = ExtResource("16_g3o3v")
+this_npc_ref = NodePath("..")
 weapon_attatchment = NodePath("../MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D")
 look_origin = NodePath("../LookOrigin")
 
-[node name="SchedulerBrain" type="Node" parent="."]
+[node name="SchedulerBrain" type="Node" parent="." node_paths=PackedStringArray("this_npc_ref")]
 script = ExtResource("17_shrwc")
+this_npc_ref = NodePath("..")
 
 [connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
 [connection signal="damage_taken" from="." to="CombatBrain" method="_on_damage_taken"]
@@ -5178,3 +5181,4 @@ script = ExtResource("17_shrwc")
 [connection signal="trigger_death" from="." to="MainBrain" method="_on_trigger_death"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_finished"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]

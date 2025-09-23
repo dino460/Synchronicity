@@ -9,6 +9,8 @@ var landmark_current : Landmark
 var landmark_last    : Landmark
 var landmark_target  : Landmark
 
+@export var this_npc_ref : NPC
+
 var home : Landmark
 var job : Landmark
 @export var landmarks_of_interest : Array[Landmark]
@@ -29,10 +31,10 @@ var attraction_update_counter : int = 0
 var tiredness : float = 0.0
 
 
-func setup(npc_ref : NPC):
-	landmarks_of_interest.append_array(npc_ref.points_of_interest)
-	landmarks_of_interest.append(npc_ref.home)
-	landmarks_of_interest.append(npc_ref.job)
+func setup():
+	landmarks_of_interest.append_array(this_npc_ref.points_of_interest)
+	landmarks_of_interest.append(this_npc_ref.home)
+	landmarks_of_interest.append(this_npc_ref.job)
 
 	if landmark_current == null:
 		var home_candidate : Landmark = check_for_home()
@@ -42,24 +44,24 @@ func setup(npc_ref : NPC):
 			landmark_current = home_candidate
 			home = home_candidate
 
-	call_deferred("update_landmark_attraction", npc_ref)
+	call_deferred("update_landmark_attraction")
 
 
 ## ONLY CALL AT _physics_process
-func process_update_landmark_attraction(npc_ref : NPC):
+func process_update_landmark_attraction():
 	attraction_update_counter += 1
 
 	if attraction_update_counter < 60 / number_of_attraction_updates:
 		return
 
 	attraction_update_counter = 0
-	update_landmark_attraction(npc_ref)
+	update_landmark_attraction()
 
-func update_landmark_attraction(npc_ref : NPC):
+func update_landmark_attraction():
 	for landmark in landmarks_of_interest:
-		var distance_weight = npc_ref.personality.energy * landmark.get_attraction(npc_ref.position.distance_to(landmark.position), npc_ref)
-		var loyalty_weight = npc_ref.personality.loyalty * landmark.get_npc_reputation(npc_ref.id)
-		var avoidance_weight = npc_ref.personality.aggression / landmark.get_npc_reputation(npc_ref.id)
+		var distance_weight = this_npc_ref.personality.energy * landmark.get_attraction(this_npc_ref.position.distance_to(landmark.position), this_npc_ref)
+		var loyalty_weight = this_npc_ref.personality.loyalty * landmark.get_npc_reputation(this_npc_ref.id)
+		var avoidance_weight = this_npc_ref.personality.aggression / landmark.get_npc_reputation(this_npc_ref.id)
 
 		landmarks_attractions[landmark] = distance_weight + loyalty_weight - avoidance_weight
 		if not landmarks_timers.has(landmark):
@@ -67,7 +69,7 @@ func update_landmark_attraction(npc_ref : NPC):
 
 	match current_task_state:
 		TaskState.MOVING:
-			# landmarks_attractions[landmark_target] /= (1 - npc_ref.personality.loyalty)
+			# landmarks_attractions[landmark_target] /= (1 - this_npc_ref.personality.loyalty)
 			pass
 		TaskState.IDLING:
 			pass
@@ -81,12 +83,12 @@ func check_for_home() -> Landmark:
 	return null
 
 
-func handle_schedule(npc_ref : NPC, delta : float) -> Dictionary:
+func handle_schedule(delta : float) -> Dictionary:
 	# for landmark in landmarks_attractions:
 	# 	print(landmark, ": ", landmarks_attractions[landmark], " | Timer: ", landmarks_timers[landmark])
 	# print()
 
-	# landmark_current = npc_ref.current_location
+	# landmark_current = this_npc_ref.current_location
 	if landmark_current == null:
 		landmark_current = check_for_home()
 
@@ -101,7 +103,7 @@ func handle_schedule(npc_ref : NPC, delta : float) -> Dictionary:
 	change_landmark_target()
 	match current_task_state:
 		TaskState.WORKING:
-			tiredness += delta / npc_ref.personality.energy
+			tiredness += delta / this_npc_ref.personality.energy
 
 		TaskState.IDLING:
 			# change_landmark_target()
@@ -148,7 +150,7 @@ func handle_schedule(npc_ref : NPC, delta : float) -> Dictionary:
 func arrive_at_landmark_target():
 	landmark_current = landmark_target
 
-func check_for_sleep(npc_ref : NPC):
+func check_for_sleep():
 	pass
 
 func change_landmark_target():
@@ -170,8 +172,8 @@ func tick_timers(delta : float):
 		if landmarks_timers[landmark] > 1.0:
 			landmarks_timers[landmark] -= delta
 
-# func choose_next_location(npc_ref : NPC) -> Landmark:
-# 	landmark_current = npc_ref.current_location
+# func choose_next_location(this_npc_ref : NPC) -> Landmark:
+# 	landmark_current = this_npc_ref.current_location
 # 	# if home == null or job == null:
 # 		# return null
 
@@ -187,9 +189,9 @@ func tick_timers(delta : float):
 # 		# if landmark == home && landmark_current == home:
 # 		# 	special_check_var = true
 # 		# elif landmark == job:
-# 		# 	special_check_var = npc_ref.has_worked_today
+# 		# 	special_check_var = this_npc_ref.has_worked_today
 
-# 		var landmark_attraction : float = landmark.get_npc_attraction(npc_ref, landmark == landmark_current, special_check_var)
+# 		var landmark_attraction : float = landmark.get_npc_attraction(this_npc_ref, landmark == landmark_current, special_check_var)
 # 		if landmark_attraction > chosen_location_attraction:
 # 			chosen_location = landmark
 # 			chosen_location_attraction = landmark_attraction
