@@ -144,13 +144,18 @@ func handle_combat(delta : float) -> Dictionary:
 					next_combat_state = CombatState.SEARCHING
 				else:
 					next_combat_state = CombatState.CHASING
+
+				target_position = self.global_position
+
 			elif this_npc_ref.stats.stamina >= this_npc_ref.stats.max_stamina:
-				circling_timer = 0.0
+				circling_timer = INF
 				circling_time = 0.0
 				should_circle = false
 				circling_probability = base_circling_probability
 
+				target_position = current_aggressor.global_position
 				next_combat_state = CombatState.ATTACKING
+
 			elif should_circle and circling_timer >= circling_time:
 				circling_time = randf_range(circling_min_time, circling_max_time)
 				circling_timer = 0.0
@@ -161,6 +166,7 @@ func handle_combat(delta : float) -> Dictionary:
 				search_position = candidate_position
 				target_position = search_position
 				look_target = current_aggressor.global_position
+
 			elif weapon.stamina_cost_per_attack.get(converted_animation_state) <= this_npc_ref.stats.stamina and not this_npc_ref.is_attacking and not should_circle:
 				should_circle = randf() <= circling_probability
 				if should_circle:
@@ -172,13 +178,14 @@ func handle_combat(delta : float) -> Dictionary:
 				target_position = current_aggressor.global_position
 				look_target = target_position
 				next_combat_state = CombatState.ATTACKING
+
 			elif not this_npc_ref.is_attacking:
 				should_circle = weapon.stamina_cost_per_attack.get(converted_animation_state) <= this_npc_ref.stats.stamina and not this_npc_ref.is_attacking and randf() < circling_probability
 				target_position = search_position
 				look_target = current_aggressor.global_position
 				circling_timer += delta
 
-			print(target_position)
+			print(CombatState.keys()[current_combat_state], " | ", CombatState.keys()[next_combat_state], " | ", target_position, " | ", this_npc_ref.is_attacking, " | ", should_circle, " | ", circling_timer >= circling_time)
 
 		CombatState.ATTACKING:
 			if not is_agressor_in_attack_range():
@@ -188,6 +195,8 @@ func handle_combat(delta : float) -> Dictionary:
 					next_combat_state = CombatState.SEARCHING
 				else:
 					next_combat_state = CombatState.CHASING
+
+				target_position = self.global_position
 			# elif weapon.stamina_cost_per_attack.get(converted_animation_state) >= this_npc_ref.stats.stamina:
 				# next_combat_state = CombatState.CLOSE
 			else:
