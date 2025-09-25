@@ -1337,7 +1337,7 @@ soul = 0.8
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("3_kkvfd")
-constitution = 10.0
+constitution = 100.0
 
 [node name="AnimationHandler" type="Node" parent="." node_paths=PackedStringArray("animator")]
 script = ExtResource("4_y33ke")

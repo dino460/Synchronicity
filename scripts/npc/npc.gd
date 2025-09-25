@@ -71,6 +71,7 @@ var is_at_home : bool = false
 @export_group("NPC Movement")
 var is_running         : bool = false
 var look_direction     : Vector3 = Vector3.ZERO
+var look_target        : Vector3 = Vector3.ZERO
 var navigation_enabled : bool = false
 var minimum_movement_distance : float = 1.5
 
@@ -155,8 +156,11 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 
-	if not navigation_agent.is_navigation_finished():
-		look_direction = (navigation_agent.get_next_path_position() - self.global_position).normalized()
+	# if not navigation_agent.is_navigation_finished():
+	if look_target < Vector3.INF:
+		look_direction = (look_target - self.global_position).normalized()
+	else:
+		look_direction = velocity.normalized()
 	mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
 
 	if is_in_frustum:
@@ -178,19 +182,23 @@ func _physics_process(delta: float) -> void:
 	if navigation_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
 
-func handle_navigation(target_position : Vector3, run : bool):
+func handle_navigation(target_position : Vector3, look_target_position : Vector3, run : bool):
 	var desired_velocity = Vector3.ZERO
+
 	if should_attack_move == false or is_dead:
 		# velocity = Vector3.ZERO
 		return
 
+	look_target = look_target_position
+
 	if target_position.distance_to(self.global_position) < minimum_movement_distance:
-		look_direction = (target_position - self.global_position).normalized()
+
+		look_direction = target_position.direction_to(self.global_position)
 		navigation_agent.target_position = self.global_position
 		# velocity = Vector3.ZERO
 		return
-	if not target_position.is_equal_approx(navigation_agent.target_position):
-		navigation_agent.target_position = target_position
+	# if not target_position.is_equal_approx(navigation_agent.target_position):
+	navigation_agent.target_position = target_position
 
 	is_running = run
 
@@ -199,6 +207,11 @@ func handle_navigation(target_position : Vector3, run : bool):
 	desired_velocity = current_agent_position.direction_to(next_path_position) * get_speed()
 	desired_velocity.y = -75.0
 	navigation_agent.velocity = desired_velocity
+
+	# if look_target_position != null:
+	# 	look_target = look_target_position
+	# else:
+	# 	look_target = self.global_position + velocity
 
 func disable_pathfinding():
 	navigation_agent.target_position = self.global_position

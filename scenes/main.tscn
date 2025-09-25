@@ -528,12 +528,11 @@ shadow_enabled = true
 omni_range = 7.648
 omni_attenuation = 0.765
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "navigation_region", "player_ref") instance=ExtResource("12_bvghk")]
+[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 sun_up_time = 5.0
 sun_down_time = 20.0
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
-navigation_region = NodePath("../EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D")
 player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="."]

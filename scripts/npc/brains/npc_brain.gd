@@ -42,16 +42,16 @@ func _physics_process(_delta: float) -> void:
 func run() -> void:
 	var delta : float = get_physics_process_delta_time()
 
-	if thoughts_label != null:
+	if thoughts_label != null and true:
 		thoughts_label.text = ""
-		# if schedule_commands.size() > 1:
-		# 	thoughts_label.text += scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state"))
-		# if combat_commands.size() > 1:
-		# 	thoughts_label.text += "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
-		# thoughts_label.text += "\n" + str(npc.stats.health)
-		for landmark in scheduled_brain.landmarks_attractions:
-			if landmark == null: continue
-			thoughts_label.text += landmark.name + " " + str(scheduled_brain.landmarks_attractions[landmark]) + "\n"
+		if schedule_commands.size() > 1:
+			thoughts_label.text += scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state"))
+		if combat_commands.size() > 1:
+			thoughts_label.text += "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
+		thoughts_label.text += "\n" + str(npc.stats.health)
+		# for landmark in scheduled_brain.landmarks_attractions:
+		# 	if landmark == null: continue
+		# 	thoughts_label.text += landmark.name + " " + str(scheduled_brain.landmarks_attractions[landmark]) + "\n"
 
 		# thoughts_label.text =  + "\n" + combat_brain.CombatState.keys().get(combat_commands.get("current_combat_state"))
 		var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
@@ -72,7 +72,7 @@ func run() -> void:
 
 			match schedule_commands.get("current_task_state"):
 				ScheduledBrain.TaskState.MOVING:
-					npc.handle_navigation(schedule_commands.get("landmark_target").position, false)
+					npc.handle_navigation(schedule_commands.get("landmark_target").position, Vector3.INF, false)
 				# ScheduledBrain.TaskState.IDLING:
 				# 	npc.handle_navigation(schedule_commands.get("landmark_target").position)
 
@@ -82,20 +82,21 @@ func run() -> void:
 
 		CombatBrain.CombatState.SEARCHING:
 			current_state = State.FIGHTING
-			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 			if npc.navigation_agent.distance_to_target() >= combat_brain.max_wandering_distance and not combat_brain.can_see_search_position():
 				npc.disable_pathfinding()
 
 		CombatBrain.CombatState.CHASING:
 			current_state = State.FIGHTING
-			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 
 		CombatBrain.CombatState.ATTACKING:
 			current_state = State.FIGHTING
-			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("run"))
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 			npc.do_attack(combat_commands.get("converted_animation_state"), combat_commands.get("weapon"))
 
 		CombatBrain.CombatState.CLOSE:
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 			current_state = State.FIGHTING
 
 func _on_trigger_death() -> void:
