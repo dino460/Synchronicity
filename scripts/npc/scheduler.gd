@@ -67,8 +67,11 @@ func _process(_delta: float) -> void:
 
 	if is_stopped():
 		print_rich("[color=red][b] DAY OVER [/b][/color]")
-		for npc in npc_holder.get_children():
-			npc.reset_has_worked_today()
+		# for npc in npc_holder.get_children():
+		# 	npc.reset_has_worked_today()
+		# TEMPORARY FIX
+		# This is used to reset that the NPC has worked when the day is over
+		# Not implemented yet (after rework)
 
 		start()
 
