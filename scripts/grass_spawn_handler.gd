@@ -1,12 +1,18 @@
 extends Node
 
 
-@export_range(24000, 400000, 8000) var total_number_of_meshes : int = 40000
+# @export_range(24000, 400000, 8000) var total_number_of_meshes : int = 40000
+@export_enum("Off:0", "Potato:8000", "Ultra Low:24000", "Very Low:40000", "Low:80000", "Low/Medium:104000", "Medium:240000", "High:320000", "Very High:400000", "Ultra:640000")
+var total_number_of_meshes : int = 104000
+
 @export_enum("Single:1", "Few:4", "Some:16", "Many:64") var number_of_groups : int = 4
 @export var ground_mesh : MeshInstance3D
 @export var grass_mesh : MeshInstance3D
 
 func _ready() -> void:
+	if total_number_of_meshes == 0:
+		return
+
 	var counter : int = sqrt(number_of_groups)
 	var mult_factor_x : float = - (sqrt(number_of_groups) - 1.0)
 	var mult_factor_z : float = - (sqrt(number_of_groups) - 1.0)

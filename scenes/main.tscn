@@ -37,7 +37,7 @@ size = Vector3(75, 1, 75)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trceg"]
 diffuse_mode = 3
 specular_mode = 1
-albedo_color = Color(0.191974, 0.41181, 0.223239, 1)
+albedo_color = Color(0.132715, 0.300119, 0.156548, 1)
 roughness = 0.5
 disable_receive_shadows = true
 
@@ -454,7 +454,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-total_number_of_meshes = 368000
+total_number_of_meshes = 240000
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
