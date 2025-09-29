@@ -24,6 +24,8 @@ func get_current_state() -> State:
 	return current_state
 
 func _ready() -> void:
+	npc.enemy_killed.connect(combat_brain._on_enemy_killed)
+
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduled_brain.setup()
 	viewport = get_viewport()
@@ -76,8 +78,8 @@ func run() -> void:
 				# ScheduledBrain.TaskState.IDLING:
 				# 	npc.handle_navigation(schedule_commands.get("landmark_target").position)
 
-		CombatBrain.CombatState.LOOKING:
 			current_state = State.FIGHTING
+		CombatBrain.CombatState.LOOKING:
 			pass
 
 		CombatBrain.CombatState.SEARCHING:
@@ -95,9 +97,14 @@ func run() -> void:
 			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 			npc.do_attack(combat_commands.get("converted_animation_state"), combat_commands.get("weapon"))
 
-		CombatBrain.CombatState.CLOSE:
-			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
+		CombatBrain.CombatState.CIRCLING:
 			current_state = State.FIGHTING
+			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
+
+		CombatBrain.CombatState.CLOSE:
+			current_state = State.FIGHTING
+			# if npc.is_attacking:
+			# 	npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 
 func _on_trigger_death() -> void:
 	print("NPC died")

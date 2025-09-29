@@ -1,15 +1,17 @@
-[gd_scene load_steps=21 format=3 uid="uid://cwpoincpr5pgn"]
+[gd_scene load_steps=25 format=3 uid="uid://cwpoincpr5pgn"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_o36fe"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="2_6owvg"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="2_xq7gy"]
-[ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="3_ttlna"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_dxudb"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_lgn12"]
 [ext_resource type="PackedScene" uid="uid://drk0ngcyttknx" path="res://assets/props/grass patch/Grass Patch.glb" id="6_lgn12"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="6_xq7gy"]
 [ext_resource type="PackedScene" uid="uid://b2cokpp3n1n4b" path="res://assets/props/ancient ruins/ancient_ruins.glb" id="8_68wvi"]
 [ext_resource type="ArrayMesh" uid="uid://df2yxvgv38aoj" path="res://assets/props/tree/new_array_mesh.tres" id="8_vwee6"]
+[ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="10_owfbn"]
+[ext_resource type="Shader" uid="uid://d2nordhselkgc" path="res://shaders/new_grass_shader.gdshader" id="11_8clt3"]
+[ext_resource type="Texture2D" uid="uid://bola5ct3ibjk4" path="res://assets/sprites/grass_sprite-tmp.png" id="12_4lbig"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a8y0u"]
 render_priority = 127
@@ -30,9 +32,10 @@ size = Vector2(2, 2)
 size = Vector3(75, 1, 75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lbv16"]
-albedo_texture = ExtResource("3_ttlna")
-uv1_scale = Vector3(0.4, 0.4, 0.4)
+shading_mode = 0
+albedo_color = Color(0.329412, 0.498039, 0.270588, 1)
 uv1_triplanar = true
+disable_receive_shadows = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_68wvi"]
 material = SubResource("StandardMaterial3D_lbv16")
@@ -43,6 +46,20 @@ agent_radius = 1.24
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_68wvi"]
 size = Vector3(4.46985, 11.1754, 4.35938)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkv2x"]
+render_priority = 0
+shader = ExtResource("11_8clt3")
+shader_parameter/time_scale = 0.0
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/texture_albedo = ExtResource("12_4lbig")
+shader_parameter/wrap = 0.0
+shader_parameter/steepness = 1.0
+shader_parameter/cuts = 3
+
+[sub_resource type="QuadMesh" id="QuadMesh_30wxc"]
+material = SubResource("ShaderMaterial_jkv2x")
+size = Vector2(0.5, 0.75)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.7
@@ -996,6 +1013,17 @@ shape = SubResource("BoxShape3D_68wvi")
 [node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0222254, -0.107616, -0.199408)
 mesh = SubResource("PlaneMesh_68wvi")
+
+[node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+script = ExtResource("10_owfbn")
+total_number_of_meshes = 640000
+number_of_groups = 64
+ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
+grass_mesh = NodePath("GrassMeshInstance3D")
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance"]
+mesh = SubResource("QuadMesh_30wxc")
+skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.390458, 0.920621, 0, -0.920621, 0.390458, 0, 0, 0)

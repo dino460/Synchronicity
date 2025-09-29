@@ -35,10 +35,10 @@ size = Vector2(2, 2)
 size = Vector3(75, 1, 75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trceg"]
+shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
-albedo_color = Color(0.132715, 0.300119, 0.156548, 1)
-roughness = 0.5
+albedo_color = Color(0.203922, 0.490196, 0.223529, 1)
 disable_receive_shadows = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
@@ -64,25 +64,27 @@ shader_parameter/cuts = 3
 material = SubResource("ShaderMaterial_jkv2x")
 size = Vector2(0.5, 0.75)
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_pwylq"]
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
+rayleigh_coefficient = 25.7
 turbidity = 0.0
 ground_color = Color(0.294793, 0.227868, 0.147204, 1)
 energy_multiplier = 1.18
 
 [sub_resource type="Sky" id="Sky_yalbf"]
-sky_material = SubResource("PhysicalSkyMaterial_pwylq")
+sky_material = SubResource("PhysicalSkyMaterial_owfbn")
 
-[sub_resource type="Environment" id="Environment_xso02"]
+[sub_resource type="Environment" id="Environment_jkv2x"]
 background_mode = 2
 background_energy_multiplier = 2.25
 sky = SubResource("Sky_yalbf")
 ambient_light_source = 3
-tonemap_mode = 2
+tonemap_mode = 4
 tonemap_exposure = 0.9
-tonemap_white = 1.45
-ssao_radius = 1.8
-ssao_intensity = 2.5
-ssao_power = 2.35375
+ssao_enabled = true
+ssao_radius = 2.01
+ssao_intensity = 1.99
+ssao_power = 1.84672
+ssil_enabled = true
 glow_enabled = true
 glow_normalized = true
 glow_bloom = 0.1
@@ -454,7 +456,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-total_number_of_meshes = 240000
+total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
@@ -470,7 +472,7 @@ shadow_blur = 0.4
 directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport"]
-environment = SubResource("Environment_xso02")
+environment = SubResource("Environment_jkv2x")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 

@@ -6,9 +6,12 @@ signal trigger_death
 signal damage_taken(int, Entity)
 signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
+signal enemy_killed(Entity)
+
 @export var stats : CharacterStats
 
 var damaged_enemies_this_attack : Array
+var enemy_kill_list : Array[Entity]
 
 @export var is_attacking       : bool = false
 @export var can_combo          : bool = false
@@ -25,6 +28,8 @@ func take_damage(damage : int, attacker : Entity):
 		should_attack_move = false
 		stats.health = 0
 		trigger_death.emit()
+		attacker.enemy_kill_list.append(self)
+		attacker.enemy_killed.emit(self)
 		return
 	# print("HP after: ", stats.health)
 	# print()

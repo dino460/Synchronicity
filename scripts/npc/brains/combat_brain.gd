@@ -2,14 +2,14 @@ extends Node3D
 
 class_name CombatBrain
 
-enum CombatState { NONE, LOOKING, SEARCHING, CHASING, ATTACKING, CLOSE }
+enum CombatState { NONE, LOOKING, SEARCHING, CHASING, ATTACKING, CLOSE, CIRCLING }
 var current_combat_state : CombatState = CombatState.NONE
 var next_combat_state : CombatState = CombatState.NONE
 
 enum CombatDirection { NONE, UP, DOWN, LEFT, RIGHT }
 var current_combat_direction : CombatDirection = CombatDirection.LEFT
 
-var attack_distance : float = 4.0
+var attack_distance : float = 5.0
 
 var desired_velocity : Vector3
 var desired_target_position : Vector3
@@ -26,6 +26,7 @@ var damage_per_aggressor : Dictionary[Entity, float] = { null : -100000000.0}
 var current_aggressor : Entity
 @export var damage_threshold : float = 0.0
 @export var damage_dissipation : float = 0.5
+var aggression_level : float = 0.0
 
 @export_group("Look & Search")
 var looking_base_time : float
@@ -56,7 +57,7 @@ var circling_timer : float = 0.0
 var circling_time : float = 0.0
 @export var circling_min_time : float = 1.5
 @export var circling_max_time : float = 3.0
-@export var circling_distance : float = 5.0
+@export var max_circling_distance : float = 6.0
 
 
 func _ready() -> void:
@@ -145,7 +146,7 @@ func handle_combat(delta : float) -> Dictionary:
 				else:
 					next_combat_state = CombatState.CHASING
 
-				target_position = self.global_position
+				target_position = this_npc_ref.global_position
 
 			elif this_npc_ref.stats.stamina >= this_npc_ref.stats.max_stamina:
 				circling_timer = INF
@@ -156,28 +157,30 @@ func handle_combat(delta : float) -> Dictionary:
 				target_position = current_aggressor.global_position
 				next_combat_state = CombatState.ATTACKING
 
-			elif should_circle and circling_timer >= circling_time:
-				circling_time = randf_range(circling_min_time, circling_max_time)
-				circling_timer = 0.0
+			# elif should_circle and circling_timer >= circling_time:
+			# 	circling_time = randf_range(circling_min_time, circling_max_time)
+			# 	circling_timer = 0.0
 
-				var search_pos_x : float = current_aggressor.global_position.x + randf_range(-circling_distance, circling_distance)
-				var search_pos_z : float = current_aggressor.global_position.z + randf_range(-circling_distance, circling_distance)
-				var candidate_position = Vector3(search_pos_x, current_aggressor.global_position.y, search_pos_z)
-				search_position = candidate_position
-				target_position = search_position
-				look_target = current_aggressor.global_position
+			# 	var search_pos_x : float = current_aggressor.global_position.x + randf_range(-max_circling_distance, max_circling_distance)
+			# 	var search_pos_z : float = current_aggressor.global_position.z + randf_range(-max_circling_distance, max_circling_distance)
+			# 	var candidate_position = Vector3(search_pos_x, current_aggressor.global_position.y, search_pos_z)
+			# 	search_position = candidate_position
+			# 	target_position = search_position
+			# 	look_target = current_aggressor.global_position
 
 			elif weapon.stamina_cost_per_attack.get(converted_animation_state) <= this_npc_ref.stats.stamina and not this_npc_ref.is_attacking and not should_circle:
 				should_circle = randf() <= circling_probability
 				if should_circle:
 					circling_timer = INF
+					circling_probability = exit_circling_probability
+					next_combat_state = CombatState.CIRCLING
 				else:
 					circling_timer = 0.0
 					circling_time = 0.0
+					next_combat_state = CombatState.ATTACKING
 
 				target_position = current_aggressor.global_position
 				look_target = target_position
-				next_combat_state = CombatState.ATTACKING
 
 			elif not this_npc_ref.is_attacking:
 				should_circle = weapon.stamina_cost_per_attack.get(converted_animation_state) <= this_npc_ref.stats.stamina and not this_npc_ref.is_attacking and randf() < circling_probability
@@ -186,6 +189,30 @@ func handle_combat(delta : float) -> Dictionary:
 				circling_timer += delta
 
 			print(CombatState.keys()[current_combat_state], " | ", CombatState.keys()[next_combat_state], " | ", target_position, " | ", this_npc_ref.is_attacking, " | ", should_circle, " | ", circling_timer >= circling_time)
+
+		CombatState.CIRCLING:
+			if not should_circle:
+				circling_timer = INF
+				circling_time = 0.0
+				should_circle = false
+				circling_probability = base_circling_probability
+
+				search_position = current_aggressor.global_position
+				next_combat_state = CombatState.CLOSE
+
+			elif circling_timer >= circling_time:
+				circling_time = randf_range(circling_min_time, circling_max_time)
+				circling_timer = 0.0
+
+				var search_pos_x : float = current_aggressor.global_position.x + randf_range(-max_circling_distance, max_circling_distance)
+				var search_pos_z : float = current_aggressor.global_position.z + randf_range(-max_circling_distance, max_circling_distance)
+				var candidate_position = Vector3(search_pos_x, current_aggressor.global_position.y, search_pos_z)
+				search_position = candidate_position
+
+			target_position = search_position
+			look_target = current_aggressor.global_position
+
+			should_circle = weapon.stamina_cost_per_attack.get(converted_animation_state) <= this_npc_ref.stats.stamina and not this_npc_ref.is_attacking and randf() < circling_probability
 
 		CombatState.ATTACKING:
 			if not is_agressor_in_attack_range():
@@ -196,12 +223,12 @@ func handle_combat(delta : float) -> Dictionary:
 				else:
 					next_combat_state = CombatState.CHASING
 
-				target_position = self.global_position
+				target_position = this_npc_ref.global_position
 			# elif weapon.stamina_cost_per_attack.get(converted_animation_state) >= this_npc_ref.stats.stamina:
 				# next_combat_state = CombatState.CLOSE
 			else:
 				run = false
-				target_position = current_aggressor.global_position
+				target_position = this_npc_ref.global_position
 				look_target = target_position
 				next_combat_state = CombatState.CLOSE
 
@@ -245,7 +272,7 @@ func can_see_search_position() -> bool:
 func is_agressor_in_attack_range() -> bool:
 	var attack_distance_check : float = self.global_position.distance_squared_to(current_aggressor.global_position)
 	var circling_distance_check : float = self.global_position.distance_squared_to(current_aggressor.global_position)
-	return attack_distance_check <= attack_distance or (should_circle and circling_distance_check <= circling_distance)
+	return attack_distance_check <= attack_distance or (should_circle and circling_distance_check <= max_circling_distance)
 
 func convert_combat_direction_to_animation_state() -> AnimationHandler.AnimationState:
 	match current_combat_direction:
@@ -297,6 +324,12 @@ func get_predicted_aggressor_position() -> Vector3:
 
 	return predicted_position
 
+func change_current_aggressor():
+	for attacker in damage_per_aggressor:
+		if damage_per_aggressor[attacker] > damage_per_aggressor[current_aggressor]:
+			current_aggressor = attacker
+
+
 func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
 	# print("taking damage: ", damage, " from ", new_attacker)
 	if damage_per_aggressor.has(new_attacker):
@@ -304,10 +337,15 @@ func _on_damage_taken(damage : int, new_attacker : Entity) -> void:
 	else:
 		damage_per_aggressor[new_attacker] = damage
 
-	if current_aggressor == null:
-		current_aggressor = new_attacker
-		return
-	else:
-		for attacker in damage_per_aggressor:
-			if damage_per_aggressor[attacker] > damage_per_aggressor[current_aggressor]:
-				current_aggressor = attacker
+	change_current_aggressor()
+	# if current_aggressor == null:
+	# 	current_aggressor = new_attacker
+	# 	return
+	# else:
+	# 	for attacker in damage_per_aggressor:
+	# 		if damage_per_aggressor[attacker] > damage_per_aggressor[current_aggressor]:
+	# 			current_aggressor = attacker
+
+func _on_enemy_killed(enemy : Entity):
+	damage_per_aggressor.erase(enemy)
+	change_current_aggressor()
