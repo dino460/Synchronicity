@@ -82,6 +82,10 @@ func check_for_home() -> Landmark:
 			return landmark
 	return null
 
+func reset_brain():
+	current_task_state = TaskState.IDLING
+	landmark_current = null
+	landmark_target = null
 
 func handle_schedule(delta : float) -> Dictionary:
 	# for landmark in landmarks_attractions:

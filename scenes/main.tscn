@@ -35,10 +35,10 @@ size = Vector2(2, 2)
 size = Vector3(75, 1, 75)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_trceg"]
-shading_mode = 0
+shading_mode = 2
 diffuse_mode = 3
 specular_mode = 1
-albedo_color = Color(0.203922, 0.490196, 0.223529, 1)
+albedo_color = Color(0.159306, 0.393491, 0.175146, 1)
 disable_receive_shadows = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
@@ -466,7 +466,7 @@ mesh = SubResource("QuadMesh_a8y0u")
 skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.894934, 0.446198, 0, -0.446198, 0.894934, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.180982, 0.983487, 0, -0.983487, 0.180982, 0, 0, 0)
 shadow_enabled = true
 shadow_blur = 0.4
 directional_shadow_mode = 0

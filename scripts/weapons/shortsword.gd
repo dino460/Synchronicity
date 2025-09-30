@@ -9,10 +9,10 @@ func _ready():
 	attack_animations[AnimationHandler.AnimationState.ATTACK_RIGHT] = "attack_right_shortsword"
 
 	stamina_cost_per_attack = {
-		AnimationHandler.AnimationState.ATTACK_UP: 10,
-		AnimationHandler.AnimationState.ATTACK_DOWN: 10,
-		AnimationHandler.AnimationState.ATTACK_LEFT: 10,
-		AnimationHandler.AnimationState.ATTACK_RIGHT: 10
+		AnimationHandler.AnimationState.ATTACK_UP: 5,
+		AnimationHandler.AnimationState.ATTACK_DOWN: 5,
+		AnimationHandler.AnimationState.ATTACK_LEFT: 5,
+		AnimationHandler.AnimationState.ATTACK_RIGHT: 5
 	}
 
 	preferred_attack_stream.append_array([

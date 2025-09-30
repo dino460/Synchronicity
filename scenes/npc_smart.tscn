@@ -5165,6 +5165,7 @@ script = ExtResource("16_g3o3v")
 this_npc_ref = NodePath("..")
 weapon_attatchment = NodePath("../MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D")
 look_origin = NodePath("../LookOrigin")
+base_circling_probability = 0.75
 
 [node name="SchedulerBrain" type="Node" parent="." node_paths=PackedStringArray("this_npc_ref")]
 script = ExtResource("17_shrwc")

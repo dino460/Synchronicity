@@ -94,17 +94,25 @@ func run() -> void:
 
 		CombatBrain.CombatState.ATTACKING:
 			current_state = State.FIGHTING
-			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
+			# npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 			npc.do_attack(combat_commands.get("converted_animation_state"), combat_commands.get("weapon"))
 
 		CombatBrain.CombatState.CIRCLING:
 			current_state = State.FIGHTING
-			npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
+			if not npc.is_attacking or not npc.navigation_agent.is_navigation_finished():
+				npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
 
 		CombatBrain.CombatState.CLOSE:
 			current_state = State.FIGHTING
-			# if npc.is_attacking:
-			# 	npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
+			# npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
+
+func arrive_at_landmark_target():
+	scheduled_brain.arrive_at_landmark_target()
+
+func reset_brain():
+	current_state = State.IN_TASK
+	combat_brain.reset_brain()
+	scheduled_brain.reset_brain()
 
 func _on_trigger_death() -> void:
 	print("NPC died")
@@ -112,6 +120,3 @@ func _on_trigger_death() -> void:
 	current_state = State.DEAD
 	npc.is_dead = true
 	npc.death.emit()
-
-func arrive_at_landmark_target():
-	scheduled_brain.arrive_at_landmark_target()

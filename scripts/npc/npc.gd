@@ -59,6 +59,9 @@ var process_group    : int
 
 @export_group("NPC Navigation")
 @onready var navigation_agent : NavigationAgent3D = $NavigationAgent3D
+@export var max_stuck_time : float = 1.2
+var stuck_timer : float = 0.0
+var last_position : Vector3 = Vector3.ZERO
 # @export  var look_origin      : Node3D
 
 # var current_target   : Landmark
@@ -124,7 +127,6 @@ func get_speed() -> float:
 	return get_run_speed() if is_running else get_walk_speed()
 
 
-
 func _ready() -> void:
 	add_to_group("persist")
 
@@ -144,7 +146,17 @@ func _ready() -> void:
 	navigation_agent.debug_enabled = true
 
 
-# func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	if not navigation_agent.is_navigation_finished() and last_position.distance_squared_to(self.global_position) <= last_position.distance_squared_to(last_position + (-mesh_pivot_ref.global_basis.z * get_speed() * delta)):
+		stuck_timer += delta
+		if stuck_timer >= max_stuck_time:
+			npc_brain.reset_brain()
+			stuck_timer = 0.0
+	else:
+		stuck_timer = 0.0
+
+	last_position = self.global_position
+
 # 	if thoughts_label != null:
 # 		thoughts_label.text = State.find_key(_current_state) + "\n" + CombatState.find_key(current_combat_state)
 # 		var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
@@ -158,7 +170,7 @@ func _physics_process(delta: float) -> void:
 
 	if not navigation_agent.is_navigation_finished():
 		if look_target < Vector3.INF:
-			look_direction = (look_target - self.global_position).normalized()
+			look_direction = self.global_position.direction_to(look_target)
 		else:
 			look_direction = velocity.normalized()
 		mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
@@ -208,6 +220,16 @@ func handle_navigation(target_position : Vector3, look_target_position : Vector3
 func disable_pathfinding():
 	navigation_agent.target_position = self.global_position
 	velocity = Vector3.ZERO
+
+func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
+	super(attack_state, weapon)
+	disable_pathfinding()
+	var target_position : Vector3 = self.global_position + (-mesh_pivot_ref.global_basis.z * 100.0)
+	handle_navigation(target_position, target_position, true)
+
+func stop_attack_movement():
+	super()
+	disable_pathfinding()
 
 
 func _on_navigation_finished() -> void:

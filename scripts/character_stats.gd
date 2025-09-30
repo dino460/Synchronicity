@@ -17,7 +17,7 @@ var max_health : float
 var max_stamina : float
 @export var stamina : float
 var stamina_regen : float
-@export var base_stamina_regen : float = 1.0
+@export var base_stamina_regen : float = 5.0
 
 func _ready():
 	max_health = constitution * (log(constitution) / log(10.0)) + 10.0
