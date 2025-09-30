@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://bylwa0aplfyax"]
+[gd_scene load_steps=25 format=4 uid="uid://bylwa0aplfyax"]
 
 [ext_resource type="Script" uid="uid://4owdwe56mk1c" path="res://scripts/player/player.gd" id="1_br4xa"]
 [ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="2_u5517"]
@@ -17,6 +17,7 @@
 [ext_resource type="Animation" uid="uid://k7cstmgdecv" path="res://assets/SELS low poly char/animations/run.res" id="14_a38lo"]
 [ext_resource type="Animation" uid="uid://k7wauxe1h0em" path="res://assets/SELS low poly char/animations/walk.res" id="15_4ni07"]
 [ext_resource type="Animation" uid="uid://d2draxebn8vfq" path="res://assets/SELS low poly char/animations/attack_right_shortsword.res" id="15_qfm1y"]
+[ext_resource type="Shader" uid="uid://dn8ot3vt5s6bc" path="res://shaders/new_edge_outline.gdshader" id="18_fulsm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
 radius = 0.407304
@@ -56,6 +57,19 @@ _data = {
 &"run": ExtResource("14_a38lo"),
 &"walk": ExtResource("15_4ni07")
 }
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qfm1y"]
+size = Vector2(25, 25)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4r5pv"]
+render_priority = 3
+shader = ExtResource("18_fulsm")
+shader_parameter/shadows_enabled = true
+shader_parameter/highlights_enabled = true
+shader_parameter/shadow_strength = 0.82
+shader_parameter/highlight_strength = 0.03
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon", "raycast_holder", "label_anchor", "stats")]
 script = ExtResource("1_br4xa")
@@ -820,6 +834,11 @@ projection = 1
 size = 15.0
 near = 0.1
 far = 100.0
+
+[node name="Postprocessing" type="MeshInstance3D" parent="CameraPivot/EnvironmentCamera3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.873369)
+mesh = SubResource("PlaneMesh_qfm1y")
+surface_material_override/0 = SubResource("ShaderMaterial_4r5pv")
 
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true

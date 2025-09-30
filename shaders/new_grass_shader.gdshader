@@ -2,19 +2,23 @@
 
 render_mode depth_draw_opaque;
 
-uniform float time_scale;
+uniform float time_scale = 1.0;
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color, filter_nearest, repeat_enable;
 uniform float wrap : hint_range(-2.0f, 2.0f) = 0.0f;
 uniform float steepness : hint_range(1.0f, 8.0f) = 1.0f;
 uniform int cuts : hint_range(1, 8) = 3;
 varying vec3 instance_origin;
+uniform float pivot = 1.0;
 
 void vertex() {
-	float time = TIME * time_scale;
+	float time = (TIME * (0.5 + INSTANCE_CUSTOM.y) * time_scale) + (6.28318 * INSTANCE_CUSTOM.x);
+	float pivot_angle = cos(time) * 0.1 * pivot;
+	mat2 rotation_matrix = mat2(vec2(cos(pivot_angle), -sin(pivot_angle)), vec2(sin(pivot_angle), cos(pivot_angle)));
 	instance_origin = MODELVIEW_MATRIX[3].xyz;
 	//billboarding
 	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
+	VERTEX.xz = rotation_matrix * VERTEX.xz;
 	NORMAL = vec3(0.0, 1.0, 0.0);
 }
 
