@@ -51,6 +51,7 @@ size = Vector3(4.46985, 11.1754, 4.35938)
 render_priority = 0
 shader = ExtResource("11_8clt3")
 shader_parameter/time_scale = 0.0
+shader_parameter/pivot = 1.0
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/texture_albedo = ExtResource("12_4lbig")
 shader_parameter/wrap = 0.0
