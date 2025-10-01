@@ -3,6 +3,7 @@
 //render_mode depth_prepass_alpha, depth_draw_opaque;
 render_mode diffuse_burley;
 
+uniform bool do_billboard = false;
 uniform float time_scale = 1.0;
 uniform float pivot = 1.0;
 
@@ -26,9 +27,11 @@ void vertex() {
 
 	instance_origin = MODELVIEW_MATRIX[3].xyz;
 	//billboarding
-	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
+	if (do_billboard == true) {
+		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
+		NORMAL = vec3(0.0, 1.0, 0.0);
+	}
 	VERTEX.xz = rotation_matrix * VERTEX.xz;
-	NORMAL = vec3(0.0, 1.0, 0.0);
 }
 
 void fragment() {

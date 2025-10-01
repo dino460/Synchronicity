@@ -24,6 +24,6 @@ func _ready():
 	# Set the transform of the instances.
 	for i in multimesh.visible_instance_count:
 		var position = Transform3D()
-		position = position.translated(Vector3(spawn_area_center.x + randf_range(-1.0, 1.0) * spawn_area_size / 2.0, spawn_area_center.y, spawn_area_center.z + randf_range(-1.0, 1.0) * spawn_area_size / 2.0))
+		position = position.translated(Vector3(spawn_area_center.x + randf_range(-1.0, 1.0) * spawn_area_size / 2.0, spawn_area_center.y + (multimesh.mesh.size.y / 2.0), spawn_area_center.z + randf_range(-1.0, 1.0) * spawn_area_size / 2.0))
 		multimesh.set_instance_transform(i, position)
 		multimesh.set_instance_custom_data(i, Color(randf(), randf(), randf(), randf()))

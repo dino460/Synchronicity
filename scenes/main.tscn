@@ -1,17 +1,16 @@
-[gd_scene load_steps=37 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=35 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
-[ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="4_4cap6"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="4_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="6_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
-[ext_resource type="Shader" uid="uid://d2nordhselkgc" path="res://shaders/new_grass_shader.gdshader" id="8_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
+[ext_resource type="Texture2D" uid="uid://bjd2vtgkym1yj" path="res://assets/sprites/grass1.png" id="9_jbj1t"]
 [ext_resource type="Texture2D" uid="uid://d22rjsuei2fwe" path="res://assets/sprites/grass0.png" id="9_muem4"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
-[ext_resource type="Texture2D" uid="uid://w68v3t1gxymk" path="res://assets/sprites/grass2.png" id="10_muem4"]
+[ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
@@ -60,97 +59,59 @@ material = SubResource("ShaderMaterial_jbj1t")
 size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
-vertices = PackedVector3Array(-4, 0.315277, -11.25, -2.25, 0.315277, -11.75, -2.25, 0.315277, -36.25, -4.25, 0.315277, -8.75, -36.25, 0.315277, -36.25, -36.25, 0.315277, -8.75, -1.25, 0.315277, -5.5, -2.25, 0.315277, -5.5, -2.25, 0.315277, -5.25, -0.5, 0.315277, -4.75, -1.25, 0.315277, -11.75, -0.25, 0.315277, -6.5, 7.25, 0.315277, -4, 7.75, 0.315277, -2, 10.25, 0.315277, -2, -0.25, 0.315277, -2, 3.75, 0.315277, -2, 3.75, 0.315277, -3.25, 5, 0.315277, -4.5, 11, 0.315277, -1.5, 16.75, 0.315277, 3, 17, 0.315277, 4.5, 36.25, 0.315277, 4.5, 11.25, 0.315277, 2.5, 16, 0.315277, 2.5, -0.25, 0.315277, -10.75, 36.25, 0.315277, -36.25, -4, 0.315277, -4.75, -4, 0.315277, -6, -36.25, 0.315277, 0, -7.5, 0.315277, 0, -7.25, 0.315277, -1.5, -6.5, 0.315277, -2, -4.25, 0.315277, -2, -0.75, 0.315277, 8, -0.75, 0.315277, 2, -6.5, 0.315277, 2, -0.25, 0.315277, 8.75, -7.5, 0.315277, 1, -36.25, 0.315277, 36.25, 1.25, 0.315277, 36.25, 1.25, 0.315277, 9, 7.25, 0.315277, 5.5, 7.25, 0.315277, 2, 3.25, 0.315277, 2, 3.25, 0.315277, 8, 2.25, 0.315277, 9, 8.25, 0.315277, 6.5, 14.75, 0.315277, 36.25, 14.5, 0.315277, 6.5, 16.5, 0.315277, 6.25, 36.25, 0.315277, 36.25)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(10, 1, 2), PackedInt32Array(9, 6, 11), PackedInt32Array(14, 13, 12), PackedInt32Array(17, 16, 15), PackedInt32Array(9, 11, 15), PackedInt32Array(15, 11, 17), PackedInt32Array(17, 11, 18), PackedInt32Array(19, 14, 10), PackedInt32Array(22, 21, 20), PackedInt32Array(24, 23, 19), PackedInt32Array(20, 24, 19), PackedInt32Array(18, 11, 12), PackedInt32Array(12, 11, 25), PackedInt32Array(19, 10, 20), PackedInt32Array(20, 10, 22), PackedInt32Array(22, 10, 2), PackedInt32Array(22, 2, 26), PackedInt32Array(25, 10, 12), PackedInt32Array(12, 10, 14), PackedInt32Array(8, 27, 7), PackedInt32Array(7, 27, 28), PackedInt32Array(31, 30, 29), PackedInt32Array(27, 33, 32), PackedInt32Array(3, 28, 27), PackedInt32Array(32, 31, 27), PackedInt32Array(27, 31, 3), PackedInt32Array(3, 31, 5), PackedInt32Array(5, 31, 29), PackedInt32Array(36, 35, 34), PackedInt32Array(36, 34, 37), PackedInt32Array(36, 37, 38), PackedInt32Array(38, 37, 40), PackedInt32Array(38, 40, 29), PackedInt32Array(29, 40, 39), PackedInt32Array(37, 41, 40), PackedInt32Array(29, 30, 38), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(40, 41, 46), PackedInt32Array(45, 42, 47), PackedInt32Array(45, 47, 46), PackedInt32Array(46, 47, 49), PackedInt32Array(46, 49, 48), PackedInt32Array(46, 48, 40), PackedInt32Array(22, 50, 21), PackedInt32Array(50, 22, 49), PackedInt32Array(49, 22, 48), PackedInt32Array(48, 22, 51)]
+vertices = PackedVector3Array(-4, 0.315277, -11.25, -2.25, 0.315277, -11.75, -2.25, 0.315277, -36.25, -4.25, 0.315277, -8.75, -36.25, 0.315277, -36.25, -36.25, 0.315277, -8.75, -1.25, 0.315277, -5.5, -2.25, 0.315277, -5.5, -2.25, 0.315277, -5.25, -0.5, 0.315277, -4.75, 16.75, 0.315277, 3, 17, 0.315277, 4.5, 36.25, 0.315277, 4.5, -0.25, 0.315277, -6.5, -0.25, 0.315277, -2, 10.75, 0.315277, -1.75, 11.25, 0.315277, -1, 11.25, 0.315277, 2.5, 16, 0.315277, 2.5, -1.25, 0.315277, -11.75, 36.25, 0.315277, -36.25, -0.25, 0.315277, -10.75, -4, 0.315277, -4.75, -4, 0.315277, -6, -36.25, 0.315277, 0, -7.5, 0.315277, 0, -7.25, 0.315277, -1.5, -6.5, 0.315277, -2, -4.25, 0.315277, -2, -0.75, 0.315277, 8, -0.75, 0.315277, 2, -6.5, 0.315277, 2, -0.25, 0.315277, 8.75, -7.5, 0.315277, 1, -36.25, 0.315277, 36.25, 1.25, 0.315277, 36.25, 1.25, 0.315277, 9, 7.25, 0.315277, 5.5, 7.25, 0.315277, 2, 3.25, 0.315277, 2, 3.25, 0.315277, 8, 2.25, 0.315277, 9, 8.25, 0.315277, 6.5, 14.75, 0.315277, 36.25, 14.5, 0.315277, 6.5, 16.5, 0.315277, 6.25, 36.25, 0.315277, 36.25)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(12, 11, 10), PackedInt32Array(9, 6, 13), PackedInt32Array(9, 13, 14), PackedInt32Array(14, 13, 15), PackedInt32Array(18, 17, 16), PackedInt32Array(16, 15, 18), PackedInt32Array(18, 15, 10), PackedInt32Array(19, 1, 2), PackedInt32Array(15, 19, 10), PackedInt32Array(10, 19, 12), PackedInt32Array(12, 19, 2), PackedInt32Array(12, 2, 20), PackedInt32Array(15, 13, 21), PackedInt32Array(15, 21, 19), PackedInt32Array(8, 22, 7), PackedInt32Array(7, 22, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(22, 28, 27), PackedInt32Array(3, 23, 22), PackedInt32Array(27, 26, 22), PackedInt32Array(22, 26, 3), PackedInt32Array(3, 26, 5), PackedInt32Array(5, 26, 24), PackedInt32Array(31, 30, 29), PackedInt32Array(31, 29, 32), PackedInt32Array(31, 32, 33), PackedInt32Array(33, 32, 35), PackedInt32Array(33, 35, 24), PackedInt32Array(24, 35, 34), PackedInt32Array(32, 36, 35), PackedInt32Array(24, 25, 33), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(35, 36, 41), PackedInt32Array(40, 37, 42), PackedInt32Array(40, 42, 41), PackedInt32Array(41, 42, 44), PackedInt32Array(41, 44, 43), PackedInt32Array(41, 43, 35), PackedInt32Array(12, 45, 11), PackedInt32Array(45, 12, 44), PackedInt32Array(44, 12, 43), PackedInt32Array(43, 12, 46)]
 agent_radius = 1.24
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
-render_priority = 55
-shader = ExtResource("8_jbj1t")
-shader_parameter/time_scale = 3.0
-shader_parameter/pivot = 6.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkv2x"]
+render_priority = 10
+shader = ExtResource("10_dp3eg")
 shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
-shader_parameter/texture_albedo = ExtResource("9_muem4")
-shader_parameter/wrap = 0.0
-shader_parameter/steepness = 1.0
+shader_parameter/albedo_texture = ExtResource("9_muem4")
+shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 3
+shader_parameter/wrap = 0.355
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = false
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
+shader_parameter/do_billboard = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_jbj1t"]
+material = SubResource("ShaderMaterial_jkv2x")
+size = Vector2(0.3, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
+render_priority = 20
+shader = ExtResource("10_dp3eg")
+shader_parameter/albedo = Color(0.210324, 0.407486, 0.163576, 1)
+shader_parameter/albedo_texture = ExtResource("9_jbj1t")
+shader_parameter/clamp_diffuse_to_max = true
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.355
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = false
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
+shader_parameter/do_billboard = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_dp3eg"]
 material = SubResource("ShaderMaterial_muem4")
-size = Vector2(0.5, 0.75)
-
-[sub_resource type="Shader" id="Shader_jkv2x"]
-code = " shader_type spatial;
-
-//render_mode depth_prepass_alpha, depth_draw_opaque;
-render_mode depth_draw_opaque;
-
-uniform float time_scale = 1.0;
-uniform float pivot = 1.0;
-
-uniform vec4 albedo : source_color;
-uniform sampler2D texture_albedo : source_color, filter_nearest, repeat_enable;
-uniform float wrap : hint_range(-2.0f, 2.0f) = 0.0f;
-uniform float steepness : hint_range(1.0f, 8.0f) = 1.0f;
-uniform int cuts : hint_range(1, 8) = 3;
-
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_nearest;
-
-varying vec3 instance_origin;
-varying float random_value;
-
-void vertex() {
-	random_value = INSTANCE_CUSTOM.z;
-
-	float time = (TIME * (0.5 + INSTANCE_CUSTOM.y) * time_scale) + (6.28318 * INSTANCE_CUSTOM.x);
-	float pivot_angle = cos(time) * 0.1 * pivot;
-	mat2 rotation_matrix = mat2(vec2(cos(pivot_angle), -sin(pivot_angle)), vec2(sin(pivot_angle), cos(pivot_angle)));
-
-	instance_origin = MODELVIEW_MATRIX[3].xyz;
-	//billboarding
-	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
-	VERTEX.xz = rotation_matrix * VERTEX.xz;
-	NORMAL = vec3(0.0, 1.0, 0.0);
-}
-
-void fragment() {
-	vec2 base_uv = UV;
-	LIGHT_VERTEX = instance_origin;
-	vec4 original_color = texture(SCREEN_TEXTURE, SCREEN_UV);
-	vec4 albedo_tex = texture(texture_albedo, base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	ALPHA = albedo.a * albedo_tex.a;
-	//ALBEDO = original_color.rgb;
-	//ALPHA *= original_color.a;
-}
-
-void light() {
-	float attenuation = ATTENUATION;
-	float NdotL = dot(NORMAL, LIGHT);
-	float diffuse_amount = NdotL + (attenuation - 1.0) + wrap;
-	diffuse_amount *= steepness;
-	float cuts_inv = 1.0f / float(cuts);
-	float diffuse_stepped = clamp(diffuse_amount + mod(1.0f - diffuse_amount, cuts_inv), 0.0f, 1.0f);
-	// Apply diffuse result
-	vec3 diffuse = ALBEDO.rgb * LIGHT_COLOR / PI;
-	diffuse *= diffuse_stepped;
-	DIFFUSE_LIGHT += diffuse;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
-render_priority = 10
-shader = SubResource("Shader_jkv2x")
-shader_parameter/time_scale = 3.0
-shader_parameter/pivot = 3.0
-shader_parameter/albedo = Color(0.25388, 0.419657, 0.219452, 1)
-shader_parameter/texture_albedo = ExtResource("10_muem4")
-shader_parameter/wrap = 0.0
-shader_parameter/steepness = 1.0
-shader_parameter/cuts = 3
-
-[sub_resource type="QuadMesh" id="QuadMesh_0ld40"]
-material = SubResource("ShaderMaterial_dp3eg")
-size = Vector2(0.5, 1)
+size = Vector2(0.3, 0.5)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.7
@@ -169,7 +130,9 @@ tonemap_exposure = 0.9
 ssao_radius = 2.01
 ssao_intensity = 1.99
 ssao_power = 1.84672
+glow_enabled = true
 glow_bloom = 0.1
+adjustment_enabled = true
 adjustment_contrast = 1.07
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2604s"]
@@ -527,38 +490,35 @@ transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5
 [node name="crate54" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -7.58757)
 
-[node name="barrel" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" instance=ExtResource("4_4cap6")]
-transform = Transform3D(1.55604, 0, 0, 0, 1.55604, 0, 0, 0, 1.55604, 5.71241, 0, -2.41453)
-
 [node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108, 0)
 mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-level_of_detail = 24000
+level_of_detail = 40000
 total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
 
 [node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance"]
-mesh = SubResource("QuadMesh_dp3eg")
+mesh = SubResource("QuadMesh_jbj1t")
 skeleton = NodePath("")
 
 [node name="GrassMultiMeshInstance2" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-total_number_of_meshes = 0
+total_number_of_meshes = 500
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
 
 [node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance2"]
-mesh = SubResource("QuadMesh_0ld40")
+mesh = SubResource("QuadMesh_dp3eg")
 skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.553696, 0.832719, 0, -0.832719, 0.553696, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.554539, 0.832158, 0, -0.832158, 0.554539, 0, 0, 0)
 light_energy = 2.0
 light_indirect_energy = 0.0
 shadow_enabled = true
@@ -627,8 +587,9 @@ skeleton = NodePath("../../Ground/NavigationRegion3D")
 [node name="Lighting" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.384849, 1.2679, -6.54563)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.67098, 2.00692, -7.09452)
 light_energy = 5.133
+light_indirect_energy = 0.0
 shadow_enabled = true
 shadow_blur = 0.0
 omni_range = 7.648
