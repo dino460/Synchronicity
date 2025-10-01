@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="6_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
-[ext_resource type="Shader" uid="uid://d2nordhselkgc" path="res://shaders/new_grass_shader.gdshader" id="7_a8y0u"]
+[ext_resource type="Shader" uid="uid://d2nordhselkgc" path="res://shaders/new_grass_shader.gdshader" id="8_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
+[ext_resource type="Texture2D" uid="uid://d22rjsuei2fwe" path="res://assets/sprites/grass0.png" id="9_muem4"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
+[ext_resource type="Texture2D" uid="uid://w68v3t1gxymk" path="res://assets/sprites/grass2.png" id="10_muem4"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
@@ -37,15 +39,15 @@ size = Vector3(75, 1, 75)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbj1t"]
 render_priority = 0
 shader = ExtResource("4_jkv2x")
-shader_parameter/albedo = Color(0.317647, 0.537255, 0.25098, 1)
+shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
 shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 3
-shader_parameter/wrap = 0.0
+shader_parameter/wrap = 0.355
 shader_parameter/steepness = 1.0
 shader_parameter/use_attenuation = true
 shader_parameter/use_specular = false
 shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
+shader_parameter/specular_shininess = 16.33
 shader_parameter/use_rim = false
 shader_parameter/rim_width = 8.0
 shader_parameter/rim_color = Color(1, 1, 1, 1)
@@ -62,23 +64,20 @@ vertices = PackedVector3Array(-4, 0.315277, -11.25, -2.25, 0.315277, -11.75, -2.
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(10, 1, 2), PackedInt32Array(9, 6, 11), PackedInt32Array(14, 13, 12), PackedInt32Array(17, 16, 15), PackedInt32Array(9, 11, 15), PackedInt32Array(15, 11, 17), PackedInt32Array(17, 11, 18), PackedInt32Array(19, 14, 10), PackedInt32Array(22, 21, 20), PackedInt32Array(24, 23, 19), PackedInt32Array(20, 24, 19), PackedInt32Array(18, 11, 12), PackedInt32Array(12, 11, 25), PackedInt32Array(19, 10, 20), PackedInt32Array(20, 10, 22), PackedInt32Array(22, 10, 2), PackedInt32Array(22, 2, 26), PackedInt32Array(25, 10, 12), PackedInt32Array(12, 10, 14), PackedInt32Array(8, 27, 7), PackedInt32Array(7, 27, 28), PackedInt32Array(31, 30, 29), PackedInt32Array(27, 33, 32), PackedInt32Array(3, 28, 27), PackedInt32Array(32, 31, 27), PackedInt32Array(27, 31, 3), PackedInt32Array(3, 31, 5), PackedInt32Array(5, 31, 29), PackedInt32Array(36, 35, 34), PackedInt32Array(36, 34, 37), PackedInt32Array(36, 37, 38), PackedInt32Array(38, 37, 40), PackedInt32Array(38, 40, 29), PackedInt32Array(29, 40, 39), PackedInt32Array(37, 41, 40), PackedInt32Array(29, 30, 38), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(40, 41, 46), PackedInt32Array(45, 42, 47), PackedInt32Array(45, 47, 46), PackedInt32Array(46, 47, 49), PackedInt32Array(46, 49, 48), PackedInt32Array(46, 48, 40), PackedInt32Array(22, 50, 21), PackedInt32Array(50, 22, 49), PackedInt32Array(49, 22, 48), PackedInt32Array(48, 22, 51)]
 agent_radius = 1.24
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jbj1t"]
-load_path = "res://.godot/imported/grass_sprite-tmp.png-558f131866df6c981f1d7a8265c5394c.s3tc.ctex"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
-render_priority = 0
-shader = ExtResource("7_a8y0u")
+render_priority = 55
+shader = ExtResource("8_jbj1t")
 shader_parameter/time_scale = 3.0
 shader_parameter/pivot = 6.0
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/texture_albedo = SubResource("CompressedTexture2D_jbj1t")
+shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
+shader_parameter/texture_albedo = ExtResource("9_muem4")
 shader_parameter/wrap = 0.0
 shader_parameter/steepness = 1.0
 shader_parameter/cuts = 3
 
 [sub_resource type="QuadMesh" id="QuadMesh_dp3eg"]
 material = SubResource("ShaderMaterial_muem4")
-size = Vector2(0.5, 1.5)
+size = Vector2(0.5, 0.75)
 
 [sub_resource type="Shader" id="Shader_jkv2x"]
 code = " shader_type spatial;
@@ -138,23 +137,20 @@ void light() {
 	DIFFUSE_LIGHT += diffuse;
 }"
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_muem4"]
-load_path = "res://.godot/imported/grass_sprite-tmp.png-558f131866df6c981f1d7a8265c5394c.s3tc.ctex"
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
 render_priority = 10
 shader = SubResource("Shader_jkv2x")
 shader_parameter/time_scale = 3.0
 shader_parameter/pivot = 3.0
-shader_parameter/albedo = Color(0.796243, 0.796243, 0.796243, 1)
-shader_parameter/texture_albedo = SubResource("CompressedTexture2D_muem4")
+shader_parameter/albedo = Color(0.25388, 0.419657, 0.219452, 1)
+shader_parameter/texture_albedo = ExtResource("10_muem4")
 shader_parameter/wrap = 0.0
 shader_parameter/steepness = 1.0
 shader_parameter/cuts = 3
 
 [sub_resource type="QuadMesh" id="QuadMesh_0ld40"]
 material = SubResource("ShaderMaterial_dp3eg")
-size = Vector2(0.5, 0.75)
+size = Vector2(0.5, 1)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.7
@@ -169,21 +165,12 @@ sky_material = SubResource("PhysicalSkyMaterial_owfbn")
 background_mode = 2
 background_energy_multiplier = 2.25
 sky = SubResource("Sky_yalbf")
-ambient_light_source = 3
-tonemap_mode = 4
 tonemap_exposure = 0.9
-ssao_enabled = true
 ssao_radius = 2.01
 ssao_intensity = 1.99
 ssao_power = 1.84672
-ssil_enabled = true
-glow_enabled = true
-glow_normalized = true
 glow_bloom = 0.1
-adjustment_enabled = true
-adjustment_brightness = 0.94
-adjustment_contrast = 0.87
-adjustment_saturation = 1.21
+adjustment_contrast = 1.07
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2604s"]
 albedo_color = Color(0.858904, 0, 0.160098, 1)
@@ -549,7 +536,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-level_of_detail = 80000
+level_of_detail = 24000
 total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
@@ -561,7 +548,7 @@ skeleton = NodePath("")
 
 [node name="GrassMultiMeshInstance2" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-total_number_of_meshes = 500
+total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
@@ -571,7 +558,9 @@ mesh = SubResource("QuadMesh_0ld40")
 skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.807712, 0.589578, 0, -0.589578, 0.807712, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.553696, 0.832719, 0, -0.832719, 0.553696, 0, 0, 0)
+light_energy = 2.0
+light_indirect_energy = 0.0
 shadow_enabled = true
 shadow_blur = 0.4
 directional_shadow_mode = 0
@@ -638,8 +627,7 @@ skeleton = NodePath("../../Ground/NavigationRegion3D")
 [node name="Lighting" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.61151, 2.99291, 3.95771)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.384849, 1.2679, -6.54563)
 light_energy = 5.133
 shadow_enabled = true
 shadow_blur = 0.0

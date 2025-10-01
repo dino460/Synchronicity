@@ -1,7 +1,7 @@
  shader_type spatial;
 
 //render_mode depth_prepass_alpha, depth_draw_opaque;
-render_mode depth_draw_opaque;
+render_mode diffuse_burley;
 
 uniform float time_scale = 1.0;
 uniform float pivot = 1.0;
@@ -34,12 +34,10 @@ void vertex() {
 void fragment() {
 	vec2 base_uv = UV;
 	LIGHT_VERTEX = instance_origin;
-	vec4 original_color = texture(SCREEN_TEXTURE, SCREEN_UV);
+	//vec4 original_color = texture(SCREEN_TEXTURE, SCREEN_UV);
 	vec4 albedo_tex = texture(texture_albedo, base_uv);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	ALPHA = albedo.a * albedo_tex.a;
-	//ALBEDO = original_color.rgb;
-	//ALPHA *= original_color.a;
+	ALPHA *= albedo.a * albedo_tex.a;
 }
 
 void light() {
