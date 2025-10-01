@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="6_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
+[ext_resource type="Texture2D" uid="uid://dg88lq04pvlmk" path="res://assets/sprites/test_grass.png" id="8_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
 [ext_resource type="Texture2D" uid="uid://bjd2vtgkym1yj" path="res://assets/sprites/grass1.png" id="9_jbj1t"]
-[ext_resource type="Texture2D" uid="uid://d22rjsuei2fwe" path="res://assets/sprites/grass0.png" id="9_muem4"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
 [ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
@@ -66,8 +66,10 @@ agent_radius = 1.24
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jkv2x"]
 render_priority = 10
 shader = ExtResource("10_dp3eg")
+shader_parameter/time_scale = 3.0
+shader_parameter/pivot = 6.0
 shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
-shader_parameter/albedo_texture = ExtResource("9_muem4")
+shader_parameter/albedo_texture = ExtResource("8_jbj1t")
 shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 3
 shader_parameter/wrap = 0.355
@@ -86,12 +88,14 @@ shader_parameter/do_billboard = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_jbj1t"]
 material = SubResource("ShaderMaterial_jkv2x")
-size = Vector2(0.3, 0.5)
+size = Vector2(0.6, 0.6)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
 render_priority = 20
 shader = ExtResource("10_dp3eg")
-shader_parameter/albedo = Color(0.210324, 0.407486, 0.163576, 1)
+shader_parameter/time_scale = 3.0
+shader_parameter/pivot = 3.0
+shader_parameter/albedo = Color(0.306346, 0.57838, 0.24171, 1)
 shader_parameter/albedo_texture = ExtResource("9_jbj1t")
 shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 3
@@ -111,7 +115,7 @@ shader_parameter/do_billboard = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_dp3eg"]
 material = SubResource("ShaderMaterial_muem4")
-size = Vector2(0.3, 0.5)
+size = Vector2(0.4, 0.5)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.7
@@ -126,14 +130,15 @@ sky_material = SubResource("PhysicalSkyMaterial_owfbn")
 background_mode = 2
 background_energy_multiplier = 2.25
 sky = SubResource("Sky_yalbf")
-tonemap_exposure = 0.9
 ssao_radius = 2.01
 ssao_intensity = 1.99
 ssao_power = 1.84672
 glow_enabled = true
 glow_bloom = 0.1
 adjustment_enabled = true
-adjustment_contrast = 1.07
+adjustment_brightness = 0.95
+adjustment_contrast = 1.21
+adjustment_saturation = 0.82
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2604s"]
 albedo_color = Color(0.858904, 0, 0.160098, 1)
@@ -496,7 +501,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-level_of_detail = 40000
+level_of_detail = 80000
 total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
@@ -508,7 +513,7 @@ skeleton = NodePath("")
 
 [node name="GrassMultiMeshInstance2" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-total_number_of_meshes = 500
+total_number_of_meshes = 350
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
@@ -522,7 +527,6 @@ transform = Transform3D(1, 0, 0, 0, 0.554539, 0.832158, 0, -0.832158, 0.554539, 
 light_energy = 2.0
 light_indirect_energy = 0.0
 shadow_enabled = true
-shadow_blur = 0.4
 directional_shadow_mode = 0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport"]

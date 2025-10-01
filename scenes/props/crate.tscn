@@ -1,18 +1,28 @@
-[gd_scene load_steps=7 format=4 uid="uid://bvs1xcg0yjlxv"]
+[gd_scene load_steps=8 format=4 uid="uid://bvs1xcg0yjlxv"]
 
 [ext_resource type="PackedScene" uid="uid://co7mw48qs41dx" path="res://assets/lukkys props/containers/crate.glb" id="1_e8afg"]
+[ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="2_ou5ok"]
 [ext_resource type="Texture2D" uid="uid://c3l6iskrcos4i" path="res://assets/lukkys props/containers/crate_crate_albedo.png" id="2_wxgmk"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dpkob"]
-resource_name = "Material"
-cull_mode = 2
-diffuse_mode = 3
-specular_mode = 1
-albedo_texture = ExtResource("2_wxgmk")
-metallic = 0.5
-roughness = 0.0
-proximity_fade_distance = 0.01
-distance_fade_max_distance = 6.2
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rc6k0"]
+render_priority = 0
+shader = ExtResource("2_ou5ok")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo_texture = ExtResource("2_wxgmk")
+shader_parameter/clamp_diffuse_to_max = true
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.335
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = false
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_hjjuv"]
 _surfaces = [{
@@ -36,7 +46,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 432,
 "index_data": PackedByteArray("DgAVABIADgAfABUAMQALAOYAMQAHAAsA5wAQAO0A5wAMABAA6gATAAIA6gAPABMAAQAFAC4AAQARAAUAGQAgAB0AGQAWACAABgAcAAoABgAYABwACQAeAA0ACQAbAB4AFAAaAAgAFAAXABoAIgArACoAIgAjACsAJwAkACYAJwAsACQAJQApACgAJQAhACkAPwBFAEIAPwBOAEUALQA6AAAALQA3ADoAAAA9AIMAAAA6AD0AgwBAADIAgwA9AEAAMgA3AC0AMgBAADcARgBMAEkARgBDAEwAOABKADsAOABHAEoAPABNAD4APABLAE0AQQBIADkAQQBEAEgATwBZAFcATwBRAFkAVQBSAFQAVQBaAFIAUwBYAFYAUwBQAFgAZABsAGcAZAB2AGwAAwBhAOsAAwBcAGEA7ABmAOEA7ABiAGYA4ABoAIYA4ABlAGgAhwBdAAQAhwBpAF0AbwB1AHMAbwBrAHUAWwByAGAAWwBuAHIAXwB0AGMAXwBxAHQAagBwAF4AagBtAHAAeACBAIAAeAB5AIEAfQB6AHwAfQCCAHoAewB/AH4AewB3AH8AkwCZAJYAkwCjAJkAhACOAN8AhACIAI4A3gCRANgA3gCNAJEA2gCUADQA2gCSAJQANgCJAIUANgCVAIkAmwCiAJ8AmwCYAKIAigCgAI8AigCcAKAAjAChAJAAjACeAKEAlwCdAIsAlwCaAJ0ApQCuAK0ApQCmAK4AqgCnAKkAqgCvAKcAqACsAKsAqACkAKwAuwDAAL4AuwDKAMAANQC2ANsANQCxALYA2QC5AOQA2QC1ALkA5QC9ADAA5QC6AL0ALwCwADMALwC8ALAAwwDLAMcAwwDBAMsAsgDIALcAsgDEAMgAtADJALgAtADGAMkAvwDFALMAvwDCAMUAzQDWANUAzQDOANYA0gDPANEA0gDXAM8A0ADUANMA0ADMANQA+AAAAfwA+AAJAQAB3QD3AOMA3QDzAPcA4gD6AO4A4gD2APoA7wD/AOkA7wD7AP8A6ADyANwA6AD+APIABQELAQgBBQECAQsB8QAHAfUA8QAEAQcB9AAKAfkA9AAGAQoB/QADAfAA/QABAQMBDQEXARUBDQEPARcBEgEOAREBEgEWAQ4BEAEUARMBEAEMARQB"),
-"material": SubResource("StandardMaterial3D_dpkob"),
+"material": SubResource("ShaderMaterial_rc6k0"),
 "name": "Material",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),

@@ -4,6 +4,9 @@ shader_type spatial;
 render_mode depth_draw_opaque;
 //const float PI = 3.1415926536f;
 
+uniform float time_scale = 1.0;
+uniform float pivot = 1.0;
+
 uniform vec4 albedo : source_color = vec4(1.0f);
 uniform sampler2D albedo_texture : source_color, filter_nearest;
 uniform bool clamp_diffuse_to_max = false;
@@ -35,17 +38,25 @@ varying vec3 normal;
 uniform bool do_billboard = false;
 
 varying vec3 instance_origin; 
+varying float random_value;
 
 float split_specular(float specular) {
 	return step(0.5f, specular);
 }
 
 void vertex() {
+	random_value = INSTANCE_CUSTOM.z;
+
+	float time = (TIME * (0.5 + INSTANCE_CUSTOM.y) * time_scale) + (6.28318 * INSTANCE_CUSTOM.x);
+	float pivot_angle = cos(time) * 0.1 * pivot;
+	mat2 rotation_matrix = mat2(vec2(cos(pivot_angle), -sin(pivot_angle)), vec2(sin(pivot_angle), cos(pivot_angle)));
+	
 	instance_origin = MODELVIEW_MATRIX[3].xyz;
 	if (do_billboard == true) {
 		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
 		NORMAL = vec3(0.0, 1.0, 0.0);
 	}
+	VERTEX.xz = rotation_matrix * VERTEX.xz;
 	vertex_pos = VERTEX;
 	normal = NORMAL;
 }
