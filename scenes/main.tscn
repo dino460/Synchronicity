@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=37 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dg88lq04pvlmk" path="res://assets/sprites/test_grass.png" id="8_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
 [ext_resource type="Texture2D" uid="uid://bjd2vtgkym1yj" path="res://assets/sprites/grass1.png" id="9_jbj1t"]
+[ext_resource type="ArrayMesh" uid="uid://c4lbgf21lnics" path="res://assets/props/rocks/rock1.res" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
 [ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
@@ -16,6 +17,7 @@
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://cp55ol2hjudtm" path="res://scenes/menus/main_menu.tscn" id="17_muem4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
 render_priority = 127
@@ -522,6 +524,18 @@ grass_mesh = NodePath("GrassMeshInstance3D")
 mesh = SubResource("QuadMesh_dp3eg")
 skeleton = NodePath("")
 
+[node name="RockMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+script = ExtResource("6_jbj1t")
+total_number_of_meshes = 10
+number_of_groups = 64
+ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
+grass_mesh = NodePath("Rock1")
+
+[node name="Rock1" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/RockMultiMeshInstance"]
+transform = Transform3D(0.510907, 0, 0, 0, 0.510907, 0, 0, 0, 0.510907, 2.08562, 0.111524, -2.9526)
+mesh = ExtResource("10_0ld40")
+skeleton = NodePath("../../../../..")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.554539, 0.832158, 0, -0.832158, 0.554539, 0, 0, 0)
 light_energy = 2.0
@@ -678,3 +692,7 @@ text = "test to test test size"
 label_settings = SubResource("LabelSettings_0gito")
 horizontal_alignment = 1
 uppercase = true
+
+[node name="MainMenu" parent="UISubViewportContainer" instance=ExtResource("17_muem4")]
+visible = false
+layout_mode = 2

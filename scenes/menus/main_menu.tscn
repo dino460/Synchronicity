@@ -1,0 +1,100 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp55ol2hjudtm"]
+
+[ext_resource type="FontFile" uid="uid://dcga1t6wt3iep" path="res://assets/fonts/Alkhemikal.ttf" id="2_2o76q"]
+[ext_resource type="Shader" uid="uid://b2fnqr4g2slah" path="res://shaders/blur.gdshader" id="3_2o76q"]
+[ext_resource type="FontFile" uid="uid://l5udpiyp6anb" path="res://assets/fonts/alagard.ttf" id="3_6bivr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2o76q"]
+shader = ExtResource("3_2o76q")
+shader_parameter/blur_amount = 1.033
+shader_parameter/mix_amount = 0.12
+shader_parameter/color_over = Color(0, 0, 0, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Blur" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_2o76q")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -493.5
+offset_top = -196.5
+offset_right = 493.5
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.815686, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.234986, 0.140942, 0.130454, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = ExtResource("2_2o76q")
+theme_override_font_sizes/font_size = 195
+text = "Synchronicity"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 74.5
+offset_right = 56.0
+offset_bottom = 125.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_pressed_color = Color(0.685744, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.811765, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.239216, 0.239216, 0.239216, 1)
+theme_override_colors/font_color = Color(0.82606, 0.82606, 0.82606, 1)
+theme_override_colors/font_focus_color = Color(0.811765, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.686275, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("3_6bivr")
+theme_override_font_sizes/font_size = 75
+text = "Start"
+flat = true
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 166.5
+offset_right = 56.0
+offset_bottom = 217.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_hover_pressed_color = Color(0.685744, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.811765, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.239216, 0.239216, 0.239216, 1)
+theme_override_colors/font_color = Color(0.82606, 0.82606, 0.82606, 1)
+theme_override_colors/font_focus_color = Color(0.811765, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.686275, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("3_6bivr")
+theme_override_font_sizes/font_size = 75
+text = "Exit"
+flat = true
