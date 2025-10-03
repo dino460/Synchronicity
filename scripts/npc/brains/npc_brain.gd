@@ -44,7 +44,7 @@ func _physics_process(_delta: float) -> void:
 func run() -> void:
 	var delta : float = get_physics_process_delta_time()
 
-	if thoughts_label != null and true:
+	if thoughts_label != null and false:
 		thoughts_label.text = ""
 		if schedule_commands.size() > 1:
 			thoughts_label.text += scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state"))
@@ -74,11 +74,10 @@ func run() -> void:
 
 			match schedule_commands.get("current_task_state"):
 				ScheduledBrain.TaskState.MOVING:
-					npc.handle_navigation(schedule_commands.get("landmark_target").position, Vector3.INF, false)
+					npc.handle_navigation(schedule_commands.get("landmark_target").global_position, Vector3.INF, false)
 				# ScheduledBrain.TaskState.IDLING:
 				# 	npc.handle_navigation(schedule_commands.get("landmark_target").position)
 
-			current_state = State.FIGHTING
 		CombatBrain.CombatState.LOOKING:
 			pass
 

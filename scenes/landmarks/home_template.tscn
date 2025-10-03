@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbow8vjepuo2f"]
+[gd_scene load_steps=6 format=3 uid="uid://cbow8vjepuo2f"]
 
 [ext_resource type="Script" uid="uid://cdb7tnymvulwp" path="res://scripts/npc/landmarks/home.gd" id="1_s3pby"]
+[ext_resource type="PackedScene" uid="uid://bvnvenss520rg" path="res://assets/houses/House_Full_ordinar/house_08_full.fbx" id="2_74yr1"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rijab"]
 albedo_color = Color(0.293485, 0.352648, 1, 1)
@@ -8,8 +9,10 @@ albedo_color = Color(0.293485, 0.352648, 1, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_0suxt"]
 material = SubResource("StandardMaterial3D_rijab")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_74yr1"]
+size = Vector3(3.13837, 2.9364, 5.01031)
+
 [node name="HOME" type="Node3D"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
 script = ExtResource("1_s3pby")
 expected_home_time = 8.0
 time_want_to_arrive = 20.0
@@ -19,12 +22,22 @@ radius_of_influence = 5.0
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_0suxt")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
-light_color = Color(4.62055e-06, 0.720069, 0.970503, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09422, 4.58071, 3.47835)
+light_color = Color(0.754726, 0.632143, 0.589694, 1)
 light_energy = 4.75
 shadow_enabled = true
 omni_range = 5.73
 omni_attenuation = 0.375
+
+[node name="house_08_full" parent="." instance=ExtResource("2_74yr1")]
+transform = Transform3D(2.445, 0, 0, 0, 1.75, 0, 0, 0, 1.466, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="house_08_full"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="house_08_full/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.478668, 1.48658, -0.421051)
+shape = SubResource("BoxShape3D_74yr1")

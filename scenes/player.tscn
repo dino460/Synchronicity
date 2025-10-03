@@ -836,7 +836,7 @@ near = 0.1
 far = 100.0
 
 [node name="Postprocessing" type="MeshInstance3D" parent="CameraPivot/EnvironmentCamera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
+transform = Transform3D(3.7904, 0, 0, 0, -4.37114e-08, -1.79783, 0, 1, -7.85855e-08, 0, 0, -1)
 mesh = SubResource("PlaneMesh_qfm1y")
 surface_material_override/0 = SubResource("ShaderMaterial_4r5pv")
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://djjrue350v5uh"]
+[gd_scene load_steps=6 format=3 uid="uid://djjrue350v5uh"]
 
 [ext_resource type="Script" uid="uid://bbgyagyxugep8" path="res://scripts/npc/landmarks/job.gd" id="1_h1gmx"]
+[ext_resource type="PackedScene" uid="uid://dtahbfifsectj" path="res://assets/houses/House_Full_ordinar/House_10_full.fbx" id="2_hd88k"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_34hwy"]
 albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)
@@ -8,8 +9,10 @@ albedo_color = Color(0.534753, 0.796901, 1.15514e-06, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_ejm8f"]
 material = SubResource("StandardMaterial3D_34hwy")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hd88k"]
+size = Vector3(9.17684, 2.9364, 5.20143)
+
 [node name="WORK" type="Node3D"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 6.43425, 0.133088, -7.53322)
 script = ExtResource("1_h1gmx")
 max_lateness = 1.0
 max_worker_distance = 10.0
@@ -17,12 +20,29 @@ landmark_name = "Work"
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_ejm8f")
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="."]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.576, 0)
-light_color = Color(0, 0.800927, 0.184589, 1)
+transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, -3.62602, 5.84561, 8.0314)
+light_color = Color(0.698311, 0.676932, 0.390158, 1)
 light_energy = 4.75
 shadow_enabled = true
-omni_range = 5.73
+omni_range = 8.8273
 omni_attenuation = 0.375
+
+[node name="House_10_full" parent="." instance=ExtResource("2_hd88k")]
+transform = Transform3D(2.445, 0, 0, 0, 1.75, 0, 0, 0, 1.466, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="House_10_full"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="House_10_full/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.498837, 1.48658, 0.533669)
+shape = SubResource("BoxShape3D_hd88k")
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="House_10_full"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100136, 0)
+height = 31.45
+vertices = PackedVector3Array(-3.90564, 0, -1.79326, 4.94834, 0, -1.77357, 4.91292, 0, 2.83364, -3.92925, 0, 2.79426)
+affect_navigation_mesh = true
+carve_navigation_mesh = true
