@@ -31,7 +31,6 @@ func _ready() -> void:
 		var new_center_x = ground_mesh.global_position.x + (mult_factor_x * ground_mesh.mesh.size.x / denominator)
 		var new_center_z = ground_mesh.global_position.z + (mult_factor_z * ground_mesh.mesh.size.x / denominator)
 		multimesh_instance.spawn_area_center = Vector3(new_center_x, ground_mesh.global_position.y, new_center_z)
-		print(multimesh_instance.spawn_area_center)
 
 		mult_factor_x += increment
 		counter -= 1
