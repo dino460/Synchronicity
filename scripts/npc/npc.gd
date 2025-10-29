@@ -143,7 +143,7 @@ func _ready() -> void:
 	# weapon_attatchment = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D"
 
 	should_attack_move = true
-	navigation_agent.debug_enabled = true
+	# navigation_agent.debug_enabled = true
 
 
 func _process(delta: float) -> void:
@@ -176,9 +176,9 @@ func _physics_process(delta: float) -> void:
 		mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
 
 	if is_in_frustum:
-		# mesh_pivot_ref.visible = true
+		mesh_pivot_ref.visible = true
 		if npc_brain.get_current_state() == NPCBrain.State.DEAD:
-			pass
+			return
 		elif not Vector2(velocity.x, velocity.z).is_zero_approx():
 			if is_running:
 				running.emit()
@@ -186,8 +186,8 @@ func _physics_process(delta: float) -> void:
 				walking.emit()
 		else:
 			idling.emit()
-	# else:
-		# mesh_pivot_ref.visible = false # CHANGE TO FADE WHEN POSSIBLE
+	else:
+		mesh_pivot_ref.visible = false # CHANGE TO FADE WHEN POSSIBLE
 
 	move_and_slide()
 

@@ -20,6 +20,8 @@ func _process(_delta):
 		right_attack_performed.emit()
 	elif Input.is_action_just_pressed("player_dash"):
 		dash_performed.emit()
+	elif Input.is_action_just_pressed("exit"):
+		get_tree().quit()
 
 
 func get_player_direction_this_frame() -> Vector3:

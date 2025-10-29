@@ -91,17 +91,15 @@ animator = NodePath("../MeshPivot/Low-Poly-Base_blend/AnimationPlayer")
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("3_imqgc")
 
-[node name="PlayerStats" type="Node" parent="."]
-script = ExtResource("4_dcvbl")
-
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("4_dcvbl")
-constitution = 100.0
+constitution = 50.0
 
 [node name="DepthTestOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.622089, 0)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." node_paths=PackedStringArray("audio_stream_player")]
+volume_db = 5.0
 script = ExtResource("4_n1gxj")
 audio_stream_player = NodePath(".")
 

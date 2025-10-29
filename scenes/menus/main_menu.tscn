@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://cp55ol2hjudtm"]
+[gd_scene load_steps=6 format=3 uid="uid://cp55ol2hjudtm"]
 
+[ext_resource type="Script" uid="uid://wt2pcbbij7n5" path="res://scripts/menu.gd" id="1_6bivr"]
 [ext_resource type="FontFile" uid="uid://dcga1t6wt3iep" path="res://assets/fonts/Alkhemikal.ttf" id="2_2o76q"]
 [ext_resource type="Shader" uid="uid://b2fnqr4g2slah" path="res://shaders/blur.gdshader" id="3_2o76q"]
 [ext_resource type="FontFile" uid="uid://l5udpiyp6anb" path="res://assets/fonts/alagard.ttf" id="3_6bivr"]
@@ -17,6 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_6bivr")
 
 [node name="Blur" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_2o76q")
@@ -98,3 +100,6 @@ theme_override_fonts/font = ExtResource("3_6bivr")
 theme_override_font_sizes/font_size = 75
 text = "Exit"
 flat = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

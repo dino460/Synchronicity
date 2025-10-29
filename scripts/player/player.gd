@@ -195,6 +195,6 @@ func _on_animation_handler_enable_combo():
 
 func _on_trigger_death() -> void:
 	# print("Player died")
-	# is_dead = true
-	# death.emit()
+	is_dead = true
+	death.emit()
 	pass # Replace with function body.
