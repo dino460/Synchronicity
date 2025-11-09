@@ -14,7 +14,7 @@ class_name Scheduler
 
 @export var next_available_id : int = 1
 
-@export var number_of_groups     : int = 10
+@export var number_of_groups     : int = 50
 @export var max_number_of_groups : int = 10
 @export var max_npcs_in_group    : int = 150
 var next_group : int = 0
@@ -77,15 +77,16 @@ func _process(_delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if not thread_group[frame_counter].is_alive():
-		var thread = Thread.new()
-		thread_group[frame_counter] = thread
+		# print("Group ", frame_counter, " is not alive")
+		# var thread = Thread.new()
+		# thread_group[frame_counter] = thread
 		thread_group[frame_counter].start(run_process_group.bind(frame_counter, thread_group[frame_counter]))
 
 	frame_counter += 1
 	if frame_counter >= number_of_groups:
 		frame_counter = 0
 
-	call_deferred("stop_npc_animation")
+	# call_deferred("stop_npc_animation")
 
 func stop_npc_animation():
 	for npc in npc_holder.get_children():

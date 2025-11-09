@@ -9,7 +9,6 @@ albedo_color = Color(0.293485, 0.352648, 1, 1)
 material = SubResource("StandardMaterial3D_rijab")
 
 [node name="HOME" type="Node3D"]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -0.620317, 0.133089, 15.5366)
 script = ExtResource("1_s3pby")
 expected_home_time = 8.0
 time_want_to_arrive = 20.0
@@ -19,12 +18,5 @@ radius_of_influence = 5.0
 area_max_influence = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, 0, 0, 0)
 mesh = SubResource("SphereMesh_0suxt")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(0.716872, 0, 0, 0, 0.716872, 0, 0, 0, 0.716872, 0, 1.57619, 0)
-light_color = Color(4.62055e-06, 0.720069, 0.970503, 1)
-light_energy = 4.75
-shadow_enabled = true
-omni_range = 5.73
-omni_attenuation = 0.375

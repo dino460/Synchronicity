@@ -502,7 +502,6 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-level_of_detail = 80000
 total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
@@ -588,34 +587,6 @@ transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.04739
 visible = false
 mesh = SubResource("PlaneMesh_ip3kr")
 skeleton = NodePath("../../Ground/NavigationRegion3D")
-
-[node name="Lighting" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
-
-[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.67098, 2.00692, -7.09452)
-light_energy = 5.133
-light_indirect_energy = 0.0
-shadow_enabled = true
-shadow_blur = 0.0
-omni_range = 7.648
-omni_attenuation = 0.765
-omni_shadow_mode = 0
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0153115, 2.99291, -8.87177)
-visible = false
-light_energy = 5.133
-shadow_enabled = true
-omni_range = 7.648
-omni_attenuation = 0.765
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Lighting"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.54987, 2.99291, -5.15791)
-visible = false
-light_energy = 5.133
-shadow_enabled = true
-omni_range = 7.648
-omni_attenuation = 0.765
 
 [node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 sun_up_time = 5.0

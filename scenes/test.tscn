@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene load_steps=16 format=3 uid="uid://flkg36ogpfcu"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_8maks"]
 [ext_resource type="Script" uid="uid://b4dfmkk7jnilp" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="4_u8e0t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
-size = Vector3(1000, 1, 1000)
+size = Vector3(100, 1, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwulq"]
 albedo_texture = ExtResource("1_x07qc")
@@ -17,10 +17,10 @@ uv1_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
 material = SubResource("StandardMaterial3D_fwulq")
-size = Vector2(1000, 1000)
+size = Vector2(100, 100)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_knv0t"]
-vertices = PackedVector3Array(-499.522, 0.392384, -499.699, -499.522, 0.392384, 499.301, 499.478, 0.392384, 499.301, 499.478, 0.392384, -499.699)
+vertices = PackedVector3Array(-49.5222, 0.392384, -49.6994, -49.5222, 0.392384, 49.3006, 49.4778, 0.392384, 49.3006, 49.4778, 0.392384, -49.6994)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_phknx"]
@@ -58,14 +58,6 @@ font = SubResource("SystemFont_ju7ma")
 font_size = 30
 font_color = Color(0.926528, 0, 0, 1)
 
-[sub_resource type="SystemFont" id="SystemFont_6govk"]
-font_names = PackedStringArray("FiraCode Nerd Font Mono")
-
-[sub_resource type="LabelSettings" id="LabelSettings_vmv3x"]
-font = SubResource("SystemFont_6govk")
-font_size = 20
-font_color = Color(0.926528, 0, 0, 1)
-
 [node name="Main" type="Node3D"]
 
 [node name="Main SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -88,8 +80,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 200
-world_size = 1000.0
+number_of_npcs_to_spawn = 50
+world_size = 100.0
 npc_holder = NodePath("../NPC HOLDER")
 
 [node name="NPC HOLDER" type="Node" parent="Main SubViewportContainer/SubViewport"]
@@ -118,6 +110,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport"]
 transform = Transform3D(0.896574, -0.11613, -0.427398, 0.442861, 0.22326, 0.868348, -0.00542101, -0.967817, 0.251596, 0, 0, 0)
 shadow_enabled = true
+directional_shadow_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_0jq3o")
@@ -150,15 +143,3 @@ offset_right = 296.0
 offset_bottom = 38.0
 text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_v26lh")
-
-[node name="Weights Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
-visible = false
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -111.0
-offset_bottom = 38.0
-grow_horizontal = 0
-text = "test to test test size"
-label_settings = SubResource("LabelSettings_vmv3x")
-horizontal_alignment = 2

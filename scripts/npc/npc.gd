@@ -23,6 +23,8 @@ var viewport : Viewport
 
 var is_dead : bool = false
 
+@export var mesh : MeshInstance3D
+
 @export_group("NPC Identity")
 @export var npc_name : String
 @export var id       : int
@@ -165,6 +167,7 @@ func _process(delta: float) -> void:
 # 		thoughts_label.position = new_label_position
 
 func _physics_process(delta: float) -> void:
+	print(mesh.visible)
 	if is_dead:
 		return
 
@@ -176,7 +179,7 @@ func _physics_process(delta: float) -> void:
 		mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
 
 	if is_in_frustum:
-		# mesh_pivot_ref.visible = true
+		mesh_pivot_ref.visible = true
 		if npc_brain.get_current_state() == NPCBrain.State.DEAD:
 			pass
 		elif not Vector2(velocity.x, velocity.z).is_zero_approx():
@@ -186,8 +189,8 @@ func _physics_process(delta: float) -> void:
 				walking.emit()
 		else:
 			idling.emit()
-	# else:
-		# mesh_pivot_ref.visible = false # CHANGE TO FADE WHEN POSSIBLE
+	else:
+		mesh_pivot_ref.visible = false # CHANGE TO FADE WHEN POSSIBLE
 
 	move_and_slide()
 
