@@ -23,7 +23,7 @@ func _ready() -> void:
 		new_job_instance.position = pos
 		add_child(new_job_instance)
 
-		var new_npc_scene = preload("res://scenes/npc_smart.tscn")
+		var new_npc_scene = preload("res://scenes/npc_smart_update.tscn")
 		var new_npc_instance = new_npc_scene.instantiate()
 		pos = Vector3(0.0, 1.02, start + (counter * spacing))
 		new_npc_instance.position = pos

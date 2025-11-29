@@ -4,6 +4,7 @@ class_name Player
 
 # Get references to nodes
 # Removes get_node call each time the node is referenced
+@onready var characterbody_ref = $"."
 @onready var combo_timer_ref  = $ComboCooldownTimer
 @onready var mesh_pivot_ref   = $MeshPivot
 @onready var camera_pivot_ref = $CameraPivot
@@ -152,13 +153,13 @@ func _physics_process(delta : float) -> void:
 	target_velocity.x = direction.x * applied_speed
 	target_velocity.z = direction.z * applied_speed
 
-	if not is_on_floor():
+	if not characterbody_ref.is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	else:
 		target_velocity.y = 0.0
 
-	velocity = target_velocity
-	move_and_slide()
+	characterbody_ref.velocity = target_velocity
+	characterbody_ref.move_and_slide()
 
 func _on_animation_handler_dash_ended():
 	is_dashing = false

@@ -22,6 +22,7 @@ signal running
 var viewport : Viewport
 
 var is_dead : bool = false
+@onready var rigidbody_ref : RigidBody3D = $"."
 
 @export var mesh : MeshInstance3D
 
@@ -77,6 +78,10 @@ var last_position : Vector3 = Vector3.ZERO
 var is_running         : bool = false
 var look_direction     : Vector3 = Vector3.ZERO
 var look_target        : Vector3 = Vector3.ZERO
+var velocity           : Vector3 = Vector3.ZERO
+
+var off_screen_movement_update_timer : float = 0.0
+@export var off_screen_movement_update_rate : float = 1.0
 # var navigation_enabled : bool = false
 @export var minimum_movement_distance : float = 1.5
 
@@ -113,7 +118,7 @@ var look_target        : Vector3 = Vector3.ZERO
 
 @export_group("NPC Rendering")
 @onready var mesh_pivot_ref = $MeshPivot
-var is_in_frustum : bool = true
+@export var should_animate : bool = true
 
 
 func mod_by_age() -> float:
@@ -159,6 +164,8 @@ func _process(delta: float) -> void:
 
 	last_position = self.global_position
 
+	off_screen_movement_update_timer += delta
+
 # 	if thoughts_label != null:
 # 		thoughts_label.text = State.find_key(_current_state) + "\n" + CombatState.find_key(current_combat_state)
 # 		var new_label_position = viewport.get_camera_3d().unproject_position(label_anchor.global_transform.origin)
@@ -167,7 +174,9 @@ func _process(delta: float) -> void:
 # 		thoughts_label.position = new_label_position
 
 func _physics_process(delta: float) -> void:
-	print(mesh.visible)
+	# print(mesh.visible)
+	# print(should_animate, " ", id)
+
 	if is_dead:
 		return
 
@@ -178,21 +187,33 @@ func _physics_process(delta: float) -> void:
 			look_direction = velocity.normalized()
 		mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-look_direction.x, -look_direction.z), delta * 10.0)
 
-	if is_in_frustum:
-		mesh_pivot_ref.visible = true
-		if npc_brain.get_current_state() == NPCBrain.State.DEAD:
-			pass
-		elif not Vector2(velocity.x, velocity.z).is_zero_approx():
+	if should_animate:
+		if not Vector2(velocity.x, velocity.z).is_zero_approx():
 			if is_running:
 				running.emit()
 			else:
 				walking.emit()
 		else:
 			idling.emit()
-	else:
-		mesh_pivot_ref.visible = false # CHANGE TO FADE WHEN POSSIBLE
 
-	move_and_slide()
+	var start_time = Time.get_ticks_usec()
+	if not should_animate:
+		# if off_screen_movement_update_timer >= off_screen_movement_update_rate:
+			# if id <= 101:
+			# 	print("here")
+			# velocity *= off_screen_movement_update_rate / delta
+			# move_and_slide()
+			# global_position += velocity * delta
+			# rigidbody_ref.linear_velocity = velocity
+			print(velocity)
+			rigidbody_ref.linear_velocity = velocity
+			off_screen_movement_update_timer = 0.0
+	else:
+		# move_and_slide()
+		rigidbody_ref.linear_velocity = velocity
+
+	# if id <= 101:
+	# 	print("Move and slide time: ", (Time.get_ticks_usec() - start_time) / 1000.0, "\n")
 
 	if navigation_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
@@ -217,7 +238,7 @@ func handle_navigation(target_position : Vector3, look_target_position : Vector3
 	var current_agent_position: Vector3 = global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 	desired_velocity = current_agent_position.direction_to(next_path_position) * get_speed()
-	desired_velocity.y = -75.0
+	# desired_velocity.y = -75.0
 	navigation_agent.velocity = desired_velocity
 
 func disable_pathfinding():
@@ -248,6 +269,17 @@ func _on_trigger_death() -> void:
 func _on_navigation_agent_3d_velocity_computed(safe_velocity:Vector3) -> void:
 	velocity = safe_velocity
 
+func _on_visible_on_screen_enabler_3d_screen_exited() -> void:
+	# should_animate = false
+	# mesh.visible = false
+	# print("exited")
+	pass
+
+func _on_visible_on_screen_enabler_3d_screen_entered() -> void:
+	# should_animate = true
+	# mesh.visible = true
+	# print("entered")
+	pass
 
 
 
@@ -377,7 +409,7 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity:Vector3) -> void:
 # 		# position += velocity * delta
 # 		move_and_slide()
 
-# 	if is_in_frustum:
+# 	if should_animate:
 # 		if _current_state == State.DEAD:
 # 			pass
 # 		elif not velocity.is_zero_approx():

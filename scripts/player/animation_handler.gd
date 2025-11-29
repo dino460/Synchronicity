@@ -97,9 +97,6 @@ func check_wanted_state() -> bool:
 		return true
 
 func play_animation(animation_name : String = "", animation_speed : float = 1.0):
-	if animator.process_mode == PROCESS_MODE_DISABLED:
-		return
-
 	there_is_animation_playing = true
 	animation_name = caller_prefix + animation_name
 

@@ -544,7 +544,7 @@ home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
 
 [node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -9.05901, 2.13348, 3.5111)
+transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, 26.9562, 2.13348, 34.39)
 npc_name = "Lelê"
 id = 11
 scheduler = NodePath("../../../../Scheduler")
@@ -555,6 +555,7 @@ points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("8_trceg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12412, 0, 13.8794)
 
 [node name="STATUE" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets"]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
@@ -580,6 +581,7 @@ transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.14026, 0
 landmark_name = "Fountain"
 
 [node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" instance=ExtResource("11_jkv2x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.67445, 0, -6.5277)
 work_begin_time = 8.0
 
 [node name="Ground Mesh2" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets"]
