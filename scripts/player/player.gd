@@ -105,22 +105,6 @@ func _physics_process(delta : float) -> void:
 	if debug_label != null:
 		debug_label.text = str(stats.health)
 
-	# var intersections : int = 0
-
-	# var space_state = get_world_3d().direct_space_state
-	# var query = PhysicsRayQueryParameters3D.new()
-	# var camera_position = get_viewport().get_camera_3d().global_position
-	# query.exclude = [self]
-	# # query.hit_back_faces = true
-
-	# for origin in raycast_holder.get_children():
-	# 	query.from = origin.global_position
-	# 	query.to = camera_position
-	# 	if space_state.intersect_ray(query).size() > 0:
-	# 		intersections += 1
-
-	# mat_ref.no_depth_test = intersections >= raycast_holder.get_children().size() / 4.0
-
 	if is_attacking: # Collision check for attacking
 		damage_enemies(weapon)
 

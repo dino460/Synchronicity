@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cw6ypj6tli70v"]
+[gd_scene load_steps=15 format=3 uid="uid://cw6ypj6tli70v"]
 
 [ext_resource type="Script" uid="uid://cguddavepqt3l" path="res://scripts/npc/npc.gd" id="1_co1y7"]
 [ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="2_15skq"]
 [ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="3_yucy0"]
 [ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="4_pypbk"]
 [ext_resource type="PackedScene" uid="uid://dk1sjoe5pajay" path="res://assets/Dwarf2.blend" id="5_fmt41"]
+[ext_resource type="Script" uid="uid://clji58j2n47e" path="res://scripts/weapons/dwarf.gd" id="6_qxb6j"]
 [ext_resource type="Script" uid="uid://drv1x7wdcmf56" path="res://scripts/npc/brains/npc_brain.gd" id="15_5owd8"]
 [ext_resource type="PackedScene" uid="uid://bywvo08rx0fh2" path="res://scenes/npc_thoughts_template.tscn" id="16_vfrm5"]
 [ext_resource type="Script" uid="uid://cuqioxg75n8y3" path="res://scripts/npc/brains/combat_brain.gd" id="17_pmage"]
@@ -19,6 +20,9 @@ albedo_color = Color(0, 0.693455, 0.60667, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_kmggu"]
 material = SubResource("StandardMaterial3D_rkigc")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qxb6j"]
+radius = 0.86
 
 [node name="NPC-SMART-UPDATE" type="RigidBody3D" node_paths=PackedStringArray("npc_brain", "personality", "stats")]
 collision_layer = 1057
@@ -73,6 +77,17 @@ avoidance_enabled = true
 [node name="Dwarf3" parent="MeshPivot" instance=ExtResource("5_fmt41")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.536717, 0)
 
+[node name="WeaponAttachment" type="Node3D" parent="MeshPivot"]
+
+[node name="Weapon" type="Node3D" parent="MeshPivot/WeaponAttachment"]
+script = ExtResource("6_qxb6j")
+
+[node name="Area3D" type="Area3D" parent="MeshPivot/WeaponAttachment/Weapon"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshPivot/WeaponAttachment/Weapon/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.835, -0.64)
+shape = SubResource("SphereShape3D_qxb6j")
+
 [node name="LookOrigin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.926, 0)
 
@@ -87,20 +102,16 @@ scheduled_brain = NodePath("../SchedulerBrain")
 thoughts_label_template = ExtResource("16_vfrm5")
 label_anchor = NodePath("../LabelAnchor")
 
-[node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("this_npc_ref", "look_origin")]
+[node name="CombatBrain" type="Node3D" parent="." node_paths=PackedStringArray("this_npc_ref", "weapon_attatchment", "look_origin")]
 script = ExtResource("17_pmage")
 this_npc_ref = NodePath("..")
+weapon_attatchment = NodePath("../MeshPivot/WeaponAttachment")
 look_origin = NodePath("../LookOrigin")
 base_circling_probability = 0.75
 
 [node name="SchedulerBrain" type="Node" parent="." node_paths=PackedStringArray("this_npc_ref")]
 script = ExtResource("18_85t3l")
 this_npc_ref = NodePath("..")
-
-[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
-process_mode = 4
-aabb = AABB(-1.5, 0, -1.5, 3, 2, 3)
-enable_node_path = NodePath("")
 
 [connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
 [connection signal="damage_taken" from="." to="CombatBrain" method="_on_damage_taken"]
@@ -111,5 +122,3 @@ enable_node_path = NodePath("")
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
-[connection signal="screen_entered" from="VisibleOnScreenEnabler3D" to="." method="_on_visible_on_screen_enabler_3d_screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenEnabler3D" to="." method="_on_visible_on_screen_enabler_3d_screen_exited"]

@@ -23,11 +23,6 @@ var on_combo                   : bool  = false
 
 var last_attack_state : AnimationState;
 
-# var interruptable_states = [
-# 	AnimationState.IDLE,
-# 	AnimationState.WALK,
-# 	AnimationState.RUN
-# ]
 var attack_states = [
 	AnimationState.ATTACK_UP,
 	AnimationState.ATTACK_DOWN,
@@ -77,12 +72,7 @@ func _on_death() -> void:
 func _on_attack(animation_direction: AnimationState, weapon: Weapon, was_attacking):
 	wanted_state = animation_direction
 	on_combo = was_attacking
-	# current_weapon = weapon
 	if check_wanted_state():
-		# if weapon.is_preferred_attack(last_attack_state, wanted_state):
-		# 	# Do something damage and animation speed related some day
-		# 	pass
-		# animation_speed = 5.5 #1.0 / weapon.up_attack_time
 		last_attack_state = wanted_state
 	play_animation(weapon.attack_animations[wanted_state], 5.5)
 
@@ -112,12 +102,6 @@ func play_animation(animation_name : String = "", animation_speed : float = 1.0)
 		is_attacking = false
 
 	animator.play(animation_name, 0.1, animation_speed, false)
-
-# Called on the end of an animation to enable chaining them into a combo
-# DO NOT FORGET TO ADD THIS TO A METHOD TRACK
-func allow_combo():
-	is_attacking = false
-	enable_combo.emit()
 
 
 func end_attack():

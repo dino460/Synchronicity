@@ -1,16 +1,17 @@
-[gd_scene load_steps=36 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=37 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="4_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="6_jbj1t"]
-[ext_resource type="PackedScene" uid="uid://mkhk0i0eskjt" path="res://scenes/npc_smart.tscn" id="6_mfdyr"]
 [ext_resource type="Texture2D" uid="uid://dg88lq04pvlmk" path="res://assets/sprites/test_grass.png" id="8_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
 [ext_resource type="Texture2D" uid="uid://bjd2vtgkym1yj" path="res://assets/sprites/grass1.png" id="9_jbj1t"]
+[ext_resource type="PackedScene" uid="uid://vfdrhxyo43sg" path="res://scenes/npc_smart_update.tscn" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
 [ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="10_dp3eg"]
+[ext_resource type="PackedScene" uid="uid://cw6ypj6tli70v" path="res://scenes/npc_smart_DWARF.tscn" id="11_gqmmt"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
@@ -36,7 +37,7 @@ size = Vector2(2, 2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jbj1t"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
 render_priority = 0
 shader = ExtResource("4_jkv2x")
 shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
@@ -56,7 +57,7 @@ shader_parameter/use_borders = false
 shader_parameter/border_width = 0.01
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
-material = SubResource("ShaderMaterial_jbj1t")
+material = SubResource("ShaderMaterial_dp3eg")
 size = Vector2(75, 75)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
@@ -64,7 +65,7 @@ vertices = PackedVector3Array(-4, 0.315277, -11.25, -2.25, 0.315277, -11.75, -2.
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(12, 11, 10), PackedInt32Array(9, 6, 13), PackedInt32Array(9, 13, 14), PackedInt32Array(14, 13, 15), PackedInt32Array(18, 17, 16), PackedInt32Array(16, 15, 18), PackedInt32Array(18, 15, 10), PackedInt32Array(19, 1, 2), PackedInt32Array(15, 19, 10), PackedInt32Array(10, 19, 12), PackedInt32Array(12, 19, 2), PackedInt32Array(12, 2, 20), PackedInt32Array(15, 13, 21), PackedInt32Array(15, 21, 19), PackedInt32Array(8, 22, 7), PackedInt32Array(7, 22, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(22, 28, 27), PackedInt32Array(3, 23, 22), PackedInt32Array(27, 26, 22), PackedInt32Array(22, 26, 3), PackedInt32Array(3, 26, 5), PackedInt32Array(5, 26, 24), PackedInt32Array(31, 30, 29), PackedInt32Array(31, 29, 32), PackedInt32Array(31, 32, 33), PackedInt32Array(33, 32, 35), PackedInt32Array(33, 35, 24), PackedInt32Array(24, 35, 34), PackedInt32Array(32, 36, 35), PackedInt32Array(24, 25, 33), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(35, 36, 41), PackedInt32Array(40, 37, 42), PackedInt32Array(40, 42, 41), PackedInt32Array(41, 42, 44), PackedInt32Array(41, 44, 43), PackedInt32Array(41, 43, 35), PackedInt32Array(12, 45, 11), PackedInt32Array(45, 12, 44), PackedInt32Array(44, 12, 43), PackedInt32Array(43, 12, 46)]
 agent_radius = 1.24
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkv2x"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ld40"]
 render_priority = 10
 shader = ExtResource("10_dp3eg")
 shader_parameter/time_scale = 3.0
@@ -88,10 +89,10 @@ shader_parameter/border_width = 0.01
 shader_parameter/do_billboard = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_jbj1t"]
-material = SubResource("ShaderMaterial_jkv2x")
+material = SubResource("ShaderMaterial_0ld40")
 size = Vector2(0.6, 0.6)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqmmt"]
 render_priority = 20
 shader = ExtResource("10_dp3eg")
 shader_parameter/time_scale = 3.0
@@ -115,7 +116,7 @@ shader_parameter/border_width = 0.01
 shader_parameter/do_billboard = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_dp3eg"]
-material = SubResource("ShaderMaterial_muem4")
+material = SubResource("ShaderMaterial_gqmmt")
 size = Vector2(0.4, 0.5)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
@@ -502,6 +503,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
+level_of_detail = 80000
 total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
@@ -513,7 +515,7 @@ skeleton = NodePath("")
 
 [node name="GrassMultiMeshInstance2" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-total_number_of_meshes = 0
+total_number_of_meshes = 300
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
@@ -534,23 +536,27 @@ environment = SubResource("Environment_jkv2x")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
-[node name="NPC-SMART" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, -7.43745, 1.40603, -1.75753)
-npc_name = "Lelê"
-id = 11
-scheduler = NodePath("../../../../Scheduler")
+[node name="NPC-SMART-UPDATE2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home", "points_of_interest") instance=ExtResource("10_0ld40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.07862, 0.512242, 4.47689)
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
 
-[node name="NPC-SMART2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("scheduler", "job", "home", "points_of_interest") instance=ExtResource("6_mfdyr")]
-transform = Transform3D(0.999997, -0.0013109, 0.00190189, 0.00131371, 0.999998, -0.00147281, -0.00189996, 0.0014753, 0.999997, 26.9562, 2.13348, 34.39)
-npc_name = "Lelê"
-id = 11
-scheduler = NodePath("../../../../Scheduler")
+[node name="NPC-SMART-UPDATE3" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home", "points_of_interest") instance=ExtResource("10_0ld40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.15572, 0.65002, -4.86488)
+npc_name = "Me"
+current_age = 24
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
-points_of_interest = [NodePath("../../Targets/STATUE"), NodePath("../../Targets/FOUNTAIN")]
+points_of_interest = [NodePath("../../Targets/FOUNTAIN")]
+
+[node name="NPC-SMART-UPDATE" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home", "points_of_interest") instance=ExtResource("11_gqmmt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.57158, 0.546543, 3.18884)
+npc_name = "Vêncio"
+current_age = 40
+job = NodePath("../../Targets/WORK")
+home = NodePath("../../Targets/HOME")
+points_of_interest = [NodePath("../../Targets/STATUE")]
 
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 

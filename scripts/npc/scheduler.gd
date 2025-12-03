@@ -34,13 +34,6 @@ func _ready() -> void:
 	wait_time = full_day_time
 	one_shot = true
 
-	## The code below is commented out because it is not needed for the current implementation.
-	## It is meant to be used with a predetermined amount of NPCs, which may not be the case when testing with 'npc_quantity_test'
-	## Should be paired, in the future, with code to dynamically adjust the number of groups based on the number of NPCs
-	# number_of_groups = max(1, min(npc_holder.get_child_count() / max_npcs_in_group, max_number_of_groups))
-	# print("NUMBER OF GROUPS:", number_of_groups)
-	# number_of_groups = max_number_of_groups
-
 	process_groups.resize(number_of_groups)
 	thread_group.resize(number_of_groups)
 	for i in number_of_groups:
@@ -67,19 +60,10 @@ func _process(_delta: float) -> void:
 
 	if is_stopped():
 		print_rich("[color=red][b] DAY OVER [/b][/color]")
-		# for npc in npc_holder.get_children():
-		# 	npc.reset_has_worked_today()
-		# TEMPORARY FIX
-		# This is used to reset that the NPC has worked when the day is over
-		# Not implemented yet (after rework)
-
 		start()
 
 func _physics_process(_delta: float) -> void:
 	if not thread_group[frame_counter].is_alive():
-		# print("Group ", frame_counter, " is not alive")
-		# var thread = Thread.new()
-		# thread_group[frame_counter] = thread
 		thread_group[frame_counter].start(run_process_group.bind(frame_counter, thread_group[frame_counter]))
 
 	frame_counter += 1
