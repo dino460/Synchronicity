@@ -1317,6 +1317,7 @@ collision_layer = 1057
 collision_mask = 1057
 script = ExtResource("1_p1mm1")
 mesh = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/Base")
+npc_name = "H"
 npc_brain = NodePath("MainBrain")
 current_age = 25
 personality = NodePath("Personality")

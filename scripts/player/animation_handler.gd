@@ -3,6 +3,7 @@ extends Node
 class_name AnimationHandler
 
 @export var animator : AnimationPlayer
+@export var animate_entity : Node
 
 signal dash_ended
 signal attack_ended
@@ -36,6 +37,8 @@ var attack_states = [
 
 
 func _ready() -> void:
+	if animator == null:
+		animator = animate_entity.get_node("AnimationPlayer")
 	remove_animation_interpolation()
 
 func remove_animation_interpolation():

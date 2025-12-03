@@ -137,7 +137,7 @@ func get_speed() -> float:
 func _ready() -> void:
 	add_to_group("persist")
 
-	get_node("AnimationHandler").caller_prefix = "NPC/"
+	get_node("AnimationHandler").caller_prefix = ""
 	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
 
 	personality = get_node("Personality")
@@ -174,9 +174,6 @@ func _process(delta: float) -> void:
 # 		thoughts_label.position = new_label_position
 
 func _physics_process(delta: float) -> void:
-	# print(mesh.visible)
-	# print(should_animate, " ", id)
-
 	if is_dead:
 		return
 
@@ -196,24 +193,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			idling.emit()
 
-	var start_time = Time.get_ticks_usec()
-	if not should_animate:
-		# if off_screen_movement_update_timer >= off_screen_movement_update_rate:
-			# if id <= 101:
-			# 	print("here")
-			# velocity *= off_screen_movement_update_rate / delta
-			# move_and_slide()
-			# global_position += velocity * delta
-			# rigidbody_ref.linear_velocity = velocity
-			print(velocity)
-			rigidbody_ref.linear_velocity = velocity
-			off_screen_movement_update_timer = 0.0
-	else:
-		# move_and_slide()
-		rigidbody_ref.linear_velocity = velocity
-
-	# if id <= 101:
-	# 	print("Move and slide time: ", (Time.get_ticks_usec() - start_time) / 1000.0, "\n")
+	global_position += velocity * delta
 
 	if navigation_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
@@ -270,14 +250,16 @@ func _on_navigation_agent_3d_velocity_computed(safe_velocity:Vector3) -> void:
 	velocity = safe_velocity
 
 func _on_visible_on_screen_enabler_3d_screen_exited() -> void:
-	# should_animate = false
-	# mesh.visible = false
+	# if update_again:
+	# 	should_animate = false
+	# 	self.visible = false
 	# print("exited")
 	pass
 
 func _on_visible_on_screen_enabler_3d_screen_entered() -> void:
-	# should_animate = true
-	# mesh.visible = true
+	# if update_again:
+	# 	should_animate = true
+	# 	self.visible = true
 	# print("entered")
 	pass
 

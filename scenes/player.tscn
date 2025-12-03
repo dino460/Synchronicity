@@ -833,12 +833,22 @@ transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 
 projection = 1
 size = 15.0
 near = 0.1
-far = 100.0
+far = 40.0
 
 [node name="Postprocessing" type="MeshInstance3D" parent="CameraPivot/EnvironmentCamera3D"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
 mesh = SubResource("PlaneMesh_qfm1y")
 surface_material_override/0 = SubResource("ShaderMaterial_4r5pv")
+
+[node name="FrustumCulllingCamera3D" type="Camera3D" parent="CameraPivot/EnvironmentCamera3D"]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
+projection = 1
+fov = 15.0
+size = 17.0
+near = 1.0
+far = 40.0
 
 [node name="ComboCooldownTimer" type="Timer" parent="."]
 one_shot = true

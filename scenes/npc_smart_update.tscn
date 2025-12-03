@@ -1316,15 +1316,17 @@ _data = {
 collision_layer = 1057
 collision_mask = 1057
 axis_lock_angular_x = true
+axis_lock_angular_y = true
 axis_lock_angular_z = true
-mass = 0.001
-gravity_scale = 0.0
+mass = 70.0
+linear_damp_mode = 1
+angular_damp_mode = 1
 script = ExtResource("1_pywe8")
 mesh = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/Base")
 npc_name = "H"
 npc_brain = NodePath("MainBrain")
+current_age = 25
 personality = NodePath("Personality")
-should_animate = false
 stats = NodePath("Stats")
 
 [node name="Personality" type="Node" parent="."]
@@ -4099,7 +4101,7 @@ bones/320/parent = 319
 bones/320/rest = Transform3D(-0.999204, -1.78524e-08, -0.0398989, 1.79453e-08, -1, -1.97109e-09, -0.0398989, -2.68552e-09, 0.999204, 1.86265e-09, 0.022978, 6.65241e-08)
 bones/320/enabled = true
 bones/320/position = Vector3(1.86265e-09, 0.022978, 6.65241e-08)
-bones/320/rotation = Quaternion(-0.0199534, -4.96327e-09, 0.999801, 1.26014e-08)
+bones/320/rotation = Quaternion(-0.0199534, -1.16438e-09, 0.999801, 8.9512e-09)
 bones/320/scale = Vector3(1, 1, 1)
 bones/321/name = "MCH-f_middle.03.R"
 bones/321/parent = 319
@@ -4731,7 +4733,7 @@ mesh = SubResource("ArrayMesh_xu3sh")
 skin = SubResource("Skin_tw5v6")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"]
-transform = Transform3D(-0.896316, -0.276155, -0.346924, -0.332466, 0.936235, 0.113709, 0.293401, 0.217259, -0.930975, -0.062122, 1.51039, 0.261348)
+transform = Transform3D(-0.896315, -0.276155, -0.346924, -0.332466, 0.936236, 0.113709, 0.293401, 0.21726, -0.930975, -0.0621214, 1.51039, 0.261348)
 bone_name = "hand_ik.L"
 bone_idx = 373
 
@@ -5150,7 +5152,7 @@ transform = Transform3D(0.0835832, -1.26207e-08, 0, 1.26207e-08, 0.0835831, 0, 0
 transform = Transform3D(0.787776, 0, 0, 0, 0.787776, 0, 0, 0, 0.787776, 0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MeshPivot/Low-Poly-Base_blend"]
-process_mode = 4
+callback_mode_process = 0
 libraries = {
 &"NPC": SubResource("AnimationLibrary_v7n6u")
 }
@@ -5181,8 +5183,18 @@ script = ExtResource("18_j2tb8")
 this_npc_ref = NodePath("..")
 
 [node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
-aabb = AABB(-2, 0, -2, 4, 2.5, 4)
-enable_node_path = NodePath("../MeshPivot/Low-Poly-Base_blend/AnimationPlayer")
+process_mode = 4
+aabb = AABB(-1.5, 0, -1.5, 3, 2, 3)
+enable_node_path = NodePath("")
 
+[connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
+[connection signal="damage_taken" from="." to="CombatBrain" method="_on_damage_taken"]
+[connection signal="death" from="." to="AnimationHandler" method="_on_death"]
+[connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
+[connection signal="running" from="." to="AnimationHandler" method="_on_running"]
+[connection signal="trigger_death" from="." to="MainBrain" method="_on_trigger_death"]
+[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="navigation_finished" from="NavigationAgent3D" to="." method="_on_navigation_finished"]
 [connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="screen_entered" from="VisibleOnScreenEnabler3D" to="." method="_on_visible_on_screen_enabler_3d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler3D" to="." method="_on_visible_on_screen_enabler_3d_screen_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene load_steps=19 format=3 uid="uid://flkg36ogpfcu"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_8maks"]
 [ext_resource type="Script" uid="uid://b4dfmkk7jnilp" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="4_u8e0t"]
+[ext_resource type="PackedScene" uid="uid://dw2kvc4hywnhb" path="res://scenes/npc_smart_DRAGON.tscn" id="9_uacia"]
+[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="15_5jxlq"]
+[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="16_xrtyr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(100, 1, 100)
@@ -80,7 +83,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 50
 world_size = 100.0
 npc_holder = NodePath("../NPC HOLDER")
 
@@ -114,6 +116,17 @@ directional_shadow_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_0jq3o")
+
+[node name="NPC-SMART-UPDATE" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("job", "home") instance=ExtResource("9_uacia")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35552, 0.97974, 4.14862)
+job = NodePath("../WORK")
+home = NodePath("../HOME")
+
+[node name="HOME" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("15_5jxlq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.595069, 0.658371, -5.89132)
+
+[node name="WORK" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("16_xrtyr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.66744, 0.658372, 12.1068)
 
 [node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("3_r78pc")]
 full_day_time = 20.0
