@@ -23,12 +23,12 @@ Synchronicity is a top down pixelated open world-ish adventure game I'm developi
 > Synchronicity is a concept introduced by analytical psychologist Carl Jung to describe events that coincide in time and appear meaningfully related, yet lack a discoverable causal connection.[1] Jung held this was a healthy function of the mind, that can become harmful within psychosis.
 <sup>[wikipedia](https://en.wikipedia.org/wiki/Synchronicity)</sup>
 
-## Installing
+## Installation
 Installation should be quite simple. 
 - Install [Godot 4.4-stable](https://godotengine.org/download/archive/4.4-stable/).
-- Install [Blender 5.0](https://www.blender.org/download/releases/5-0/). This will allow you to import the .blend files I use for my models and animations.
-- Open the project in the engine. I'll probably complain about not finding Blender.
-- Add the filepath to the Blender executable to the box Godot just jumpscared you with.
+- Install [Blender 5.0](https://www.blender.org/download/releases/5-0/). _This will allow you to import the .blend files I use for my models and animations._
+- Open the project in the engine. It'll probably complain about not finding Blender.
+- Add the **filepath** to the _Blender executable_ to the box Godot just jumpscared you with.
 - If, for some reason, Godot just doesn't say anything and the project loads incorrectly, go to `Editor Settings > Filesystem > Import > Blender` and add the path to the executable.
 - If, for any reason, the imports break and the game doesn't work, simply delete the `.blend.import` files located in `res://assets/`.
 
