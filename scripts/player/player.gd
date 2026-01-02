@@ -4,6 +4,7 @@ class_name Player
 
 # Get references to nodes
 # Removes get_node call each time the node is referenced
+@onready var characterbody_ref = $"."
 @onready var combo_timer_ref  = $ComboCooldownTimer
 @onready var mesh_pivot_ref   = $MeshPivot
 @onready var camera_pivot_ref = $CameraPivot
@@ -104,22 +105,6 @@ func _physics_process(delta : float) -> void:
 	if debug_label != null:
 		debug_label.text = str(stats.health)
 
-	# var intersections : int = 0
-
-	# var space_state = get_world_3d().direct_space_state
-	# var query = PhysicsRayQueryParameters3D.new()
-	# var camera_position = get_viewport().get_camera_3d().global_position
-	# query.exclude = [self]
-	# # query.hit_back_faces = true
-
-	# for origin in raycast_holder.get_children():
-	# 	query.from = origin.global_position
-	# 	query.to = camera_position
-	# 	if space_state.intersect_ray(query).size() > 0:
-	# 		intersections += 1
-
-	# mat_ref.no_depth_test = intersections >= raycast_holder.get_children().size() / 4.0
-
 	if is_attacking: # Collision check for attacking
 		damage_enemies(weapon)
 
@@ -152,13 +137,13 @@ func _physics_process(delta : float) -> void:
 	target_velocity.x = direction.x * applied_speed
 	target_velocity.z = direction.z * applied_speed
 
-	if not is_on_floor():
+	if not characterbody_ref.is_on_floor():
 		target_velocity.y = target_velocity.y - (fall_acceleration * delta)
 	else:
 		target_velocity.y = 0.0
 
-	velocity = target_velocity
-	move_and_slide()
+	characterbody_ref.velocity = target_velocity
+	characterbody_ref.move_and_slide()
 
 func _on_animation_handler_dash_ended():
 	is_dashing = false

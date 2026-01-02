@@ -29,8 +29,10 @@ func _ready() -> void:
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	scheduled_brain.setup()
 	viewport = get_viewport()
-	thoughts_label = thoughts_label_template.instantiate()
-	get_tree().root.get_children()[1].get_children()[2].get_children()[0].add_child(thoughts_label)
+
+	if false:
+		thoughts_label = thoughts_label_template.instantiate()
+		get_tree().root.get_children()[1].get_children()[2].get_children()[0].add_child(thoughts_label)
 
 	scheduler.call_deferred("bind_callable_to_group", npc.process_group, run)
 
@@ -44,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 func run() -> void:
 	var delta : float = get_physics_process_delta_time()
 
-	if thoughts_label != null and true:
+	if thoughts_label != null and false:
 		thoughts_label.text = ""
 		if schedule_commands.size() > 1:
 			thoughts_label.text += scheduled_brain.TaskState.keys().get(schedule_commands.get("current_task_state"))

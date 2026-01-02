@@ -3,13 +3,13 @@
 ---
 
 <div align="center">
-  
+
   **A Souls-like Top-down Adventure Game**
-  
+
 </div>
 
 <div align="center">
-  
+
   [Installation](#installing)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Features](#features)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Configurations](#configurations)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Contributing](#contributing)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Links](#links)&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;[Licensing](#licensing)
 
   [![Godot Engine](https://img.shields.io/badge/Godot%204.4--stable-%23FFFFFF.svg?logo=godot-engine)](#)
@@ -23,14 +23,14 @@ Synchronicity is a top down pixelated open world-ish adventure game I'm developi
 > Synchronicity is a concept introduced by analytical psychologist Carl Jung to describe events that coincide in time and appear meaningfully related, yet lack a discoverable causal connection.[1] Jung held this was a healthy function of the mind, that can become harmful within psychosis.
 <sup>[wikipedia](https://en.wikipedia.org/wiki/Synchronicity)</sup>
 
-## Installing
-Installation should be quite simple. 
+## Installation
+Installation should be quite simple.
 - Install [Godot 4.4-stable](https://godotengine.org/download/archive/4.4-stable/).
-- Install [Blender 5.0](https://www.blender.org/download/releases/5-0/). This will allow you to import the .blend files I use for my models and animations.
-- Open the project in the engine. I'll probably complain about not finding Blender.
-- Add the filepath to the Blender executable to the box Godot just jumpscared you with.
+- Install [Blender 5.0](https://www.blender.org/download/releases/5-0/). _This will allow you to import the .blend files I use for my models and animations._
+- Open the project in the engine. It'll probably complain about not finding Blender.
+- Add the **filepath** to the _Blender executable_ to the box Godot just jumpscared you with.
 - If, for some reason, Godot just doesn't say anything and the project loads incorrectly, go to `Editor Settings > Filesystem > Import > Blender` and add the path to the executable.
-- If anything goes wrong and it doesn't recognize the imports, just delete all the `.blend.import` files. 
+- If, for any reason, the imports break and the game doesn't work, simply delete the `.blend.import` files located in `res://assets/`.
 
 Now everything should be working properly!
 
@@ -50,9 +50,9 @@ For now, the game is quite barebones and totally in an Alpha state of affairs. B
 | :---: | --- | --- | --- |
 | 100% 🟢 | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations and custom dusk and dawn times | Completed & Fully Functional. |
 | 85% 🟢 | [Movement](#movement-system) | Normalized analog movement + running + rolling. | Base movement + sprinting done. Needs polishing. |
-| 60% 🟡 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options. |
-| 46% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working. Currently on a big rework of this whole system. |
-| 38% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs attack, but behave really simplistically. No nuance. Heavy polishing needed. Currently on a big rework of the NPC system.
+| 65% 🟡 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options. |
+| 40% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working. Currently on a big rework of this whole system. |
+| 35% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs attack, but behave really simplistically. No nuance. Heavy polishing needed. Currently on a big rework of the NPC system.
 | 0.000001% 🔴 | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority. |
 | 0.0% 🔴 | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton in the corner... waiting_</sub> |
 
@@ -80,8 +80,16 @@ A simple system for defining an absolute time for a full day to last (such as 10
 ### Movement System
 > Section is a Work In-progress
 
+Currently the player has simple 3D top down movement with two speeds and a directional combat system. In the future, I plan on adding different dashes and perhaps some other different, but simple, movement abilities.
+
 ### Scheduled NPC Interaction System
 > Section is a Work In-progress
+
+The SNIS, as I call it, is a organic and dynamic system for simulating interactions between NPCs and their surroundings. The idea is to give them life-like behaviour with as much simplicity as possible and the possibility of constant simulation, meaning, NPCs won't stop acting and despawn when off-screen. This is a system heavily inspired by how the ecosystem in Rain World works.
+
+Currently, SNIS is at it's infancy and in heavy prototyping/reworking phases. Constant changes are made, and I'm remaking it from the ground up frequently. For now, NPCs simply respond to attacks, try to find you if you go out of sight, and move between Home, Work and any Points Of Interest added to them. It's simplistic, janky, overly-engineered, and I'm already working on a 3rd iteration, so nothing here is final.
+
+It's "zero" iteration was a [Rust based Dijkstra algorithm for pathfinding in a randomly generated maze](https://github.com/dino460/scheduled-npc-interaction-system) I made for fun (and studying Rust). It was through that experiment I started thinking about what I wanted for SNIS.
 
 ### SFX/OST
 > Section is a Work In-(glacial)-progress
@@ -118,7 +126,7 @@ Some usefull/important links:
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?&logo=discord&logoColor=white)](https://discordapp.com/users/dino460)
 [![GitHub](https://img.shields.io/github/followers/dino460?label=follow&style=social)](https://github.com/dino460)
 
-[![Sychronicity](https://github-readme-stats.vercel.app/api/pin/?username=dino460&repo=Synchronicity&theme=dark)](https://github.com/dino460/Synchronicity) 
+[![Sychronicity](https://github-readme-stats.vercel.app/api/pin/?username=dino460&repo=Synchronicity&theme=dark)](https://github.com/dino460/Synchronicity)
 
 #### [Issue tracker](https://github.com/dino460/Synchronicity/issues)
 

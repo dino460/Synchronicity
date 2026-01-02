@@ -14,7 +14,7 @@ class_name Scheduler
 
 @export var next_available_id : int = 1
 
-@export var number_of_groups     : int = 10
+@export var number_of_groups     : int = 50
 @export var max_number_of_groups : int = 10
 @export var max_npcs_in_group    : int = 150
 var next_group : int = 0
@@ -26,20 +26,13 @@ var current_group : int = 0
 var frame_counter : int
 
 @export var player_ref : Node3D
-var camera_ref : Camera3D
+@export var camera_ref : Camera3D
 
 func _ready() -> void:
 	add_to_group("persist")
 	is_sun_up = true
 	wait_time = full_day_time
 	one_shot = true
-
-	## The code below is commented out because it is not needed for the current implementation.
-	## It is meant to be used with a predetermined amount of NPCs, which may not be the case when testing with 'npc_quantity_test'
-	## Should be paired, in the future, with code to dynamically adjust the number of groups based on the number of NPCs
-	# number_of_groups = max(1, min(npc_holder.get_child_count() / max_npcs_in_group, max_number_of_groups))
-	# print("NUMBER OF GROUPS:", number_of_groups)
-	# number_of_groups = max_number_of_groups
 
 	process_groups.resize(number_of_groups)
 	thread_group.resize(number_of_groups)
@@ -50,7 +43,7 @@ func _ready() -> void:
 		thread_group[i] = thread
 		thread_group[i].start(run_process_group.bind(i, thread))
 
-	camera_ref = player_ref.get_node("CameraPivot/EnvironmentCamera3D")
+	camera_ref = player_ref.get_node("CameraPivot/EnvironmentCamera3D/FrustumCulllingCamera3D")
 
 	print_rich("[color=yellow][b] DAY START [/b][/color]")
 	start()
@@ -67,18 +60,10 @@ func _process(_delta: float) -> void:
 
 	if is_stopped():
 		print_rich("[color=red][b] DAY OVER [/b][/color]")
-		# for npc in npc_holder.get_children():
-		# 	npc.reset_has_worked_today()
-		# TEMPORARY FIX
-		# This is used to reset that the NPC has worked when the day is over
-		# Not implemented yet (after rework)
-
 		start()
 
 func _physics_process(_delta: float) -> void:
 	if not thread_group[frame_counter].is_alive():
-		var thread = Thread.new()
-		thread_group[frame_counter] = thread
 		thread_group[frame_counter].start(run_process_group.bind(frame_counter, thread_group[frame_counter]))
 
 	frame_counter += 1
@@ -89,7 +74,7 @@ func _physics_process(_delta: float) -> void:
 
 func stop_npc_animation():
 	for npc in npc_holder.get_children():
-		npc.is_in_frustum = camera_ref.is_position_in_frustum(npc.position)
+		npc.should_animate = camera_ref.is_position_in_frustum(npc.position)
 
 func rotate_sun():
 	if sun != null:
