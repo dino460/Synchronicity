@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=36 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://vfdrhxyo43sg" path="res://scenes/npc_smart_update.tscn" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
 [ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="10_dp3eg"]
-[ext_resource type="PackedScene" uid="uid://cw6ypj6tli70v" path="res://scenes/npc_smart_DWARF.tscn" id="11_gqmmt"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
@@ -549,14 +548,6 @@ current_age = 24
 job = NodePath("../../Targets/WORK")
 home = NodePath("../../Targets/HOME")
 points_of_interest = [NodePath("../../Targets/FOUNTAIN")]
-
-[node name="NPC-SMART-UPDATE" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" node_paths=PackedStringArray("job", "home", "points_of_interest") instance=ExtResource("11_gqmmt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.57158, 0.546543, 3.18884)
-npc_name = "Vêncio"
-current_age = 40
-job = NodePath("../../Targets/WORK")
-home = NodePath("../../Targets/HOME")
-points_of_interest = [NodePath("../../Targets/STATUE")]
 
 [node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 
