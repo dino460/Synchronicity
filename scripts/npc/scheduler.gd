@@ -56,7 +56,7 @@ func _process(_delta: float) -> void:
 	if clock_label != null:
 		clock_label.text = "%d:%d | %f | %d" % [hours, minutes, get_current_time(), Engine.get_frames_per_second()]
 
-	rotate_sun()
+	# rotate_sun()
 
 	if is_stopped():
 		print_rich("[color=red][b] DAY OVER [/b][/color]")

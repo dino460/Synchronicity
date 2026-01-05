@@ -66,9 +66,9 @@ render_priority = 3
 shader = ExtResource("18_fulsm")
 shader_parameter/shadows_enabled = true
 shader_parameter/highlights_enabled = true
-shader_parameter/shadow_strength = 0.82
-shader_parameter/highlight_strength = 0.25
-shader_parameter/highlight_color = Color(0.868985, 0.868985, 0.868985, 1)
+shader_parameter/shadow_strength = 1.0
+shader_parameter/highlight_strength = 3.2
+shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("weapon", "label_anchor", "stats")]

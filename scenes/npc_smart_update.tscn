@@ -4733,7 +4733,7 @@ mesh = SubResource("ArrayMesh_xu3sh")
 skin = SubResource("Skin_tw5v6")
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"]
-transform = Transform3D(-0.918287, 0.110169, 0.380279, -0.235099, -0.924561, -0.29986, 0.318555, -0.364761, 0.874913, 0.244699, 0.805649, -0.211648)
+transform = Transform3D(-0.918287, 0.110169, 0.380279, -0.235099, -0.924561, -0.29986, 0.318556, -0.364761, 0.874913, 0.244699, 0.805649, -0.211648)
 bone_name = "hand_ik.L"
 bone_idx = 373
 

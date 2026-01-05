@@ -54,11 +54,16 @@ void light() {
 
 	// Diffuse lighting.
 	float NdotL = dot(NORMAL, LIGHT);
-	float diffuse_amount = NdotL + (attenuation - 1.0) + wrap;
-	//float diffuse_amount = NdotL * attenuation + wrap;
+	//float diffuse_amount = NdotL + (attenuation - 1.0) + wrap;
+	float diffuse_amount = NdotL * attenuation;
 	diffuse_amount *= steepness;
 	float cuts_inv = 1.0f / float(cuts);
-	float diffuse_stepped = clamp(diffuse_amount + mod(1.0f - diffuse_amount, cuts_inv), 0.0f, 1.0f);
+	float diffuse_stepped;
+	if (LIGHT_IS_DIRECTIONAL) {
+		diffuse_stepped = clamp(diffuse_amount, 0.0f, 1.0f);
+	} else {
+		diffuse_stepped = clamp(diffuse_amount + mod(1.0f - diffuse_amount, cuts_inv), 0.0f, 1.0f);
+	}
 
 	// Calculate borders.
 	float border = 0.0f;
