@@ -4,13 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="4_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
-[ext_resource type="Texture2D" uid="uid://cu3f0xd42js3j" path="res://assets/grass_color.png" id="5_dp3eg"]
-[ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="6_jbj1t"]
-[ext_resource type="Texture2D" uid="uid://dg88lq04pvlmk" path="res://assets/sprites/test_grass.png" id="8_jbj1t"]
+[ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_jbj1t"]
+[ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://mats/grass.tres" id="7_a8y0u"]
+[ext_resource type="Material" uid="uid://cuuj18tsqh38o" path="res://mats/grass_highlight.tres" id="8_muem4"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
-[ext_resource type="Texture2D" uid="uid://bjd2vtgkym1yj" path="res://assets/sprites/grass1.png" id="9_jbj1t"]
+[ext_resource type="Material" uid="uid://c6wbta212gb2n" path="res://mats/grass_highlight_shadow.tres" id="9_dp3eg"]
+[ext_resource type="Material" uid="uid://bsku1f6dglrpe" path="res://mats/grass_highlight_light.tres" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
-[ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
@@ -39,8 +39,7 @@ size = Vector3(75, 1, 75)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
 render_priority = 0
 shader = ExtResource("4_jkv2x")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/albedo_texture = ExtResource("5_dp3eg")
+shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
 shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 3
 shader_parameter/wrap = 0.355
@@ -65,59 +64,21 @@ vertices = PackedVector3Array(-4, 0.315277, -11.25, -2.25, 0.315277, -11.75, -2.
 polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(0, 3, 2), PackedInt32Array(2, 3, 5), PackedInt32Array(2, 5, 4), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(12, 11, 10), PackedInt32Array(9, 6, 13), PackedInt32Array(9, 13, 14), PackedInt32Array(14, 13, 15), PackedInt32Array(18, 17, 16), PackedInt32Array(16, 15, 18), PackedInt32Array(18, 15, 10), PackedInt32Array(19, 1, 2), PackedInt32Array(15, 19, 10), PackedInt32Array(10, 19, 12), PackedInt32Array(12, 19, 2), PackedInt32Array(12, 2, 20), PackedInt32Array(15, 13, 21), PackedInt32Array(15, 21, 19), PackedInt32Array(8, 22, 7), PackedInt32Array(7, 22, 23), PackedInt32Array(26, 25, 24), PackedInt32Array(22, 28, 27), PackedInt32Array(3, 23, 22), PackedInt32Array(27, 26, 22), PackedInt32Array(22, 26, 3), PackedInt32Array(3, 26, 5), PackedInt32Array(5, 26, 24), PackedInt32Array(31, 30, 29), PackedInt32Array(31, 29, 32), PackedInt32Array(31, 32, 33), PackedInt32Array(33, 32, 35), PackedInt32Array(33, 35, 24), PackedInt32Array(24, 35, 34), PackedInt32Array(32, 36, 35), PackedInt32Array(24, 25, 33), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(35, 36, 41), PackedInt32Array(40, 37, 42), PackedInt32Array(40, 42, 41), PackedInt32Array(41, 42, 44), PackedInt32Array(41, 44, 43), PackedInt32Array(41, 43, 35), PackedInt32Array(12, 45, 11), PackedInt32Array(45, 12, 44), PackedInt32Array(44, 12, 43), PackedInt32Array(43, 12, 46)]
 agent_radius = 1.24
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ld40"]
-render_priority = 10
-shader = ExtResource("10_dp3eg")
-shader_parameter/time_scale = 3.0
-shader_parameter/pivot = 6.0
-shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
-shader_parameter/albedo_texture = ExtResource("8_jbj1t")
-shader_parameter/clamp_diffuse_to_max = true
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.355
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-shader_parameter/do_billboard = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_jbj1t"]
-material = SubResource("ShaderMaterial_0ld40")
+[sub_resource type="QuadMesh" id="QuadMesh_a8y0u"]
+material = ExtResource("7_a8y0u")
 size = Vector2(0.6, 0.6)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqmmt"]
-render_priority = 20
-shader = ExtResource("10_dp3eg")
-shader_parameter/time_scale = 3.0
-shader_parameter/pivot = 3.0
-shader_parameter/albedo = Color(0.306346, 0.57838, 0.24171, 1)
-shader_parameter/albedo_texture = ExtResource("9_jbj1t")
-shader_parameter/clamp_diffuse_to_max = true
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.355
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-shader_parameter/do_billboard = true
+[sub_resource type="QuadMesh" id="QuadMesh_jkv2x"]
+material = ExtResource("8_muem4")
+size = Vector2(0.6, 0.6)
 
-[sub_resource type="QuadMesh" id="QuadMesh_dp3eg"]
-material = SubResource("ShaderMaterial_gqmmt")
-size = Vector2(0.4, 0.5)
+[sub_resource type="QuadMesh" id="QuadMesh_jbj1t"]
+material = ExtResource("9_dp3eg")
+size = Vector2(0.6, 0.6)
+
+[sub_resource type="QuadMesh" id="QuadMesh_muem4"]
+material = ExtResource("10_0ld40")
+size = Vector2(0.6, 0.6)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.0
@@ -133,7 +94,7 @@ background_mode = 2
 background_energy_multiplier = 2.25
 sky = SubResource("Sky_yalbf")
 ambient_light_source = 2
-ambient_light_color = Color(0.283965, 0.31611, 0.424944, 1)
+ambient_light_color = Color(0.737582, 0.649001, 0.539227, 1)
 ssao_radius = 2.01
 ssao_intensity = 1.99
 ssao_power = 1.84672
@@ -194,7 +155,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(2, 4, 8, 15, 45, 52, 56, 58),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(0.273117, 0.313436, 0.435382, 1), Color(0.534956, 0.377976, 0.183441, 1), Color(0.534956, 0.377976, 0.183441, 1), Color(0.273117, 0.313436, 0.435382, 1), Color(0.273117, 0.313436, 0.435382, 1), Color(0.47983, 0.233345, 0.234024, 1), Color(0.47983, 0.233345, 0.234024, 1), Color(0.273117, 0.313436, 0.435382, 1)]
+"values": [Color(0.273117, 0.313436, 0.435382, 1), Color(0.534956, 0.377976, 0.183441, 1), Color(0.534956, 0.377976, 0.183441, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.47983, 0.233345, 0.234024, 1), Color(0.47983, 0.233345, 0.234024, 1), Color(0.273117, 0.313436, 0.435382, 1)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -261,12 +222,11 @@ render_target_update_mode = 4
 
 [node name="EdgeOutliner" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport"]
 transform = Transform3D(1, -0.000417502, -0.0002671, 0.000416927, 0.999998, -0.0021605, 0.000267997, 0.00216039, 0.999998, 0.834889, 4.95951, -0.874888)
-visible = false
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_trceg")
 
 [node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" node_paths=PackedStringArray("debug_label") instance=ExtResource("1_ywxjf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67426, -1.76201)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.57987, 1.67426, 3.75982)
 walk_speed = 3.0
 run_speed = 15.0
 debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
@@ -573,35 +533,63 @@ transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108, 0)
 mesh = SubResource("PlaneMesh_ip3kr")
 
-[node name="GrassMultiMeshInstance" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+[node name="Grass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground"]
+
+[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
 level_of_detail = 80000
 total_number_of_meshes = 0
 number_of_groups = 64
-ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
+ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance"]
-mesh = SubResource("QuadMesh_jbj1t")
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass/MainGrass"]
+visible = false
+mesh = SubResource("QuadMesh_a8y0u")
 skeleton = NodePath("")
 
-[node name="GrassMultiMeshInstance2" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+[node name="GrassHighlight1" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+script = ExtResource("6_jbj1t")
+total_number_of_meshes = 50
+number_of_groups = 64
+ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
+grass_mesh = NodePath("GrassMeshInstance3D")
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass/GrassHighlight1"]
+visible = false
+mesh = SubResource("QuadMesh_jkv2x")
+skeleton = NodePath("")
+
+[node name="GrassHighlightShadow" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
 total_number_of_meshes = 300
 number_of_groups = 64
-ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
+ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance2"]
-mesh = SubResource("QuadMesh_dp3eg")
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass/GrassHighlightShadow"]
+visible = false
+mesh = SubResource("QuadMesh_jbj1t")
+skeleton = NodePath("")
+
+[node name="GrassHighlightLight" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+script = ExtResource("6_jbj1t")
+total_number_of_meshes = 100
+number_of_groups = 64
+ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
+grass_mesh = NodePath("GrassMeshInstance3D")
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass/GrassHighlightLight"]
+visible = false
+mesh = SubResource("QuadMesh_muem4")
 skeleton = NodePath("")
 
 [node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 0.717761, 0.69629, 0, -0.69629, 0.717761, 0, 0, 0)
-light_color = Color(0.9913, 0.98302, 0.968717, 1)
-light_energy = 8.06873
+transform = Transform3D(1, 0, 0, 0, 0.837241, 0.546834, 0, -0.546834, 0.837241, 0, 0, 0)
+light_color = Color(0.8815, 0.768716, 0.573908, 1)
+light_energy = 9.11144
 light_indirect_energy = 0.0
 light_bake_mode = 0
 shadow_enabled = true
@@ -615,6 +603,7 @@ callback_mode_process = 0
 libraries = {
 &"": SubResource("AnimationLibrary_0ld40")
 }
+autoplay = "Sun Rotation"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.81208, 2.79701, 3.64503)
@@ -690,7 +679,6 @@ size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
 [node name="Clock Label" type="Label" parent="UISubViewportContainer/UISubViewport"]
-visible = false
 offset_left = 14.0
 offset_top = 2.0
 offset_right = 329.0

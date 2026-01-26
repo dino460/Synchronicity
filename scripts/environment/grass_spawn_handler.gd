@@ -35,7 +35,6 @@ func _ready() -> void:
 		mult_factor_x += increment
 		counter -= 1
 		if counter <= 0:
-			print("0")
 			counter = sqrt(number_of_groups)
 			mult_factor_x = - (sqrt(number_of_groups) - 1.0)
 			mult_factor_z += increment

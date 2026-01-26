@@ -17,7 +17,6 @@ extends Node3D
 
 var is_rotating : bool = false
 var target_rotation : float = 0.0
-
 var vertical_target : float = 0.0
 
 
@@ -32,13 +31,13 @@ func _process(delta: float) -> void:
 	else:
 		self.rotation.y = target_rotation
 
-	if not is_equal_approx(environment_camera_ref.position.y, vertical_target):
-		environment_camera_ref.position.y = lerpf(environment_camera_ref.position.y, vertical_target, delta * vertical_speed)
-	else:
-		environment_camera_ref.position.y = vertical_target
+	# if not is_equal_approx(environment_camera_ref.position.y, vertical_target):
+	# 	environment_camera_ref.position.y = lerpf(environment_camera_ref.position.y, vertical_target, delta * vertical_speed)
+	# else:
+	# 	environment_camera_ref.position.y = vertical_target
 
 func _physics_process(_delta: float) -> void:
-	update_vertical_target()
+	# update_vertical_target()
 	pass
 
 func update_target_rotation():

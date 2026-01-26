@@ -1,0 +1,31 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://c6wbta212gb2n"]
+
+[ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass/grass.gdshader" id="1_f034g"]
+[ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="2_hq6tk"]
+
+[resource]
+render_priority = 10
+shader = ExtResource("1_f034g")
+shader_parameter/grass_type = 1
+shader_parameter/time_scale = 1.0
+shader_parameter/pivot = 1.0
+shader_parameter/hframe = 4
+shader_parameter/vframe = 1
+shader_parameter/current_frame = Vector2(0, 0)
+shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
+shader_parameter/albedo_texture = ExtResource("2_hq6tk")
+shader_parameter/clamp_diffuse_to_max = false
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.355
+shader_parameter/steepness = 1.0
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = false
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.0
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
+shader_parameter/do_billboard = true

@@ -4,8 +4,13 @@ shader_type spatial;
 render_mode depth_draw_opaque;
 //const float PI = 3.1415926536f;
 
+uniform int grass_type : hint_enum("Normal", "Only on Shadow", "Only on Light");
 uniform float time_scale = 1.0;
 uniform float pivot = 1.0;
+
+uniform int hframe : hint_range(1,128);
+uniform int vframe : hint_range(1,128);
+uniform vec2 current_frame = vec2(0,0);
 
 uniform vec4 albedo : source_color = vec4(1.0f);
 uniform sampler2D albedo_texture : source_color, filter_nearest;
@@ -38,14 +43,16 @@ varying vec3 normal;
 uniform bool do_billboard = false;
 
 varying vec3 instance_origin;
-varying float random_value;
+varying vec3 random_value;
+varying vec3 instance_pos;
 
 float split_specular(float specular) {
 	return step(0.5f, specular);
 }
 
 void vertex() {
-	random_value = INSTANCE_CUSTOM.z;
+	random_value = INSTANCE_CUSTOM.xyz;
+	instance_pos = MODEL_MATRIX[3].xyz;
 
 	float time = (TIME * (0.5 + INSTANCE_CUSTOM.y) * time_scale) + (6.28318 * INSTANCE_CUSTOM.x);
 	float pivot_angle = cos(time) * 0.1 * pivot;
@@ -56,23 +63,36 @@ void vertex() {
 		MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
 		NORMAL = vec3(0.0, 1.0, 0.0);
 	}
-	VERTEX.xz = rotation_matrix * VERTEX.xz;
+	//VERTEX.xz = rotation_matrix * VERTEX.xz;
 	vertex_pos = VERTEX;
 	normal = NORMAL;
 }
 
 void fragment() {
 	LIGHT_VERTEX = instance_origin;
-	ALBEDO = albedo.rgb * texture(albedo_texture, UV).rgb;
-	ALPHA *= albedo.a * texture(albedo_texture, UV).a;
+	float time = (TIME * time_scale) + instance_pos.x;
+	vec2 base_uv = (UV / vec2(float(hframe),float(vframe)));
+	base_uv += (current_frame + floor(time))/vec2(float(hframe),float(vframe));
+	vec4 final_tex = texture(albedo_texture,base_uv);
+	
+	ALBEDO = albedo.rgb * final_tex.rgb;
+	ALPHA *= albedo.a * final_tex.a;
+	//ALBEDO = albedo.rgb * texture(albedo_texture, UV).rgb;
+	//ALPHA *= albedo.a * texture(albedo_texture, UV).a;
 }
 
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
-	if (use_attenuation) {
+	if (grass_type == 2) {
+		attenuation = 0.0f;
+	}
+	if ((use_attenuation && (grass_type == 0)) || (use_attenuation && !LIGHT_IS_DIRECTIONAL)) {
 		attenuation = ATTENUATION;
 	}
+	//if (use_attenuation) {
+		//attenuation = ATTENUATION;
+	//}
 
 	// Diffuse lighting.
 	float NdotL = dot(NORMAL, LIGHT);

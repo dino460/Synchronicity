@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="4_u8e0t"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="5_ajshl"]
-[ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/grass_spawn_handler.gd" id="6_ghpyy"]
-[ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass.gdshader" id="7_44saj"]
+[ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_ghpyy"]
+[ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass/grass.gdshader" id="7_44saj"]
 [ext_resource type="Texture2D" uid="uid://dg88lq04pvlmk" path="res://assets/sprites/test_grass.png" id="8_7mbro"]
-[ext_resource type="Texture2D" uid="uid://bjd2vtgkym1yj" path="res://assets/sprites/grass1.png" id="9_ff6ho"]
+[ext_resource type="Texture2D" path="res://assets/sprites/grass1.png" id="9_ff6ho"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(100, 1, 100)
