@@ -15,8 +15,9 @@ func _ready() -> void:
 	super()
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 
+
 func get_npc_want(npc : NPC, is_at_home : bool, interference : float) -> float:
-	var time_want_to_arrive_corrected = (scheduler.full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc)
+	var time_want_to_arrive_corrected = (scheduler.cycle_total_time * time_want_to_arrive / 24.0) - time_to_arrive(npc)
 	var lateness = scheduler.get_current_time() - time_want_to_arrive_corrected
 	var lateness_weight = 0.0
 	if not is_at_home:
@@ -44,7 +45,7 @@ func get_npc_want(npc : NPC, is_at_home : bool, interference : float) -> float:
 	return super(npc, is_at_home, interference) + lateness_weight + stay_weight
 
 func get_npc_attraction(npc_ref : NPC, is_current_location : bool, is_at_home : bool) -> float:
-	var time_want_to_arrive_corrected = (scheduler.full_day_time * time_want_to_arrive / 24.0) - time_to_arrive(npc_ref)
+	var time_want_to_arrive_corrected = (scheduler.cycle_total_time * time_want_to_arrive / 24.0) - time_to_arrive(npc_ref)
 	var lateness = scheduler.get_current_time() - time_want_to_arrive_corrected
 	var lateness_weight = 0.0
 	if not is_at_home:

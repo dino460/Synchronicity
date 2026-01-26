@@ -1,7 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cr4wsdpcjwklo"]
 
-[ext_resource type="Script" uid="uid://dk4nwd76nm4ld" path="res://scripts/npc/scheduler.gd" id="1_e74sc"]
+[ext_resource type="Script" uid="uid://dk4nwd76nm4ld" path="res://scripts/scheduler.gd" id="1_e74sc"]
 
-[node name="Scheduler" type="Timer"]
+[node name="Node" type="Node"]
 script = ExtResource("1_e74sc")
-full_day_time = 60.0

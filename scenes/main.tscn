@@ -1,21 +1,23 @@
-[gd_scene load_steps=38 format=3 uid="uid://divk0ab7tgtd0"]
+[gd_scene load_steps=43 format=3 uid="uid://divk0ab7tgtd0"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="4_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_jbj1t"]
-[ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://mats/grass.tres" id="7_a8y0u"]
-[ext_resource type="Material" uid="uid://cuuj18tsqh38o" path="res://mats/grass_highlight.tres" id="8_muem4"]
+[ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_a8y0u"]
+[ext_resource type="Material" uid="uid://cuuj18tsqh38o" path="res://assets/materials/grass_highlight.tres" id="8_muem4"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
-[ext_resource type="Material" uid="uid://c6wbta212gb2n" path="res://mats/grass_highlight_shadow.tres" id="9_dp3eg"]
-[ext_resource type="Material" uid="uid://bsku1f6dglrpe" path="res://mats/grass_highlight_light.tres" id="10_0ld40"]
+[ext_resource type="Material" uid="uid://c6wbta212gb2n" path="res://assets/materials/grass_highlight_shadow.tres" id="9_dp3eg"]
+[ext_resource type="Material" uid="uid://bsku1f6dglrpe" path="res://assets/materials/grass_highlight_light.tres" id="10_0ld40"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="Shader" uid="uid://sey82h7jx67m" path="res://shaders/edge_outline.gdshader" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
+[ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/gradients/sun_color.tres" id="16_dp3eg"]
+[ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/gradients/environment color.tres" id="17_0ld40"]
 [ext_resource type="PackedScene" uid="uid://cp55ol2hjudtm" path="res://scenes/menus/main_menu.tscn" id="17_muem4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_trceg"]
@@ -94,7 +96,7 @@ background_mode = 2
 background_energy_multiplier = 2.25
 sky = SubResource("Sky_yalbf")
 ambient_light_source = 2
-ambient_light_color = Color(0.737582, 0.649001, 0.539227, 1)
+ambient_light_color = Color(0.534956, 0.377976, 0.183441, 1)
 ssao_radius = 2.01
 ssao_intensity = 1.99
 ssao_power = 1.84672
@@ -180,6 +182,21 @@ albedo_color = Color(0.858904, 0, 0.160098, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
 material = SubResource("StandardMaterial3D_2604s")
+
+[sub_resource type="Curve" id="Curve_muem4"]
+_limits = [-180.0, 0.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, -180.0, 0, 1, Vector2(1, -180), -180.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_dp3eg"]
+_limits = [8.0, 10.0, 0.0, 1.0]
+_data = [Vector2(0.1, 10), 0.0, 0.0, 0, 0, Vector2(0.3, 8), 0.0, 0.0, 0, 0, Vector2(0.7, 8), 0.0, 0.0, 0, 0, Vector2(0.9, 10), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_0ld40"]
+_limits = [1.0, 1.5, 0.0, 1.0]
+_data = [Vector2(0, 1.5), 0.0, 0.0, 0, 0, Vector2(0.248705, 1), 0.0, 0.0, 0, 0, Vector2(0.746114, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="LabelSettings" id="LabelSettings_113qa"]
 font = ExtResource("14_a8y0u")
@@ -587,9 +604,9 @@ skeleton = NodePath("")
 [node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 0.837241, 0.546834, 0, -0.546834, 0.837241, 0, 0, 0)
-light_color = Color(0.8815, 0.768716, 0.573908, 1)
-light_energy = 9.11144
+transform = Transform3D(1, 0, 0, 0, 0.94374, 0.330689, 0, -0.330689, 0.94374, 0, 0, 0)
+light_color = Color(0.79, 0.59013, 0.2449, 1)
+light_energy = 10.4005
 light_indirect_energy = 0.0
 light_bake_mode = 0
 shadow_enabled = true
@@ -603,7 +620,6 @@ callback_mode_process = 0
 libraries = {
 &"": SubResource("AnimationLibrary_0ld40")
 }
-autoplay = "Sun Rotation"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.81208, 2.79701, 3.64503)
@@ -653,11 +669,16 @@ visible = false
 mesh = SubResource("PlaneMesh_ip3kr")
 skeleton = NodePath("../../Ground/NavigationRegion3D")
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
-full_day_time = 10.0
-sun_up_time = 5.0
-sun_down_time = 20.0
+[node name="Scheduler" parent="." node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
+day_total_time = 60.0
+night_total_time = 40.0
 sun = NodePath("../EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment/DirectionalLight3D")
+sun_rotation = SubResource("Curve_muem4")
+sun_energy = SubResource("Curve_dp3eg")
+sun_color = ExtResource("16_dp3eg")
+environment = NodePath("../EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment/WorldEnvironment")
+environment_energy = SubResource("Curve_0ld40")
+environment_color = ExtResource("17_0ld40")
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
 player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")

@@ -33,7 +33,7 @@ func _ready() -> void:
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	radius_of_influence = max_worker_distance
 
-	full_day_time_converted        = scheduler.full_day_time
+	full_day_time_converted        = scheduler.cycle_total_time
 	expected_work_amount_converted = full_day_time_converted * expected_work_amount / 24.0
 	work_begin_time_converted      = full_day_time_converted * work_begin_time / 24.0
 	max_lateness_converted         = full_day_time_converted * max_lateness / 24.0
@@ -42,7 +42,7 @@ func _ready() -> void:
 func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : float) -> float:
 	var scheduler_current_time = scheduler.get_current_time()
 	var scheduler_time_left = scheduler.time_left
-	var scheduler_full_day_time = scheduler.full_day_time
+	var scheduler_full_day_time = scheduler.cycle_total_time
 
 	var excess_poi_visit_time_correction = npc.points_of_interest.size() * npc.average_poi_distance * npc.personality.energy * npc.personality.bravery / npc.get_speed()
 	var time_want_to_arrive_corrected = (scheduler_full_day_time * work_begin_time / 24.0) - time_to_arrive(npc) - excess_poi_visit_time_correction
@@ -65,7 +65,7 @@ func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : f
 func get_npc_attraction(npc_ref : NPC, _is_current_location : bool, is_working_or_need_to_work : bool) -> float:
 	var scheduler_current_time = scheduler.get_current_time()
 	var scheduler_time_left = scheduler.time_left
-	var scheduler_full_day_time = scheduler.full_day_time
+	var scheduler_full_day_time = scheduler.cycle_total_time
 
 	var excess_poi_visit_time_correction = npc_ref.points_of_interest.size() * npc_ref.average_poi_distance * npc_ref.personality.energy * npc_ref.personality.bravery / npc_ref.get_speed()
 	var time_want_to_arrive_corrected = (scheduler_full_day_time * work_begin_time / 24.0) - time_to_arrive(npc_ref) - excess_poi_visit_time_correction
@@ -112,7 +112,7 @@ func get_attraction(distance : float, npc_ref : NPC) -> float:
 # 	return super_save + save_dict
 
 func get_in_game_expected_work() -> float:
-	return scheduler.full_day_time * expected_work_amount / 24.0
+	return scheduler.cycle_total_time * expected_work_amount / 24.0
 
 func has_worked_today(time_worked : float) -> bool:
-	return time_worked >= (expected_work_amount * scheduler.full_day_time / 24.0)
+	return time_worked >= (expected_work_amount * scheduler.cycle_total_time / 24.0)
