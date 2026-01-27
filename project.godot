@@ -143,6 +143,7 @@ decrease_time_warp={
 
 2d/run_on_separate_thread=true
 3d/run_on_separate_thread=true
+3d/physics_engine="GodotPhysics3D"
 3d/default_linear_damp=0.0
 3d/default_angular_damp=0.0
 

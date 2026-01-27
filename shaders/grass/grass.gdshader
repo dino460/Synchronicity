@@ -74,7 +74,7 @@ void fragment() {
 	vec2 base_uv = (UV / vec2(float(hframe),float(vframe)));
 	base_uv += (current_frame + floor(time))/vec2(float(hframe),float(vframe));
 	vec4 final_tex = texture(albedo_texture,base_uv);
-	
+
 	ALBEDO = albedo.rgb * final_tex.rgb;
 	ALPHA *= albedo.a * final_tex.a;
 	//ALBEDO = albedo.rgb * texture(albedo_texture, UV).rgb;
