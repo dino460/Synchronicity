@@ -1,4 +1,4 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://cneu7a23o6mwl"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://cneu7a23o6mwl"]
 
 [ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass/grass.gdshader" id="1_j4c6y"]
 [ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="2_6h01r"]

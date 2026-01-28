@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://djulrim2pvfcv"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://djulrim2pvfcv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qfm1y"]
 transparency = 4

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://dujhmkkto3lkr"
-path="res://.godot/imported/monolith.blend-39b6d78cd4a889e6f26fe3e257fe832c.scn"
+uid="uid://be4gr3254xqgn"
+path="res://.godot/imported/bush.blend-2715c74233e1f83ba97decc030e9c9f5.scn"
 
 [deps]
 
-source_file="res://assets/props/monolith.blend"
-dest_files=["res://.godot/imported/monolith.blend-39b6d78cd4a889e6f26fe3e257fe832c.scn"]
+source_file="res://assets/props/bush.blend"
+dest_files=["res://.godot/imported/bush.blend-2715c74233e1f83ba97decc030e9c9f5.scn"]
 
 [params]
 
