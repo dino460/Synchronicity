@@ -25,7 +25,7 @@ Synchronicity is a top down pixelated open world-ish adventure game I'm developi
 
 ## Installation
 Installation should be quite simple.
-- Install [Godot 4.4-stable](https://godotengine.org/download/archive/4.4-stable/).
+- Install [Godot 4.6-stable](https://godotengine.org/download/archive/4.6-stable/).
 - Install [Blender 5.0](https://www.blender.org/download/releases/5-0/). _This will allow you to import the .blend files I use for my models and animations._
 - Open the project in the engine. It'll probably complain about not finding Blender.
 - Add the **filepath** to the _Blender executable_ to the box Godot just jumpscared you with.
