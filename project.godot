@@ -160,3 +160,14 @@ lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 occlusion_culling/use_occlusion_culling=true
 vrs/directional_shadow/16_bits=true
+
+[shader_globals]
+
+grass_dark_noise={
+"type": "sampler2D",
+"value": "::vgjhr"
+}
+grass_light_noise={
+"type": "sampler2D",
+"value": "::gjj3c"
+}

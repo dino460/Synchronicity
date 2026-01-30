@@ -5,6 +5,7 @@ transparency = 4
 diffuse_mode = 3
 specular_mode = 1
 metallic = 0.5
+metallic_specular = 0.0
 roughness = 0.0
 
 [resource]
