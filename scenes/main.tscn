@@ -783,89 +783,198 @@ visible = false
 mesh = SubResource("PlaneMesh_ip3kr")
 skeleton = NodePath("../../Ground/NavigationRegion3D")
 
-[node name="bush4" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1740429518]
+[node name="BushHolder" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2012438881]
+
+[node name="bush4" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1740429518]
 transform = Transform3D(1.4508259, 0, 0, 0, 0.6541866, -0.7563332, 0, 0.7563332, 0.6541866, -8.408224, 0.57021093, 4.805743)
-visible = false
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush4" unique_id=676500258]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush4" unique_id=676500258]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush4" unique_id=458610632]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush4" unique_id=458610632]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush4" unique_id=1387854076]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush4" unique_id=1387854076]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush5" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=330015813]
+[node name="bush5" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=330015813]
 transform = Transform3D(1.1957496, -0.42832655, -0.37047893, 0, 0.6541866, -0.7563332, 0.82163167, 0.62335885, 0.5391711, -5.5094604, 0.57021093, 2.179442)
-visible = false
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush5" unique_id=1818919998]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush5" unique_id=1818919998]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush5" unique_id=1976043458]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush5" unique_id=1976043458]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush5" unique_id=1451553357]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush5" unique_id=1451553357]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush6" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2002331862]
+[node name="bush6" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=2002331862]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -9.099846, 0.57021093, 2.684751)
-visible = false
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush6" unique_id=1380500097]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush6" unique_id=1380500097]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush6" unique_id=1098845948]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush6" unique_id=1098845948]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush6" unique_id=215040656]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush6" unique_id=215040656]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush7" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1007321110]
+[node name="bush7" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1007321110]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -10.845062, 0.5702114, 3.5288563)
-visible = false
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush7" unique_id=1883002140]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush7" unique_id=1883002140]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush7" unique_id=1831383557]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush7" unique_id=1831383557]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush7" unique_id=844976087]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush7" unique_id=844976087]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush8" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1003097593]
+[node name="bush8" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1003097593]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -9.59732, 1.1536927, 3.3717947)
-visible = false
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush8" unique_id=1362970448]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush8" unique_id=1362970448]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush8" unique_id=389644952]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush8" unique_id=389644952]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/bush8" unique_id=1821175872]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush8" unique_id=1821175872]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush9" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=915936890]
+transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -11.394668, 0.49748373, 9.595902)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush9" unique_id=1484154995]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush9" unique_id=1077401901]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush9" unique_id=1753606683]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush10" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1869953396]
+transform = Transform3D(-1.4439439, -0.073581845, -0.06364417, -2.9769852e-08, 0.6541866, -0.7563332, 0.14114729, -0.75274545, -0.65108335, -0.15740395, 0.49748373, 1.5311546)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush10" unique_id=165208802]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush10" unique_id=710673428]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush10" unique_id=1592175947]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush15" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1186395422]
+transform = Transform3D(-1.4439439, -0.073581845, -0.06364417, -2.9769852e-08, 0.6541866, -0.7563332, 0.14114729, -0.75274545, -0.65108335, -12.41182, 0.49748373, -1.685709)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush15" unique_id=1746727985]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush15" unique_id=859939802]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush15" unique_id=604404063]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush11" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=908355581]
+transform = Transform3D(1.2745998, 0.36128542, 0.3124919, -1.4805121e-08, 0.65418667, -0.7563333, -0.69303083, 0.6644645, 0.5747251, -5.9396048, 0.49748373, -3.2308855)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush11" unique_id=1184450246]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush11" unique_id=1008975870]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush11" unique_id=1244113562]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush12" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1545908028]
+transform = Transform3D(1.0889677, 0.81844836, 0.67978776, -8.5407194e-08, 0.92683476, -1.0289813, -1.288619, 0.69164264, 0.57446545, -8.52846, 0.49748373, -3.4009075)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush12" unique_id=1434394225]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush12" unique_id=1272082697]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush12" unique_id=101741749]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush13" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=464494777]
+transform = Transform3D(1.0889677, 0.81844836, 0.67978776, -8.5407194e-08, 0.92683476, -1.0289813, -1.288619, 0.69164264, 0.57446545, -15.314947, 0.055990696, 3.1667871)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush13" unique_id=1802419880]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush13" unique_id=959131748]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush13" unique_id=1547588902]
+multimesh = SubResource("MultiMesh_jscy8")
+
+[node name="bush14" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=148594621]
+transform = Transform3D(1.5934452, -0.35209808, -0.29244608, -7.945711e-08, 0.9268347, -1.0289812, 0.55436635, 1.0120543, 0.8405933, -15.522936, 0.606884, 1.0498533)
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush14" unique_id=127671484]
+visible = false
+mesh = SubResource("QuadMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush14" unique_id=948130648]
+visible = false
+mesh = SubResource("ArrayMesh_y6deb")
+skeleton = NodePath("")
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush14" unique_id=1275747677]
 multimesh = SubResource("MultiMesh_jscy8")
 
 [node name="monolith" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=166603866]
@@ -891,7 +1000,7 @@ omni_range = 11.742
 omni_attenuation = 0.0
 
 [node name="Scheduler" parent="." unique_id=1212023566 node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
-day_total_time = 60.0
+day_total_time = 30.0
 night_total_time = 40.0
 sun = NodePath("../EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment/DirectionalLight3D")
 sun_rotation = SubResource("Curve_muem4")
@@ -910,7 +1019,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-stretch = true
 metadata/_edit_lock_ = true
 
 [node name="UISubViewport" type="SubViewport" parent="UISubViewportContainer" unique_id=493926166]

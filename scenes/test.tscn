@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://flkg36ogpfcu"]
+[gd_scene format=3 uid="uid://flkg36ogpfcu"]
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_8maks"]
 [ext_resource type="Script" uid="uid://b4dfmkk7jnilp" path="res://scripts/npc/npc_quantity_test.gd" id="1_mlvqa"]
@@ -8,9 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="4_u8e0t"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="5_ajshl"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_ghpyy"]
-[ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass/grass.gdshader" id="7_44saj"]
-[ext_resource type="Texture2D" uid="uid://dg88lq04pvlmk" path="res://assets/sprites/test_grass.png" id="8_7mbro"]
-[ext_resource type="Texture2D" path="res://assets/sprites/grass1.png" id="9_ff6ho"]
+[ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_uacia"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(100, 1, 100)
@@ -36,6 +34,7 @@ shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/cuts = 3
 shader_parameter/wrap = 0.355
 shader_parameter/steepness = 1.0
+shader_parameter/threshold_gradient_size = 0.2
 shader_parameter/use_attenuation = true
 shader_parameter/use_specular = false
 shader_parameter/specular_strength = 1.0
@@ -49,61 +48,11 @@ shader_parameter/border_width = 0.01
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7yos8"]
 material = SubResource("ShaderMaterial_jbj1t")
-size = Vector2(75, 75)
+size = Vector2(100, 100)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkv2x"]
-render_priority = 10
-shader = ExtResource("7_44saj")
-shader_parameter/time_scale = 3.0
-shader_parameter/pivot = 6.0
-shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
-shader_parameter/albedo_texture = ExtResource("8_7mbro")
-shader_parameter/clamp_diffuse_to_max = true
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.355
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-shader_parameter/do_billboard = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_5jxlq"]
-material = SubResource("ShaderMaterial_jkv2x")
-size = Vector2(0.6, 0.6)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_muem4"]
-render_priority = 20
-shader = ExtResource("7_44saj")
-shader_parameter/time_scale = 3.0
-shader_parameter/pivot = 3.0
-shader_parameter/albedo = Color(0.306346, 0.57838, 0.24171, 1)
-shader_parameter/albedo_texture = ExtResource("9_ff6ho")
-shader_parameter/clamp_diffuse_to_max = true
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.355
-shader_parameter/steepness = 1.0
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.0
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-shader_parameter/do_billboard = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_xrtyr"]
-material = SubResource("ShaderMaterial_muem4")
-size = Vector2(0.4, 0.5)
+[sub_resource type="QuadMesh" id="QuadMesh_yk7ts"]
+material = ExtResource("7_uacia")
+size = Vector2(0.6, 0.7)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_phknx"]
 turbidity = 0.0
@@ -140,9 +89,9 @@ font = SubResource("SystemFont_ju7ma")
 font_size = 30
 font_color = Color(0.926528, 0, 0, 1)
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" unique_id=993117901]
 
-[node name="Main SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="Main SubViewportContainer" type="SubViewportContainer" parent="." unique_id=388678303]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -152,45 +101,45 @@ grow_vertical = 2
 stretch = true
 script = ExtResource("1_8maks")
 
-[node name="SubViewport" type="SubViewport" parent="Main SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Main SubViewportContainer" unique_id=77550068]
 handle_input_locally = false
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
-[node name="Player" parent="Main SubViewportContainer/SubViewport" instance=ExtResource("4_t1xvl")]
+[node name="Player" parent="Main SubViewportContainer/SubViewport" unique_id=119236905 instance=ExtResource("4_t1xvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
-[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" node_paths=PackedStringArray("npc_holder")]
+[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=1928514937 node_paths=PackedStringArray("npc_holder")]
 script = ExtResource("1_mlvqa")
 number_of_npcs_to_spawn = 50
 world_size = 100.0
 npc_holder = NodePath("../NPC HOLDER")
 
-[node name="NPC HOLDER" type="Node" parent="Main SubViewportContainer/SubViewport"]
+[node name="NPC HOLDER" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=564472960]
 
-[node name="Ground" type="StaticBody3D" parent="Main SubViewportContainer/SubViewport"]
+[node name="Ground" type="StaticBody3D" parent="Main SubViewportContainer/SubViewport" unique_id=1028118325]
 collision_layer = 1057
 collision_mask = 1057
 
-[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/Ground"]
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="Main SubViewportContainer/SubViewport/Ground" unique_id=1056776051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
 shape = SubResource("BoxShape3D_7h77l")
 
-[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground"]
+[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground" unique_id=886903355]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
 mesh = SubResource("PlaneMesh_ip3kr")
 skeleton = NodePath("../NavigationRegion3D")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Main SubViewportContainer/SubViewport/Ground"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Main SubViewportContainer/SubViewport/Ground" unique_id=433600069]
 transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0252132, -4.76837e-07, 0.00361061)
 navigation_mesh = SubResource("NavigationMesh_knv0t")
 
-[node name="Ground Mesh" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D"]
+[node name="Ground Mesh" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/NavigationRegion3D" unique_id=1331748915]
 transform = Transform3D(1.00177, 0, 0, 0, 1.00177, 0, 0, 0, 1.00177, 0.0252577, -0.10819, -0.00361699)
 mesh = SubResource("PlaneMesh_7yos8")
 skeleton = NodePath("../..")
 
-[node name="GrassMultiMeshInstance" type="Node" parent="Main SubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+[node name="MainGrass" type="Node" parent="Main SubViewportContainer/SubViewport/Ground" unique_id=1056454851 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_ghpyy")
 level_of_detail = 80000
 total_number_of_meshes = 0
@@ -198,38 +147,27 @@ number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance"]
-mesh = SubResource("QuadMesh_5jxlq")
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/MainGrass" unique_id=710475682]
+visible = false
+mesh = SubResource("QuadMesh_yk7ts")
 skeleton = NodePath("")
 
-[node name="GrassMultiMeshInstance2" type="Node" parent="Main SubViewportContainer/SubViewport/Ground" node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
-script = ExtResource("6_ghpyy")
-total_number_of_meshes = 300
-number_of_groups = 64
-ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
-grass_mesh = NodePath("GrassMeshInstance3D")
-
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="Main SubViewportContainer/SubViewport/Ground/GrassMultiMeshInstance2"]
-mesh = SubResource("QuadMesh_xrtyr")
-skeleton = NodePath("")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport" unique_id=299895407]
 transform = Transform3D(0.896574, -0.11613, -0.427398, 0.442861, 0.22326, 0.868348, -0.00542101, -0.967817, 0.251596, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_mode = 1
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport" unique_id=1266266298]
 environment = SubResource("Environment_0jq3o")
 
-[node name="Scheduler" parent="." node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("3_r78pc")]
-full_day_time = 20.0
-sun_up_time = 6.0
-sun_down_time = 18.0
+[node name="Scheduler" parent="." unique_id=1797512426 node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("3_r78pc")]
+day_total_time = 20.0
+night_total_time = 20.0
 npc_holder = NodePath("../Main SubViewportContainer/SubViewport/NPC HOLDER")
 clock_label = NodePath("../UI SubViewportContainer/SubViewport/Clock Label")
 player_ref = NodePath("../Main SubViewportContainer/SubViewport/Player")
 
-[node name="UI SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="UI SubViewportContainer" type="SubViewportContainer" parent="." unique_id=2068473308]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -237,13 +175,13 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="UI SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="UI SubViewportContainer" unique_id=1789747629]
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
-[node name="Clock Label" type="Label" parent="UI SubViewportContainer/SubViewport"]
+[node name="Clock Label" type="Label" parent="UI SubViewportContainer/SubViewport" unique_id=1808016263]
 z_index = 100
 offset_right = 296.0
 offset_bottom = 38.0
