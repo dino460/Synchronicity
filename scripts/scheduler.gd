@@ -145,7 +145,8 @@ func request_id() -> int:
 
 func request_group() -> int:
 	var group_to_return = next_group
-	next_group += 1 % number_of_groups
+	next_group += 1
+	next_group %= number_of_groups
 	return group_to_return
 
 func bind_callable_to_group(group : int, callable : Callable):

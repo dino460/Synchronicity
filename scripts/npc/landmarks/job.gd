@@ -38,63 +38,15 @@ func _ready() -> void:
 	work_begin_time_converted      = full_day_time_converted * work_begin_time / 24.0
 	max_lateness_converted         = full_day_time_converted * max_lateness / 24.0
 
-
-func get_npc_want(npc : NPC, is_working_or_need_to_work : bool, interference : float) -> float:
-	var scheduler_current_time = scheduler.get_current_time()
-	var scheduler_time_left = scheduler.time_left
-	var scheduler_full_day_time = scheduler.cycle_total_time
-
-	var excess_poi_visit_time_correction = npc.points_of_interest.size() * npc.average_poi_distance * npc.personality.energy * npc.personality.bravery / npc.get_speed()
-	var time_want_to_arrive_corrected = (scheduler_full_day_time * work_begin_time / 24.0) - time_to_arrive(npc) - excess_poi_visit_time_correction
-	var lateness = scheduler_current_time - time_want_to_arrive_corrected
-	var lateness_weight = 0.0 if is_working_or_need_to_work else lateness * npc.personality.mind
-	var time_weight : float
-
-	var in_game_time_want_to_stop = (scheduler_full_day_time * (work_begin_time + expected_work_amount) / 24.0)
-	if scheduler_current_time > in_game_time_want_to_stop:
-		var time_left = scheduler_time_left if scheduler_time_left > 0.0 else 0.1
-		time_weight = -1 * in_game_time_want_to_stop / (time_left * sqrt(npc.personality.mind))
-	elif scheduler_current_time >= time_want_to_arrive_corrected:
-		time_weight = scheduler_time_left / (sqrt(npc.personality.mind) * scheduler_full_day_time)
-	else:
-		time_weight = pow(npc.personality.soul, 2) * scheduler.get_current_time() / scheduler_full_day_time
-
-	return super(npc, is_working_or_need_to_work, interference) + lateness_weight + time_weight
-
-
-func get_npc_attraction(npc_ref : NPC, _is_current_location : bool, is_working_or_need_to_work : bool) -> float:
-	var scheduler_current_time = scheduler.get_current_time()
-	var scheduler_time_left = scheduler.time_left
-	var scheduler_full_day_time = scheduler.cycle_total_time
-
-	var excess_poi_visit_time_correction = npc_ref.points_of_interest.size() * npc_ref.average_poi_distance * npc_ref.personality.energy * npc_ref.personality.bravery / npc_ref.get_speed()
-	var time_want_to_arrive_corrected = (scheduler_full_day_time * work_begin_time / 24.0) - time_to_arrive(npc_ref) - excess_poi_visit_time_correction
-	var lateness = scheduler_current_time - time_want_to_arrive_corrected
-	var lateness_weight = 0.0 if is_working_or_need_to_work else lateness * npc_ref.personality.mind
-	var time_weight : float
-
-	var in_game_time_want_to_stop = (scheduler_full_day_time * (work_begin_time + expected_work_amount) / 24.0)
-	if scheduler_current_time > in_game_time_want_to_stop:
-		var time_left = scheduler_time_left if scheduler_time_left > 0.0 else 0.1
-		time_weight = -1 * in_game_time_want_to_stop / (time_left * sqrt(npc_ref.personality.mind))
-	elif scheduler_current_time >= time_want_to_arrive_corrected:
-		time_weight = scheduler_time_left / (sqrt(npc_ref.personality.mind) * scheduler_full_day_time)
-	else:
-		time_weight = pow(npc_ref.personality.soul, 2) * scheduler.get_current_time() / scheduler_full_day_time
-
-	return super(npc_ref, _is_current_location, is_working_or_need_to_work) + lateness_weight + time_weight
-
-
 func is_job() -> bool:
 	return true
 
-func get_attraction(distance : float, npc_ref : NPC) -> float:
-	var attraction = super(distance, npc_ref)
+func get_attraction(distance : float) -> float:
+	var attraction = super(distance)
 	var current_time = scheduler.get_current_time()
-	var _time_to_arrive = time_to_arrive(npc_ref)
 
-	var lateness_weight = max(1.0, (current_time - work_begin_time_converted + _time_to_arrive) / (max_lateness_converted))
-	var punctuality_weight = (work_begin_time_converted - _time_to_arrive + current_time) / full_day_time_converted
+	var lateness_weight = max(1.0, (current_time - work_begin_time_converted) / (max_lateness_converted))
+	var punctuality_weight = (work_begin_time_converted + current_time) / full_day_time_converted
 	# print("JOB: ", attraction, " | ", lateness_weight, " | ", punctuality_weight)
 
 	return attraction * lateness_weight * punctuality_weight

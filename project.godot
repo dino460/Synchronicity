@@ -36,6 +36,7 @@ import/fbx/enabled=false
 [global_group]
 
 Persist="Group for all Nodes that must have their data saved "
+NPC="Group to identify NPC Objects"
 
 [input]
 

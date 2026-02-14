@@ -1,4 +1,4 @@
-extends Node3D
+extends Area3D
 
 class_name Landmark
 
@@ -11,31 +11,15 @@ class_name Landmark
 func _ready():
 	add_to_group("persist")
 	id = get_tree().get_root().get_node("Main/Scheduler").request_id()
-
+	self.connect("body_entered", _on_body_enter)
 
 func run():
 	# print(landmark_name, " is running")
 	pass
 
-
-func get_npc_want(npc : NPC, _is_at_landmark : bool, interference : float) -> float:
-	var npc_reputation_here = get_npc_reputation(npc.id)
-
-	var distance_weight = npc.personality.energy * influence_by_distance(npc.position.distance_to(self.position))
-	var loyalty_weight = npc.personality.loyalty * npc_reputation_here
-	var avoidance_weight = npc.personality.aggression / npc_reputation_here
-
-	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc) + avoidance_weight)) + interference
-
-
-func get_npc_attraction(npc_ref : NPC, _is_current_location : bool, _special_check_var : bool) -> float:
-	var npc_reputation_here = get_npc_reputation(npc_ref.id)
-
-	var distance_weight = npc_ref.personality.energy * influence_by_distance(npc_ref.position.distance_to(self.position))
-	var loyalty_weight = npc_ref.personality.loyalty * npc_reputation_here
-	var avoidance_weight = npc_ref.personality.aggression / npc_reputation_here
-
-	return ((distance_weight + loyalty_weight) / (time_to_arrive(npc_ref) + avoidance_weight))
+func _on_body_enter(body : Node3D):
+	if body.is_in_group("NPC"):
+		body._append_landmark(self, self.global_position)
 
 
 func is_home() -> bool:
@@ -50,8 +34,8 @@ func get_npc_reputation(npc_id : int) -> float:
 		reputations[npc_id] = 1.0
 	return reputations[npc_id]
 
-func time_to_arrive(npc : NPC) -> float:
-	return npc.position.distance_to(self.position) / npc.get_speed()
+func get_npc_visits(npc_id : int) -> int:
+	return reputations[npc_id] if reputations.has(npc_id) else 0
 
 func influence_by_distance(distance : float) -> float:
 	if distance <= radius_of_influence:
@@ -59,9 +43,9 @@ func influence_by_distance(distance : float) -> float:
 	return area_max_influence / exp(distance - radius_of_influence)
 
 
-func get_attraction(distance : float, _npc_ref : NPC) -> float:
+func get_attraction(distance : float) -> float:
 	if distance > 250:
-		return 0.0
+		return 0.01
 	return distance_lut[int(distance)]
 
 var distance_lut : Array[float] = [

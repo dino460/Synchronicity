@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_x07qc"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="3_r78pc"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="4_t1xvl"]
-[ext_resource type="Texture2D" uid="uid://dkosm7bkxnj7o" path="res://assets/blue_nebulae_1.png" id="4_u8e0t"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="5_ajshl"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_ghpyy"]
 [ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_uacia"]
@@ -54,32 +53,100 @@ size = Vector2(100, 100)
 material = ExtResource("7_uacia")
 size = Vector2(0.6, 0.7)
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_phknx"]
-turbidity = 0.0
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_jcd4p"]
+rayleigh_coefficient = 25.0
 ground_color = Color(0.294793, 0.227868, 0.147204, 1)
 energy_multiplier = 1.18
-night_sky = ExtResource("4_u8e0t")
+use_debanding = false
 
-[sub_resource type="Sky" id="Sky_dnvjr"]
-sky_material = SubResource("PhysicalSkyMaterial_phknx")
+[sub_resource type="Sky" id="Sky_yalbf"]
+sky_material = SubResource("PhysicalSkyMaterial_jcd4p")
 
-[sub_resource type="Environment" id="Environment_0jq3o"]
+[sub_resource type="Environment" id="Environment_uacia"]
 background_mode = 2
 background_energy_multiplier = 2.25
-sky = SubResource("Sky_dnvjr")
-ambient_light_source = 3
-tonemap_mode = 2
-tonemap_exposure = 0.9
-tonemap_white = 1.45
-ssao_radius = 1.8
-ssao_intensity = 2.5
-ssao_power = 2.35375
+sky = SubResource("Sky_yalbf")
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ssao_radius = 2.01
+ssao_intensity = 1.99
+ssao_power = 1.84672
 glow_enabled = true
-glow_normalized = true
 glow_bloom = 0.1
 adjustment_enabled = true
-adjustment_contrast = 0.87
-adjustment_saturation = 1.21
+adjustment_brightness = 0.95
+adjustment_contrast = 1.21
+adjustment_saturation = 0.82
+
+[sub_resource type="Animation" id="Animation_muem4"]
+resource_name = "Sun Rotation"
+length = 120.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("./DirectionalLight3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30, 60, 90, 120),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 0, 0), Vector3(-3.14159, 0, 0), Vector3(-4.71239, 0, 0), Vector3(-6.28319, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./DirectionalLight3D:light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2, 4, 8, 15, 45, 52, 56, 58, 90, 120),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.79, 0.59013, 0.2449, 1), Color(0.79, 0.59013, 0.2449, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.82, 0.29192, 0.1312, 1), Color(0.82, 0.29192, 0.1312, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("./DirectionalLight3D:light_energy")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(8, 15, 45, 52),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [10.0, 8.0, 8.0, 10.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WorldEnvironment:environment:ambient_light_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2, 4, 8, 15, 45, 52, 56, 58),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.273117, 0.313436, 0.435382, 1), Color(0.534956, 0.377976, 0.183441, 1), Color(0.534956, 0.377976, 0.183441, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.47983, 0.233345, 0.234024, 1), Color(0.47983, 0.233345, 0.234024, 1), Color(0.273117, 0.313436, 0.435382, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WorldEnvironment:environment:ambient_light_energy")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2, 4, 56, 58),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [1.5, 1.0, 1.0, 1.5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yk7ts"]
+_data = {
+&"Sun Rotation": SubResource("Animation_muem4")
+}
 
 [sub_resource type="SystemFont" id="SystemFont_ju7ma"]
 font_names = PackedStringArray("FiraCode Nerd Font Mono")
@@ -152,13 +219,22 @@ visible = false
 mesh = SubResource("QuadMesh_yk7ts")
 skeleton = NodePath("")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport" unique_id=299895407]
-transform = Transform3D(0.896574, -0.11613, -0.427398, 0.442861, 0.22326, 0.868348, -0.00542101, -0.967817, 0.251596, 0, 0, 0)
-shadow_enabled = true
-directional_shadow_mode = 1
+[node name="LightingAndEnvironment" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=438442959]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport" unique_id=1266266298]
-environment = SubResource("Environment_0jq3o")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Main SubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=2060576756]
+transform = Transform3D(1, 0, 0, 0, -0.47980037, 0.8773777, 0, -0.8773777, -0.47980037, 0, 0, 0)
+light_energy = 6.96791
+light_indirect_energy = 0.0
+light_bake_mode = 0
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Main SubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=909182516]
+environment = SubResource("Environment_uacia")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Main SubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=950496273]
+callback_mode_process = 0
+libraries/ = SubResource("AnimationLibrary_yk7ts")
 
 [node name="Scheduler" parent="." unique_id=1797512426 node_paths=PackedStringArray("npc_holder", "clock_label", "player_ref") instance=ExtResource("3_r78pc")]
 day_total_time = 20.0

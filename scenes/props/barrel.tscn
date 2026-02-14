@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://decyj3xqmljig"]
+[gd_scene format=4 uid="uid://decyj3xqmljig"]
 
 [ext_resource type="PackedScene" uid="uid://2smwte7i8ht" path="res://assets/lukkys props/containers/barrel.glb" id="1_2oeeb"]
 [ext_resource type="Texture2D" uid="uid://lkh6p4gofnu2" path="res://assets/lukkys props/containers/barrel_barrel_albedo.png" id="2_l8aas"]
@@ -49,19 +49,19 @@ shadow_mesh = SubResource("ArrayMesh_umxq0")
 height = 0.964
 radius = 0.41
 
-[node name="barrel" instance=ExtResource("1_2oeeb")]
+[node name="barrel" unique_id=1209122429 instance=ExtResource("1_2oeeb")]
 
 [node name="barrel2" parent="." index="0"]
 mesh = SubResource("ArrayMesh_4socx")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="." index="1"]
+[node name="RigidBody3D" type="RigidBody3D" parent="." index="1" unique_id=250126015]
 collision_mask = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" index="0" unique_id=587266036]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.485088, 0)
 shape = SubResource("CylinderShape3D_ivmg1")
 
-[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="2"]
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="." index="2" unique_id=959517273]
 vertices = PackedVector3Array(0.00243814, 0, -0.468177, 0.4, 0, -0.27, 0.4, 0, 0.2, 0, 0, 0.47, -0.4, 0, 0.27, -0.4, 0, -0.27)
 affect_navigation_mesh = true
 avoidance_enabled = false

@@ -180,17 +180,3 @@ func _on_trigger_death() -> void:
 
 func _on_navigation_agent_3d_velocity_computed(safe_velocity:Vector3) -> void:
 	velocity = safe_velocity
-
-func _on_visible_on_screen_enabler_3d_screen_exited() -> void:
-	# if update_again:
-	# 	should_animate = false
-	# 	self.visible = false
-	# print("exited")
-	pass
-
-func _on_visible_on_screen_enabler_3d_screen_entered() -> void:
-	# if update_again:
-	# 	should_animate = true
-	# 	self.visible = true
-	# print("entered")
-	pass
