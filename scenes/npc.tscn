@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cp6n57vllgpls" path="res://scripts/npc/npc_controller.gd" id="1_n0klm"]
 [ext_resource type="Script" uid="uid://cfsbnk3hnsjes" path="res://scripts/npc/characteristics/personality.gd" id="2_u2tho"]
+[ext_resource type="PackedScene" uid="uid://bywvo08rx0fh2" path="res://scenes/npc_thoughts_template.tscn" id="2_yf2ql"]
 [ext_resource type="Script" uid="uid://ww1hqolmdu61" path="res://scripts/character_stats.gd" id="3_ca6vw"]
 [ext_resource type="Script" uid="uid://cdqw8mkrjfvrx" path="res://scripts/player/animation_handler.gd" id="4_t8u8m"]
 [ext_resource type="Script" uid="uid://c4bdfbjq5tji3" path="res://scripts/weapons/shortsword.gd" id="5_d56e8"]
@@ -1308,7 +1309,7 @@ _data = {
 &"walk": ExtResource("14_u8ld7")
 }
 
-[node name="NPC" type="RigidBody3D" unique_id=343174346 node_paths=PackedStringArray("mesh", "personality", "stats") groups=["NPC"]]
+[node name="NPC" type="RigidBody3D" unique_id=343174346 node_paths=PackedStringArray("mesh", "label_anchor", "personality", "stats") groups=["NPC"]]
 collision_layer = 1057
 collision_mask = 1057
 axis_lock_angular_x = true
@@ -1319,6 +1320,8 @@ linear_damp_mode = 1
 angular_damp_mode = 1
 script = ExtResource("1_n0klm")
 mesh = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/Base")
+thoughts_label_template = ExtResource("2_yf2ql")
+label_anchor = NodePath("LabelAnchor")
 npc_name = "Helena \"Honey Pie\", meu maior amor"
 current_age = 25
 personality = NodePath("Personality")
@@ -1338,6 +1341,8 @@ soul = 0.8
 [node name="Stats" type="Node" parent="." unique_id=1621210711]
 script = ExtResource("3_ca6vw")
 constitution = 30.0
+max_hunger = 10.0
+base_hunger_drain = 0.5
 
 [node name="AnimationHandler" type="Node" parent="." unique_id=1358891073 node_paths=PackedStringArray("animator")]
 script = ExtResource("4_t8u8m")

@@ -19,7 +19,8 @@ func run():
 
 func _on_body_enter(body : Node3D):
 	if body.is_in_group("NPC"):
-		body._append_landmark(self, self.global_position)
+		# body._append_landmark(self, self.global_position)
+		print("append")
 
 
 func is_home() -> bool:

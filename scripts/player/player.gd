@@ -62,6 +62,7 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
 	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
+	stats.is_npc = false
 	pass
 
 
