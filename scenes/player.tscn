@@ -122,7 +122,6 @@ audio_stream_player = NodePath(".")
 shape = SubResource("CapsuleShape3D_sv48k")
 
 [node name="MeshPivot" type="Node3D" parent="." unique_id=970028316]
-visible = false
 
 [node name="Low-Poly-Base_blend" parent="MeshPivot" unique_id=144398554 instance=ExtResource("4_pdx7r")]
 transform = Transform3D(-1.8, 0, 1.57361e-07, 0, 1.8, 0, -1.57361e-07, 0, -1.8, 0, -1.546, 0)
