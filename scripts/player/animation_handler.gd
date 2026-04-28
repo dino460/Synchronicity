@@ -30,6 +30,8 @@ var attack_states = [
 	AnimationState.ATTACK_RIGHT
 ]
 
+@export var stats : CharacterStats
+
 
 func _ready() -> void:
 	if animator == null:
@@ -45,17 +47,20 @@ func remove_animation_interpolation():
 func _on_idling():
 	wanted_state = AnimationState.IDLE
 	check_wanted_state()
-	play_animation("idle", 3.0)
+	# play_animation("idle", 3.0)
+	play_animation("idle", 1.0 + (stats.exhaustion / stats.max_exhaustion))
 
 func _on_walking():
 	wanted_state = AnimationState.WALK
 	check_wanted_state()
-	play_animation("walk", 3.8)
+	# play_animation("walk", 3.8)
+	play_animation("walk", 1.0)
 
 func _on_running():
 	wanted_state = AnimationState.RUN
 	check_wanted_state()
-	play_animation("run", 8.0)
+	# play_animation("run", 8.0)
+	play_animation("run", 1.0)
 
 func _on_dashing(dash_time):
 	wanted_state = AnimationState.DASH

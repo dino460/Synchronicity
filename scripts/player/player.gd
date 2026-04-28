@@ -24,7 +24,7 @@ var is_dead : bool = false
 
 @export_group("Movement Properties")
 @export var applied_speed : float = 0.0
-@export var walk_speed    : float = 3.3
+@export var walk_speed    : float = 3.1
 
 @export var run_speed     : float = 18.0
 @export var is_running    : bool  = false
@@ -123,8 +123,10 @@ func _physics_process(delta : float) -> void:
 		if not is_dashing:
 			if applied_speed >= run_speed:
 				running.emit()
+				stats.tick_exhaustion = true
 			else:
 				walking.emit()
+				stats.tick_exhaustion = false
 
 		# Rotates direction of movement around UP axis in relation to camera and then normalizes it
 		direction = rotate_direction(direction)
@@ -133,6 +135,7 @@ func _physics_process(delta : float) -> void:
 
 	elif not is_attacking:
 		idling.emit()
+		stats.tick_exhaustion = false
 
 	target_velocity.x = direction.x * applied_speed
 	target_velocity.z = direction.z * applied_speed
