@@ -243,7 +243,7 @@ shader_parameter/lineShadow = 10.59
 
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("weapon", "label_anchor", "stats")]
 script = ExtResource("1_br4xa")
-walk_speed = 4.0
+walk_speed = 4.2
 run_speed = 10.0
 dash_speed = 20.0
 dash_time = 0.5
@@ -938,7 +938,7 @@ libraries/ = SubResource("AnimationLibrary_l71n6")
 [node name="base_male" parent="MeshPivot" unique_id=1708852958 instance=ExtResource("17_60mlk")]
 transform = Transform3D(-1.365, 0, 2.0610928e-07, 0, 1.365, 0, -2.0610928e-07, 0, -1.365, 0, -1.5, 0)
 
-[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1708852958, 198816163) index="0" unique_id=1235878977]
+[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1708852958, 1887805886) index="0" unique_id=1516729661]
 bones/0/position = Vector3(8.515904e-18, 0.16631146, 0.03835222)
 bones/0/rotation = Quaternion(-0.022983048, 4.994307e-17, -2.1155053e-16, 0.99973583)
 bones/1/rotation = Quaternion(0.20077439, -1.5620701e-16, -3.6212596e-16, 0.97963756)
@@ -962,19 +962,19 @@ bones/34/position = Vector3(-2.33314, 0.34438643, 0.07826535)
 bones/35/rotation = Quaternion(0.07589675, 0.7766944, -0.61796933, -0.095390774)
 bones/37/position = Vector3(-0.7953922, -6.1254706, -2.1674824)
 
-[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=638424318]
+[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1803836310]
 mesh = SubResource("ArrayMesh_i4ail")
 
-[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=322758637]
+[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=2057396782]
 mesh = SubResource("ArrayMesh_a38lo")
 
-[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=892230699]
+[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=1435994727]
 mesh = SubResource("ArrayMesh_4ni07")
 
-[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=2101835388]
+[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=550401100]
 mesh = SubResource("ArrayMesh_l71n6")
 
-[node name="AnimationPlayer" parent="MeshPivot/base_male" index="3" unique_id=1242251704]
+[node name="AnimationPlayer" parent="MeshPivot/base_male" index="3" unique_id=1508705224]
 autoplay = &"idle"
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
