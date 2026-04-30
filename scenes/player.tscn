@@ -243,7 +243,7 @@ shader_parameter/lineShadow = 10.59
 
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("weapon", "label_anchor", "stats")]
 script = ExtResource("1_br4xa")
-walk_speed = 4.2
+walk_speed = 4.3
 run_speed = 10.0
 dash_speed = 20.0
 dash_time = 0.5
