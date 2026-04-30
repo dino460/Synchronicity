@@ -2,13 +2,18 @@ shader_type spatial;
 
 render_mode depth_draw_opaque;
 
-uniform int grass_type : hint_enum("Normal", "Only on Shadow", "Only on Light", "Tree Leaf");
 uniform float time_scale = 1.0;
 
 group_uniforms animation;
 uniform int hframe : hint_range(1,128);
 uniform int vframe : hint_range(1,128);
 uniform vec2 current_frame = vec2(0,0);
+
+group_uniforms clouds;
+global uniform float cloud_cover_scale = 1.0;
+global uniform float cloud_cover_intensity = 0.3;
+global uniform vec2 cloud_scroll_speed = vec2(0.5, 0.2);
+global uniform sampler2D cloud_noise_texture;
 
 group_uniforms color;
 uniform vec4 albedo : source_color = vec4(1.0f);
@@ -34,9 +39,6 @@ uniform bool clamp_diffuse_to_max = false;
 
 uniform bool use_attenuation = true;
 
-varying vec3 vertex_pos;
-varying vec3 normal;
-
 varying vec3 instance_origin;
 varying vec3 instance_pos;
 
@@ -46,8 +48,6 @@ void vertex() {
 	
 	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
 	NORMAL = vec3(0.0, 1.0, 0.0);
-	vertex_pos = VERTEX;
-	normal = NORMAL;
 }
 
 void fragment() {
@@ -77,11 +77,11 @@ void fragment() {
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
-	if (grass_type == 2) {
-		attenuation = 0.0f;
-	}
-	if ((use_attenuation && (grass_type == 0)) || (use_attenuation && !LIGHT_IS_DIRECTIONAL)) {
-		attenuation = ATTENUATION;
+	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale)).r;
+	cloud_cover -= cloud_cover_intensity;
+	if (use_attenuation) {
+		attenuation = min(ATTENUATION, cloud_cover);
+		//attenuation = ATTENUATION;
 	}
 
 	// Diffuse lighting.

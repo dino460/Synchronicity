@@ -7,6 +7,7 @@
 frequency = 0.005
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gjj3c"]
+generate_mipmaps = false
 noise = SubResource("FastNoiseLite_vgjhr")
 seamless = true
 
@@ -15,13 +16,13 @@ seed = 1
 frequency = 0.004
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8xqkc"]
+generate_mipmaps = false
 noise = SubResource("FastNoiseLite_c82c8")
 seamless = true
 
 [resource]
 render_priority = 1
 shader = ExtResource("1_j4c6y")
-shader_parameter/grass_type = 0
 shader_parameter/time_scale = 1.0
 shader_parameter/hframe = 4
 shader_parameter/vframe = 1
