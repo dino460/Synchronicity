@@ -9,6 +9,12 @@ uniform vec4 albedo : source_color = vec4(1.0f);
 uniform sampler2D albedo_texture : source_color;
 uniform bool clamp_diffuse_to_max = false;
 
+group_uniforms clouds;
+global uniform float cloud_cover_scale;
+global uniform float cloud_cover_intensity;
+global uniform vec2 cloud_scroll_speed;
+global uniform sampler2D cloud_noise_texture;
+
 group_uniforms toon_shading;
 uniform int cuts : hint_range(1, 8) = 3;
 uniform float wrap : hint_range(-2.0f, 2.0f) = 0.0f;
@@ -32,6 +38,7 @@ uniform sampler2D ramp : source_color;
 uniform bool use_borders = false;
 uniform float border_width = 0.01f;
 
+varying vec3 instance_pos;
 varying vec3 vertex_pos;
 varying vec3 normal;
 
@@ -40,6 +47,7 @@ float split_specular(float specular) {
 }
 
 void vertex() {
+	instance_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	vertex_pos = VERTEX;
 	normal = NORMAL;
 }
@@ -51,8 +59,11 @@ void fragment() {
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
+	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale)).r;
+	cloud_cover -= cloud_cover_intensity;
 	if (use_attenuation) {
-		attenuation = ATTENUATION;
+		attenuation = min(ATTENUATION, cloud_cover);
+		//attenuation = ATTENUATION;
 	}
 
 	// Diffuse lighting.

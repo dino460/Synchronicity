@@ -2,13 +2,18 @@ shader_type spatial;
 
 render_mode depth_draw_opaque;
 
-uniform int grass_type : hint_enum("Normal", "Only on Shadow", "Only on Light");
 uniform float time_scale = 1.0;
 
 group_uniforms animation;
 uniform int hframe : hint_range(1,128);
 uniform int vframe : hint_range(1,128);
 uniform vec2 current_frame = vec2(0,0);
+
+group_uniforms clouds;
+global uniform float cloud_cover_scale;
+global uniform float cloud_cover_intensity;
+global uniform vec2 cloud_scroll_speed;
+global uniform sampler2D cloud_noise_texture;
 
 group_uniforms color;
 uniform vec4 albedo : source_color = vec4(1.0f);
@@ -61,11 +66,11 @@ void fragment() {
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
-	if (grass_type == 2) {
-		attenuation = 0.0f;
-	}
-	if ((use_attenuation && (grass_type == 0)) || (use_attenuation && !LIGHT_IS_DIRECTIONAL)) {
-		attenuation = ATTENUATION;
+	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale)).r;
+	cloud_cover -= cloud_cover_intensity;
+	if (use_attenuation) {
+		attenuation = min(ATTENUATION, cloud_cover);
+		//attenuation = ATTENUATION;
 	}
 
 	// Diffuse lighting.
@@ -122,7 +127,7 @@ void light() {
 		DIFFUSE_LIGHT += diffuse;
 	}
 	
-	float NdotV = dot(NORMAL, VIEW);
-	float rim_light = pow(1.0 - NdotV, rim_width) * ATTENUATION;
-	DIFFUSE_LIGHT += rim_light * rim_color.rgb * rim_color.a * LIGHT_COLOR / PI;
+	//float NdotV = dot(NORMAL, VIEW);
+	//float rim_light = pow(1.0 - NdotV, rim_width) * ATTENUATION;
+	//DIFFUSE_LIGHT += rim_light * rim_color.rgb * rim_color.a * LIGHT_COLOR / PI;
 }

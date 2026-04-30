@@ -163,11 +163,19 @@ vrs/directional_shadow/16_bits=true
 
 [shader_globals]
 
-grass_dark_noise={
-"type": "sampler2D",
-"value": "::vgjhr"
+cloud_cover_scale={
+"type": "float",
+"value": 0.015
 }
-grass_light_noise={
+cloud_cover_intensity={
+"type": "float",
+"value": 0.61
+}
+cloud_scroll_speed={
+"type": "vec2",
+"value": Vector2(1.2, 0.7)
+}
+cloud_noise_texture={
 "type": "sampler2D",
-"value": "::gjj3c"
+"value": "res://assets/textures/noise/cloud_noise_texture.tres"
 }
