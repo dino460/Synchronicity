@@ -77,7 +77,7 @@ void fragment() {
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
-	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale)).r;
+	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale) + (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xy).r;
 	cloud_cover -= cloud_cover_intensity;
 	if (use_attenuation) {
 		attenuation = min(ATTENUATION, cloud_cover);

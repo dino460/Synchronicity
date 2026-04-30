@@ -165,11 +165,11 @@ vrs/directional_shadow/16_bits=true
 
 cloud_cover_scale={
 "type": "float",
-"value": 0.015
+"value": 0.01
 }
 cloud_cover_intensity={
 "type": "float",
-"value": 0.61
+"value": -0.08
 }
 cloud_scroll_speed={
 "type": "vec2",
