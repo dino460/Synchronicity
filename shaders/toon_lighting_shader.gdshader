@@ -14,6 +14,7 @@ global uniform float cloud_cover_scale;
 global uniform float cloud_cover_intensity;
 global uniform vec2 cloud_scroll_speed;
 global uniform sampler2D cloud_noise_texture;
+uniform vec2 stretch_factor = vec2(1.0f);
 
 group_uniforms toon_shading;
 uniform int cuts : hint_range(1, 8) = 3;
@@ -59,7 +60,8 @@ void fragment() {
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
-	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz+ (cloud_scroll_speed * TIME)) * (cloud_cover_scale) + (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xy).r;
+	vec2 custom_uv = instance_pos.xz * stretch_factor;
+	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale)).r;
 	cloud_cover -= cloud_cover_intensity;
 	if (use_attenuation) {
 		attenuation = min(ATTENUATION, cloud_cover);

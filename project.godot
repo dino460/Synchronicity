@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Synchronicity"
 run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="uid://dcsigkogygq06"
+config/icon="uid://vugnr6ttauny"
 
 [autoload]
 
@@ -169,7 +169,7 @@ cloud_cover_scale={
 }
 cloud_cover_intensity={
 "type": "float",
-"value": -0.08
+"value": 0.065
 }
 cloud_scroll_speed={
 "type": "vec2",
