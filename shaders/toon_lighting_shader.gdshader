@@ -14,7 +14,8 @@ global uniform float cloud_cover_scale;
 global uniform float cloud_cover_intensity;
 global uniform vec2 cloud_scroll_speed;
 global uniform sampler2D cloud_noise_texture;
-uniform vec2 stretch_factor = vec2(1.0f);
+global uniform float cloud_cover_threshold;
+//uniform float correction = 1.0f;
 
 group_uniforms toon_shading;
 uniform int cuts : hint_range(1, 8) = 3;
@@ -60,9 +61,28 @@ void fragment() {
 void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
-	vec2 custom_uv = instance_pos.xz * stretch_factor;
-	float cloud_cover = texture(cloud_noise_texture, (instance_pos.xz + (cloud_scroll_speed * TIME)) * (cloud_cover_scale)).r;
-	cloud_cover -= cloud_cover_intensity;
+	
+	// Convert LIGHT from view space to world space
+	vec3 LIGHT_world_space = (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xyz;
+	
+	// Manipulate cloud noise UV values
+	vec2 cloud_uv = (instance_pos.xz + (cloud_scroll_speed * TIME) /*+ (LIGHT_world_space.xz / 2.0f)*/) * (cloud_cover_scale);
+	// Stretch UV in direction of the sun LIGHT
+	cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
+	
+	//Sample texture value for current pixel 
+	float cloud_cover = texture(cloud_noise_texture, cloud_uv).r;
+	
+	// Threshold value for crisp shadows 
+	if (cloud_cover >= cloud_cover_threshold) {
+		cloud_cover = 0.0;
+	} else {
+		cloud_cover = 1.0;
+	}
+	
+	//cloud_cover -= cloud_cover_intensity;
+	
+	// Apply a shadow if it exists
 	if (use_attenuation) {
 		attenuation = min(ATTENUATION, cloud_cover);
 		//attenuation = ATTENUATION;

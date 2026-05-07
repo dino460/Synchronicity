@@ -3,6 +3,7 @@
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ko6s2"]
 noise_type = 2
 frequency = 0.003
+domain_warp_type = 1
 
 [resource]
 width = 1024

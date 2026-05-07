@@ -25,7 +25,6 @@ render_priority = 0
 shader = ExtResource("4_jkv2x")
 shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
 shader_parameter/clamp_diffuse_to_max = true
-shader_parameter/stretch_factor = Vector2(1, 1)
 shader_parameter/cuts = 3
 shader_parameter/wrap = 0.355
 shader_parameter/steepness = 1.0
@@ -226,7 +225,6 @@ render_priority = 0
 shader = ExtResource("4_jkv2x")
 shader_parameter/albedo = Color(0.39215687, 0.41568628, 0.39607844, 1)
 shader_parameter/clamp_diffuse_to_max = false
-shader_parameter/stretch_factor = Vector2(1, 1)
 shader_parameter/cuts = 3
 shader_parameter/wrap = 0.35500011186250013
 shader_parameter/steepness = 1.0
@@ -308,7 +306,6 @@ render_priority = 0
 shader = ExtResource("4_jkv2x")
 shader_parameter/albedo = Color(0.70980394, 0.1882353, 0, 1)
 shader_parameter/clamp_diffuse_to_max = false
-shader_parameter/stretch_factor = Vector2(1, 1)
 shader_parameter/cuts = 3
 shader_parameter/wrap = 0.35500011186250013
 shader_parameter/steepness = 1.0
@@ -721,6 +718,7 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
+level_of_detail = 80000
 total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
@@ -734,7 +732,7 @@ skeleton = NodePath("")
 [node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=856473818]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=619800890]
-transform = Transform3D(1, 0, 0, 0, 0.8746197, 0.4848096, 0, -0.4848096, 0.8746197, 0, 0, 0)
+transform = Transform3D(0.9999999, 0, 0, 0, -0.2368724, 0.97154033, 0, -0.9715409, -0.23687223, 0, 0, 0)
 light_energy = 7.828398
 light_indirect_energy = 0.0
 light_bake_mode = 0
