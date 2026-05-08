@@ -92,7 +92,11 @@ void light() {
 	
 	// Apply a shadow if it exists
 	if (use_attenuation) {
-		attenuation = min(ATTENUATION, cloud_cover);
+		if (LIGHT_IS_DIRECTIONAL) {
+			attenuation = min(ATTENUATION, cloud_cover);
+		} else {
+			attenuation = ATTENUATION;
+		}
 		//attenuation = ATTENUATION;
 	}
 
@@ -145,9 +149,9 @@ void light() {
 
 	if (clamp_diffuse_to_max) {
 		// Clamp diffuse to max for multiple light sources.
-		DIFFUSE_LIGHT = max(DIFFUSE_LIGHT, diffuse);
+		DIFFUSE_LIGHT = max(DIFFUSE_LIGHT, diffuse * attenuation);
 	} else {
-		DIFFUSE_LIGHT += diffuse;
+		DIFFUSE_LIGHT += diffuse * attenuation;
 	}
 	
 	//float NdotV = dot(NORMAL, VIEW);

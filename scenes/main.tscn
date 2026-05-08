@@ -1016,6 +1016,12 @@ transform = Transform3D(0.4356493, 0, 0, 0, 0.12851262, -0.41626287, 0, 0.416262
 mesh = SubResource("ArrayMesh_2wyq8")
 skeleton = NodePath("")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1769489995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8136799, 3.1555073, 8.951954)
+light_energy = 2.656
+shadow_enabled = true
+omni_range = 63.995
+
 [node name="Scheduler" parent="." unique_id=1212023566 node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 day_total_time = 30.0
 night_total_time = 40.0
