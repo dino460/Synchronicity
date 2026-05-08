@@ -8,6 +8,8 @@ uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
 uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 uniform sampler2D NORMAL_TEXTURE : hint_normal_roughness_texture, filter_nearest;
 
+uniform sampler2D mask_texture : hint_default_black; // Assign your SubViewport Texture here
+
 uniform bool shadows_enabled = true;
 uniform bool highlights_enabled = true;
 uniform float shadow_strength : hint_range(0.0, 1.0, 0.01) = 0.4;
@@ -89,6 +91,7 @@ void fragment() {
 //		ALBEDO = vec3(normal_diff);
 	}
 
+	float mask = texture(mask_texture, SCREEN_UV).r;
 
 	vec3 original_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
 	//vec3 final_highlight_color = mix(original_color, highlight_color, highlight_strength);
@@ -96,11 +99,15 @@ void fragment() {
 	vec3 final_highlight_color = original_color * highlight_strength;
 	vec3 final_shadow_color = mix(original_color, shadow_color, shadow_strength);
 	vec3 final = original_color;
-	if (highlights_enabled) {
+	if (highlights_enabled && mask > 0.5f) {
 		final = mix(final, final_highlight_color, normal_diff);
 	}
-	if (shadows_enabled) {
+	if (shadows_enabled && mask < 0.5f) {
+		ALBEDO = vec3(1.0f);
 		final = mix(final, final_shadow_color, depth_diff);
+	}
+	else {
+		ALBEDO = vec3(0.0f);
 	}
 	ALBEDO = final;
 

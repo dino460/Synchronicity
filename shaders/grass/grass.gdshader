@@ -2,6 +2,7 @@ shader_type spatial;
 
 render_mode depth_draw_opaque;
 
+
 uniform float time_scale = 1.0;
 
 group_uniforms animation;
@@ -73,6 +74,7 @@ void fragment() {
 	
 	ALBEDO = final_albedo.rgb * final_tex.rgb;
 	ALPHA *= final_tex.a;
+	ALPHA_SCISSOR_THRESHOLD = 0.5;
 }
 
 void light() {
