@@ -19,6 +19,7 @@ uniform vec3 shadow_color : source_color = vec3(0.0);
 
 varying mat4 model_view_matrix;
 
+uniform float depth_threshold : hint_range(0.0, 10.0, 0.001) = 0.0f;
 
 float getDepth(vec2 screen_uv, sampler2D depth_texture, mat4 inv_projection_matrix){
 //	Credit: https://godotshaders.com/shader/depth-modulated-pixel-outline-in-screen-space/
@@ -75,39 +76,35 @@ void fragment() {
 
 //	Highlights
 	float normal_diff = 0.;
-	if (highlights_enabled) {
-		vec3 normal = texture(NORMAL_TEXTURE, SCREEN_UV).rgb * 2.0 - 1.0;
-		vec3 nu = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., -1.)*e).rgb * 2.0 - 1.0;
-		vec3 nr = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(1., 0.)*e).rgb * 2.0 - 1.0;
-		vec3 nd = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., 1.)*e).rgb * 2.0 - 1.0;
-		vec3 nl = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(-1., 0.)*e).rgb * 2.0 - 1.0;
-		vec3 normal_edge_bias = (vec3(1., 1., 1.));
-		normal_diff += normalIndicator(normal_edge_bias, normal, nu, depth_diff);
-		normal_diff += normalIndicator(normal_edge_bias, normal, nr, depth_diff);
-		normal_diff += normalIndicator(normal_edge_bias, normal, nd, depth_diff);
-		normal_diff += normalIndicator(normal_edge_bias, normal, nl, depth_diff);
-		normal_diff = smoothstep(0.2, 0.8, normal_diff);
-		normal_diff = clamp(normal_diff-neg_depth_diff, 0., 1.);
-//		ALBEDO = vec3(normal_diff);
-	}
+	//if (highlights_enabled) {
+		//vec3 normal = texture(NORMAL_TEXTURE, SCREEN_UV).rgb * 2.0 - 1.0;
+		//vec3 nu = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., -1.)*e).rgb * 2.0 - 1.0;
+		//vec3 nr = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(1., 0.)*e).rgb * 2.0 - 1.0;
+		//vec3 nd = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(0., 1.)*e).rgb * 2.0 - 1.0;
+		//vec3 nl = texture(NORMAL_TEXTURE, SCREEN_UV+vec2(-1., 0.)*e).rgb * 2.0 - 1.0;
+		//vec3 normal_edge_bias = (vec3(1., 1., 1.));
+		//normal_diff += normalIndicator(normal_edge_bias, normal, nu, depth_diff);
+		//normal_diff += normalIndicator(normal_edge_bias, normal, nr, depth_diff);
+		//normal_diff += normalIndicator(normal_edge_bias, normal, nd, depth_diff);
+		//normal_diff += normalIndicator(normal_edge_bias, normal, nl, depth_diff);
+		//normal_diff = smoothstep(0.2, 0.8, normal_diff);
+		//normal_diff = clamp(normal_diff-neg_depth_diff, 0., 1.);
+////		ALBEDO = vec3(normal_diff);
+	//}
 
 	float mask = texture(mask_texture, SCREEN_UV).r;
 
 	vec3 original_color = texture(SCREEN_TEXTURE, SCREEN_UV).rgb;
 	//vec3 final_highlight_color = mix(original_color, highlight_color, highlight_strength);
 	//vec3 final_shadow_color = mix(original_color, shadow_color, shadow_strength);
-	vec3 final_highlight_color = original_color * highlight_strength;
+	//vec3 final_highlight_color = original_color * highlight_strength;
 	vec3 final_shadow_color = mix(original_color, shadow_color, shadow_strength);
 	vec3 final = original_color;
-	if (highlights_enabled && mask > 0.5f) {
-		final = mix(final, final_highlight_color, normal_diff);
-	}
-	if (shadows_enabled && mask < 0.5f) {
-		ALBEDO = vec3(1.0f);
+	//if (highlights_enabled) {
+		//final = mix(final, final_highlight_color, normal_diff);
+	//}
+	if (shadows_enabled) {
 		final = mix(final, final_shadow_color, depth_diff);
-	}
-	else {
-		ALBEDO = vec3(0.0f);
 	}
 	ALBEDO = final;
 

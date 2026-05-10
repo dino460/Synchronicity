@@ -134,44 +134,14 @@ void light() {
 		}
 	}
 
-	// Calculate borders.
-	float border = 0.0f;
-	if (use_borders) {
-		float corr_border_width = length(cross(NORMAL, LIGHT)) * border_width * steepness;
-		border = step(diffuse_stepped - corr_border_width, diffuse_amount)
-				 - step(1.0 - corr_border_width, diffuse_amount);
-	}
-
 	// Apply diffuse result to different styles.
 	vec3 diffuse = ALBEDO.rgb * LIGHT_COLOR / PI;
-	if (use_ramp) {
-		diffuse *= texture(ramp, vec2(diffuse_stepped * (1.0f - border), 0.0f)).rgb;
-	} else {
-		diffuse *= diffuse_stepped * (1.0f - border);
-	}
+	diffuse *= diffuse_stepped;
 
 	if (clamp_diffuse_to_max) {
 		// Clamp diffuse to max for multiple light sources.
-		DIFFUSE_LIGHT = max(DIFFUSE_LIGHT, diffuse);
+		DIFFUSE_LIGHT = max(DIFFUSE_LIGHT, diffuse * attenuation);
 	} else {
 		DIFFUSE_LIGHT += diffuse * attenuation;
-	}
-
-	// Specular lighting.
-	if (use_specular) {
-		vec3 H = normalize(LIGHT + VIEW);
-		float NdotH = dot(NORMAL, H);
-		float specular_amount = max(pow(NdotH, specular_shininess*specular_shininess), 0.0f)
-							    * texture(specular_map, UV).r
-								* attenuation;
-		specular_amount = split_specular(specular_amount);
-		SPECULAR_LIGHT += specular_strength * specular_amount * LIGHT_COLOR;
-	}
-
-	// Simple rim lighting.
-	if (use_rim) {
-		float NdotV = dot(NORMAL, VIEW);
-		float rim_light = pow(1.0 - NdotV, rim_width);
-		DIFFUSE_LIGHT += rim_light * rim_color.rgb * rim_color.a * LIGHT_COLOR / PI;
 	}
 }

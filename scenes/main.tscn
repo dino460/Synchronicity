@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
-[ext_resource type="Shader" uid="uid://bt5c5d120sfox" path="res://shaders/depth_to_color.gdshader" id="3_dp3eg"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="4_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_jbj1t"]
@@ -12,19 +11,47 @@
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
-[ext_resource type="Script" uid="uid://bfmdlww4ow0cx" path="res://scripts/player/follow_player_main_camera.gd" id="13_muem4"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 [ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/gradients/sun_color.tres" id="16_dp3eg"]
 [ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/gradients/environment color.tres" id="17_0ld40"]
 [ext_resource type="Shader" uid="uid://c4620k2iihv5v" path="res://shaders/grass/leaf.gdshader" id="17_jscy8"]
 [ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="17_yc10j"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gqmmt"]
-render_priority = 0
-shader = ExtResource("3_dp3eg")
+[sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
+size = Vector3(75, 1, 75)
 
-[sub_resource type="QuadMesh" id="QuadMesh_yc10j"]
-material = SubResource("ShaderMaterial_gqmmt")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
+render_priority = 0
+shader = ExtResource("4_jkv2x")
+shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
+shader_parameter/clamp_diffuse_to_max = true
+shader_parameter/cuts = 3
+shader_parameter/wrap = 0.355
+shader_parameter/steepness = 1.0
+shader_parameter/threshold_gradient_size = 0.2
+shader_parameter/use_attenuation = true
+shader_parameter/use_specular = false
+shader_parameter/specular_strength = 1.0
+shader_parameter/specular_shininess = 16.33
+shader_parameter/use_rim = false
+shader_parameter/rim_width = 8.0
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/use_ramp = false
+shader_parameter/use_borders = false
+shader_parameter/border_width = 0.01
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
+material = SubResource("ShaderMaterial_dp3eg")
+size = Vector2(75, 75)
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
+vertices = PackedVector3Array(7.5, 0.315277, -13.25, 7.5, 0.315277, -13.75, 6, 0.315277, -14, 5.75, 0.315277, -12.75, 5.5, 0.315277, -18.75, 6, 0.315277, -19.5, 7.5, 0.315277, -36.25, 5.5, 0.315277, -14.75, 2.5, 0.315277, -9.5, 3.25, 0.315277, -10, 5.5, 0.315277, -10, -36.25, 0.315277, -36.25, -36.25, 0.315277, -8, 2.25, 0.315277, -8, 7.5, 0.315277, -19.75, 8.5, 0.315277, -13.75, 9.25, 0.315277, -12.75, 8.5, 0.315277, -19.75, 9.5, 0.315277, -18.75, 20.25, 0.315277, -9.75, 9.5, 0.315277, -14.75, 9.5, 0.315277, -10, 20.75, 0.315277, -9, 20.75, 0.315277, -5.5, 25.5, 0.315277, -5.5, 26.25, 0.315277, -5, 36.25, 0.315277, -3.5, 36.25, 0.315277, -36.25, 26.5, 0.315277, -3.5, 8.75, 0.315277, -0.25, 8.75, 0.315277, -6, 3.25, 0.315277, -6, 9.25, 0.315277, 0.5, 2.25, 0.315277, -7, -36.25, 0.315277, 36.25, 10.75, 0.315277, 36.25, 10.75, 0.315277, 0.75, 16.75, 0.315277, -2.5, 16.75, 0.315277, -6, 12.75, 0.315277, -6, 12.75, 0.315277, -0.25, 11.75, 0.315277, 0.75, 17.75, 0.315277, -1.5, 36.25, 0.315277, 36.25, 25.5, 0.315277, -1.5, 26.25, 0.315277, -2)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(6, 5, 4), PackedInt32Array(2, 3, 7), PackedInt32Array(7, 3, 9), PackedInt32Array(7, 9, 8), PackedInt32Array(3, 10, 9), PackedInt32Array(4, 8, 6), PackedInt32Array(6, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(8, 13, 12), PackedInt32Array(4, 7, 8), PackedInt32Array(6, 14, 5), PackedInt32Array(1, 15, 0), PackedInt32Array(0, 15, 16), PackedInt32Array(19, 18, 17), PackedInt32Array(16, 15, 20), PackedInt32Array(16, 20, 21), PackedInt32Array(21, 20, 19), PackedInt32Array(24, 23, 22), PackedInt32Array(22, 19, 24), PackedInt32Array(24, 19, 25), PackedInt32Array(25, 19, 26), PackedInt32Array(26, 19, 17), PackedInt32Array(26, 17, 6), PackedInt32Array(26, 6, 27), PackedInt32Array(26, 28, 25), PackedInt32Array(17, 14, 6), PackedInt32Array(19, 20, 18), PackedInt32Array(31, 30, 29), PackedInt32Array(31, 29, 32), PackedInt32Array(31, 32, 33), PackedInt32Array(33, 32, 35), PackedInt32Array(33, 35, 12), PackedInt32Array(12, 35, 34), PackedInt32Array(32, 36, 35), PackedInt32Array(12, 13, 33), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(35, 36, 41), PackedInt32Array(40, 37, 42), PackedInt32Array(40, 42, 41), PackedInt32Array(41, 42, 44), PackedInt32Array(41, 44, 35), PackedInt32Array(35, 44, 43), PackedInt32Array(45, 28, 26), PackedInt32Array(45, 26, 44), PackedInt32Array(44, 26, 43)]
+agent_radius = 1.24
+
+[sub_resource type="QuadMesh" id="QuadMesh_a8y0u"]
+material = ExtResource("7_a8y0u")
+size = Vector2(0.6, 0.7)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_owfbn"]
 rayleigh_coefficient = 25.0
@@ -132,30 +159,6 @@ albedo_color = Color(0.858904, 0, 0.160098, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
 material = SubResource("StandardMaterial3D_2604s")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dp3eg"]
-render_priority = 0
-shader = ExtResource("4_jkv2x")
-shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
-shader_parameter/clamp_diffuse_to_max = true
-shader_parameter/cuts = 3
-shader_parameter/wrap = 0.355
-shader_parameter/steepness = 1.0
-shader_parameter/threshold_gradient_size = 0.2
-shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.33
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
-material = SubResource("ShaderMaterial_dp3eg")
-size = Vector2(75, 75)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pm3ni"]
 render_priority = 0
@@ -347,18 +350,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_og1vs")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
-size = Vector3(75, 1, 75)
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_t33e6"]
-vertices = PackedVector3Array(7.5, 0.315277, -13.25, 7.5, 0.315277, -13.75, 6, 0.315277, -14, 5.75, 0.315277, -12.75, 5.5, 0.315277, -18.75, 6, 0.315277, -19.5, 7.5, 0.315277, -36.25, 5.5, 0.315277, -14.75, 2.5, 0.315277, -9.5, 3.25, 0.315277, -10, 5.5, 0.315277, -10, -36.25, 0.315277, -36.25, -36.25, 0.315277, -8, 2.25, 0.315277, -8, 7.5, 0.315277, -19.75, 8.5, 0.315277, -13.75, 9.25, 0.315277, -12.75, 8.5, 0.315277, -19.75, 9.5, 0.315277, -18.75, 20.25, 0.315277, -9.75, 9.5, 0.315277, -14.75, 9.5, 0.315277, -10, 20.75, 0.315277, -9, 20.75, 0.315277, -5.5, 25.5, 0.315277, -5.5, 26.25, 0.315277, -5, 36.25, 0.315277, -3.5, 36.25, 0.315277, -36.25, 26.5, 0.315277, -3.5, 8.75, 0.315277, -0.25, 8.75, 0.315277, -6, 3.25, 0.315277, -6, 9.25, 0.315277, 0.5, 2.25, 0.315277, -7, -36.25, 0.315277, 36.25, 10.75, 0.315277, 36.25, 10.75, 0.315277, 0.75, 16.75, 0.315277, -2.5, 16.75, 0.315277, -6, 12.75, 0.315277, -6, 12.75, 0.315277, -0.25, 11.75, 0.315277, 0.75, 17.75, 0.315277, -1.5, 36.25, 0.315277, 36.25, 25.5, 0.315277, -1.5, 26.25, 0.315277, -2)
-polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(6, 5, 4), PackedInt32Array(2, 3, 7), PackedInt32Array(7, 3, 9), PackedInt32Array(7, 9, 8), PackedInt32Array(3, 10, 9), PackedInt32Array(4, 8, 6), PackedInt32Array(6, 8, 11), PackedInt32Array(11, 8, 12), PackedInt32Array(8, 13, 12), PackedInt32Array(4, 7, 8), PackedInt32Array(6, 14, 5), PackedInt32Array(1, 15, 0), PackedInt32Array(0, 15, 16), PackedInt32Array(19, 18, 17), PackedInt32Array(16, 15, 20), PackedInt32Array(16, 20, 21), PackedInt32Array(21, 20, 19), PackedInt32Array(24, 23, 22), PackedInt32Array(22, 19, 24), PackedInt32Array(24, 19, 25), PackedInt32Array(25, 19, 26), PackedInt32Array(26, 19, 17), PackedInt32Array(26, 17, 6), PackedInt32Array(26, 6, 27), PackedInt32Array(26, 28, 25), PackedInt32Array(17, 14, 6), PackedInt32Array(19, 20, 18), PackedInt32Array(31, 30, 29), PackedInt32Array(31, 29, 32), PackedInt32Array(31, 32, 33), PackedInt32Array(33, 32, 35), PackedInt32Array(33, 35, 12), PackedInt32Array(12, 35, 34), PackedInt32Array(32, 36, 35), PackedInt32Array(12, 13, 33), PackedInt32Array(38, 37, 39), PackedInt32Array(39, 37, 40), PackedInt32Array(35, 36, 41), PackedInt32Array(40, 37, 42), PackedInt32Array(40, 42, 41), PackedInt32Array(41, 42, 44), PackedInt32Array(41, 44, 35), PackedInt32Array(35, 44, 43), PackedInt32Array(45, 28, 26), PackedInt32Array(45, 26, 44), PackedInt32Array(44, 26, 43)]
-agent_radius = 1.24
-
-[sub_resource type="QuadMesh" id="QuadMesh_a8y0u"]
-material = ExtResource("7_a8y0u")
-size = Vector2(0.6, 0.7)
-
 [sub_resource type="Curve" id="Curve_muem4"]
 _limits = [-180.0, 0.0, 0.0, 1.0]
 _data = [Vector2(0, 0), 0.0, -180.0, 0, 1, Vector2(1, -180), -180.0, 0.0, 1, 0]
@@ -406,28 +397,342 @@ script = ExtResource("1_g8fm3")
 metadata/_edit_lock_ = true
 
 [node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer" unique_id=1090957521]
+transparent_bg = true
 handle_input_locally = false
 use_occlusion_culling = true
 anisotropic_filtering_level = 0
 audio_listener_enable_3d = true
-canvas_cull_mask = 4294967293
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
-[node name="NoEdgeEnvironmentCamera3D" type="Camera3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2055784176 node_paths=PackedStringArray("player")]
-transform = Transform3D(1, 0, 0, 0, 0.8480482, 0.5299192, 0, -0.5299192, 0.8480482, 0, 9.75, 14)
-cull_mask = 1048573
-projection = 1
-size = 15.0
-near = 0.1
-far = 40.0
-script = ExtResource("13_muem4")
-player = NodePath("../../NoEdgeSubViewport/Player")
+[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1926174252 node_paths=PackedStringArray("debug_label") instance=ExtResource("1_ywxjf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21415, 1.67426, 7.35026)
+walk_speed = 3.1
+run_speed = 15.0
+debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/NoEdgeEnvironmentCamera3D" unique_id=805062940]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.065294296)
+[node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=346623154]
+collision_layer = 1057
+collision_mask = 1057
+
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=1200409911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
+shape = SubResource("BoxShape3D_7h77l")
+
+[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=110621872]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
 layers = 2
-mesh = SubResource("QuadMesh_yc10j")
+mesh = SubResource("PlaneMesh_ip3kr")
+skeleton = NodePath("../NavigationRegion3D")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=194543068]
+transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.029039819, 0.026618004, -0.0175848)
+navigation_mesh = SubResource("NavigationMesh_t33e6")
+
+[node name="Obstacles" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D" unique_id=990615629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.569814, 0, -8.105917)
+visible = false
+
+[node name="crate" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1127902008 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, -0.184723, 0)
+
+[node name="crate6" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1297896357 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.11256, -0.184723, 0)
+
+[node name="crate2" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1150251878 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, -0.184723, 0)
+
+[node name="crate3" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=445455073 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, -0.184723, 0)
+
+[node name="crate4" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=688952451 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 3.52473, -0.184723, 0)
+
+[node name="crate5" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1083359242 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 4.6781, -0.184723, 0)
+
+[node name="crate55" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1271406180 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 5.69878, -0.184723, 0)
+
+[node name="crate56" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=593836705 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 6.91393, -0.184723, 0)
+
+[node name="crate57" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1937795365 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 8.0673, -0.184723, 0)
+
+[node name="crate58" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=550338187 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 0.00367383)
+
+[node name="crate59" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=941719884 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 1.15705)
+
+[node name="crate60" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1744196028 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 2.17772)
+
+[node name="crate61" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=506943029 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 3.39287)
+
+[node name="crate62" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1865245268 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 4.54625)
+
+[node name="crate63" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1327435167 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 2.17772)
+
+[node name="crate64" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=152227944 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 3.39287)
+
+[node name="crate65" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=705736119 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 4.54625)
+
+[node name="crate72" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2042344837 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 10.376, -0.184722, 4.59399)
+
+[node name="crate73" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1059331371 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 11.5294, -0.184722, 4.59399)
+
+[node name="crate74" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=272632125 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 12.55, -0.184722, 4.59399)
+
+[node name="crate75" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=9312487 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 13.7652, -0.184722, 4.59399)
+
+[node name="crate76" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=24619653 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 14.9186, -0.184722, 4.59399)
+
+[node name="crate77" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2085469767 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 12.5959, 0.940786, 4.59399)
+
+[node name="crate78" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1368626192 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 13.7652, 0.940786, 4.59399)
+
+[node name="crate79" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=138315424 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 14.9186, 0.940786, 4.59399)
+
+[node name="crate66" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1385376444 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 2.17772)
+
+[node name="crate67" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=900350588 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 3.39287)
+
+[node name="crate68" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1359844240 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 4.54625)
+
+[node name="crate69" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=661279416 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 2.17772)
+
+[node name="crate70" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=956055610 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 3.39287)
+
+[node name="crate71" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1168667139 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 4.54625)
+
+[node name="crate88" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=878453943 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 2.0297, 4.55621)
+
+[node name="crate89" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=818778648 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 2.0297, 4.55621)
+
+[node name="crate90" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1421425892 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 2.0297, 4.55621)
+
+[node name="crate91" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1804579260 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 3.10646, 4.55621)
+
+[node name="crate92" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=684845201 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 3.10646, 4.55621)
+
+[node name="crate93" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=103436972 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 3.10646, 4.55621)
+
+[node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1453785986 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 1.25246)
+
+[node name="crate12" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=357295328 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 2.36637)
+
+[node name="crate13" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1204430985 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 3.58152)
+
+[node name="crate14" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1503222533 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 4.7349)
+
+[node name="crate18" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1970690983 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 5.77196)
+
+[node name="crate19" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1251101570 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 6.92534)
+
+[node name="crate7" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=323120996 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.16839, -0.184723, 0)
+
+[node name="crate15" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=978070191 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.25374, -0.184723, 0)
+
+[node name="crate16" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=297565727 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, -0.184723, 0)
+
+[node name="crate17" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1786591658 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -5.41665, -0.184723, 0)
+
+[node name="crate8" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=491084609 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -3.26339)
+
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=122943906 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -2.15082)
+
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2093733282 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -1.09499)
+
+[node name="crate20" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=654072627 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -9.75596)
+
+[node name="crate21" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=475716053 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -8.6434)
+
+[node name="crate22" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1149380468 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -7.58757)
+
+[node name="crate23" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1856162051 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, 1.03283, 0)
+
+[node name="crate24" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=672929064 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.11256, 1.03283, 0)
+
+[node name="crate25" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=394083139 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 1.03283, 0)
+
+[node name="crate26" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=811720089 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 1.03283, 0)
+
+[node name="crate27" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2142860678 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 3.52473, 1.03283, 0)
+
+[node name="crate28" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2141498075 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 4.6781, 1.03283, 0)
+
+[node name="crate29" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=209538826 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 1.25246)
+
+[node name="crate30" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1817531805 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 2.36637)
+
+[node name="crate31" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=498856781 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 3.58152)
+
+[node name="crate32" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1538617258 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 4.7349)
+
+[node name="crate33" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2117178434 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 5.77197)
+
+[node name="crate34" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=500206173 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 6.92534)
+
+[node name="crate35" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=130045763 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.16839, 1.03283, 0)
+
+[node name="crate36" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=391909640 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.25374, 1.03283, 0)
+
+[node name="crate37" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1537571835 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 1.03283, 0)
+
+[node name="crate38" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=77535833 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -5.41665, 1.03283, 0)
+
+[node name="crate39" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1449036136 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -3.26339)
+
+[node name="crate40" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1714663220 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -2.15082)
+
+[node name="crate41" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1771362287 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -1.09499)
+
+[node name="crate83" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=424420857 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -2.15082)
+
+[node name="crate84" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1999446062 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -1.09499)
+
+[node name="crate42" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=316196813 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -9.75596)
+
+[node name="crate43" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=273848769 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -8.6434)
+
+[node name="crate44" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=207957411 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -7.58757)
+
+[node name="crate45" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1514795518 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, 2.15131, 0)
+
+[node name="crate46" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=367336748 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 2.15131, 0)
+
+[node name="crate47" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=977499905 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 2.15131, 0)
+
+[node name="crate80" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=290659353 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.33649, 2.15131, 0)
+
+[node name="crate81" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1867251161 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.14083, 2.15131, 0)
+
+[node name="crate82" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1340665855 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.02691, 2.15131, 0)
+
+[node name="crate48" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=48965895 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 2.36637)
+
+[node name="crate85" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1390495027 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 1.20809)
+
+[node name="crate49" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=312934564 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 5.77197)
+
+[node name="crate50" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1181557868 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 6.92534)
+
+[node name="crate86" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1987206655 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 3.47865)
+
+[node name="crate87" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1370032884 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 4.63202)
+
+[node name="crate51" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1716863213 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 2.15131, 0)
+
+[node name="crate52" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1813655996 instance=ExtResource("5_d76mp")]
+transform = Transform3D(1.24393, 0.00120061, 0.00226815, -0.00120236, 1.24393, 0.000946098, -0.00226723, -0.000948312, 1.24393, -5.41665, 2.15131, 0)
+
+[node name="crate53" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=406449259 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -3.26339)
+
+[node name="crate54" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=712115098 instance=ExtResource("5_d76mp")]
+transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -7.58757)
+
+[node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D" unique_id=1227412245]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108, 0)
+layers = 2
+mesh = SubResource("PlaneMesh_ip3kr")
+
+[node name="Grass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=795730799]
+
+[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+script = ExtResource("6_jbj1t")
+level_of_detail = 80000
+total_number_of_meshes = 0
+number_of_groups = 64
+ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
+grass_mesh = NodePath("GrassMeshInstance3D")
+
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass/MainGrass" unique_id=1724032643]
+visible = false
+layers = 2
+cast_shadow = 0
+mesh = SubResource("QuadMesh_a8y0u")
+skeleton = NodePath("")
 
 [node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=856473818]
 
@@ -485,7 +790,7 @@ work_begin_time = 8.0
 transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0473994, -0.107427, -0.195446)
 visible = false
 mesh = SubResource("PlaneMesh_ip3kr")
-skeleton = NodePath("../../../NoEdgeSubViewport/Ground/NavigationRegion3D")
+skeleton = NodePath("../../Ground/NavigationRegion3D")
 
 [node name="BushHolder" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2012438881]
 
@@ -706,359 +1011,22 @@ omni_attenuation = 0.0
 [node name="Props" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1933743712]
 
 [node name="Sync S" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1440054404]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4777946, 3.7974203, 3.6393108)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4777946, 0.64368415, 3.6393108)
 
 [node name="Empty" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/Sync S" unique_id=1505727225]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 
 [node name="Plane" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/Sync S" unique_id=829534203]
 transform = Transform3D(0.4356493, 0, 0, 0, 0.12851262, -0.41626287, 0, 0.41626287, 0.12851262, -2.7173867, 0.7930019, 0.68427896)
+layers = 3
 mesh = SubResource("ArrayMesh_2wyq8")
 skeleton = NodePath("")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1769489995]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8136799, 3.1555073, 8.951954)
-light_energy = 2.656
+light_energy = 24.53
 shadow_enabled = true
 omni_range = 63.995
-
-[node name="NoEdgeSubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer" unique_id=1604973864]
-transparent_bg = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-canvas_cull_mask = 4293918722
-size = Vector2i(1000, 625)
-render_target_update_mode = 4
-
-[node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport" unique_id=346623154]
-collision_layer = 1057
-collision_mask = 1057
-
-[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground" unique_id=1200409911]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
-shape = SubResource("BoxShape3D_7h77l")
-
-[node name="Ground Botoom Inverted" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground" unique_id=110621872]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.0252132, -0.870062, 0.00361061)
-layers = 2
-mesh = SubResource("PlaneMesh_ip3kr")
-skeleton = NodePath("../NavigationRegion3D")
-
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground" unique_id=194543068]
-transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.029039819, 0.026618004, -0.0175848)
-navigation_mesh = SubResource("NavigationMesh_t33e6")
-
-[node name="Obstacles" type="Node3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D" unique_id=990615629]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.569814, 0, -8.105917)
-visible = false
-
-[node name="crate" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1127902008 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, -0.184723, 0)
-
-[node name="crate6" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1297896357 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.11256, -0.184723, 0)
-
-[node name="crate2" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1150251878 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, -0.184723, 0)
-
-[node name="crate3" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=445455073 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, -0.184723, 0)
-
-[node name="crate4" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=688952451 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 3.52473, -0.184723, 0)
-
-[node name="crate5" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1083359242 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 4.6781, -0.184723, 0)
-
-[node name="crate55" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1271406180 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 5.69878, -0.184723, 0)
-
-[node name="crate56" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=593836705 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 6.91393, -0.184723, 0)
-
-[node name="crate57" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1937795365 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 8.0673, -0.184723, 0)
-
-[node name="crate58" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=550338187 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 0.00367383)
-
-[node name="crate59" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=941719884 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 1.15705)
-
-[node name="crate60" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1744196028 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 2.17772)
-
-[node name="crate61" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=506943029 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 3.39287)
-
-[node name="crate62" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1865245268 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 4.54625)
-
-[node name="crate63" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1327435167 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 2.17772)
-
-[node name="crate64" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=152227944 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 3.39287)
-
-[node name="crate65" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=705736119 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 4.54625)
-
-[node name="crate72" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2042344837 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 10.376, -0.184722, 4.59399)
-
-[node name="crate73" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1059331371 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 11.5294, -0.184722, 4.59399)
-
-[node name="crate74" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=272632125 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 12.55, -0.184722, 4.59399)
-
-[node name="crate75" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=9312487 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 13.7652, -0.184722, 4.59399)
-
-[node name="crate76" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=24619653 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 14.9186, -0.184722, 4.59399)
-
-[node name="crate77" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2085469767 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 12.5959, 0.940786, 4.59399)
-
-[node name="crate78" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1368626192 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 13.7652, 0.940786, 4.59399)
-
-[node name="crate79" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=138315424 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 14.9186, 0.940786, 4.59399)
-
-[node name="crate66" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1385376444 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 2.17772)
-
-[node name="crate67" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=900350588 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 3.39287)
-
-[node name="crate68" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1359844240 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 4.54625)
-
-[node name="crate69" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=661279416 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 2.17772)
-
-[node name="crate70" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=956055610 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 3.39287)
-
-[node name="crate71" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1168667139 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 4.54625)
-
-[node name="crate88" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=878453943 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 2.0297, 4.55621)
-
-[node name="crate89" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=818778648 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 2.0297, 4.55621)
-
-[node name="crate90" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1421425892 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 2.0297, 4.55621)
-
-[node name="crate91" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1804579260 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 3.10646, 4.55621)
-
-[node name="crate92" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=684845201 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 3.10646, 4.55621)
-
-[node name="crate93" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=103436972 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 3.10646, 4.55621)
-
-[node name="crate11" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1453785986 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 1.25246)
-
-[node name="crate12" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=357295328 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 2.36637)
-
-[node name="crate13" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1204430985 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 3.58152)
-
-[node name="crate14" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1503222533 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 4.7349)
-
-[node name="crate18" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1970690983 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 5.77196)
-
-[node name="crate19" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1251101570 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 6.92534)
-
-[node name="crate7" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=323120996 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.16839, -0.184723, 0)
-
-[node name="crate15" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=978070191 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.25374, -0.184723, 0)
-
-[node name="crate16" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=297565727 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, -0.184723, 0)
-
-[node name="crate17" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1786591658 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -5.41665, -0.184723, 0)
-
-[node name="crate8" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=491084609 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -3.26339)
-
-[node name="crate9" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=122943906 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -2.15082)
-
-[node name="crate10" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2093733282 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -1.09499)
-
-[node name="crate20" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=654072627 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -9.75596)
-
-[node name="crate21" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=475716053 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -8.6434)
-
-[node name="crate22" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1149380468 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -7.58757)
-
-[node name="crate23" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1856162051 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, 1.03283, 0)
-
-[node name="crate24" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=672929064 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.11256, 1.03283, 0)
-
-[node name="crate25" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=394083139 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 1.03283, 0)
-
-[node name="crate26" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=811720089 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 1.03283, 0)
-
-[node name="crate27" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2142860678 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 3.52473, 1.03283, 0)
-
-[node name="crate28" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2141498075 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 4.6781, 1.03283, 0)
-
-[node name="crate29" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=209538826 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 1.25246)
-
-[node name="crate30" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1817531805 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 2.36637)
-
-[node name="crate31" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=498856781 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 3.58152)
-
-[node name="crate32" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1538617258 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 4.7349)
-
-[node name="crate33" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2117178434 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 5.77197)
-
-[node name="crate34" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=500206173 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 6.92534)
-
-[node name="crate35" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=130045763 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.16839, 1.03283, 0)
-
-[node name="crate36" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=391909640 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.25374, 1.03283, 0)
-
-[node name="crate37" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1537571835 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 1.03283, 0)
-
-[node name="crate38" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=77535833 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -5.41665, 1.03283, 0)
-
-[node name="crate39" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1449036136 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -3.26339)
-
-[node name="crate40" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1714663220 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -2.15082)
-
-[node name="crate41" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1771362287 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -1.09499)
-
-[node name="crate83" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=424420857 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -2.15082)
-
-[node name="crate84" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1999446062 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -1.09499)
-
-[node name="crate42" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=316196813 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -9.75596)
-
-[node name="crate43" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=273848769 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -8.6434)
-
-[node name="crate44" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=207957411 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -7.58757)
-
-[node name="crate45" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1514795518 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, 2.15131, 0)
-
-[node name="crate46" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=367336748 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 2.15131, 0)
-
-[node name="crate47" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=977499905 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 2.15131, 0)
-
-[node name="crate80" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=290659353 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.33649, 2.15131, 0)
-
-[node name="crate81" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1867251161 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.14083, 2.15131, 0)
-
-[node name="crate82" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1340665855 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.02691, 2.15131, 0)
-
-[node name="crate48" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=48965895 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 2.36637)
-
-[node name="crate85" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1390495027 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 1.20809)
-
-[node name="crate49" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=312934564 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 5.77197)
-
-[node name="crate50" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1181557868 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 6.92534)
-
-[node name="crate86" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1987206655 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 3.47865)
-
-[node name="crate87" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1370032884 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 4.63202)
-
-[node name="crate51" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1716863213 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 2.15131, 0)
-
-[node name="crate52" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1813655996 instance=ExtResource("5_d76mp")]
-transform = Transform3D(1.24393, 0.00120061, 0.00226815, -0.00120236, 1.24393, 0.000946098, -0.00226723, -0.000948312, 1.24393, -5.41665, 2.15131, 0)
-
-[node name="crate53" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=406449259 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -3.26339)
-
-[node name="crate54" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=712115098 instance=ExtResource("5_d76mp")]
-transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -7.58757)
-
-[node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/NavigationRegion3D" unique_id=1227412245]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108, 0)
-layers = 2
-mesh = SubResource("PlaneMesh_ip3kr")
-
-[node name="Grass" type="Node" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground" unique_id=795730799]
-
-[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
-script = ExtResource("6_jbj1t")
-level_of_detail = 80000
-total_number_of_meshes = 0
-number_of_groups = 64
-ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
-grass_mesh = NodePath("GrassMeshInstance3D")
-
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport/Ground/Grass/MainGrass" unique_id=1724032643]
-visible = false
-layers = 2
-cast_shadow = 0
-mesh = SubResource("QuadMesh_a8y0u")
-skeleton = NodePath("")
-
-[node name="Player" parent="EnvironmentSubViewportContainer/NoEdgeSubViewport" unique_id=1926174252 node_paths=PackedStringArray("debug_label", "mask_viewport") instance=ExtResource("1_ywxjf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21415, 1.67426, 7.35026)
-walk_speed = 3.1
-run_speed = 15.0
-debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
-mask_viewport = NodePath("../../SubViewport")
 
 [node name="Scheduler" parent="." unique_id=1212023566 node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 day_total_time = 30.0
@@ -1072,7 +1040,7 @@ environment_energy = SubResource("Curve_0ld40")
 environment_color = ExtResource("17_0ld40")
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
-player_ref = NodePath("../EnvironmentSubViewportContainer/NoEdgeSubViewport/Player")
+player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="." unique_id=366579931]
 anchors_preset = 15
