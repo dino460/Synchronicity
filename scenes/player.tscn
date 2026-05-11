@@ -227,7 +227,7 @@ shader_parameter/shadow_strength = 0.5999999865888
 shader_parameter/highlight_strength = 3.51999992132096
 shader_parameter/highlight_color = Color(1, 1, 1, 1)
 shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/depth_threshold = 0.0
+shader_parameter/depth_threshold = 0.150000007125
 
 [sub_resource type="QuadMesh" id="QuadMesh_60mlk"]
 flip_faces = true
@@ -242,7 +242,7 @@ shader_parameter/useLighting = true
 shader_parameter/lineHighlight = 0.2
 shader_parameter/lineShadow = 10.59
 
-[node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("weapon", "label_anchor", "stats")]
+[node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("weapon", "label_anchor", "shaded_mesh", "stats")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.3
 run_speed = 10.0
@@ -252,6 +252,7 @@ smooth_speed = 20.0
 weapon = NodePath("MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D/BoneAttachment3D/Shortsword")
 mat_ref = ExtResource("7_fulsm")
 label_anchor = NodePath("LabelAnchor")
+shaded_mesh = NodePath("CameraPivot/EnvironmentCamera3D/DarkPostprocessing")
 stats = NodePath("Stats")
 
 [node name="AnimationHandler" type="Node" parent="." unique_id=1789066113 node_paths=PackedStringArray("animator", "stats")]
@@ -986,6 +987,7 @@ vertical_down_corretion = 0.75
 
 [node name="EnvironmentCamera3D" type="Camera3D" parent="CameraPivot" unique_id=24484333]
 transform = Transform3D(1, 0, 0, 0, 0.848048, 0.529919, 0, -0.529919, 0.848048, 0, 9.75, 14)
+cull_mask = 3
 projection = 1
 size = 15.0
 near = 0.1
@@ -993,13 +995,11 @@ far = 40.0
 
 [node name="DarkPostprocessing" type="MeshInstance3D" parent="CameraPivot/EnvironmentCamera3D" unique_id=1027085826]
 transform = Transform3D(1, 0, 0, 0, -2.9802322e-08, -1, 0, 1, -2.9802322e-08, -0.027418137, -0.010949612, -0.9824772)
-layers = 2
 mesh = SubResource("PlaneMesh_qfm1y")
 surface_material_override/0 = SubResource("ShaderMaterial_4r5pv")
 
 [node name="LightPostprocessing" type="MeshInstance3D" parent="CameraPivot/EnvironmentCamera3D" unique_id=1357487497]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
-layers = 2
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_60mlk")
@@ -1009,6 +1009,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_i4ail")
 process_thread_group = 2
 process_thread_group_order = 0
 process_thread_messages = 0
+visible = false
 projection = 1
 fov = 15.0
 size = 17.0

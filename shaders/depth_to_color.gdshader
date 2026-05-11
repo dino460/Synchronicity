@@ -23,7 +23,7 @@ void fragment() {
     // Output depth to the red channel (or pack into RGB for higher precision)
 	float depth = getDepth(SCREEN_UV, DEPTH_TEXTURE, INV_PROJECTION_MATRIX);
 	float world_pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).y;
-	if (world_position.y > 0.0f) {
+	if (world_position.y > 10.0f) {
 		ALBEDO = vec3(depth / depth_scale);
 	} else {
 		ALBEDO = vec3(10.0f);

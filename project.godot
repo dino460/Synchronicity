@@ -139,6 +139,8 @@ decrease_time_warp={
 
 [layer_names]
 
+3d_render/layer_1="Main Render (OUTLINED)"
+3d_render/layer_2="Masked Render"
 3d_physics/layer_1="Player"
 3d_physics/layer_6="NPC"
 3d_physics/layer_11="Ambient"

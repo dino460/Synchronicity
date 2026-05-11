@@ -58,6 +58,8 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 @export var debug_label : Label
 @export var label_anchor : Node3D
 
+@export var mask_viewport : Viewport
+@export var shaded_mesh : MeshInstance3D
 
 func _ready():
 	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
@@ -96,6 +98,7 @@ func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
 	set_is_running()
+	shaded_mesh.get_surface_override_material(0).set_shader_parameter("mask_texture", mask_viewport.get_texture())
 
 
 func _physics_process(delta : float) -> void:
