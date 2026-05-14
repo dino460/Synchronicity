@@ -83,11 +83,9 @@ void light() {
 	
 	// Convert LIGHT from view space to world space
 	vec3 LIGHT_world_space = (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xyz;
-	vec3 LIGHT_xz_projected = vec3(LIGHT_world_space.x, LIGHT_world_space.y, LIGHT_world_space.z);
 	
 	// Manipulate cloud noise UV values
 	vec2 cloud_uv = (instance_pos.xz + (cloud_scroll_speed * TIME) /*+ (LIGHT_world_space.xz / 2.0f)*/) * (cloud_cover_scale);
-	//vec2 cloud_uv = vec2(instance_pos.x, instance_pos.y * LIGHT_world_space.y);
 	// Stretch UV in direction of the sun LIGHT
 	cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
 	
