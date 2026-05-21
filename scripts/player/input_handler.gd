@@ -9,7 +9,7 @@ signal right_attack_performed
 signal dash_performed
 
 
-func _process(_delta):
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("attack_up"):
 		up_attack_performed.emit()
 	elif Input.is_action_just_pressed("attack_down"):
