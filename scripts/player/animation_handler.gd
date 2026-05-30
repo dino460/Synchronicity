@@ -13,6 +13,7 @@ signal enable_combo
 # So, for example, an ATTACK_UP starts down and arcs upwards,
 # while and ATTACK_LEFT starts on the right side and ends on the left
 enum AnimationState {IDLE, WALK, RUN, DASH, ATTACK_UP, ATTACK_DOWN, ATTACK_LEFT, ATTACK_RIGHT, HURT, DEAD}
+var anim_states_keys : Array = AnimationState.keys()
 var current_state : AnimationState = AnimationState.IDLE
 var wanted_state  : AnimationState = AnimationState.IDLE
 
@@ -30,6 +31,12 @@ var attack_states = [
 	AnimationState.ATTACK_RIGHT
 ]
 
+enum AttackStances {NONE, OX, PLOW, TAIL, WRATH}
+var stances_keys : Array = AttackStances.keys()
+var current_stance : AttackStances = AttackStances.NONE
+
+@export var weapon_holder : Node3D
+
 @export var stats : CharacterStats
 
 
@@ -43,24 +50,37 @@ func remove_animation_interpolation():
 		for track in animator.get_animation(anim).get_track_count():
 			animator.get_animation(anim).track_set_interpolation_type(track, Animation.INTERPOLATION_NEAREST)
 
+var anim_name : String = ""
 
 func _on_idling():
 	wanted_state = AnimationState.IDLE
 	check_wanted_state()
 	# play_animation("idle", 3.0)
-	play_animation("idle_combat_plow_lswrd", 1.0 + (stats.exhaustion / stats.max_exhaustion))
+	# play_animation("idle_plow_lswrd", 1.0 + (stats.exhaustion / stats.max_exhaustion))
+	anim_name = "idle"
+	if current_stance != AttackStances.NONE:
+		anim_name += "_" + stances_keys[current_stance].to_lower() + "_" + weapon_holder.get_child(0).get_type_string().to_lower()
+	play_animation(anim_name, 1.0 + (stats.exhaustion / stats.max_exhaustion))
 
 func _on_walking():
 	wanted_state = AnimationState.WALK
 	check_wanted_state()
 	# play_animation("walk", 3.8)
-	play_animation("walk_combat_plow_lswrd", 1.0)
+	# play_animation("walk_plow_lswrd", 1.0)
+	anim_name = "walk"
+	if current_stance != AttackStances.NONE:
+		anim_name += "_" + stances_keys[current_stance].to_lower() + "_" + weapon_holder.get_child(0).get_type_string().to_lower()
+	play_animation(anim_name, 1.0)
 
 func _on_running():
 	wanted_state = AnimationState.RUN
 	check_wanted_state()
 	# play_animation("run", 8.0)
-	play_animation("run_combat_slgswrd", 1.0)
+	# play_animation("run_slgswrd", 1.0)
+	anim_name = "run"
+	if current_stance != AttackStances.NONE:
+		anim_name += "_" + weapon_holder.get_child(0).get_group_string().to_lower()
+	play_animation(anim_name, 1.0)
 
 func _on_dashing(dash_time):
 	wanted_state = AnimationState.DASH
@@ -79,7 +99,12 @@ func _on_attack(animation_direction: AnimationState, weapon: Weapon, was_attacki
 	on_combo = was_attacking
 	if check_wanted_state():
 		last_attack_state = wanted_state
-	play_animation(weapon.attack_animations[wanted_state], 5.5)
+	# play_animation(weapon.attack_animations[wanted_state], 5.5)
+
+	anim_name = anim_states_keys[wanted_state].right(-7).to_lower() + "_"
+	anim_name += "_" + stances_keys[current_stance].to_lower()
+	anim_name += "_" + weapon_holder.get_child(0).get_type_string()
+	play_animation(anim_name, 1.0)
 
 
 func check_wanted_state() -> bool:
@@ -120,3 +145,23 @@ func _on_animation_player_animation_finished(anim_name):
 
 	if anim_name == "Roll":
 		dash_ended.emit()
+
+
+func _on_input_handler_stance(stance_val: int) -> void:
+	current_stance = stance_val as AttackStances
+
+func _on_input_handler_increase_stance() -> void:
+	var stance : int = current_stance as int
+	stance += 1
+	if stance >= AttackStances.size():
+		current_stance = 0 as AttackStances
+	else:
+		current_stance = stance as AttackStances
+
+func _on_input_handler_decrease_stance() -> void:
+	var stance : int = current_stance as int
+	stance -= 1
+	if stance < 0:
+		current_stance = AttackStances.size() - 1 as AttackStances
+	else:
+		current_stance = stance as AttackStances

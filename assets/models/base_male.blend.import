@@ -2095,11 +2095,11 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 },
-"idle_combat_plow_lswrd": {
+"idle_plow_lswrd": {
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://assets/animations/base_male/idle_combat_plow_lsword.anim",
+"save_to_file/fallback_path": "res://assets/animations/base_male/idle_plow_lsword.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://cay8tni8q7kgl",
+"save_to_file/path": "uid://cppsl22vvamj8",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
@@ -6207,12 +6207,12 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 },
-"run_combat_slgswrd": {
+"run_blade": {
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://assets/animations/base_male/run_combat_slgswrd.anim",
+"save_to_file/fallback_path": "res://assets/animations/base_male/run_blade.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://83n5bafdeue2",
-"settings/loop_mode": 1,
+"save_to_file/path": "uid://b8b2ba1vi2moh",
+"settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
@@ -10319,12 +10319,12 @@ _subresources={
 "slice_99/start_frame": 0,
 "slices/amount": 0
 },
-"walk_combat_plow_lswrd": {
+"walk_plow_lswrd": {
 "save_to_file/enabled": true,
-"save_to_file/fallback_path": "res://assets/animations/base_male/walk_combat_plow_lswrd.anim",
+"save_to_file/fallback_path": "res://assets/animations/base_male/walk_plow_lswrd.anim",
 "save_to_file/keep_custom_tracks": true,
-"save_to_file/path": "uid://h01wafndplon",
-"settings/loop_mode": 1,
+"save_to_file/path": "uid://gas3knku237l",
+"settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,
 "slice_1/name": "",
