@@ -37,10 +37,14 @@ var current_stance : AttackStances = AttackStances.NONE
 
 @export var weapon_holder : Node3D
 
+@export var hand : Node3D
+@export var sheathe : Node3D
+
 @export var stats : CharacterStats
 
 
 func _ready() -> void:
+	print(weapon_holder.transform)
 	if animator == null:
 		animator = animate_entity.get_node("AnimationPlayer")
 	remove_animation_interpolation()
@@ -148,20 +152,49 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 func _on_input_handler_stance(stance_val: int) -> void:
+	if current_state != AnimationState.IDLE:
+		return
 	current_stance = stance_val as AttackStances
+	change_weapon_position()
 
 func _on_input_handler_increase_stance() -> void:
+	if current_state != AnimationState.IDLE:
+		return
 	var stance : int = current_stance as int
 	stance += 1
 	if stance >= AttackStances.size():
 		current_stance = 0 as AttackStances
 	else:
 		current_stance = stance as AttackStances
+	change_weapon_position()
 
 func _on_input_handler_decrease_stance() -> void:
+	if current_state != AnimationState.IDLE:
+		return
 	var stance : int = current_stance as int
 	stance -= 1
 	if stance < 0:
 		current_stance = AttackStances.size() - 1 as AttackStances
 	else:
 		current_stance = stance as AttackStances
+	change_weapon_position()
+
+func change_weapon_position():
+	if current_stance == AttackStances.NONE and sheathe.get_child_count() == 0:
+		weapon_holder.reparent(sheathe)
+		weapon_holder.transform = weapon_holder.get_child(0).weapon_sheathe_transform
+		print(weapon_holder.transform)
+	elif current_stance != AttackStances.NONE and hand.get_child_count() == 0:
+		weapon_holder.reparent(hand)
+		weapon_holder.transform = weapon_holder.get_child(0).weapon_hand_transform
+		print(weapon_holder.transform)
+
+	pass
+# 0,806 0,246 3,613
+# -35,4 -99,7 98,7
+#
+# 0,319 0,598 -1,647
+# 16,9 -97,5 -89,9
+
+# HAND : [X: (0.287765, -0.956843, 0.04052), Y: (-0.13204, 0.002266, 0.991242), Z: (-0.948555, -0.290595, -0.125689), O: (0.318746, 0.597563, -1.646948)]
+# HIP: [X: (0.589915, 0.805749, -0.052619), Y: (0.080181, -0.123297, -0.989125), Z: (-0.803474, 0.579281, -0.13734), O: (0.806, 0.246, 3.613)]

@@ -4,14 +4,15 @@ class_name Weapon
 
 enum WEAPON_TYPE {LSWRD, SSWRD, GSWRD, AXE, GAXE, SPR, DAG}
 @export var type : WEAPON_TYPE
-
 enum WEAPON_GROUP {BLADE, POLE, SMALL}
 @export var group : WEAPON_GROUP
 
 # @export var attack_animations		: Dictionary[AnimationHandler.AnimationState, String]
 @export var preferred_attack_stream : Array[PreferredNextAttack]
-
 @export var stamina_cost_per_attack : Dictionary[AnimationHandler.AnimationState, float]
+
+@export var weapon_hand_transform : Transform3D
+@export var weapon_sheathe_transform : Transform3D
 
 @export var attack_damage : float
 
