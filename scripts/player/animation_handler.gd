@@ -31,7 +31,7 @@ var attack_states = [
 	AnimationState.ATTACK_RIGHT
 ]
 
-enum AttackStances {NONE, OX, PLOW, TAIL, WRATH}
+enum AttackStances {NONE, ROOF, PLOW, FOOL, TWOHORN}
 var stances_keys : Array = AttackStances.keys()
 var current_stance : AttackStances = AttackStances.NONE
 
