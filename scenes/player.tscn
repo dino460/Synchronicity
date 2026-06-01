@@ -310,27 +310,27 @@ mesh = SubResource("ArrayMesh_ewgnx")
 [node name="AnimationPlayer" parent="MeshPivot/Low-Poly-Base_blend" index="136"]
 libraries/ = SubResource("AnimationLibrary_l71n6")
 
-[node name="base_male" parent="MeshPivot" unique_id=1689932177 instance=ExtResource("17_60mlk")]
+[node name="base_male" parent="MeshPivot" unique_id=1538143175 instance=ExtResource("17_60mlk")]
 transform = Transform3D(-1.365, 0, 2.0610928e-07, 0, 1.365, 0, -2.0610928e-07, 0, -1.365, 0, -1.5, 0)
 
-[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1689932177, 130500963) index="0" unique_id=1864720253]
+[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="0" unique_id=1803889614]
 mesh = SubResource("ArrayMesh_i4ail")
 
-[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1689932177, 130500963) index="1" unique_id=667395300]
+[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="1" unique_id=1068069635]
 mesh = SubResource("ArrayMesh_a38lo")
 
-[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1689932177, 130500963) index="2" unique_id=271104971]
+[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="2" unique_id=1437364325]
 mesh = SubResource("ArrayMesh_4ni07")
 
-[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1689932177, 130500963) index="3" unique_id=2039975030]
+[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="3" unique_id=1922600065]
 mesh = SubResource("ArrayMesh_l71n6")
 
-[node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1689932177, 130500963) index="4" unique_id=1358059341]
+[node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="4" unique_id=1358059341]
 transform = Transform3D(-0.98533565, 0.078292094, 0.1516033, -0.0756745, -0.9968675, 0.022967804, 0.15292661, 0.011158645, 0.98817456, -2.3331404, 0.3443892, 0.07826623)
 bone_name = "Hand.R"
 bone_idx = 15
 
-[node name="SheatheAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1689932177, 130500963) index="5" unique_id=164721672]
+[node name="SheatheAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="5" unique_id=164721672]
 transform = Transform3D(1, -1.0203945e-17, 9.745322e-18, 9.745324e-18, 0.99894345, 0.045954533, -1.02039445e-17, -0.045954533, 0.99894345, 8.515854e-18, 0.16631211, 0.038352102)
 bone_name = "Spine.000"
 bone_idx = 0
@@ -351,7 +351,7 @@ metadata/_custom_type_script = "uid://dtoixt6ge8xdk"
 transform = Transform3D(0.020202829, 0.004022522, -0.009362539, 0.0017181745, 0.33557928, 0.0043147947, 0.0092072375, -0.07144922, 0.019738413, 0.030324731, 0.3368261, 0.024280388)
 surface_material_override/0 = SubResource("ShaderMaterial_ujl30")
 
-[node name="AnimationPlayer" parent="MeshPivot/base_male" index="4" unique_id=393430044]
+[node name="AnimationPlayer" parent="MeshPivot/base_male" index="4" unique_id=2145967860]
 autoplay = &"idle"
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
