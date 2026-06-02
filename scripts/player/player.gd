@@ -18,7 +18,6 @@ signal walking
 signal running
 signal dashing(dash_time: float)
 signal death
-# signal attack(animation_direction: AnimationHandler.AnimationState, weapon: Weapon, is_attacking: bool)
 
 var is_dead : bool = false
 
@@ -44,12 +43,7 @@ var direction       : Vector3 = Vector3.ZERO
 
 @export_group("Combat Properties")
 @export var attack_movement_speed : float = 10.0
-@export var weapon                : Weapon
-# var is_attacking                  : bool = false
-# var should_attack_move            : bool = false
-# var can_combo 					  : bool = false
 var last_direction_normalized     : Vector3 = Vector3.UP
-# var damaged_enemies_this_attack   : Array = []
 
 @export_group("Rendering Properties")
 @export var mat_ref : Material
@@ -62,7 +56,6 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 @export var shaded_mesh : MeshInstance3D
 
 func _ready():
-	#weapon = $MeshPivot/Viking_Female/CharacterArmature/Skeleton3D/BoneAttachment3D.get_child(0)
 	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
 	pass
 
@@ -109,7 +102,7 @@ func _physics_process(delta : float) -> void:
 		debug_label.text = str(stats.health)
 
 	if is_attacking: # Collision check for attacking
-		damage_enemies(weapon)
+		damage_enemies()
 
 	set_speed()
 
@@ -135,7 +128,6 @@ func _physics_process(delta : float) -> void:
 		direction = rotate_direction(direction)
 		# Smoothly rotate character Mesh3D to face direction of movement
 		mesh_pivot_ref.rotation.y = lerp_angle(mesh_pivot_ref.rotation.y, atan2(-direction.x, -direction.z), delta * smooth_speed)
-
 	elif not is_attacking:
 		idling.emit()
 		stats.tick_exhaustion = false
@@ -157,22 +149,22 @@ func _on_animation_handler_dash_ended():
 func _on_input_handler_up_attack_performed():
 	if is_dashing:
 		return
-	do_attack(AnimationHandler.AnimationState.ATTACK_UP, weapon)
+	do_attack(AnimationHandler.AnimationState.ATTACK_UP)
 
 func _on_input_handler_down_attack_performed() -> void:
 	if is_dashing:
 		return
-	do_attack(AnimationHandler.AnimationState.ATTACK_DOWN, weapon)
+	do_attack(AnimationHandler.AnimationState.ATTACK_DOWN)
 
 func _on_input_handler_left_attack_performed() -> void:
 	if is_dashing:
 		return
-	do_attack(AnimationHandler.AnimationState.ATTACK_LEFT, weapon)
+	do_attack(AnimationHandler.AnimationState.ATTACK_LEFT)
 
 func _on_input_handler_right_attack_performed() -> void:
 	if is_dashing:
 		return
-	do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT, weapon)
+	do_attack(AnimationHandler.AnimationState.ATTACK_RIGHT)
 
 func _on_input_handler_dash_performed():
 	if not is_dashing and not direction == Vector3.ZERO:

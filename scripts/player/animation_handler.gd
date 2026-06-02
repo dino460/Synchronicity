@@ -6,6 +6,7 @@ class_name AnimationHandler
 @export var animate_entity : Node
 
 signal dash_ended
+signal attack_started
 signal attack_ended
 signal enable_combo
 
@@ -64,7 +65,7 @@ func _on_idling():
 	anim_name = "idle"
 	if current_stance != AttackStances.NONE:
 		anim_name += "_" + stances_keys[current_stance].to_lower() + "_" + weapon_holder.get_child(0).get_type_string().to_lower()
-	play_animation(anim_name, 1.0 + (stats.exhaustion / stats.max_exhaustion))
+	play_animation(anim_name, 0.1, 1.0 + (stats.exhaustion / stats.max_exhaustion))
 
 func _on_walking():
 	wanted_state = AnimationState.WALK
@@ -74,7 +75,7 @@ func _on_walking():
 	anim_name = "walk"
 	if current_stance != AttackStances.NONE:
 		anim_name += "_" + stances_keys[current_stance].to_lower() + "_" + weapon_holder.get_child(0).get_type_string().to_lower()
-	play_animation(anim_name, 1.0)
+	play_animation(anim_name)
 
 func _on_running():
 	wanted_state = AnimationState.RUN
@@ -84,7 +85,7 @@ func _on_running():
 	anim_name = "run"
 	if current_stance != AttackStances.NONE:
 		anim_name += "_" + weapon_holder.get_child(0).get_group_string().to_lower()
-	play_animation(anim_name, 1.0)
+	play_animation(anim_name)
 
 func _on_dashing(dash_time):
 	wanted_state = AnimationState.DASH
@@ -96,34 +97,33 @@ func _on_death() -> void:
 	current_state = AnimationState.DEAD
 	wanted_state = AnimationState.DEAD
 	is_attacking = false
-	play_animation("death", 1.0)
+	play_animation("death")
 
-func _on_attack(animation_direction: AnimationState, weapon: Weapon, was_attacking):
+func _on_attack(animation_direction: AnimationState, was_attacking):
 	wanted_state = animation_direction
 	on_combo = was_attacking
 	if check_wanted_state():
 		last_attack_state = wanted_state
 	# play_animation(weapon.attack_animations[wanted_state], 5.5)
 
-	anim_name = anim_states_keys[wanted_state].right(-7).to_lower() + "_"
-	anim_name += "_" + stances_keys[current_stance].to_lower()
-	anim_name += "_" + weapon_holder.get_child(0).get_type_string()
-	play_animation(anim_name, 1.0)
+		anim_name = anim_states_keys[wanted_state].right(-7).to_lower()
+		anim_name += "_" + stances_keys[current_stance].to_lower()
+		anim_name += "_" + weapon_holder.get_child(0).get_type_string().to_lower()
+		print(anim_name)
+		play_animation(anim_name, 0.1)
 
 
 func check_wanted_state() -> bool:
 	# var check_for_anim_interrupt := current_state not in interruptable_states and there_is_animation_playing
 	var check_for_attack_interrupt := current_state in attack_states and is_attacking
 
-	if check_for_attack_interrupt:
-		return false
-	elif current_state == AnimationState.DEAD:
+	if check_for_attack_interrupt or current_state == AnimationState.DEAD or (wanted_state in attack_states and current_stance == AttackStances.NONE):
 		return false
 	else:
 		current_state = wanted_state
 		return true
 
-func play_animation(animation_name : String = "", animation_speed : float = 1.0):
+func play_animation(animation_name : String = "", transition_time : float = 0.1, animation_speed : float = 1.0):
 	there_is_animation_playing = true
 	animation_name = caller_prefix + animation_name
 
@@ -135,8 +135,11 @@ func play_animation(animation_name : String = "", animation_speed : float = 1.0)
 	else:
 		is_attacking = false
 
-	animator.play(animation_name, 0.1, animation_speed, false)
+	animator.play(animation_name, transition_time, animation_speed, false)
 
+
+func start_attack():
+	attack_started.emit()
 
 func end_attack():
 	is_attacking = false
@@ -152,13 +155,13 @@ func _on_animation_player_animation_finished(anim_name):
 
 
 func _on_input_handler_stance(stance_val: int) -> void:
-	if current_state != AnimationState.IDLE:
+	if current_state == AnimationState.RUN:
 		return
 	current_stance = stance_val as AttackStances
 	change_weapon_position()
 
 func _on_input_handler_increase_stance() -> void:
-	if current_state != AnimationState.IDLE:
+	if current_state == AnimationState.RUN:
 		return
 	var stance : int = current_stance as int
 	stance += 1
@@ -169,7 +172,7 @@ func _on_input_handler_increase_stance() -> void:
 	change_weapon_position()
 
 func _on_input_handler_decrease_stance() -> void:
-	if current_state != AnimationState.IDLE:
+	if current_state == AnimationState.RUN:
 		return
 	var stance : int = current_stance as int
 	stance -= 1

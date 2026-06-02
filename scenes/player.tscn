@@ -211,6 +211,9 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i4ail"]
+height = 1.8076172
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ujl30"]
 render_priority = 0
 shader = ExtResource("18_i4ail")
@@ -258,7 +261,7 @@ shader_parameter/useLighting = true
 shader_parameter/lineHighlight = 0.2
 shader_parameter/lineShadow = 10.59
 
-[node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("label_anchor", "shaded_mesh", "stats")]
+[node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("label_anchor", "shaded_mesh", "stats", "weapon")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.3
 run_speed = 10.0
@@ -269,6 +272,7 @@ mat_ref = ExtResource("7_fulsm")
 label_anchor = NodePath("LabelAnchor")
 shaded_mesh = NodePath("CameraPivot/EnvironmentCamera3D/DarkPostprocessing")
 stats = NodePath("Stats")
+weapon = NodePath("MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword")
 
 [node name="AnimationHandler" type="Node" parent="." unique_id=1789066113 node_paths=PackedStringArray("animator", "weapon_holder", "hand", "sheathe", "stats")]
 script = ExtResource("2_u5517")
@@ -310,28 +314,68 @@ mesh = SubResource("ArrayMesh_ewgnx")
 [node name="AnimationPlayer" parent="MeshPivot/Low-Poly-Base_blend" index="136"]
 libraries/ = SubResource("AnimationLibrary_l71n6")
 
-[node name="base_male" parent="MeshPivot" unique_id=1538143175 instance=ExtResource("17_60mlk")]
+[node name="base_male" parent="MeshPivot" unique_id=1155039001 instance=ExtResource("17_60mlk")]
 transform = Transform3D(-1.365, 0, 2.0610928e-07, 0, 1.365, 0, -2.0610928e-07, 0, -1.365, 0, -1.5, 0)
 
-[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="0" unique_id=1803889614]
+[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1155039001, 1128144576) index="0" unique_id=1230834805]
+bones/0/position = Vector3(-9.729341e-09, -1.7324613, 0.12704505)
+bones/0/rotation = Quaternion(-0.037988238, -0.06599288, -0.027017152, 0.9967306)
+bones/1/rotation = Quaternion(0.216467, 8.788076e-06, 0.0034117077, 0.976284)
+bones/2/rotation = Quaternion(-0.18028407, -0.00013519522, 0.011315168, 0.9835496)
+bones/3/rotation = Quaternion(0.12965967, 0.0003109794, 0.0056567704, 0.99154246)
+bones/4/rotation = Quaternion(0.080160774, -8.764056e-05, 0.001430068, 0.99678093)
+bones/5/rotation = Quaternion(0.27541494, 0.055949427, -0.030439725, 0.95921314)
+bones/6/rotation = Quaternion(0.009394466, -0.0013459146, -0.80827034, 0.58873504)
+bones/7/rotation = Quaternion(0.79706943, 0.1597268, -0.03262172, 0.58146673)
+bones/8/rotation = Quaternion(0.54474574, -0.001953482, -0.012769638, 0.8385017)
+bones/9/rotation = Quaternion(0.084186934, -0.89701074, -0.3186929, 0.29448098)
+bones/11/rotation = Quaternion(0.1441886, -0.09561668, -0.9314792, 0.32002127)
+bones/12/rotation = Quaternion(0.009394247, 0.0013457772, 0.80827034, 0.5887351)
+bones/13/rotation = Quaternion(0.55282503, 0.04875627, 0.004664755, 0.83185667)
+bones/14/rotation = Quaternion(0.0024830492, 0.0023297556, 5.818846e-05, 0.9999943)
+bones/15/rotation = Quaternion(-0.44524297, -0.22589593, -0.0071712276, 0.8664169)
+bones/17/rotation = Quaternion(0.0040852223, 0.035772875, 0.9652211, 0.25894395)
+bones/18/rotation = Quaternion(0.8403004, 0.14965579, -0.22628361, -0.469355)
+bones/19/rotation = Quaternion(0.18700972, -0.000899857, 0.010721482, 0.98229915)
+bones/20/rotation = Quaternion(-0.47358343, 0.0075460616, 0.018237108, 0.88052785)
+bones/22/rotation = Quaternion(-0.34234738, -0.011572919, 0.012905622, 0.9394136)
+bones/23/rotation = Quaternion(0.89790225, -0.01599376, -0.05439842, 0.43652785)
+bones/24/rotation = Quaternion(0.58692133, 0.000741004, -0.033648845, 0.80894417)
+bones/25/rotation = Quaternion(-0.26324227, -0.00021352305, -0.007204171, 0.96470284)
+bones/26/rotation = Quaternion(-0.5064619, -3.831927e-10, 0.00012895807, 0.86226237)
+bones/27/rotation = Quaternion(-0.07345149, -7.450914e-10, 1.870507e-05, 0.99729884)
+bones/28/position = Vector3(-2.160681, 1.6492646, 2.6040893)
+bones/28/rotation = Quaternion(-0.06430649, 0.038001142, 0.98867077, -0.13019484)
+bones/30/position = Vector3(3.8789394, 0.012628317, 5.314605)
+bones/31/position = Vector3(2.0427024, -3.6821196, 3.0508966)
+bones/32/position = Vector3(0.7953922, -4.5855393, -5.8733807)
+bones/33/position = Vector3(1.5454834e-14, 3.5622013, 1.0998966)
+bones/33/rotation = Quaternion(0.11307896, 1.18444646e-07, 1.34800615e-08, 0.993586)
+bones/34/position = Vector3(-3.4506242, 1.0529127, 4.67524)
+bones/35/position = Vector3(-4.3261366, 1.8570329, -4.0732856)
+bones/35/rotation = Quaternion(0.07589675, 0.7766944, -0.61796933, -0.095390774)
+bones/36/position = Vector3(-0.92969126, -3.6821196, 3.0508966)
+bones/37/position = Vector3(-1.2076186, -6.894667, 1.6083603)
+
+[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=117684479]
 mesh = SubResource("ArrayMesh_i4ail")
 
-[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="1" unique_id=1068069635]
+[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=1272452184]
 mesh = SubResource("ArrayMesh_a38lo")
 
-[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="2" unique_id=1437364325]
+[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=376099875]
 mesh = SubResource("ArrayMesh_4ni07")
 
-[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="3" unique_id=1922600065]
+[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=1680021561]
 mesh = SubResource("ArrayMesh_l71n6")
 
-[node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="4" unique_id=1358059341]
-transform = Transform3D(-0.98533565, 0.078292094, 0.1516033, -0.0756745, -0.9968675, 0.022967804, 0.15292661, 0.011158645, 0.98817456, -2.3331404, 0.3443892, 0.07826623)
+[node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" index="4" unique_id=1358059341]
+transform = Transform3D(-0.12170738, -0.97879666, 0.1647546, 0.8654165, -0.18592684, -0.46527955, 0.48604637, 0.085953355, 0.86969566, -3.2214887, 1.198508, 4.291651)
 bone_name = "Hand.R"
 bone_idx = 15
 
-[node name="SheatheAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" parent_id_path=PackedInt32Array(1538143175, 1760683703) index="5" unique_id=164721672]
-transform = Transform3D(1, -1.0203945e-17, 9.745322e-18, 9.745324e-18, 0.99894345, 0.045954533, -1.02039445e-17, -0.045954533, 0.99894345, 8.515854e-18, 0.16631211, 0.038352102)
+[node name="SheatheAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" index="5" unique_id=164721672]
+transform = Transform3D(0.98983, 0.05887155, -0.12950157, -0.04884374, 0.99565387, 0.07929395, 0.13360691, -0.072162196, 0.9884036, -9.729341e-09, -1.7324613, 0.12704505)
 bone_name = "Spine.000"
 bone_idx = 0
 
@@ -345,13 +389,20 @@ weapon_hand_transform = Transform3D(0.288, -0.132, -0.949, -0.957, 0.002, -0.291
 weapon_sheathe_transform = Transform3D(0.59, 0.08, -0.803, 0.806, -0.123, 0.579, -0.053, -0.989, -0.137, 0.806, 0.246, 3.613)
 metadata/_custom_type_script = "uid://dtoixt6ge8xdk"
 
+[node name="Area3D" type="Area3D" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword" unique_id=122032810]
+transform = Transform3D(1, 2.9802322e-08, -1.7229468e-08, 2.9802322e-08, 1, -7.450581e-09, -1.1641532e-08, 9.313226e-09, 0.99999994, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/Area3D" unique_id=2041903489]
+transform = Transform3D(1, 8.940697e-08, -1.5934929e-06, 2.9802322e-08, 1, -3.663823e-06, -1.21071935e-08, -5.5879354e-09, 0.999999, 7.4505806e-08, 0.72998023, -2.9802322e-08)
+shape = SubResource("CapsuleShape3D_i4ail")
+
 [node name="longsword" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword" unique_id=1758707092 instance=ExtResource("22_a38lo")]
 
-[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=1721680433]
+[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=360580900]
 transform = Transform3D(0.020202829, 0.004022522, -0.009362539, 0.0017181745, 0.33557928, 0.0043147947, 0.0092072375, -0.07144922, 0.019738413, 0.030324731, 0.3368261, 0.024280388)
 surface_material_override/0 = SubResource("ShaderMaterial_ujl30")
 
-[node name="AnimationPlayer" parent="MeshPivot/base_male" index="4" unique_id=2145967860]
+[node name="AnimationPlayer" parent="MeshPivot/base_male" index="4" unique_id=503816610]
 autoplay = &"idle"
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
@@ -409,6 +460,7 @@ radius = 1.0
 [connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
+[connection signal="attack_started" from="AnimationHandler" to="." method="_on_animation_handler_attack_started"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="enable_combo" from="AnimationHandler" to="." method="_on_animation_handler_enable_combo"]
 [connection signal="dash_performed" from="InputHandler" to="." method="_on_input_handler_dash_performed"]

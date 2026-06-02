@@ -38,7 +38,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if npc.is_attacking:
-		npc.damage_enemies(combat_commands.get("weapon"))
+		npc.damage_enemies()
 	elif npc.damaged_enemies_this_attack.size() > 0:
 		npc.damaged_enemies_this_attack.clear() # Resets the list of damaged enemies if not attacking
 
@@ -97,7 +97,7 @@ func run() -> void:
 		CombatBrain.CombatState.ATTACKING:
 			current_state = State.FIGHTING
 			# npc.handle_navigation(combat_commands.get("target_position"), combat_commands.get("look_target"), combat_commands.get("run"))
-			npc.do_attack(combat_commands.get("converted_animation_state"), combat_commands.get("weapon"))
+			npc.do_attack(combat_commands.get("converted_animation_state"))
 
 		CombatBrain.CombatState.CIRCLING:
 			current_state = State.FIGHTING

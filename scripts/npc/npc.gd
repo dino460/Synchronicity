@@ -157,8 +157,8 @@ func disable_pathfinding():
 	navigation_agent.target_position = self.global_position
 	velocity = Vector3.ZERO
 
-func do_attack(attack_state : AnimationHandler.AnimationState, weapon : Weapon):
-	super(attack_state, weapon)
+func do_attack(attack_state : AnimationHandler.AnimationState):
+	super(attack_state)
 	disable_pathfinding()
 	var target_position : Vector3 = self.global_position + (-mesh_pivot_ref.global_basis.z * 100.0)
 	handle_navigation(target_position, target_position, true)
