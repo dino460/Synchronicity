@@ -36,10 +36,11 @@ func take_damage(damage : int, attacker : Entity):
 	# print()
 
 func do_attack(attack_state : AnimationHandler.AnimationState):
-	if (not is_attacking) or can_combo:
+	# if (not is_attacking) or can_combo:
 		# stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
 		# damaged_enemies_this_attack.clear()
-		attack.emit(attack_state, is_attacking)
+	attack.emit(attack_state, is_attacking)
+	print("here")
 
 func damage_enemies():
 	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()

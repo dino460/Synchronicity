@@ -735,7 +735,7 @@ canvas_cull_mask = 4293918722
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
-[node name="Player" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=1926174252 node_paths=PackedStringArray("debug_label", "mask_viewport") instance=ExtResource("1_ywxjf")]
+[node name="Player" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=1117597475 node_paths=PackedStringArray("debug_label", "mask_viewport") instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21415, 1.67426, 7.35026)
 walk_speed = 3.1
 run_speed = 15.0

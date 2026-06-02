@@ -8,7 +8,7 @@ class_name AnimationHandler
 signal dash_ended
 signal attack_started
 signal attack_ended
-signal enable_combo
+# signal enable_combo
 
 # Attack names refer the direction of the attack, or where the attack ends
 # So, for example, an ATTACK_UP starts down and arcs upwards,
@@ -21,7 +21,7 @@ var wanted_state  : AnimationState = AnimationState.IDLE
 var caller_prefix              : String = ""
 var there_is_animation_playing : bool  = false
 var is_attacking               : bool  = false
-var on_combo                   : bool  = false
+var can_combo                  : bool  = false
 
 var last_attack_state : AnimationState;
 
@@ -43,6 +43,8 @@ var current_stance : AttackStances = AttackStances.NONE
 
 @export var stats : CharacterStats
 
+var anim_name : String = ""
+
 
 func _ready() -> void:
 	print(weapon_holder.transform)
@@ -54,8 +56,6 @@ func remove_animation_interpolation():
 	for anim in animator.get_animation_list():
 		for track in animator.get_animation(anim).get_track_count():
 			animator.get_animation(anim).track_set_interpolation_type(track, Animation.INTERPOLATION_NEAREST)
-
-var anim_name : String = ""
 
 func _on_idling():
 	wanted_state = AnimationState.IDLE
@@ -101,7 +101,6 @@ func _on_death() -> void:
 
 func _on_attack(animation_direction: AnimationState, was_attacking):
 	wanted_state = animation_direction
-	on_combo = was_attacking
 	if check_wanted_state():
 		last_attack_state = wanted_state
 	# play_animation(weapon.attack_animations[wanted_state], 5.5)
@@ -111,11 +110,12 @@ func _on_attack(animation_direction: AnimationState, was_attacking):
 		anim_name += "_" + weapon_holder.get_child(0).get_type_string().to_lower()
 		print(anim_name)
 		play_animation(anim_name, 0.1)
+		can_combo = false
 
 
 func check_wanted_state() -> bool:
 	# var check_for_anim_interrupt := current_state not in interruptable_states and there_is_animation_playing
-	var check_for_attack_interrupt := current_state in attack_states and is_attacking
+	var check_for_attack_interrupt := current_state in attack_states and is_attacking and not can_combo
 
 	if check_for_attack_interrupt or current_state == AnimationState.DEAD or (wanted_state in attack_states and current_stance == AttackStances.NONE):
 		return false
@@ -127,7 +127,7 @@ func play_animation(animation_name : String = "", transition_time : float = 0.1,
 	there_is_animation_playing = true
 	animation_name = caller_prefix + animation_name
 
-	if is_attacking:
+	if is_attacking and not can_combo:
 		return
 	elif current_state in attack_states:
 		is_attacking = true
@@ -144,7 +144,13 @@ func start_attack():
 func end_attack():
 	is_attacking = false
 	attack_ended.emit()
+	# if current_stance == AttackStances.ROOF and current_state == AnimationState.ATTACK_DOWN:
+	# 	current_stance = AttackStances.FOOL
 	check_wanted_state()
+
+func enable_combo():
+	can_combo = true
+	print("can combo")
 
 
 func _on_animation_player_animation_finished(anim_name):
