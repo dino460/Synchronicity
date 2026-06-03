@@ -6,7 +6,7 @@ class_name AnimationHandler
 @export var animate_entity : Node
 
 signal dash_ended
-signal attack_started
+signal attack_started(stance : AttackStances)
 signal attack_ended
 # signal enable_combo
 
@@ -124,6 +124,9 @@ func check_wanted_state() -> bool:
 		return true
 
 func play_animation(animation_name : String = "", transition_time : float = 0.1, animation_speed : float = 1.0):
+	if not animator.has_animation(animation_name):
+		return
+
 	there_is_animation_playing = true
 	animation_name = caller_prefix + animation_name
 
@@ -139,7 +142,7 @@ func play_animation(animation_name : String = "", transition_time : float = 0.1,
 
 
 func start_attack():
-	attack_started.emit()
+	attack_started.emit(current_stance)
 
 func end_attack():
 	is_attacking = false
@@ -150,7 +153,6 @@ func end_attack():
 
 func enable_combo():
 	can_combo = true
-	print("can combo")
 
 
 func _on_animation_player_animation_finished(anim_name):

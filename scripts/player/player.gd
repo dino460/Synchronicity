@@ -55,9 +55,13 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 @export var mask_viewport : Viewport
 @export var shaded_mesh : MeshInstance3D
 
+@export_group("UI Properties")
+@export var stamina_panel : Panel
+
+
 func _ready():
 	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
-	pass
+	stamina_panel.size.x = stats.max_stamina
 
 
 func set_is_running():
@@ -100,6 +104,9 @@ func _physics_process(delta : float) -> void:
 
 	if debug_label != null:
 		debug_label.text = str(stats.health)
+	if stamina_panel != null:
+		stamina_panel.get_child(0).scale.x = stats.stamina / stats.max_stamina
+		print(stats.stamina / stats.max_stamina)
 
 	if is_attacking: # Collision check for attacking
 		damage_enemies()

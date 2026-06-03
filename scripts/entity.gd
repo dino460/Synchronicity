@@ -40,7 +40,6 @@ func do_attack(attack_state : AnimationHandler.AnimationState):
 		# stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
 		# damaged_enemies_this_attack.clear()
 	attack.emit(attack_state, is_attacking)
-	print("here")
 
 func damage_enemies():
 	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
@@ -66,8 +65,9 @@ func start_attack_movement():
 func stop_attack_movement():
 	should_attack_move = false
 
-func _on_animation_handler_attack_started():
+func _on_animation_handler_attack_started(stance : AnimationHandler.AttackStances):
 	# stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
+	stats.stamina -= weapon.stamina_cost_per_stance.get(stance)
 	is_attacking = true
 	# can_combo = false
 

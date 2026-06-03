@@ -2,37 +2,39 @@ extends Node3D
 
 class_name Weapon
 
-enum WEAPON_TYPE {LSWRD, SSWRD, GSWRD, AXE, GAXE, SPR, DAG}
-@export var type : WEAPON_TYPE
-enum WEAPON_GROUP {BLADE, POLE, SMALL}
-@export var group : WEAPON_GROUP
+enum WeaponType {LSWRD, SSWRD, GSWRD, AXE, GAXE, SPR, DAG}
+@export var type : WeaponType
+enum WeaponGroup {BLADE, POLE, SMALL}
+@export var group : WeaponGroup
 
 # @export var attack_animations		: Dictionary[AnimationHandler.AnimationState, String]
+@export_group("Combat Properties")
+@export var attack_damage : float
+@export var stamina_cost_per_stance : Dictionary[AnimationHandler.AttackStances, float]
 @export var preferred_attack_stream : Array[PreferredNextAttack]
-@export var stamina_cost_per_attack : Dictionary[AnimationHandler.AnimationState, float]
 
+@export_group("Positioning Properties")
 @export var weapon_hand_transform : Transform3D
 @export var weapon_sheathe_transform : Transform3D
 
-@export var attack_damage : float
 
 func get_type_string() -> String:
-	return WEAPON_TYPE.keys()[self.type]
+	return WeaponType.keys()[self.type]
 
 func get_group_string() -> String:
 	if group == null:
 		match type:
-			WEAPON_TYPE.LSWRD, WEAPON_TYPE.SSWRD, WEAPON_TYPE.GSWRD, WEAPON_TYPE.AXE:
-				group = WEAPON_GROUP.BLADE
+			WeaponType.LSWRD, WeaponType.SSWRD, WeaponType.GSWRD, WeaponType.AXE:
+				group = WeaponGroup.BLADE
 
-			WEAPON_TYPE.GAXE, WEAPON_TYPE.SPR:
-				group = WEAPON_GROUP.POLE
+			WeaponType.GAXE, WeaponType.SPR:
+				group = WeaponGroup.POLE
 
-			WEAPON_TYPE.DAG:
-				group = WEAPON_GROUP.SMALL
+			WeaponType.DAG:
+				group = WeaponGroup.SMALL
 
 
-	return WEAPON_GROUP.keys()[self.type]
+	return WeaponGroup.keys()[self.type]
 
 func is_preferred_attack(current_attack : AnimationHandler.AnimationState, next_attack : AnimationHandler.AnimationState) -> bool:
 	for preference in preferred_attack_stream:

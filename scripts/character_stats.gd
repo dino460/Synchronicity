@@ -17,7 +17,7 @@ var max_health : float
 var max_stamina : float
 @export var stamina : float
 var stamina_regen : float
-@export var base_stamina_regen : float = 5.0
+@export var base_stamina_regen : float = 50.0
 
 var exhaustion : float = 0.0
 var max_exhaustion : float
@@ -37,6 +37,8 @@ func _ready():
 func _process(delta: float) -> void:
 	if stamina <= max_stamina:
 		stamina += stamina_regen * delta
+	if stamina <= 0.0:
+		stamina = 0.0
 
 	if not tick_exhaustion and exhaustion > 0.0:
 		exhaustion -= delta * exhaustion_tick / 10.0
