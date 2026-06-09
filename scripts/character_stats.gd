@@ -18,6 +18,9 @@ var max_stamina : float
 @export var stamina : float
 var stamina_regen : float
 @export var base_stamina_regen : float = 50.0
+var stamina_recently_used : bool = false
+var stamina_regen_timer : float = 0.0
+@export var stamina_regen_timer_max_time : float = 1.0
 
 var exhaustion : float = 0.0
 var max_exhaustion : float
@@ -35,12 +38,26 @@ func _ready():
 	stamina_regen = base_stamina_regen
 
 func _process(delta: float) -> void:
-	if stamina <= max_stamina:
+	if stamina_recently_used:
+		stamina_regen_timer += delta
+
+		if stamina_regen_timer >= stamina_regen_timer_max_time:
+			stamina_regen_timer = 0.0
+			stamina_recently_used = false
+
+	elif stamina <= max_stamina:
 		stamina += stamina_regen * delta
-	if stamina <= 0.0:
-		stamina = 0.0
 
 	if not tick_exhaustion and exhaustion > 0.0:
 		exhaustion -= delta * exhaustion_tick / 10.0
 	elif tick_exhaustion and exhaustion < max_exhaustion:
 		exhaustion += delta * exhaustion_tick
+
+func reduce_stamina(value : float):
+	if value >= stamina:
+		stamina = 0.0
+	else:
+		stamina -= value
+
+	stamina_regen_timer = 0.0
+	stamina_recently_used = true

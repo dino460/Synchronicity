@@ -4,7 +4,7 @@ class_name Entity
 
 signal trigger_death
 signal damage_taken(int, Entity)
-signal attack(animation_direction: AnimationHandler.AnimationState,is_attacking: bool)
+signal attack(animation_direction: AnimationHandler.AnimationState, current_stamina : float)
 
 signal enemy_killed(Entity)
 
@@ -36,10 +36,7 @@ func take_damage(damage : int, attacker : Entity):
 	# print()
 
 func do_attack(attack_state : AnimationHandler.AnimationState):
-	# if (not is_attacking) or can_combo:
-		# stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
-		# damaged_enemies_this_attack.clear()
-	attack.emit(attack_state, is_attacking)
+	attack.emit(attack_state, stats.stamina)
 
 func damage_enemies():
 	var hit_enemies = weapon.get_child(0).get_overlapping_bodies()
@@ -59,15 +56,20 @@ func undamaged_enemies(enemies : Array) -> Array:
 			undamaged.append(enemy)
 	return undamaged
 
+
 func start_attack_movement():
 	should_attack_move = true
 
 func stop_attack_movement():
 	should_attack_move = false
 
+func _on_spend_stamina(stamina_cost : float):
+	# stats.reduce_stamina(stamina_cost)
+	pass
+
+
 func _on_animation_handler_attack_started(stance : AnimationHandler.AttackStances):
-	# stats.stamina -= weapon.stamina_cost_per_attack.get(attack_state)
-	stats.stamina -= weapon.stamina_cost_per_stance.get(stance)
+	# stats.stamina -= weapon.stamina_cost_per_stance.get(stance)
 	is_attacking = true
 	# can_combo = false
 

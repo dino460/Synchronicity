@@ -8,6 +8,7 @@ class_name AnimationHandler
 signal dash_ended
 signal attack_started(stance : AttackStances)
 signal attack_ended
+signal spend_stamina(stamina_cost : float)
 # signal enable_combo
 
 # Attack names refer the direction of the attack, or where the attack ends
@@ -99,7 +100,12 @@ func _on_death() -> void:
 	is_attacking = false
 	play_animation("death")
 
-func _on_attack(animation_direction: AnimationState, was_attacking):
+func _on_attack(animation_direction: AnimationState, current_stamina):
+	if current_stance == AttackStances.NONE:
+		return
+	if current_stamina < weapon_holder.get_child(0).stamina_cost_per_stance[current_stance]:
+		print("fumble")
+		return
 	wanted_state = animation_direction
 	if check_wanted_state():
 		last_attack_state = wanted_state
@@ -124,9 +130,6 @@ func check_wanted_state() -> bool:
 		return true
 
 func play_animation(animation_name : String = "", transition_time : float = 0.1, animation_speed : float = 1.0):
-	if not animator.has_animation(animation_name):
-		return
-
 	there_is_animation_playing = true
 	animation_name = caller_prefix + animation_name
 
@@ -153,6 +156,9 @@ func end_attack():
 
 func enable_combo():
 	can_combo = true
+
+func signal_stamina_use():
+	spend_stamina.emit(weapon_holder.get_child(0).stamina_cost_per_stance[current_stance])
 
 
 func _on_animation_player_animation_finished(anim_name):

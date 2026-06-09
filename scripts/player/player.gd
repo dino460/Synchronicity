@@ -106,7 +106,6 @@ func _physics_process(delta : float) -> void:
 		debug_label.text = str(stats.health)
 	if stamina_panel != null:
 		stamina_panel.get_child(0).scale.x = stats.stamina / stats.max_stamina
-		print(stats.stamina / stats.max_stamina)
 
 	if is_attacking: # Collision check for attacking
 		damage_enemies()
