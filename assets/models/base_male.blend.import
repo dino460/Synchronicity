@@ -32940,13 +32940,22 @@ _subresources={
 "PATH:AnimationPlayer": {
 "optimizer/enabled": false
 },
+"PATH:Empty": {
+"import/skip_import": true
+},
 "PATH:ref back": {
 "import/skip_import": true
 },
 "PATH:ref front": {
 "import/skip_import": true
 },
+"PATH:ref run": {
+"import/skip_import": true
+},
 "PATH:ref side": {
+"import/skip_import": true
+},
+"PATH:ref walk": {
 "import/skip_import": true
 }
 }

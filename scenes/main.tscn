@@ -9,7 +9,7 @@
 [ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_a8y0u"]
 [ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
 [ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
-[ext_resource type="Shader" uid="uid://4xb7qxp5y7vf" path="res://shaders/deptg_only_transparent.gdshader" id="10_dp3eg"]
+[ext_resource type="Shader" uid="uid://4xb7qxp5y7vf" path="res://shaders/depth_only_transparent.gdshader" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
@@ -407,7 +407,7 @@ stretch = true
 script = ExtResource("1_g8fm3")
 metadata/_edit_lock_ = true
 
-[node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer" unique_id=1090957521]
+[node name="MaskSubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer" unique_id=1090957521]
 transparent_bg = true
 handle_input_locally = false
 use_occlusion_culling = true
@@ -418,7 +418,7 @@ size = Vector2i(1000, 625)
 render_target_clear_mode = 1
 render_target_update_mode = 4
 
-[node name="EnvironmentCamera3D" type="Camera3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1664792612 node_paths=PackedStringArray("player")]
+[node name="EnvironmentCamera3D" type="Camera3D" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=1664792612 node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 0.8480482, 0.5299192, 0, -0.5299192, 0.8480482, 0, 9.75, 14)
 visible = false
 cull_mask = 1
@@ -427,45 +427,45 @@ size = 15.0
 near = 0.1
 far = 40.0
 script = ExtResource("2_muem4")
-player = NodePath("../../MaskSubViewport/Player")
+player = NodePath("../../SubViewport/Player")
 
-[node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=856473818]
+[node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=856473818]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=619800890]
-transform = Transform3D(0.9999999, 0, 0, 0, 0.6095903, 0.7927163, 0, -0.7927168, 0.60958993, 0, 0, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/LightingAndEnvironment" unique_id=619800890]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.62728214, 0.7787918, 0, -0.77879226, 0.6272818, 0, 0, 0)
 layers = 3
-light_energy = 7.472976
+light_energy = 7.5575485
 light_indirect_energy = 0.0
 light_bake_mode = 0
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=790694228]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/MaskSubViewport/LightingAndEnvironment" unique_id=790694228]
 environment = SubResource("Environment_jkv2x")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=634746215]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="EnvironmentSubViewportContainer/MaskSubViewport/LightingAndEnvironment" unique_id=634746215]
 callback_mode_process = 0
 libraries/ = SubResource("AnimationLibrary_0ld40")
 
-[node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=267443601]
+[node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=267443601]
 
-[node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=672064832]
+[node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=672064832]
 visible = false
 
-[node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=669951283 instance=ExtResource("8_trceg")]
+[node name="HOME" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets" unique_id=669951283 instance=ExtResource("8_trceg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12412, 0, 13.8794)
 
-[node name="STATUE" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=482763622]
+[node name="STATUE" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets" unique_id=482763622]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
 script = ExtResource("11_octe2")
 landmark_name = "Statue"
 radius_of_influence = 3.0
 area_max_influence = 1.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE" unique_id=1590639767]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets/STATUE" unique_id=1590639767]
 mesh = SubResource("SphereMesh_abj4j")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE" unique_id=695956121]
+[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets/STATUE" unique_id=695956121]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57619, 0)
 visible = false
 light_color = Color(1, 0.47973, 0.467837, 1)
@@ -474,227 +474,227 @@ shadow_enabled = true
 omni_range = 5.63
 omni_attenuation = 0.375
 
-[node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=145070313 instance=ExtResource("10_a8y0u")]
+[node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets" unique_id=145070313 instance=ExtResource("10_a8y0u")]
 transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.14026, 0.119066, 9.24411)
 landmark_name = "Fountain"
 
-[node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=1243364004 instance=ExtResource("11_jkv2x")]
+[node name="WORK" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets" unique_id=1243364004 instance=ExtResource("11_jkv2x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.67445, 0, -6.5277)
 work_begin_time = 8.0
 
-[node name="Ground Mesh2" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=1803935969]
+[node name="Ground Mesh2" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Targets" unique_id=1803935969]
 transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0473994, -0.107427, -0.195446)
 visible = false
 mesh = SubResource("PlaneMesh_ip3kr")
-skeleton = NodePath("../../../MaskSubViewport/Ground/NavigationRegion3D")
+skeleton = NodePath("../../../SubViewport/Ground/NavigationRegion3D")
 
-[node name="BushHolder" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2012438881]
+[node name="BushHolder" type="Node" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=2012438881]
 
-[node name="bush4" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1740429518]
+[node name="bush4" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=1740429518]
 transform = Transform3D(1.4508259, 0, 0, 0, 0.6541866, -0.7563332, 0, 0.7563332, 0.6541866, -8.408224, 0.57021093, 4.805743)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush4" unique_id=676500258]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush4" unique_id=676500258]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush4" unique_id=458610632]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush4" unique_id=458610632]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush4" unique_id=1387854076]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush4" unique_id=1387854076]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush5" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=330015813]
+[node name="bush5" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=330015813]
 transform = Transform3D(1.1957496, -0.42832655, -0.37047893, 0, 0.6541866, -0.7563332, 0.82163167, 0.62335885, 0.5391711, -5.5094604, 0.57021093, 2.179442)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush5" unique_id=1818919998]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush5" unique_id=1818919998]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush5" unique_id=1976043458]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush5" unique_id=1976043458]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush5" unique_id=1451553357]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush5" unique_id=1451553357]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush6" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=2002331862]
+[node name="bush6" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=2002331862]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -9.099846, 0.57021093, 2.684751)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush6" unique_id=1380500097]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush6" unique_id=1380500097]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush6" unique_id=1098845948]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush6" unique_id=1098845948]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush6" unique_id=215040656]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush6" unique_id=215040656]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush7" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1007321110]
+[node name="bush7" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=1007321110]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -10.845062, 0.5702114, 3.5288563)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush7" unique_id=1883002140]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush7" unique_id=1883002140]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush7" unique_id=1831383557]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush7" unique_id=1831383557]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush7" unique_id=844976087]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush7" unique_id=844976087]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush8" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1003097593]
+[node name="bush8" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=1003097593]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -9.59732, 1.1536927, 3.3717947)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush8" unique_id=1362970448]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush8" unique_id=1362970448]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush8" unique_id=389644952]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush8" unique_id=389644952]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush8" unique_id=1821175872]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush8" unique_id=1821175872]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush9" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=915936890]
+[node name="bush9" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=915936890]
 transform = Transform3D(-0.30978745, -0.7388903, -0.6390994, -6.0122645e-08, 0.6541866, -0.7563332, 1.4173664, -0.16149591, -0.13968517, -11.394668, 0.49748373, 9.595902)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush9" unique_id=1484154995]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush9" unique_id=1484154995]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush9" unique_id=1077401901]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush9" unique_id=1077401901]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush9" unique_id=1753606683]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush9" unique_id=1753606683]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush10" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1869953396]
+[node name="bush10" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=1869953396]
 transform = Transform3D(-1.4439439, -0.073581845, -0.06364417, -2.9769852e-08, 0.6541866, -0.7563332, 0.14114729, -0.75274545, -0.65108335, -0.15740395, 0.49748373, 1.5311546)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush10" unique_id=165208802]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush10" unique_id=165208802]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush10" unique_id=710673428]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush10" unique_id=710673428]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush10" unique_id=1592175947]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush10" unique_id=1592175947]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush15" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1186395422]
+[node name="bush15" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=1186395422]
 transform = Transform3D(-1.4439439, -0.073581845, -0.06364417, -2.9769852e-08, 0.6541866, -0.7563332, 0.14114729, -0.75274545, -0.65108335, -12.41182, 0.49748373, -1.685709)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush15" unique_id=1746727985]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush15" unique_id=1746727985]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush15" unique_id=859939802]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush15" unique_id=859939802]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush15" unique_id=604404063]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush15" unique_id=604404063]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush11" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=908355581]
+[node name="bush11" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=908355581]
 transform = Transform3D(1.2745998, 0.36128542, 0.3124919, -1.4805121e-08, 0.65418667, -0.7563333, -0.69303083, 0.6644645, 0.5747251, -5.9396048, 0.49748373, -3.2308855)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush11" unique_id=1184450246]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush11" unique_id=1184450246]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush11" unique_id=1008975870]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush11" unique_id=1008975870]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush11" unique_id=1244113562]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush11" unique_id=1244113562]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush12" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1545908028]
+[node name="bush12" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=1545908028]
 transform = Transform3D(1.0889677, 0.81844836, 0.67978776, -8.5407194e-08, 0.92683476, -1.0289813, -1.288619, 0.69164264, 0.57446545, -8.52846, 0.49748373, -3.4009075)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush12" unique_id=1434394225]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush12" unique_id=1434394225]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush12" unique_id=1272082697]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush12" unique_id=1272082697]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush12" unique_id=101741749]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush12" unique_id=101741749]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush13" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=464494777]
+[node name="bush13" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=464494777]
 transform = Transform3D(1.0889677, 0.81844836, 0.67978776, -8.5407194e-08, 0.92683476, -1.0289813, -1.288619, 0.69164264, 0.57446545, -15.314947, 0.055990696, 3.1667871)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush13" unique_id=1802419880]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush13" unique_id=1802419880]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush13" unique_id=959131748]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush13" unique_id=959131748]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush13" unique_id=1547588902]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush13" unique_id=1547588902]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="bush14" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=148594621]
+[node name="bush14" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder" unique_id=148594621]
 transform = Transform3D(1.5934452, -0.35209808, -0.29244608, -7.945711e-08, 0.9268347, -1.0289812, 0.55436635, 1.0120543, 0.8405933, -15.522936, 0.606884, 1.0498533)
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush14" unique_id=127671484]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush14" unique_id=127671484]
 visible = false
 mesh = SubResource("QuadMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush14" unique_id=948130648]
+[node name="Sphere" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush14" unique_id=948130648]
 visible = false
 mesh = SubResource("ArrayMesh_y6deb")
 skeleton = NodePath("")
 
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder/bush14" unique_id=1275747677]
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/BushHolder/bush14" unique_id=1275747677]
 multimesh = SubResource("MultiMesh_jscy8")
 
-[node name="monolith" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=166603866]
+[node name="monolith" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=166603866]
 transform = Transform3D(0.92788136, -0.05943424, 0.36810833, 0.0639227, 0.99795485, 0, -0.3673555, 0.02353048, 0.9297829, -7.1916475, 2.456696, 2.7305384)
 
-[node name="Torus_002" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/monolith" unique_id=89441023]
+[node name="Torus_002" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/monolith" unique_id=89441023]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1.8130742, 0, 0, 0, 0)
 mesh = SubResource("ArrayMesh_gqmmt")
 skeleton = NodePath("")
 
-[node name="Cube" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/monolith" unique_id=1418327426]
+[node name="Cube" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/monolith" unique_id=1418327426]
 mesh = SubResource("ArrayMesh_yc10j")
 skeleton = NodePath("")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/monolith" unique_id=543513106]
+[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/monolith" unique_id=543513106]
 transform = Transform3D(0.8818492, -0.10688874, 0.45925686, 0.09480282, 0.994271, 0.049372356, -0.46190313, -1.2939695e-07, 0.8869304, 0.18280458, -0.1173017, -0.19821572)
 visible = false
 light_color = Color(0, 0.652619, 0.679591, 1)
@@ -704,349 +704,349 @@ shadow_reverse_cull_face = true
 omni_range = 11.742
 omni_attenuation = 0.0
 
-[node name="Props" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1933743712]
+[node name="Props" type="Node" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=1933743712]
 
-[node name="Sync S" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1440054404]
+[node name="Sync S" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Props" unique_id=1440054404]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.4777946, 0.64368415, 3.6393108)
 
-[node name="Empty" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/Sync S" unique_id=1505727225]
+[node name="Empty" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Props/Sync S" unique_id=1505727225]
 transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
 
-[node name="Plane" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/Sync S" unique_id=829534203]
+[node name="Plane" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Props/Sync S" unique_id=829534203]
 transform = Transform3D(0.4356493, 0, 0, 0, 0.12851262, -0.41626287, 0, 0.41626287, 0.12851262, -2.7173867, 0.7930019, 0.68427896)
 mesh = SubResource("ArrayMesh_2wyq8")
 skeleton = NodePath("")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1769489995]
+[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Props" unique_id=1769489995]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8136799, 3.1555073, 8.951954)
 layers = 3
 light_energy = 24.53
 shadow_enabled = true
 omni_range = 63.995
 
-[node name="Ground Mask" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1417664617]
+[node name="Ground Mask" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=1417664617]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025, -0.12, 0.004)
 mesh = SubResource("PlaneMesh_yc10j")
 skeleton = NodePath("../NavigationRegion3D")
 
-[node name="MaskSubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer" unique_id=100164303]
+[node name="SubViewport" type="SubViewport" parent="EnvironmentSubViewportContainer" unique_id=100164303]
 transparent_bg = true
 handle_input_locally = false
 canvas_cull_mask = 4293918722
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
-[node name="Player" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=1117597475 node_paths=PackedStringArray("debug_label", "mask_viewport", "stamina_panel") instance=ExtResource("1_ywxjf")]
+[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1117597475 node_paths=PackedStringArray("debug_label", "mask_viewport", "stamina_panel") instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21415, 1.67426, 7.35026)
 walk_speed = 3.1
 run_speed = 15.0
 debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
-mask_viewport = NodePath("../../SubViewport")
+mask_viewport = NodePath("../../MaskSubViewport")
 stamina_panel = NodePath("../../../UISubViewportContainer/UISubViewport/Panel")
 
-[node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/MaskSubViewport" unique_id=346623154]
+[node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=346623154]
 collision_layer = 1057
 collision_mask = 1057
 
-[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground" unique_id=1200409911]
+[node name="Ground CollisionShape3D" type="CollisionShape3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=1200409911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539104, 0)
 shape = SubResource("BoxShape3D_7h77l")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground" unique_id=194543068]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=194543068]
 transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.029039819, 0.026618004, -0.0175848)
 navigation_mesh = SubResource("NavigationMesh_t33e6")
 
-[node name="Obstacles" type="Node3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D" unique_id=990615629]
+[node name="Obstacles" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D" unique_id=990615629]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.569814, 0, -8.105917)
 visible = false
 
-[node name="crate" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1127902008 instance=ExtResource("5_d76mp")]
+[node name="crate" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1127902008 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, -0.184723, 0)
 
-[node name="crate6" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1297896357 instance=ExtResource("5_d76mp")]
+[node name="crate6" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1297896357 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.11256, -0.184723, 0)
 
-[node name="crate2" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1150251878 instance=ExtResource("5_d76mp")]
+[node name="crate2" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1150251878 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, -0.184723, 0)
 
-[node name="crate3" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=445455073 instance=ExtResource("5_d76mp")]
+[node name="crate3" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=445455073 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, -0.184723, 0)
 
-[node name="crate4" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=688952451 instance=ExtResource("5_d76mp")]
+[node name="crate4" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=688952451 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 3.52473, -0.184723, 0)
 
-[node name="crate5" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1083359242 instance=ExtResource("5_d76mp")]
+[node name="crate5" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1083359242 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 4.6781, -0.184723, 0)
 
-[node name="crate55" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1271406180 instance=ExtResource("5_d76mp")]
+[node name="crate55" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1271406180 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 5.69878, -0.184723, 0)
 
-[node name="crate56" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=593836705 instance=ExtResource("5_d76mp")]
+[node name="crate56" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=593836705 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 6.91393, -0.184723, 0)
 
-[node name="crate57" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1937795365 instance=ExtResource("5_d76mp")]
+[node name="crate57" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1937795365 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 8.0673, -0.184723, 0)
 
-[node name="crate58" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=550338187 instance=ExtResource("5_d76mp")]
+[node name="crate58" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=550338187 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 0.00367383)
 
-[node name="crate59" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=941719884 instance=ExtResource("5_d76mp")]
+[node name="crate59" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=941719884 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 1.15705)
 
-[node name="crate60" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1744196028 instance=ExtResource("5_d76mp")]
+[node name="crate60" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1744196028 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 2.17772)
 
-[node name="crate61" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=506943029 instance=ExtResource("5_d76mp")]
+[node name="crate61" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=506943029 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 3.39287)
 
-[node name="crate62" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1865245268 instance=ExtResource("5_d76mp")]
+[node name="crate62" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1865245268 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, -0.184723, 4.54625)
 
-[node name="crate63" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1327435167 instance=ExtResource("5_d76mp")]
+[node name="crate63" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1327435167 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 2.17772)
 
-[node name="crate64" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=152227944 instance=ExtResource("5_d76mp")]
+[node name="crate64" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=152227944 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 3.39287)
 
-[node name="crate65" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=705736119 instance=ExtResource("5_d76mp")]
+[node name="crate65" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=705736119 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 0.940786, 4.54625)
 
-[node name="crate72" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2042344837 instance=ExtResource("5_d76mp")]
+[node name="crate72" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2042344837 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 10.376, -0.184722, 4.59399)
 
-[node name="crate73" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1059331371 instance=ExtResource("5_d76mp")]
+[node name="crate73" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1059331371 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 11.5294, -0.184722, 4.59399)
 
-[node name="crate74" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=272632125 instance=ExtResource("5_d76mp")]
+[node name="crate74" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=272632125 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 12.55, -0.184722, 4.59399)
 
-[node name="crate75" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=9312487 instance=ExtResource("5_d76mp")]
+[node name="crate75" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=9312487 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 13.7652, -0.184722, 4.59399)
 
-[node name="crate76" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=24619653 instance=ExtResource("5_d76mp")]
+[node name="crate76" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=24619653 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 14.9186, -0.184722, 4.59399)
 
-[node name="crate77" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2085469767 instance=ExtResource("5_d76mp")]
+[node name="crate77" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2085469767 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 12.5959, 0.940786, 4.59399)
 
-[node name="crate78" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1368626192 instance=ExtResource("5_d76mp")]
+[node name="crate78" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1368626192 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 13.7652, 0.940786, 4.59399)
 
-[node name="crate79" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=138315424 instance=ExtResource("5_d76mp")]
+[node name="crate79" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=138315424 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-14, 0, 1.24393, 0, -1.0677e-14, 0, 1.24393, 14.9186, 0.940786, 4.59399)
 
-[node name="crate66" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1385376444 instance=ExtResource("5_d76mp")]
+[node name="crate66" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1385376444 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 2.17772)
 
-[node name="crate67" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=900350588 instance=ExtResource("5_d76mp")]
+[node name="crate67" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=900350588 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 3.39287)
 
-[node name="crate68" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1359844240 instance=ExtResource("5_d76mp")]
+[node name="crate68" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1359844240 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 2.0297, 4.54625)
 
-[node name="crate69" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=661279416 instance=ExtResource("5_d76mp")]
+[node name="crate69" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=661279416 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 2.17772)
 
-[node name="crate70" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=956055610 instance=ExtResource("5_d76mp")]
+[node name="crate70" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=956055610 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 3.39287)
 
-[node name="crate71" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1168667139 instance=ExtResource("5_d76mp")]
+[node name="crate71" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1168667139 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 9.20139, 3.10646, 4.54625)
 
-[node name="crate88" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=878453943 instance=ExtResource("5_d76mp")]
+[node name="crate88" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=878453943 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 2.0297, 4.55621)
 
-[node name="crate89" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=818778648 instance=ExtResource("5_d76mp")]
+[node name="crate89" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=818778648 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 2.0297, 4.55621)
 
-[node name="crate90" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1421425892 instance=ExtResource("5_d76mp")]
+[node name="crate90" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1421425892 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 2.0297, 4.55621)
 
-[node name="crate91" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1804579260 instance=ExtResource("5_d76mp")]
+[node name="crate91" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1804579260 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 10.29, 3.10646, 4.55621)
 
-[node name="crate92" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=684845201 instance=ExtResource("5_d76mp")]
+[node name="crate92" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=684845201 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 11.5052, 3.10646, 4.55621)
 
-[node name="crate93" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=103436972 instance=ExtResource("5_d76mp")]
+[node name="crate93" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=103436972 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 1.0677e-13, 0, 1.24393, 0, -1.0677e-13, 0, 1.24393, 12.6585, 3.10646, 4.55621)
 
-[node name="crate11" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1453785986 instance=ExtResource("5_d76mp")]
+[node name="crate11" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1453785986 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 1.25246)
 
-[node name="crate12" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=357295328 instance=ExtResource("5_d76mp")]
+[node name="crate12" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=357295328 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 2.36637)
 
-[node name="crate13" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1204430985 instance=ExtResource("5_d76mp")]
+[node name="crate13" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1204430985 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 3.58152)
 
-[node name="crate14" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1503222533 instance=ExtResource("5_d76mp")]
+[node name="crate14" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1503222533 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 4.7349)
 
-[node name="crate18" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1970690983 instance=ExtResource("5_d76mp")]
+[node name="crate18" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1970690983 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 5.77196)
 
-[node name="crate19" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1251101570 instance=ExtResource("5_d76mp")]
+[node name="crate19" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1251101570 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, -0.184723, 6.92534)
 
-[node name="crate7" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=323120996 instance=ExtResource("5_d76mp")]
+[node name="crate7" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=323120996 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.16839, -0.184723, 0)
 
-[node name="crate15" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=978070191 instance=ExtResource("5_d76mp")]
+[node name="crate15" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=978070191 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.25374, -0.184723, 0)
 
-[node name="crate16" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=297565727 instance=ExtResource("5_d76mp")]
+[node name="crate16" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=297565727 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, -0.184723, 0)
 
-[node name="crate17" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1786591658 instance=ExtResource("5_d76mp")]
+[node name="crate17" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1786591658 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -5.41665, -0.184723, 0)
 
-[node name="crate8" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=491084609 instance=ExtResource("5_d76mp")]
+[node name="crate8" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=491084609 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -3.26339)
 
-[node name="crate9" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=122943906 instance=ExtResource("5_d76mp")]
+[node name="crate9" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=122943906 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -2.15082)
 
-[node name="crate10" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2093733282 instance=ExtResource("5_d76mp")]
+[node name="crate10" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2093733282 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -1.09499)
 
-[node name="crate20" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=654072627 instance=ExtResource("5_d76mp")]
+[node name="crate20" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=654072627 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -9.75596)
 
-[node name="crate21" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=475716053 instance=ExtResource("5_d76mp")]
+[node name="crate21" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=475716053 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -8.6434)
 
-[node name="crate22" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1149380468 instance=ExtResource("5_d76mp")]
+[node name="crate22" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1149380468 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, -0.184723, -7.58757)
 
-[node name="crate23" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1856162051 instance=ExtResource("5_d76mp")]
+[node name="crate23" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1856162051 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, 1.03283, 0)
 
-[node name="crate24" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=672929064 instance=ExtResource("5_d76mp")]
+[node name="crate24" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=672929064 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.11256, 1.03283, 0)
 
-[node name="crate25" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=394083139 instance=ExtResource("5_d76mp")]
+[node name="crate25" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=394083139 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 1.03283, 0)
 
-[node name="crate26" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=811720089 instance=ExtResource("5_d76mp")]
+[node name="crate26" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=811720089 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 1.03283, 0)
 
-[node name="crate27" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2142860678 instance=ExtResource("5_d76mp")]
+[node name="crate27" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2142860678 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 3.52473, 1.03283, 0)
 
-[node name="crate28" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2141498075 instance=ExtResource("5_d76mp")]
+[node name="crate28" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2141498075 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 4.6781, 1.03283, 0)
 
-[node name="crate29" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=209538826 instance=ExtResource("5_d76mp")]
+[node name="crate29" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=209538826 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 1.25246)
 
-[node name="crate30" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1817531805 instance=ExtResource("5_d76mp")]
+[node name="crate30" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1817531805 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 2.36637)
 
-[node name="crate31" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=498856781 instance=ExtResource("5_d76mp")]
+[node name="crate31" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=498856781 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 3.58152)
 
-[node name="crate32" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1538617258 instance=ExtResource("5_d76mp")]
+[node name="crate32" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1538617258 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 4.7349)
 
-[node name="crate33" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2117178434 instance=ExtResource("5_d76mp")]
+[node name="crate33" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=2117178434 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 5.77197)
 
-[node name="crate34" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=500206173 instance=ExtResource("5_d76mp")]
+[node name="crate34" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=500206173 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 1.03283, 6.92534)
 
-[node name="crate35" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=130045763 instance=ExtResource("5_d76mp")]
+[node name="crate35" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=130045763 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.16839, 1.03283, 0)
 
-[node name="crate36" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=391909640 instance=ExtResource("5_d76mp")]
+[node name="crate36" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=391909640 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.25374, 1.03283, 0)
 
-[node name="crate37" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1537571835 instance=ExtResource("5_d76mp")]
+[node name="crate37" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1537571835 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 1.03283, 0)
 
-[node name="crate38" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=77535833 instance=ExtResource("5_d76mp")]
+[node name="crate38" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=77535833 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -5.41665, 1.03283, 0)
 
-[node name="crate39" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1449036136 instance=ExtResource("5_d76mp")]
+[node name="crate39" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1449036136 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -3.26339)
 
-[node name="crate40" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1714663220 instance=ExtResource("5_d76mp")]
+[node name="crate40" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1714663220 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -2.15082)
 
-[node name="crate41" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1771362287 instance=ExtResource("5_d76mp")]
+[node name="crate41" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1771362287 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -1.09499)
 
-[node name="crate83" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=424420857 instance=ExtResource("5_d76mp")]
+[node name="crate83" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=424420857 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -2.15082)
 
-[node name="crate84" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1999446062 instance=ExtResource("5_d76mp")]
+[node name="crate84" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1999446062 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.16212, -1.09499)
 
-[node name="crate42" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=316196813 instance=ExtResource("5_d76mp")]
+[node name="crate42" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=316196813 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -9.75596)
 
-[node name="crate43" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=273848769 instance=ExtResource("5_d76mp")]
+[node name="crate43" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=273848769 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -8.6434)
 
-[node name="crate44" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=207957411 instance=ExtResource("5_d76mp")]
+[node name="crate44" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=207957411 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 1.03283, -7.58757)
 
-[node name="crate45" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1514795518 instance=ExtResource("5_d76mp")]
+[node name="crate45" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1514795518 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, 2.15131, 0)
 
-[node name="crate46" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=367336748 instance=ExtResource("5_d76mp")]
+[node name="crate46" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=367336748 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 1.19566, 2.15131, 0)
 
-[node name="crate47" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=977499905 instance=ExtResource("5_d76mp")]
+[node name="crate47" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=977499905 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 2.30958, 2.15131, 0)
 
-[node name="crate80" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=290659353 instance=ExtResource("5_d76mp")]
+[node name="crate80" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=290659353 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -3.33649, 2.15131, 0)
 
-[node name="crate81" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1867251161 instance=ExtResource("5_d76mp")]
+[node name="crate81" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1867251161 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -2.14083, 2.15131, 0)
 
-[node name="crate82" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1340665855 instance=ExtResource("5_d76mp")]
+[node name="crate82" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1340665855 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -1.02691, 2.15131, 0)
 
-[node name="crate48" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=48965895 instance=ExtResource("5_d76mp")]
+[node name="crate48" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=48965895 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 2.36637)
 
-[node name="crate85" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1390495027 instance=ExtResource("5_d76mp")]
+[node name="crate85" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1390495027 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 1.20809)
 
-[node name="crate49" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=312934564 instance=ExtResource("5_d76mp")]
+[node name="crate49" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=312934564 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 5.77197)
 
-[node name="crate50" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1181557868 instance=ExtResource("5_d76mp")]
+[node name="crate50" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1181557868 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 6.92534)
 
-[node name="crate86" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1987206655 instance=ExtResource("5_d76mp")]
+[node name="crate86" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1987206655 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 3.47865)
 
-[node name="crate87" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1370032884 instance=ExtResource("5_d76mp")]
+[node name="crate87" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1370032884 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, -1.24393, 0, 1.24393, 0, 1.24393, 0, -5.43738e-08, 1.18569, 2.15131, 4.63202)
 
-[node name="crate51" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1716863213 instance=ExtResource("5_d76mp")]
+[node name="crate51" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1716863213 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, -4.30958, 2.15131, 0)
 
-[node name="crate52" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1813655996 instance=ExtResource("5_d76mp")]
+[node name="crate52" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1813655996 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0.00120061, 0.00226815, -0.00120236, 1.24393, 0.000946098, -0.00226723, -0.000948312, 1.24393, -5.41665, 2.15131, 0)
 
-[node name="crate53" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=406449259 instance=ExtResource("5_d76mp")]
+[node name="crate53" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=406449259 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -3.26339)
 
-[node name="crate54" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=712115098 instance=ExtResource("5_d76mp")]
+[node name="crate54" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=712115098 instance=ExtResource("5_d76mp")]
 transform = Transform3D(-5.43738e-08, 0, 1.24393, 0, 1.24393, 0, -1.24393, 0, -5.43738e-08, -2.1693, 2.15131, -7.58757)
 
-[node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/NavigationRegion3D" unique_id=1227412245]
+[node name="Ground Mesh" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D" unique_id=1227412245]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108, 0)
 layers = 2
 mesh = SubResource("PlaneMesh_ip3kr")
 
-[node name="Grass" type="Node" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground" unique_id=795730799]
+[node name="Grass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground" unique_id=795730799]
 
-[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
+[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
 level_of_detail = 80000
 total_number_of_meshes = 0
@@ -1054,7 +1054,7 @@ number_of_groups = 64
 ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
 
-[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/MaskSubViewport/Ground/Grass/MainGrass" unique_id=1724032643]
+[node name="GrassMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass/MainGrass" unique_id=1724032643]
 visible = false
 layers = 2
 cast_shadow = 0
@@ -1064,16 +1064,16 @@ skeleton = NodePath("")
 [node name="Scheduler" parent="." unique_id=1212023566 node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 day_total_time = 30.0
 night_total_time = 30.0
-sun = NodePath("../EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment/DirectionalLight3D")
+sun = NodePath("../EnvironmentSubViewportContainer/MaskSubViewport/LightingAndEnvironment/DirectionalLight3D")
 sun_rotation = SubResource("Curve_muem4")
 sun_energy = SubResource("Curve_dp3eg")
 sun_color = ExtResource("16_dp3eg")
-environment = NodePath("../EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment/WorldEnvironment")
+environment = NodePath("../EnvironmentSubViewportContainer/MaskSubViewport/LightingAndEnvironment/WorldEnvironment")
 environment_energy = SubResource("Curve_0ld40")
 environment_color = ExtResource("17_0ld40")
-npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
+npc_holder = NodePath("../EnvironmentSubViewportContainer/MaskSubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
-player_ref = NodePath("../EnvironmentSubViewportContainer/MaskSubViewport/Player")
+player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="." unique_id=366579931]
 anchors_preset = 15
