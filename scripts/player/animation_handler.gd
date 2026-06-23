@@ -114,7 +114,6 @@ func _on_attack(animation_direction: AnimationState, current_stamina):
 		anim_name = anim_states_keys[wanted_state].right(-7).to_lower()
 		anim_name += "_" + stances_keys[current_stance].to_lower()
 		anim_name += "_" + weapon_holder.get_child(0).get_type_string().to_lower()
-		print(anim_name)
 		play_animation(anim_name, 0.1)
 		can_combo = false
 

@@ -13,6 +13,9 @@ enum WeaponGroup {BLADE, POLE, SMALL}
 @export var stamina_cost_per_stance : Dictionary[AnimationHandler.AttackStances, float]
 @export var preferred_attack_stream : Array[PreferredNextAttack]
 
+@export_group("Sound Properties")
+@export var attack_sounds : Array[AudioStream]
+
 @export_group("Positioning Properties")
 @export var weapon_hand_transform : Transform3D
 @export var weapon_sheathe_transform : Transform3D
