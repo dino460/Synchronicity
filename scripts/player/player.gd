@@ -95,7 +95,7 @@ func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
 	set_is_running()
-	shaded_mesh.get_surface_override_material(0).set_shader_parameter("mask_texture", mask_viewport.get_texture())
+	# shaded_mesh.get_surface_override_material(0).set_shader_parameter("mask_texture", mask_viewport.get_texture())
 
 
 func _physics_process(delta : float) -> void:

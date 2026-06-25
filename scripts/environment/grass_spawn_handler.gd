@@ -42,6 +42,4 @@ func _ready() -> void:
 		multimesh_instance.grass_mesh = grass_mesh
 		multimesh_instance.multimesh = MultiMesh.new()
 		multimesh_instance.cast_shadow = false
-		multimesh_instance.set_layer_mask_value(1, false)
-		multimesh_instance.set_layer_mask_value(2, true)
 		add_child(multimesh_instance)

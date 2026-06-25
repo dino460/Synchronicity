@@ -61,7 +61,7 @@ void fragment() {
 	ALPHA *= albedo.a * final_tex.a;
 	ROUGHNESS = 0.0;
 	SPECULAR = 0.0;
-	ALPHA_SCISSOR_THRESHOLD = 1.0;
+	ALPHA_SCISSOR_THRESHOLD = 0.5;
 }
 
 void light() {
