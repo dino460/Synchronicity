@@ -14,13 +14,15 @@
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
-[ext_resource type="Shader" uid="uid://cyvf1fm5g0cv" path="res://shaders/edge_inner.gdshader" id="12_yc10j"]
-[ext_resource type="Shader" uid="uid://bkqm75hr35e8o" path="res://shaders/edge_outer.gdshader" id="13_jscy8"]
+[ext_resource type="Shader" uid="uid://cyvf1fm5g0cv" path="res://shaders/edge detection/edge_inner.gdshader" id="12_yc10j"]
+[ext_resource type="Shader" uid="uid://bkqm75hr35e8o" path="res://shaders/edge detection/edge_outer.gdshader" id="13_jscy8"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 [ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/gradients/sun_color.tres" id="16_dp3eg"]
 [ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/gradients/environment color.tres" id="17_0ld40"]
 [ext_resource type="Shader" uid="uid://c4620k2iihv5v" path="res://shaders/grass/leaf.gdshader" id="17_jscy8"]
 [ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="17_yc10j"]
+[ext_resource type="Shader" uid="uid://chxvk0c4p3w0e" path="res://shaders/godray.gdshader" id="18_jscy8"]
+[ext_resource type="Script" uid="uid://1fw48gtkf2vv" path="res://scripts/environment/godray_handler.gd" id="18_pm3ni"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
@@ -334,6 +336,26 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_og1vs")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6deb"]
+render_priority = 2
+shader = ExtResource("18_jscy8")
+shader_parameter/light_direction = Vector3(0, -1, 0)
+shader_parameter/quad_size = 40.0
+shader_parameter/ray_alpha = 0.006000000285
+shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
+shader_parameter/depth_fade_near = 0.0
+shader_parameter/depth_fade_far = 100.0
+shader_parameter/edge_fade_margin = 0.249999994412
+shader_parameter/ground_fade_y = -0.29999985545835983
+shader_parameter/ground_fade_range = 3.0
+shader_parameter/sun_fade_start = 0.3
+shader_parameter/sun_fade_end = 0.7
+shader_parameter/sun_fade_strength = 0.8999999798832
+shader_parameter/alignment_fade_strength = 0.9
+
+[sub_resource type="QuadMesh" id="QuadMesh_hkefc"]
+material = SubResource("ShaderMaterial_y6deb")
 
 [sub_resource type="Curve" id="Curve_muem4"]
 _limits = [-180.0, 0.0, 0.0, 1.0]
@@ -1018,10 +1040,23 @@ skeleton = NodePath("")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1769489995]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8136799, 3.1555073, 8.951954)
+visible = false
 layers = 3
 light_energy = 24.53
 shadow_enabled = true
 omni_range = 63.995
+
+[node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("ground_mesh", "godray_mesh")]
+script = ExtResource("18_pm3ni")
+total_number_of_meshes = 100
+ground_mesh = NodePath("../../Ground/NavigationRegion3D/Ground Mesh")
+godray_mesh = NodePath("Godray")
+
+[node name="Godray" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/GodrayHandler" unique_id=447186361]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.186301, 5.182287, -0.5805658)
+visible = false
+mesh = SubResource("QuadMesh_hkefc")
+skeleton = NodePath("../..")
 
 [node name="Scheduler" parent="." unique_id=1212023566 node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 day_total_time = 30.0
