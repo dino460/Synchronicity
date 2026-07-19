@@ -31,6 +31,8 @@
 [ext_resource type="Material" uid="uid://c836fjtf7i75m" path="res://materials/player_base.material" id="24_wnwbv"]
 [ext_resource type="Material" uid="uid://uyt4wh2elymb" path="res://materials/toon_base.material" id="24_wqfne"]
 [ext_resource type="AudioStream" uid="uid://eevoblbsudlq" path="res://assets/sounds/sword swings/lswrd_swing.wav" id="26_wqfne"]
+[ext_resource type="Script" uid="uid://1fw48gtkf2vv" path="res://scripts/environment/godray_handler.gd" id="32_487ah"]
+[ext_resource type="Shader" uid="uid://chxvk0c4p3w0e" path="res://shaders/godray.gdshader" id="33_md1ol"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
 radius = 0.407304
@@ -170,6 +172,29 @@ shader_parameter/lineAlpha = 0.3
 shader_parameter/useLighting = true
 shader_parameter/lineHighlight = 0.2
 shader_parameter/lineShadow = 10.59
+
+[sub_resource type="QuadMesh" id="QuadMesh_hkefc"]
+size = Vector2(26, 31)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6deb"]
+render_priority = 2
+shader = ExtResource("33_md1ol")
+shader_parameter/light_direction = Vector3(0, -1, 0)
+shader_parameter/quad_size = 40.0
+shader_parameter/ray_alpha = 0.006000000285
+shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
+shader_parameter/depth_fade_near = 0.0
+shader_parameter/depth_fade_far = 100.0
+shader_parameter/edge_fade_margin = 0.249999994412
+shader_parameter/ground_fade_y = -0.29999985545835983
+shader_parameter/ground_fade_range = 3.0
+shader_parameter/sun_fade_start = 0.3
+shader_parameter/sun_fade_end = 0.7
+shader_parameter/sun_fade_strength = 0.8999999798832
+shader_parameter/alignment_fade_strength = 0.9
+
+[sub_resource type="QuadMesh" id="QuadMesh_bj30b"]
+material = SubResource("ShaderMaterial_y6deb")
 
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("label_anchor", "shaded_mesh", "stats", "weapon")]
 script = ExtResource("1_br4xa")
@@ -376,14 +401,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
 radius = 1.0
 
+[node name="GodraySurface" type="MeshInstance3D" parent="." unique_id=1511198237]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -1.49, -4)
+visible = false
+mesh = SubResource("QuadMesh_hkefc")
+
+[node name="GodrayHandler" type="Node" parent="GodraySurface" unique_id=922318579 node_paths=PackedStringArray("ground_mesh", "godray_mesh")]
+script = ExtResource("32_487ah")
+total_number_of_meshes = 0
+ground_mesh = NodePath("..")
+godray_mesh = NodePath("Godray")
+
+[node name="Godray" type="MeshInstance3D" parent="GodraySurface/GodrayHandler" unique_id=439118790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.186301, 5.182287, -0.5805657)
+visible = false
+mesh = SubResource("QuadMesh_bj30b")
+skeleton = NodePath("../..")
+
 [connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_dashing"]
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
 [connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
-[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
+[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="attack_started" from="AnimationHandler" to="." method="_on_animation_handler_attack_started"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="spend_stamina" from="AnimationHandler" to="." method="_on_spend_stamina"]

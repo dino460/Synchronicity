@@ -222,5 +222,5 @@ cloud_noise_texture={
 }
 cloud_cover_threshold={
 "type": "float",
-"value": 1.0
+"value": 0.355
 }

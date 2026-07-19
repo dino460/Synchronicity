@@ -10,6 +10,8 @@ var level_of_detail : int = 0
 @export var ground_mesh : MeshInstance3D
 @export var godray_mesh : MeshInstance3D
 
+@export var scheduler : Scheduler
+
 func _ready() -> void:
 	if level_of_detail != 0:
 		total_number_of_meshes = level_of_detail
@@ -42,4 +44,5 @@ func _ready() -> void:
 		multimesh_instance.godray_mesh = godray_mesh
 		multimesh_instance.multimesh = MultiMesh.new()
 		multimesh_instance.cast_shadow = false
+		multimesh_instance.scheduler = scheduler
 		add_child(multimesh_instance)

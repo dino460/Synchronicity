@@ -6,7 +6,7 @@ render_mode
 	depth_test_disabled,
 	specular_disabled,
 	ambient_light_disabled,
-	blend_mix,
+	blend_add,
 	skip_vertex_transform;
 
 uniform vec3  light_direction   = vec3(0.0, -1.0, 0.0);
@@ -31,10 +31,18 @@ uniform float alignment_fade_strength : hint_range(0.0, 1.0, 0.01) = 0.9;
 
 uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
 
+group_uniforms clouds;
+global uniform float cloud_cover_scale;
+global uniform float cloud_cover_intensity;
+global uniform vec2 cloud_scroll_speed;
+global uniform sampler2D cloud_noise_texture;
+global uniform float cloud_cover_threshold;
+
 varying float v_view_depth;
 varying vec2  v_quad_uv;
 varying float v_world_y;
 varying float alignment;
+varying vec3 instance_pos;
 
 void vertex() {
 	vec3 light_ws = normalize(light_direction);
@@ -46,7 +54,7 @@ void vertex() {
 	                   : vec3(1.0, 0.0, 0.0);
 	vec3 plane_up    = light_ws;
 
-	vec3 instance_pos = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	instance_pos = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
 
 	vec3 world_pos = instance_pos
 	               + plane_right * VERTEX.x * quad_size
@@ -92,6 +100,33 @@ void fragment() {
 }
 
 void light() {
+	// Attenuation.
+	float attenuation = 1.0f;
+	
+	// Convert LIGHT from view space to world space
+	vec3 LIGHT_world_space = (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xyz;
+	
+	// Manipulate cloud noise UV values
+	vec2 cloud_uv = (instance_pos.xz + (cloud_scroll_speed * TIME) /*+ (LIGHT_world_space.xz / 2.0f)*/) * (cloud_cover_scale);
+	// Stretch UV in direction of the sun LIGHT
+	cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
+	
+	//Sample texture value for current pixel 
+	float cloud_cover = texture(cloud_noise_texture, cloud_uv).r;
+	
+	// Threshold value for crisp shadows 
+	if (cloud_cover >= cloud_cover_threshold) {
+		cloud_cover = 0.0;
+	} else {
+		cloud_cover = 1.0;
+	}
+	
+	//cloud_cover -= cloud_cover_intensity;
+	
+	// Apply a shadow if it exists
+	if (LIGHT_IS_DIRECTIONAL) {
+		attenuation = min(ATTENUATION, cloud_cover);
+	}
 	if (LIGHT_IS_DIRECTIONAL) {
 		ALPHA         *= ATTENUATION;
 		DIFFUSE_LIGHT += LIGHT_COLOR * ATTENUATION;

@@ -2,6 +2,9 @@ extends Node
 
 class_name Scheduler
 
+signal day_start
+signal day_over
+
 @export_group("Cycle Parameters")
 var time : float
 var cycle_total_time : float
@@ -100,9 +103,13 @@ func _process(delta: float) -> void:
 
 	if time > 1.0:
 		time = 0.0
+		if is_day: day_over.emit()
+		else: day_start.emit()
 		is_day = not is_day
 	elif time < 0.0:
 		time = 0.999999
+		if is_day: day_over.emit()
+		else: day_start.emit()
 		is_day = not is_day
 
 func _physics_process(_delta: float) -> void:

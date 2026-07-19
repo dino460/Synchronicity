@@ -347,7 +347,7 @@ shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
 shader_parameter/depth_fade_near = 0.0
 shader_parameter/depth_fade_far = 100.0
 shader_parameter/edge_fade_margin = 0.249999994412
-shader_parameter/ground_fade_y = -0.29999985545835983
+shader_parameter/ground_fade_y = 0.40000015497247965
 shader_parameter/ground_fade_range = 3.0
 shader_parameter/sun_fade_start = 0.3
 shader_parameter/sun_fade_end = 0.7
@@ -437,7 +437,6 @@ navigation_mesh = SubResource("NavigationMesh_t33e6")
 
 [node name="Obstacles" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D" unique_id=990615629]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.569814, 0, -8.105917)
-visible = false
 
 [node name="crate" parent="EnvironmentSubViewportContainer/SubViewport/Ground/NavigationRegion3D/Obstacles" unique_id=1127902008 instance=ExtResource("5_d76mp")]
 transform = Transform3D(1.24393, 0, 0, 0, 1.24393, 0, 0, 0, 1.24393, 0, -0.184723, 0)
@@ -1046,11 +1045,13 @@ light_energy = 24.53
 shadow_enabled = true
 omni_range = 63.995
 
-[node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("ground_mesh", "godray_mesh")]
+[node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("ground_mesh", "godray_mesh", "scheduler")]
 script = ExtResource("18_pm3ni")
 total_number_of_meshes = 100
+number_of_groups = 64
 ground_mesh = NodePath("../../Ground/NavigationRegion3D/Ground Mesh")
 godray_mesh = NodePath("Godray")
+scheduler = NodePath("../../../../Scheduler")
 
 [node name="Godray" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/GodrayHandler" unique_id=447186361]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.186301, 5.182287, -0.5805658)
