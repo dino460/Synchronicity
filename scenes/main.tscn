@@ -14,8 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
 [ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
-[ext_resource type="Shader" uid="uid://cyvf1fm5g0cv" path="res://shaders/edge detection/edge_inner.gdshader" id="12_yc10j"]
-[ext_resource type="Shader" uid="uid://bkqm75hr35e8o" path="res://shaders/edge detection/edge_outer.gdshader" id="13_jscy8"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 [ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/gradients/sun_color.tres" id="16_dp3eg"]
 [ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/gradients/environment color.tres" id="17_0ld40"]
@@ -167,28 +165,8 @@ albedo_color = Color(0.858904, 0, 0.160098, 1)
 [sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
 material = SubResource("StandardMaterial3D_2604s")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_b2d83"]
-render_priority = 0
-shader = ExtResource("12_yc10j")
-shader_parameter/lightIntensity = 1.0
-shader_parameter/lineAlpha = 0.3
-shader_parameter/useLighting = true
-shader_parameter/lineHighlight = 0.2
-shader_parameter/lineShadow = 10.59
-shader_parameter/normalSensitivity = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oowa1"]
-render_priority = 1
-next_pass = SubResource("ShaderMaterial_b2d83")
-shader = ExtResource("13_jscy8")
-shader_parameter/shadows_enabled = true
-shader_parameter/shadow_strength = 0.67999998480064
-shader_parameter/shadow_color = Color(0, 0, 0, 1)
-shader_parameter/outline_thickness = 1.0
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pm3ni"]
 render_priority = 0
-next_pass = SubResource("ShaderMaterial_oowa1")
 shader = ExtResource("17_jscy8")
 shader_parameter/time_scale = 1.0
 shader_parameter/hframe = 4
@@ -202,8 +180,8 @@ shader_parameter/steepness = 1.0
 shader_parameter/threshold_gradient_size = 1.0
 shader_parameter/clamp_diffuse_to_max = true
 shader_parameter/use_attenuation = true
-shader_parameter/rim_width = 0.0
-shader_parameter/rim_color = Color(0.427493, 0.42749307, 0.42749307, 1)
+shader_parameter/specular_amount = 0.5000000074506
+shader_parameter/fresnel_suppression = 0.034000001615
 
 [sub_resource type="QuadMesh" id="QuadMesh_y6deb"]
 material = SubResource("ShaderMaterial_pm3ni")
@@ -347,7 +325,7 @@ shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
 shader_parameter/depth_fade_near = 0.0
 shader_parameter/depth_fade_far = 100.0
 shader_parameter/edge_fade_margin = 0.249999994412
-shader_parameter/ground_fade_y = 0.40000015497247965
+shader_parameter/ground_fade_y = 1.0
 shader_parameter/ground_fade_range = 3.0
 shader_parameter/sun_fade_start = 0.3
 shader_parameter/sun_fade_end = 0.7
@@ -1045,12 +1023,12 @@ light_energy = 24.53
 shadow_enabled = true
 omni_range = 63.995
 
-[node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("ground_mesh", "godray_mesh", "scheduler")]
+[node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("godray_mesh", "player", "directional_light", "scheduler")]
 script = ExtResource("18_pm3ni")
-total_number_of_meshes = 100
-number_of_groups = 64
-ground_mesh = NodePath("../../Ground/NavigationRegion3D/Ground Mesh")
+total_number_of_meshes = 30
 godray_mesh = NodePath("Godray")
+player = NodePath("../../Player")
+directional_light = NodePath("../../LightingAndEnvironment/DirectionalLight3D")
 scheduler = NodePath("../../../../Scheduler")
 
 [node name="Godray" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/GodrayHandler" unique_id=447186361]

@@ -29,12 +29,8 @@ uniform bool clamp_diffuse_to_max = false;
 
 uniform bool use_attenuation = true;
 
-group_uniforms rim_lighting;
-uniform float rim_width : hint_range(0.0f, 16.0f) = 8.0f;
-uniform vec4 rim_color : source_color = vec4(1.0f);
-
-varying vec3 vertex_pos;
-varying vec3 normal;
+uniform float specular_amount : hint_range(0.0, 1.0, 0.05) = 0.0;
+uniform float fresnel_suppression : hint_range(0.0, 1.0) = 1.0; // 1.0 = completely flat specularity across all angles
 
 varying vec3 instance_origin;
 varying vec3 instance_pos;
@@ -56,11 +52,15 @@ void fragment() {
 	base_uv += (current_frame + floor(time))/vec2(float(hframe),float(vframe));
 	
 	vec4 final_tex = texture(albedo_texture,base_uv);
-
+	
+	float n_dot_v = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
+	float fresnel_boost = pow(1.0 - n_dot_v, 5.0);
+	float fresnel_compensation = 1.0 + (24.0 * fresnel_boost * fresnel_suppression);
+	
 	ALBEDO = albedo.rgb * final_tex.rgb;
 	ALPHA *= albedo.a * final_tex.a;
-	ROUGHNESS = 0.0;
-	SPECULAR = 0.0;
+	ROUGHNESS = 1.0;
+	SPECULAR = specular_amount / fresnel_compensation;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 }
 

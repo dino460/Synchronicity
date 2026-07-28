@@ -74,6 +74,7 @@ void fragment() {
 	
 	ALBEDO = final_albedo.rgb * final_tex.rgb;
 	ALPHA *= final_tex.a;
+	//SPECULAR = 0.0;
 	ALPHA_SCISSOR_THRESHOLD = 0.5;
 }
 

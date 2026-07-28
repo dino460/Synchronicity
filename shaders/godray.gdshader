@@ -128,7 +128,7 @@ void light() {
 		attenuation = min(ATTENUATION, cloud_cover);
 	}
 	if (LIGHT_IS_DIRECTIONAL) {
-		ALPHA         *= ATTENUATION;
-		DIFFUSE_LIGHT += LIGHT_COLOR * ATTENUATION;
+		ALPHA         *= attenuation;
+		DIFFUSE_LIGHT += LIGHT_COLOR * attenuation;
 	}
 }

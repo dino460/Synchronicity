@@ -6,10 +6,15 @@ extends Node
 var level_of_detail : int = 0
 @export var total_number_of_meshes : int = 8000
 
-@export_enum("Single:1", "Quarters:4", "Eights:16", "Many:64", "A Lot:256", "A Lot More:1024") var number_of_groups : int = 4
-@export var ground_mesh : MeshInstance3D
+@export_enum("Single:1", "Quarters:4", "Eights:16", "Many:64", "A Lot:256", "A Lot More:1024")
+var number_of_groups : int = 4
+# @export var ground_mesh : MeshInstance3D
 @export var godray_mesh : MeshInstance3D
 
+@export var spawn_area_size : float = 40.0
+
+@export var player : Player
+@export var directional_light : DirectionalLight3D
 @export var scheduler : Scheduler
 
 func _ready() -> void:
@@ -28,11 +33,16 @@ func _ready() -> void:
 	for i in range(number_of_groups):
 		var multimesh_instance = Godray.new()
 		multimesh_instance.number_of_meshes = total_number_of_meshes / number_of_groups
-		multimesh_instance.spawn_area_size = ground_mesh.mesh.size.x / sqrt(number_of_groups)
+		# multimesh_instance.spawn_area_size = ground_mesh.mesh.size.x / sqrt(number_of_groups)
 
-		var new_center_x = ground_mesh.global_position.x + (mult_factor_x * ground_mesh.mesh.size.x / denominator)
-		var new_center_z = ground_mesh.global_position.z + (mult_factor_z * ground_mesh.mesh.size.x / denominator)
-		multimesh_instance.spawn_area_center = Vector3(new_center_x, ground_mesh.global_position.y, new_center_z)
+		# var new_center_x = ground_mesh.global_position.x + (mult_factor_x * ground_mesh.mesh.size.x / denominator)
+		# var new_center_z = ground_mesh.global_position.z + (mult_factor_z * ground_mesh.mesh.size.x / denominator)
+		# multimesh_instance.spawn_area_center = Vector3(new_center_x, ground_mesh.global_position.y, new_center_z)
+		multimesh_instance.spawn_area_size = spawn_area_size / sqrt(number_of_groups)
+
+		var new_center_x = player.global_position.x + (mult_factor_x * spawn_area_size / denominator)
+		var new_center_z = player.global_position.z + (mult_factor_z * spawn_area_size / denominator)
+		multimesh_instance.spawn_area_center = Vector3(new_center_x, 0.0, new_center_z)
 
 		mult_factor_x += increment
 		counter -= 1
@@ -45,4 +55,6 @@ func _ready() -> void:
 		multimesh_instance.multimesh = MultiMesh.new()
 		multimesh_instance.cast_shadow = false
 		multimesh_instance.scheduler = scheduler
+		multimesh_instance.player = player
+		multimesh_instance.directional_light = directional_light
 		add_child(multimesh_instance)
