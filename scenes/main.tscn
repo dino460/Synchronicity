@@ -2,23 +2,21 @@
 
 [ext_resource type="Script" uid="uid://c0jthg2qlubxh" path="res://scripts/handle_pixelation.gd" id="1_g8fm3"]
 [ext_resource type="PackedScene" uid="uid://bylwa0aplfyax" path="res://scenes/player.tscn" id="1_ywxjf"]
-[ext_resource type="Script" uid="uid://bfmdlww4ow0cx" path="res://scripts/player/follow_player_main_camera.gd" id="2_muem4"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="4_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_jbj1t"]
 [ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://cbow8vjepuo2f" path="res://scenes/landmarks/home_template.tscn" id="8_trceg"]
-[ext_resource type="PackedScene" uid="uid://hn6mx63b5xth" path="res://scenes/landmarks/landmark_template.tscn" id="10_a8y0u"]
+[ext_resource type="PackedScene" uid="uid://8q0jhlxkv5ok" path="res://scenes/npc/npc.tscn" id="7_muem4"]
 [ext_resource type="Material" uid="uid://bsvoh7nb070ja" path="res://materials/toon_sync_s.material" id="10_gqmmt"]
 [ext_resource type="Material" uid="uid://c3pfbwd425ifr" path="res://materials/rock.material" id="10_yc10j"]
-[ext_resource type="PackedScene" uid="uid://djjrue350v5uh" path="res://scenes/landmarks/work_template.tscn" id="11_jkv2x"]
-[ext_resource type="Script" uid="uid://cdko2v3imy6tf" path="res://scripts/npc/landmarks/landmark.gd" id="11_octe2"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 [ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/gradients/sun_color.tres" id="16_dp3eg"]
 [ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/gradients/environment color.tres" id="17_0ld40"]
+[ext_resource type="Script" uid="uid://cu134mwsik6n5" path="res://addons/GdPlanningAI/scripts/nodes/gdpai_world_node.gd" id="17_dp3eg"]
 [ext_resource type="Shader" uid="uid://c4620k2iihv5v" path="res://shaders/grass/leaf.gdshader" id="17_jscy8"]
 [ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="17_yc10j"]
+[ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="18_0ld40"]
 [ext_resource type="Shader" uid="uid://chxvk0c4p3w0e" path="res://shaders/godray.gdshader" id="18_jscy8"]
 [ext_resource type="Script" uid="uid://1fw48gtkf2vv" path="res://scripts/environment/godray_handler.gd" id="18_pm3ni"]
 
@@ -158,12 +156,6 @@ tracks/4/keys = {
 _data = {
 &"Sun Rotation": SubResource("Animation_muem4")
 }
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2604s"]
-albedo_color = Color(0.858904, 0, 0.160098, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_abj4j"]
-material = SubResource("StandardMaterial3D_2604s")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pm3ni"]
 render_priority = 0
@@ -349,6 +341,10 @@ point_count = 4
 _limits = [1.0, 1.5, 0.0, 1.0]
 _data = [Vector2(0, 1.5), 0.0, 0.0, 0, 0, Vector2(0.248705, 1), 0.0, 0.0, 0, 0, Vector2(0.746114, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.5), 0.0, 0.0, 0, 0]
 point_count = 4
+
+[sub_resource type="Resource" id="Resource_0ld40"]
+script = ExtResource("18_0ld40")
+metadata/_custom_type_script = "uid://cvie3m6t7c0hd"
 
 [sub_resource type="LabelSettings" id="LabelSettings_113qa"]
 font = ExtResource("14_a8y0u")
@@ -715,17 +711,6 @@ cast_shadow = 0
 mesh = SubResource("QuadMesh_a8y0u")
 skeleton = NodePath("")
 
-[node name="EnvironmentCamera3D" type="Camera3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1664792612 node_paths=PackedStringArray("player")]
-transform = Transform3D(1, 0, 0, 0, 0.8480482, 0.5299192, 0, -0.5299192, 0.8480482, 0, 9.75, 14)
-visible = false
-cull_mask = 1
-projection = 1
-size = 15.0
-near = 0.1
-far = 40.0
-script = ExtResource("2_muem4")
-player = NodePath("../Player")
-
 [node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=856473818]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=619800890]
@@ -746,44 +731,17 @@ libraries/ = SubResource("AnimationLibrary_0ld40")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=267443601]
 
-[node name="Targets" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=672064832]
-visible = false
+[node name="NPC" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" unique_id=1060219500 instance=ExtResource("7_muem4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3410525, 3.2193327, 5.388131)
 
-[node name="HOME" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=669951283 instance=ExtResource("8_trceg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.12412, 0, 13.8794)
+[node name="NPC2" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" unique_id=653018004 instance=ExtResource("7_muem4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.34952, 2.4270487, 5.422604)
 
-[node name="STATUE" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=482763622]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -4.7514, 0.133089, -8.35499)
-script = ExtResource("11_octe2")
-landmark_name = "Statue"
-radius_of_influence = 3.0
-area_max_influence = 1.0
+[node name="NPC3" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" unique_id=410517922 instance=ExtResource("7_muem4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56467605, 4.226164, 8.258423)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE" unique_id=1590639767]
-mesh = SubResource("SphereMesh_abj4j")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets/STATUE" unique_id=695956121]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57619, 0)
-visible = false
-light_color = Color(1, 0.47973, 0.467837, 1)
-light_energy = 4.75
-shadow_enabled = true
-omni_range = 5.63
-omni_attenuation = 0.375
-
-[node name="FOUNTAIN" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=145070313 instance=ExtResource("10_a8y0u")]
-transform = Transform3D(1.39495, 0, 0, 0, 1.39495, 0, 0, 0, 1.39495, -3.14026, 0.119066, 9.24411)
-landmark_name = "Fountain"
-
-[node name="WORK" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=1243364004 instance=ExtResource("11_jkv2x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.67445, 0, -6.5277)
-work_begin_time = 8.0
-
-[node name="Ground Mesh2" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Targets" unique_id=1803935969]
-transform = Transform3D(0.998237, 0, 0, 0, 0.998237, 0, 0, 0, 0.998237, -0.0473994, -0.107427, -0.195446)
-visible = false
-mesh = SubResource("PlaneMesh_ip3kr")
-skeleton = NodePath("../../Ground/NavigationRegion3D")
+[node name="NPC4" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" unique_id=814998940 instance=ExtResource("7_muem4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5910692, 2.4270487, 2.2557368)
 
 [node name="BushHolder" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2012438881]
 
@@ -1050,6 +1008,10 @@ environment_color = ExtResource("17_0ld40")
 npc_holder = NodePath("../EnvironmentSubViewportContainer/SubViewport/NPCs")
 clock_label = NodePath("../UISubViewportContainer/UISubViewport/Clock Label")
 player_ref = NodePath("../EnvironmentSubViewportContainer/SubViewport/Player")
+
+[node name="GdPAIWorldNode" type="Node" parent="Scheduler" unique_id=28003668]
+script = ExtResource("17_dp3eg")
+blackboard_plan = SubResource("Resource_0ld40")
 
 [node name="UISubViewportContainer" type="SubViewportContainer" parent="." unique_id=366579931]
 anchors_preset = 15

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dhntmcte4wuug"]
+[gd_scene format=3 uid="uid://dhntmcte4wuug"]
 
 [ext_resource type="Script" uid="uid://cu134mwsik6n5" path="res://addons/GdPlanningAI/scripts/nodes/gdpai_world_node.gd" id="1_56wuj"]
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="2_ke3pc"]
@@ -10,7 +10,6 @@
 
 [sub_resource type="Resource" id="Resource_mer3k"]
 script = ExtResource("2_ke3pc")
-metadata/_custom_type_script = "uid://dsov73hfryg5g"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_orlck"]
 atlas = ExtResource("5_pks2p")
@@ -73,7 +72,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f0464")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 5.0
 }, {
@@ -90,7 +89,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_a5bn8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Run",
 "speed": 5.0
 }]
@@ -98,19 +97,19 @@ animations = [{
 [sub_resource type="LabelSettings" id="LabelSettings_m5nv4"]
 font_size = 40
 
-[node name="MultiAgentDemo" type="Node2D"]
+[node name="MultiAgentDemo" type="Node2D" unique_id=1499978441]
 
-[node name="GdPAIWorldNode" type="Node" parent="."]
+[node name="GdPAIWorldNode" type="Node" parent="." unique_id=806717939]
 script = ExtResource("1_56wuj")
 blackboard_plan = SubResource("Resource_mer3k")
 
-[node name="Scenery" parent="." instance=ExtResource("3_44q8r")]
+[node name="Scenery" parent="." unique_id=1529102813 instance=ExtResource("3_44q8r")]
 
-[node name="SampleAgent" parent="." instance=ExtResource("4_7hegv")]
+[node name="SampleAgent" parent="." unique_id=569437106 instance=ExtResource("4_7hegv")]
 position = Vector2(208, 423)
 lock_rotation = true
 
-[node name="SampleAgent2" parent="." instance=ExtResource("4_7hegv")]
+[node name="SampleAgent2" parent="." unique_id=767991627 instance=ExtResource("4_7hegv")]
 position = Vector2(947, 209)
 lock_rotation = true
 
@@ -118,7 +117,7 @@ lock_rotation = true
 sprite_frames = SubResource("SpriteFrames_guyou")
 frame_progress = 0.0
 
-[node name="FPSDisplay" type="Label" parent="." node_paths=PackedStringArray("display_text")]
+[node name="FPSDisplay" type="Label" parent="." unique_id=323092005 node_paths=PackedStringArray("display_text")]
 offset_left = -215.0
 offset_top = -274.0
 offset_right = 513.0

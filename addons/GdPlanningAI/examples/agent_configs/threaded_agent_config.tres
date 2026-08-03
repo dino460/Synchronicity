@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GdPAIAgentConfig" load_steps=7 format=3 uid="uid://bl4ruglwhyx2o"]
+[gd_resource type="Resource" script_class="GdPAIAgentConfig" format=3 uid="uid://bl4ruglwhyx2o"]
 
 [ext_resource type="Script" uid="uid://bprnw0w0wdswr" path="res://addons/GdPlanningAI/scripts/resources/gdpai_behavior_config.gd" id="1_ua0bu"]
 [ext_resource type="Script" uid="uid://bwf3mdm5fplln" path="res://addons/GdPlanningAI/examples/hunger/hunger_behavior_config.gd" id="2_h8dy3"]

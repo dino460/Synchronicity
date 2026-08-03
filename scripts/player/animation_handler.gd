@@ -130,7 +130,7 @@ func check_wanted_state() -> bool:
 
 func play_animation(animation_name : String = "", transition_time : float = 0.1, animation_speed : float = 1.0):
 	there_is_animation_playing = true
-	animation_name = caller_prefix + animation_name
+	animation_name = animation_name
 
 	if is_attacking and not can_combo:
 		return
