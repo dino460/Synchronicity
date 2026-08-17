@@ -31,8 +31,6 @@
 [ext_resource type="Material" uid="uid://c836fjtf7i75m" path="res://materials/player_base.material" id="24_wnwbv"]
 [ext_resource type="Material" uid="uid://uyt4wh2elymb" path="res://materials/toon_base.material" id="24_wqfne"]
 [ext_resource type="AudioStream" uid="uid://eevoblbsudlq" path="res://assets/sounds/sword swings/lswrd_swing.wav" id="26_wqfne"]
-[ext_resource type="Script" uid="uid://1fw48gtkf2vv" path="res://scripts/environment/godray_handler.gd" id="32_487ah"]
-[ext_resource type="Shader" uid="uid://chxvk0c4p3w0e" path="res://shaders/godray.gdshader" id="33_md1ol"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sv48k"]
 radius = 0.407304
@@ -173,29 +171,6 @@ shader_parameter/useLighting = true
 shader_parameter/lineHighlight = 0.2
 shader_parameter/lineShadow = 10.59
 
-[sub_resource type="QuadMesh" id="QuadMesh_hkefc"]
-size = Vector2(26, 31)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6deb"]
-render_priority = 2
-shader = ExtResource("33_md1ol")
-shader_parameter/light_direction = Vector3(0, -1, 0)
-shader_parameter/quad_size = 40.0
-shader_parameter/ray_alpha = 0.006000000285
-shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
-shader_parameter/depth_fade_near = 0.0
-shader_parameter/depth_fade_far = 100.0
-shader_parameter/edge_fade_margin = 0.249999994412
-shader_parameter/ground_fade_y = -0.29999985545835983
-shader_parameter/ground_fade_range = 3.0
-shader_parameter/sun_fade_start = 0.3
-shader_parameter/sun_fade_end = 0.7
-shader_parameter/sun_fade_strength = 0.8999999798832
-shader_parameter/alignment_fade_strength = 0.9
-
-[sub_resource type="QuadMesh" id="QuadMesh_bj30b"]
-material = SubResource("ShaderMaterial_y6deb")
-
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("label_anchor", "shaded_mesh", "stats", "weapon")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.3
@@ -265,7 +240,7 @@ libraries/ = SubResource("AnimationLibrary_l71n6")
 [node name="base_male" parent="MeshPivot" unique_id=743913056 instance=ExtResource("17_60mlk")]
 transform = Transform3D(-1.365, 0, 2.0610928e-07, 0, 1.365, 0, -2.0610928e-07, 0, -1.365, 0, -1.5, 0)
 
-[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(743913056, 1905755619) index="0" unique_id=1539497414]
+[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(743913056, 153055397) index="0" unique_id=871142970]
 bones/0/position = Vector3(8.515904e-18, 0.16631146, 0.03835222)
 bones/0/rotation = Quaternion(-0.0323544, 5.4159005e-05, -0.00025172226, 0.9994765)
 bones/1/rotation = Quaternion(0.2192857, 3.5342695e-05, -0.0002095241, 0.9756607)
@@ -305,16 +280,16 @@ bones/35/rotation = Quaternion(0.07589675, 0.7766944, -0.61796933, -0.095390774)
 bones/36/position = Vector3(-0.7441894, -3.5668242, 2.5509284)
 bones/37/position = Vector3(-0.7953922, -6.1254706, -2.1674824)
 
-[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1934940061]
+[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1763912182]
 mesh = SubResource("ArrayMesh_i4ail")
 
-[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=1695927651]
+[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=1696942182]
 mesh = SubResource("ArrayMesh_a38lo")
 
-[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=1738337999]
+[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=1132815055]
 mesh = SubResource("ArrayMesh_4ni07")
 
-[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=1756274770]
+[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=1725980482]
 mesh = SubResource("ArrayMesh_l71n6")
 
 [node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" index="4" unique_id=1358059341]
@@ -345,11 +320,11 @@ shape = SubResource("CapsuleShape3D_i4ail")
 
 [node name="longsword" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword" unique_id=1758707092 instance=ExtResource("22_a38lo")]
 
-[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=1721680433]
+[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=360580900]
 transform = Transform3D(0.020202827, 0.0040225224, -0.009362542, 0.0017181743, 0.33557925, 0.0043147937, 0.009207238, -0.07144922, 0.019738412, 0.030324731, 0.3368261, 0.024280388)
 surface_material_override/0 = ExtResource("24_wqfne")
 
-[node name="AnimationPlayer" parent="MeshPivot/base_male" index="1" unique_id=1134526453]
+[node name="AnimationPlayer" parent="MeshPivot/base_male" index="1" unique_id=1736124738]
 autoplay = &"idle"
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
@@ -401,30 +376,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7, 0)
 radius = 1.0
 
-[node name="GodraySurface" type="MeshInstance3D" parent="." unique_id=1511198237]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -1.49, -4)
-visible = false
-mesh = SubResource("QuadMesh_hkefc")
-
-[node name="GodrayHandler" type="Node" parent="GodraySurface" unique_id=922318579 node_paths=PackedStringArray("godray_mesh")]
-script = ExtResource("32_487ah")
-total_number_of_meshes = 0
-godray_mesh = NodePath("Godray")
-
-[node name="Godray" type="MeshInstance3D" parent="GodraySurface/GodrayHandler" unique_id=439118790]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.186301, 5.182287, -0.5805657)
-visible = false
-mesh = SubResource("QuadMesh_bj30b")
-skeleton = NodePath("../..")
-
 [connection signal="attack" from="." to="AnimationHandler" method="_on_attack"]
 [connection signal="dashing" from="." to="AnimationHandler" method="_on_dashing"]
 [connection signal="death" from="." to="AnimationHandler" method="_on_death"]
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
 [connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
-[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
+[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="attack_started" from="AnimationHandler" to="." method="_on_animation_handler_attack_started"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="spend_stamina" from="AnimationHandler" to="." method="_on_spend_stamina"]

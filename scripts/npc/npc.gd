@@ -42,6 +42,12 @@ var velocity       : Vector3 = Vector3.ZERO
 @export_group("NPC Rendering")
 @onready var mesh_pivot_ref = $MeshPivot
 @export var should_animate : bool = true
+var viewport : Viewport
+
+@export_group("NPC AI")
+@export var home : Node3D
+@export var gdpai_agent : GdPAIAgent
+@export var label : Label
 
 
 func mod_by_age() -> float:
@@ -66,6 +72,10 @@ func _ready() -> void:
 
 	should_attack_move = true
 	navigation_agent.debug_enabled = true
+
+	viewport = get_viewport()
+
+	call_deferred("late_setup")
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -97,13 +107,36 @@ func _physics_process(delta: float) -> void:
 	if navigation_agent.is_navigation_finished():
 		velocity = Vector3.ZERO
 
+	if label != null and gdpai_agent != null:
+		var energy: float = gdpai_agent.blackboard.get_property("energy")
+		var goal_text: String
+		if gdpai_agent._current_goal != null:
+			goal_text = gdpai_agent._current_goal.get_title()
+
+		var action_text: String
+		if gdpai_agent._current_plan != null and gdpai_agent._current_plan.get_plan().size() > 0:
+			var step: int = min(
+				gdpai_agent._current_plan_step,
+				gdpai_agent._current_plan.get_plan().size() - 1,
+			)
+			var action: Action = gdpai_agent._current_plan.get_plan()[step]
+			action_text = action.get_title()
+		label.text = (
+			"Energy: %.f\nGoal: %s\nCurrent Action: %s" % [energy, goal_text, action_text]
+		)
+
+		var new_label_position = viewport.get_camera_3d().unproject_position(self.global_transform.origin)
+		new_label_position *= viewport.get_parent().stretch_shrink
+		new_label_position = Vector2(new_label_position.x - (label.size.x / 2.0) + 125, new_label_position.y - (label.size.y / 2.0))
+		label.position = new_label_position
+
 func handle_navigation():
 	var desired_velocity = Vector3.ZERO
 
 	var current_agent_position: Vector3 = self.global_position
 	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 	desired_velocity = current_agent_position.direction_to(next_path_position) * get_speed()
-	# desired_velocity.y = -10.0
+	desired_velocity.y = 0.0
 	navigation_agent.velocity = desired_velocity
 	# velocity = desired_velocity
 
@@ -120,6 +153,9 @@ func disable_pathfinding():
 func stop_attack_movement():
 	super()
 	disable_pathfinding()
+
+func late_setup():
+	if home != null: gdpai_agent.blackboard.set_property("home_position", home.position)
 
 
 func _on_navigation_finished() -> void:

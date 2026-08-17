@@ -2,6 +2,13 @@ class_name Goal
 extends RefCounted
 ## A GdPAI agent's goal defines a reward level and a required state to satisfy the goal.
 
+enum Priority {
+	LOW,
+	MEDIUM,
+	HIGH
+}
+
+var priority : Priority
 
 ## How rewarding is this goal to complete?  This can depend on dynamic factors (i.e. eating is
 ## more rewarding if an agent is hungry).
@@ -15,6 +22,11 @@ func compute_reward(_agent: GdPAIAgent) -> float:
 ## Returns an array of preconditions.
 func get_desired_state(_agent: GdPAIAgent) -> Array[Precondition]:
 	return []
+
+
+## Returns this goal's priority.
+func get_priority() -> Priority:
+	return priority
 
 
 ## Returns a short title for the goal.

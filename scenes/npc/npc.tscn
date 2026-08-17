@@ -20,10 +20,11 @@
 [ext_resource type="AudioStream" uid="uid://cqroggpkb80vq" path="res://assets/sounds/footsteps/footsteps_6.ogg" id="11_tcmi6"]
 [ext_resource type="AudioStream" uid="uid://dmgl0apygvae2" path="res://assets/sounds/footsteps/footsteps_7.ogg" id="12_1yraq"]
 [ext_resource type="Script" uid="uid://bprnw0w0wdswr" path="res://addons/GdPlanningAI/scripts/resources/gdpai_behavior_config.gd" id="12_sjvbi"]
-[ext_resource type="Script" uid="uid://cf4uji05kijy4" path="res://addons/GdPlanningAI/examples/wander/wander_behavior_config.gd" id="13_fv38m"]
 [ext_resource type="Script" uid="uid://bf6xxqwl5s3ix" path="res://scripts/player/sound_handler.gd" id="13_itdll"]
 [ext_resource type="Script" uid="uid://b8bjqnbsl1gr7" path="res://addons/GdPlanningAI/scripts/resources/gdpai_agent_config.gd" id="14_0ss8d"]
 [ext_resource type="Script" uid="uid://b4nu0eehv0waq" path="res://addons/GdPlanningAI/scripts/nodes/gdpai_location_data.gd" id="15_atglx"]
+[ext_resource type="Script" uid="uid://bf3d5fiuyhccc" path="res://scripts/npc/behaviours/wander/npc_wander_behavior_config.gd" id="22_tv3ln"]
+[ext_resource type="Script" uid="uid://txosf2w111gf" path="res://scripts/npc/behaviours/rest/recover_energy_behavior_config.gd" id="23_5dbi3"]
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="23_tv3ln"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ss8d"]
@@ -107,21 +108,30 @@ blend_shape_mode = 0
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iv7p3"]
 height = 1.8076172
 
-[sub_resource type="Resource" id="Resource_iv7p3"]
-script = ExtResource("13_fv38m")
-metadata/_custom_type_script = "uid://cf4uji05kijy4"
+[sub_resource type="Resource" id="Resource_tv3ln"]
+script = ExtResource("22_tv3ln")
+energy_decay = 10.0
+
+[sub_resource type="Resource" id="Resource_x87aj"]
+script = ExtResource("23_5dbi3")
+energy_recovery = 5.0
+metadata/_custom_type_script = "uid://txosf2w111gf"
 
 [sub_resource type="Resource" id="Resource_t80jw"]
 script = ExtResource("23_tv3ln")
+blackboard_backend = {
+"energy": 100.0
+}
 metadata/_custom_type_script = "uid://cvie3m6t7c0hd"
 
 [sub_resource type="Resource" id="Resource_dq28c"]
 script = ExtResource("14_0ss8d")
+planning_interval = 0.167
 blackboard_plan = SubResource("Resource_t80jw")
-behavior_configs = Array[ExtResource("12_sjvbi")]([SubResource("Resource_iv7p3")])
+behavior_configs = Array[ExtResource("12_sjvbi")]([SubResource("Resource_tv3ln"), SubResource("Resource_x87aj")])
 metadata/_custom_type_script = "uid://b8bjqnbsl1gr7"
 
-[node name="NPC" type="RigidBody3D" unique_id=1060219500 node_paths=PackedStringArray("personality", "navigation_agent", "stats")]
+[node name="NPC" type="RigidBody3D" unique_id=1060219500 node_paths=PackedStringArray("personality", "navigation_agent", "gdpai_agent", "stats")]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_wcgwu")
@@ -129,6 +139,7 @@ npc_name = "Test"
 current_age = 20
 personality = NodePath("Personality")
 navigation_agent = NodePath("NavigationAgent3D")
+gdpai_agent = NodePath("GdPAIAgent")
 stats = NodePath("Stats")
 
 [node name="AnimationHandler" type="Node" parent="." unique_id=1563419453 node_paths=PackedStringArray("animator", "weapon_holder", "hand", "sheathe", "stats")]
@@ -181,7 +192,7 @@ shape = SubResource("CapsuleShape3D_0ss8d")
 [node name="base_male" parent="MeshPivot" unique_id=1439425486 instance=ExtResource("4_1duk3")]
 transform = Transform3D(-1.365, 0, 2.0610928e-07, 0, 1.365, 0, -2.0610928e-07, 0, -1.365, 0, -1.5, 0)
 
-[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1439425486, 1905755619) index="0" unique_id=1539497414]
+[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1439425486, 153055397) index="0" unique_id=871142970]
 bones/0/position = Vector3(8.515904e-18, 0.16631146, 0.03835222)
 bones/0/rotation = Quaternion(-0.0323544, 5.4159005e-05, -0.00025172226, 0.9994765)
 bones/1/rotation = Quaternion(0.2192857, 3.5342695e-05, -0.0002095241, 0.9756607)
@@ -221,16 +232,16 @@ bones/35/rotation = Quaternion(0.07589675, 0.7766944, -0.61796933, -0.095390774)
 bones/36/position = Vector3(-0.7441894, -3.5668242, 2.5509284)
 bones/37/position = Vector3(-0.7953922, -6.1254706, -2.1674824)
 
-[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1934940061]
+[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1763912182]
 mesh = SubResource("ArrayMesh_ywuri")
 
-[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=1695927651]
+[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=1696942182]
 mesh = SubResource("ArrayMesh_hm18a")
 
-[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=1738337999]
+[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=1132815055]
 mesh = SubResource("ArrayMesh_l5jvm")
 
-[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=1756274770]
+[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=1725980482]
 mesh = SubResource("ArrayMesh_upd6w")
 
 [node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" index="4" unique_id=244040076]
@@ -261,16 +272,15 @@ shape = SubResource("CapsuleShape3D_iv7p3")
 
 [node name="longsword" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword" unique_id=1397570690 instance=ExtResource("8_sjvbi")]
 
-[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=1721680433]
+[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=360580900]
 transform = Transform3D(0.020202827, 0.0040225224, -0.009362542, 0.0017181743, 0.33557925, 0.0043147937, 0.009207238, -0.07144922, 0.019738412, 0.030324731, 0.3368261, 0.024280388)
 surface_material_override/0 = ExtResource("9_fv38m")
 
-[node name="AnimationPlayer" parent="MeshPivot/base_male" index="1" unique_id=1134526453]
+[node name="AnimationPlayer" parent="MeshPivot/base_male" index="1" unique_id=1736124738]
 autoplay = &"idle"
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1929154821]
 path_desired_distance = 1.5
-path_postprocessing = 1
 avoidance_enabled = true
 height = 3.09
 radius = 0.41

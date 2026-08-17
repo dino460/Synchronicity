@@ -61,7 +61,7 @@ var last_direction_normalized     : Vector3 = Vector3.UP
 
 func _ready():
 	get_node("AnimationHandler").connect("attack_ended", _on_animation_handler_attack_ended)
-	stamina_panel.size.x = stats.max_stamina
+	if stamina_panel != null: stamina_panel.size.x = stats.max_stamina
 
 
 func set_is_running():

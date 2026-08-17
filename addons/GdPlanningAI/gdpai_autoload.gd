@@ -7,4 +7,4 @@ extends Node
 ## Clears debugger state when game starts by messaging the debugger.
 func _ready() -> void:
 	print("Clearing debugger state")
-	EngineDebugger.send_message("gdplanningai:clear_state", [])
+	# EngineDebugger.send_message("gdplanningai:clear_state", [])

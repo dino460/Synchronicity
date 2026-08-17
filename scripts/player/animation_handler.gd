@@ -199,11 +199,11 @@ func change_weapon_position():
 	if current_stance == AttackStances.NONE and sheathe.get_child_count() == 0:
 		weapon_holder.reparent(sheathe)
 		weapon_holder.transform = weapon_holder.get_child(0).weapon_sheathe_transform
-		print(weapon_holder.transform)
+		# print(weapon_holder.transform)
 	elif current_stance != AttackStances.NONE and hand.get_child_count() == 0:
 		weapon_holder.reparent(hand)
 		weapon_holder.transform = weapon_holder.get_child(0).weapon_hand_transform
-		print(weapon_holder.transform)
+		# print(weapon_holder.transform)
 
 	pass
 # 0,806 0,246 3,613

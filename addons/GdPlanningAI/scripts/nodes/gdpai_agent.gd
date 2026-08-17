@@ -3,6 +3,8 @@ extends Node
 ## GdPlanningAI Agent.  The agent has their own record of the world state and a
 ## personal blackboard of attributes.  Agents form plans given their available goals and actions.
 
+const CURRENT_GOAL_HYSTERESIS : float = 5.0
+
 ## The top-level node of the agent.
 @export var entity: Node
 ## Configuration resource for agent setup.
@@ -32,6 +34,8 @@ GdPAIAgentConfig.PlanningStrategy.CONTINUOUS
 ## Timer for interval-based planning.
 var _planning_timer: Timer = null
 
+var should_change_plan : bool = false
+
 
 func _ready() -> void:
 	# Set planning strategy.
@@ -53,10 +57,10 @@ func _ready() -> void:
 	# Try to find a world node.
 	world_node = GdPAIUTILS.get_child_of_type(get_tree().root, GdPAIWorldNode)
 	# Notify debugger of agent creation.
-	EngineDebugger.send_message(
-		"gdplanningai:register_agent",
-		[get_instance_id(), "%s (%s)" % [name, get_instance_id()]],
-	)
+	# EngineDebugger.send_message(
+	# 	"gdplanningai:register_agent",
+	# 	[get_instance_id(), "%s (%s)" % [name, get_instance_id()]],
+	# )
 
 
 func _process(delta: float) -> void:
@@ -71,8 +75,10 @@ func _process(delta: float) -> void:
 	match _planning_strategy:
 		GdPAIAgentConfig.PlanningStrategy.CONTINUOUS:
 			# Check if a new plan is needed.
-			if _current_plan == null or _current_plan_step > _current_plan.get_plan().size():
+			if _current_plan == null or _current_plan_step > _current_plan.get_plan().size() or should_change_plan:
 				await _query_world_state_and_plan()
+			elif _current_plan != null and not should_change_plan:
+				_check_for_goal_change()
 		GdPAIAgentConfig.PlanningStrategy.ON_INTERVAL:
 			# Timer will handle planning only if current plan is finished.
 			pass
@@ -172,9 +178,21 @@ func _query_world_state_and_plan() -> void:
 		_current_plan_step = -1
 		_current_goal = goal_and_plan["goal"]
 		_current_plan = goal_and_plan["plan"]
+		should_change_plan = false
 		if _current_plan != null:
 			_reset_runtime_status(_current_plan.get_plan())
 			_update_debugger_info()
+
+
+func _check_for_goal_change():
+	for goal in goals:
+		if goal == _current_goal:
+			continue
+		if (
+			goal.compute_reward(self) > _current_goal.compute_reward(self) + CURRENT_GOAL_HYSTERESIS
+			and goal.get_priority() > _current_goal.get_priority()
+		) :
+			should_change_plan = true
 
 
 ## Iterates over all goals in order of reward until a valid plan is found.
@@ -200,7 +218,10 @@ func _select_highest_reward_goal(
 	# Deterimine the rewards from each possible goal.
 	var highest_reward_goal: Goal = goals[0]
 	for goal in goals:
-		rewards.append(goal.compute_reward(self))
+		var hysteresis : float = 0.0
+		if goal == _current_goal:
+			hysteresis = CURRENT_GOAL_HYSTERESIS
+		rewards.append(goal.compute_reward(self) + hysteresis)
 	# Continually check for the most rewarding goal.
 	while rewards.max() > -1:
 		var max_reward: float = rewards.max()
@@ -229,6 +250,7 @@ func _sync_multithreaded_plan() -> void:
 	var goal_and_plan: Dictionary = thread.wait_to_finish()
 	_current_goal = goal_and_plan["goal"]
 	_current_plan = goal_and_plan["plan"]
+	should_change_plan = false
 	if _current_plan != null:
 		_reset_runtime_status(_current_plan.get_plan())
 		_update_debugger_info()
@@ -353,4 +375,4 @@ func _update_debugger_info() -> void:
 		agent_info["current_goal"] = _current_goal.get_title()
 		agent_info["current_goal_description"] = _current_goal.get_description()
 
-	EngineDebugger.send_message("gdplanningai:update_agent_info", [get_instance_id(), agent_info])
+	# EngineDebugger.send_message("gdplanningai:update_agent_info", [get_instance_id(), agent_info])
