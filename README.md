@@ -25,7 +25,7 @@ Synchronicity is a top down pixelated open world-ish adventure game I'm developi
 
 ## Installation
 Installation should be quite simple.
-- Install [Godot 4.6-stable](https://godotengine.org/download/archive/4.6-stable/).
+- Install [Godot 4.7-stable](https://godotengine.org/download/archive/4.7-stable/).
 - Install [Blender 5.0](https://www.blender.org/download/releases/5-0/). _This will allow you to import the .blend files I use for my models and animations._
 - Open the project in the engine. It'll probably complain about not finding Blender.
 - Add the **filepath** to the _Blender executable_ to the box Godot just jumpscared you with.
@@ -48,11 +48,11 @@ For now, the game is quite barebones and totally in an Alpha state of affairs. I
 For now, the game is quite barebones and totally in an Alpha state of affairs. Below is a table summarizing the current main features and their development progress:
 | Completeness | Feature | Description | Progress/State |
 | :---: | --- | --- | --- |
-| 100% 🟢 | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations and custom dusk and dawn times | Completed & Fully Functional. |
+| 100% 🟢 | [Day/Night Cycle](#daynight-cycle) | Day/Night cycles with custom durations, sun path and light colours | Completed & Fully Functional. |
 | 85% 🟢 | [Movement](#movement-system) | Normalized analog movement + running + rolling. | Base movement + sprinting done. Needs polishing. |
-| 65% 🟡 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options. |
-| 40% 🟠 | [NPCs](#scheduled-npc-interaction-system) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired naturalistic behaviour | Messy, bad code, average performance, somehow kinda working. Currently on a big rework of this whole system. |
-| 35% 🔴 | [**Combat**](#combat-system) | My weird custom combat system, with directional attacks | 4-stance system implemented, test animations working, hiboxes and damage working. NPCs attack, but behave really simplistically. No nuance. Heavy polishing needed. Currently on a big rework of the NPC system.
+| 75% 🟢 | [Animation](#animation-system) | State driven, signal-bound unified API for Player and NPCs | Basic logic implemented and quite reliable. Needs a lot of polishing and more granularity/control options. |
+| 60% 🟡 | [**NPC AI**](#godot-planning-ai) | [Rain World](https://store.steampowered.com/app/312520/Rain_World/) inspired, [GOAP](https://scholar.google.com/citations?view_op=view_citation&hl=en&user=6jeMM0sAAAAJ&citation_for_view=6jeMM0sAAAAJ:u5HHmVD_uO8C)-based, naturalistic behaviour for dozens of agents | Using a custom Godot Extension called GdPlanningAI with modifications by me. Still in development, but basics work pretty well. |
+| 39% 🔴 | [Combat](#combat-system) | My weird, custom, direction-based, combat system | 4-stance system implemented, some test animations working, hitboxes and damage working. Heavy polishing needed. Currently on a big rework of the NPC-AI system.
 | 0.000001% 🔴 | [Story](#story) | Souls-like vague indirect weird narrative thing | Lol. There's nothing here. I thought of some stuff, but making the game work is the current priority. |
 | 0.0% 🔴 | [SFX/OST](#sfxost) | Medieval + light bit crushed/electronic elements | <sub>_wind sounds... cobwebs... a skeleton in the corner... waiting_</sub> |
 
@@ -72,24 +72,28 @@ For base animations, such as idle, walk and run, they are implemented globally, 
 ### Combat System
 > Section is a Work In-progress
 
-Custom system that provides four diferent attak directions: up, down, left, and right. These are used to simulate a somewhat real-life-like sword-fighting experience.
+Custom system that provides four different attack directions: up, down, left, and right. These are used to simulate a somewhat real-life-like sword-fighting experience.
+
+The idea behind my combat system is to allow for a more dynamic and player-driven combat experience, where the player creates their own combos through the choice of which attack comes after the other. Some general rules are applied, preventing animation cancelling and encouraging certain flows due to how one attack's end fits into the beginning of another. However, the goal is for it to be based on risk and reward opportunities. No one combo should be explicitly better than the other, just suitable to different play-styles, enemy attributes, environment, etc.
 
 ### Day/Night Cycle
-A simple system for defining an absolute time for a full day to last (such as 10 minutes), which is translated to the in-game simulated 24 hour time. Also provides the capability of defining custom sunrise and sunset times (for custom day/night ratios).
+A complete system for managing the passage of time, sun position, and ambient light and sun light colours. Day and night length in seconds can be individually configured and the scripts automatically samples a custom 2D curve for the sun rotation and energy (intensity), and a gradient texture for the colour, and equeivalent variables for the ambient light's own values. 
+
+The system also offers the ability to pause the passage of time and to manually advance or go back the current time of day through the usage of specific shortcuts.
 
 ### Movement System
 > Section is a Work In-progress
 
 Currently the player has simple 3D top down movement with two speeds and a directional combat system. In the future, I plan on adding different dashes and perhaps some other different, but simple, movement abilities.
 
-### Scheduled NPC Interaction System
+### Godot Planning AI
 > Section is a Work In-progress
 
-The SNIS, as I call it, is a organic and dynamic system for simulating interactions between NPCs and their surroundings. The idea is to give them life-like behaviour with as much simplicity as possible and the possibility of constant simulation, meaning, NPCs won't stop acting and despawn when off-screen. This is a system heavily inspired by how the ecosystem in Rain World works.
+[Godot Planning AI](https://github.com/WahahaYes/GdPlanningAI) (GdPAI for short) by [WahahaYes](https://github.com/WahahaYes/GdPlanningAI/commits?author=WahahaYes) is a modification of [Godot GOAP](https://github.com/viniciusgerevini/godot-goap) by [viniciusgerevini](https://github.com/viniciusgerevini/godot-goap/commits?author=viniciusgerevini). In his own words:
 
-Currently, SNIS is at it's infancy and in heavy prototyping/reworking phases. Constant changes are made, and I'm remaking it from the ground up frequently. For now, NPCs simply respond to attacks, try to find you if you go out of sight, and move between Home, Work and any Points Of Interest added to them. It's simplistic, janky, overly-engineered, and I'm already working on a 3rd iteration, so nothing here is final.
+> GdPlanningAI (shortened as GdPAI) is an agent planning addon for Godot that allows you to build sophisticated AI agents for your game world. These agents are able to reason in real-time and plan actions based on their own attributes and nearby interactable objects. This framework is originally based on Goal Oriented Action Planning (GOAP), a planning system developed by Jeff Orkin in the early 2000's. GOAP has been used in many games since; some popular titles using GOAP systems include F.E.A.R., Fallout 3, and Alien Isolation. This framework started as a reimplementation of GOAP. I noticed some areas for improvement and expanded the planning logics and place more emphasis on interactable objects.
 
-It's "zero" iteration was a [Rust based Dijkstra algorithm for pathfinding in a randomly generated maze](https://github.com/dino460/scheduled-npc-interaction-system) I made for fun (and studying Rust). It was through that experiment I started thinking about what I wanted for SNIS.
+This is the foundation of the NPC AI system utilized in Synchronicity. I've been doing some modifications to a few of the core functionalities of this addon to better suit Sync's needs, such as mid-plan check of goals to allow for plan interruption and goal recalculation.  
 
 ### SFX/OST
 > Section is a Work In-(glacial)-progress
@@ -103,7 +107,7 @@ It's "zero" iteration was a [Rust based Dijkstra algorithm for pathfinding in a 
 
 > Still in construction.
 There are some neat configurations you can do in-engine while editing the game.
-I'll explain them on a later date.
+I'll explain them... some day... when there is enough time for it.
 
 ## Contributing
 
@@ -118,15 +122,19 @@ Though be aware that I'm slow, so both may stay open for a while.
 
 
 ## Links
+#### Credits where they are due
+[![GdPAI](https://github-stats-extended.vercel.app/api/pin?username=WahahaYes&repo=GdPlanningAI&theme=dark)](https://github.com/WahahaYes/GdPlanningAI) 
 
-Some usefull/important links:
+---
+
+#### Other useful/important links:
 
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://www.instagram.com/the_dino460/)
 [![Reddit](https://img.shields.io/badge/Reddit-FF4500?logo=reddit&logoColor=white)](https://www.reddit.com/user/dino460)
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?&logo=discord&logoColor=white)](https://discordapp.com/users/dino460)
 [![GitHub](https://img.shields.io/github/followers/dino460?label=follow&style=social)](https://github.com/dino460)
 
-[![Sychronicity](https://github-readme-stats.vercel.app/api/pin/?username=dino460&repo=Synchronicity&theme=dark)](https://github.com/dino460/Synchronicity)
+[![Synchronicity](https://github-stats-extended.vercel.app/api/pin?username=dino460&repo=Synchronicity&theme=dark)](https://github.com/dino460/Synchronicity)
 
 #### [Issue tracker](https://github.com/dino460/Synchronicity/issues)
 
