@@ -16,7 +16,6 @@ func compute_reward(_agent: GdPAIAgent) -> float:
 
 # Override
 func get_desired_state(agent: GdPAIAgent) -> Array[Precondition]:
-	print(agent.blackboard._blackboard)
 	var agent_location_data: GdPAILocationData = agent.blackboard.get_first_object_in_group(
 		"GdPAILocationData",
 	)

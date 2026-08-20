@@ -35,6 +35,9 @@ GdPAIAgentConfig.PlanningStrategy.CONTINUOUS
 var _planning_timer: Timer = null
 
 var should_change_plan : bool = false
+var task_result : bool = false
+var task_started : bool = false
+var task_id : int
 
 
 func _ready() -> void:
@@ -72,13 +75,14 @@ func _process(delta: float) -> void:
 	if goals.size() == 0:
 		return
 
+	if _current_plan != null and not (should_change_plan or task_started):
+		_start_goal_checking_task()
+
 	match _planning_strategy:
 		GdPAIAgentConfig.PlanningStrategy.CONTINUOUS:
 			# Check if a new plan is needed.
 			if _current_plan == null or _current_plan_step > _current_plan.get_plan().size() or should_change_plan:
 				await _query_world_state_and_plan()
-			elif _current_plan != null and not should_change_plan:
-				_check_for_goal_change()
 		GdPAIAgentConfig.PlanningStrategy.ON_INTERVAL:
 			# Timer will handle planning only if current plan is finished.
 			pass
@@ -149,7 +153,7 @@ func _on_planning_timer_timeout() -> void:
 	if _planning_strategy == GdPAIAgentConfig.PlanningStrategy.ON_INTERVAL_FORCED:
 		_query_world_state_and_plan()
 	elif _planning_strategy == GdPAIAgentConfig.PlanningStrategy.ON_INTERVAL:
-		if _current_plan == null or _current_plan_step > _current_plan.get_plan().size():
+		if _current_plan == null or _current_plan_step > _current_plan.get_plan().size() or should_change_plan:
 			_query_world_state_and_plan()
 	_planning_timer.start()
 
@@ -181,7 +185,13 @@ func _query_world_state_and_plan() -> void:
 		should_change_plan = false
 		if _current_plan != null:
 			_reset_runtime_status(_current_plan.get_plan())
-			_update_debugger_info()
+			# _update_debugger_info()
+
+
+func _start_goal_checking_task():
+	task_id = WorkerThreadPool.add_task(_check_for_goal_change)
+	task_started = true
+	task_result = false
 
 
 func _check_for_goal_change():
@@ -192,7 +202,16 @@ func _check_for_goal_change():
 			goal.compute_reward(self) > _current_goal.compute_reward(self) + CURRENT_GOAL_HYSTERESIS
 			and goal.get_priority() > _current_goal.get_priority()
 		) :
-			should_change_plan = true
+			task_result = true
+			break
+
+	call_deferred("_wait_for_worker")
+
+
+func _wait_for_worker():
+	WorkerThreadPool.wait_for_task_completion(task_id)
+	should_change_plan = task_result
+	task_started = false
 
 
 ## Iterates over all goals in order of reward until a valid plan is found.
@@ -253,7 +272,7 @@ func _sync_multithreaded_plan() -> void:
 	should_change_plan = false
 	if _current_plan != null:
 		_reset_runtime_status(_current_plan.get_plan())
-		_update_debugger_info()
+		# _update_debugger_info()
 
 
 ## Executes the currently selected plan based on the current step.
@@ -295,7 +314,7 @@ func _execute_plan(delta: float) -> void:
 			_runtime_status[action.uid]["post_status"] = action_status
 		_current_plan_step += 1
 	# Update debugger info.
-	_update_debugger_info()
+	# _update_debugger_info()
 
 
 func _compute_valid_self_actions() -> Array[Action]:

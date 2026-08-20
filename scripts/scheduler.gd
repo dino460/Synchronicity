@@ -38,21 +38,11 @@ var cycle_total_time : float
 @export var npc_holder : Node
 @export var clock_label : Label
 
-@export var next_available_id : int = 1
-
-@export var number_of_groups     : int = 50
-@export var max_number_of_groups : int = 10
-@export var max_npcs_in_group    : int = 150
-var next_group : int = 0
-
-var process_groups = []
-var thread_group : Array[Thread] = []
-var current_group : int = 0
-
-var frame_counter : int
+@export var next_available_id : int = 0
 
 @export var player_ref : Node3D
 @export var camera_ref : Camera3D
+
 
 func _ready() -> void:
 	add_to_group("persist")
@@ -66,16 +56,8 @@ func _ready() -> void:
 		is_day = false
 		start_time -= day_total_time
 
-	process_groups.resize(number_of_groups)
-	thread_group.resize(number_of_groups)
-	for i in number_of_groups:
-		var arr : Array[Callable]
-		var thread = Thread.new()
-		process_groups[i] = arr
-		thread_group[i] = thread
-		thread_group[i].start(run_process_group.bind(i, thread))
-
 	camera_ref = player_ref.get_node("CameraPivot/EnvironmentCamera3D/FrustumCulllingCamera3D")
+
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("test_action"):
@@ -112,15 +94,10 @@ func _process(delta: float) -> void:
 		else: day_start.emit()
 		is_day = not is_day
 
+
 func _physics_process(_delta: float) -> void:
-	if not thread_group[frame_counter].is_alive():
-		thread_group[frame_counter].start(run_process_group.bind(frame_counter, thread_group[frame_counter]))
-
-	frame_counter += 1
-	if frame_counter >= number_of_groups:
-		frame_counter = 0
-
 	call_deferred("stop_npc_animation")
+
 
 func stop_npc_animation():
 	for npc in npc_holder.get_children():
@@ -149,32 +126,3 @@ func request_id() -> int:
 	next_available_id += 1
 
 	return id
-
-func request_group() -> int:
-	var group_to_return = next_group
-	next_group += 1 % number_of_groups
-	return group_to_return
-
-func bind_callable_to_group(group : int, callable : Callable):
-	process_groups[group].push_back(callable)
-
-func unbind_callable_from_group(group : int, callable : Callable):
-	process_groups[group].erase(callable)
-
-func run_process_group(group : int, thread : Thread):
-	for process in process_groups[group]:
-		process.call_deferred()
-	call_deferred("wait_thread", thread)
-
-func wait_thread(thread : Thread):
-	thread.wait_to_finish()
-
-func restart_thread(thread_num : int):
-	thread_group[thread_num].wait_to_finish()
-	var thread = Thread.new()
-	thread_group[thread_num] = thread
-	thread_group[thread_num].start(run_process_group.bind(thread_num))
-
-func _exit_tree() -> void:
-	for thread in thread_group:
-		thread.wait_to_finish()

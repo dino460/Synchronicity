@@ -16,7 +16,6 @@ var is_dead : bool = false
 @export_group("NPC Identity")
 @export var npc_name : String
 @export var id       : int
-var process_group    : int
 
 @export_group("NPC Scheduling")
 @export var scheduler : Scheduler
@@ -68,7 +67,6 @@ func _ready() -> void:
 
 	scheduler = get_tree().get_root().get_node("Main/Scheduler")
 	id = scheduler.request_id()
-	process_group = scheduler.request_group()
 
 	should_attack_move = true
 	navigation_agent.debug_enabled = true
@@ -156,6 +154,7 @@ func stop_attack_movement():
 
 func late_setup():
 	if home != null: gdpai_agent.blackboard.set_property("home_position", home.position)
+	gdpai_agent.blackboard.set_property("energy_decay_mult", randf_range(0.8, 1.2))
 
 
 func _on_navigation_finished() -> void:

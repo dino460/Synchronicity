@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="10_ajshl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
-size = Vector3(100, 1, 100)
+size = Vector3(300, 1, 300)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwulq"]
 albedo_texture = ExtResource("1_x07qc")
@@ -24,7 +24,7 @@ material = SubResource("StandardMaterial3D_fwulq")
 size = Vector2(100, 100)
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_knv0t"]
-vertices = PackedVector3Array(-49.5222, 0.392384, -49.6994, -49.5222, 0.392384, 49.3006, 49.4778, 0.392384, 49.3006, 49.4778, 0.392384, -49.6994)
+vertices = PackedVector3Array(-149.74025, 0.39181, -149.76912, -149.74025, 0.39181, 149.73088, 149.75975, 0.39181, 149.73088, 149.75975, 0.39181, -149.76912)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbj1t"]
@@ -49,7 +49,7 @@ shader_parameter/border_width = 0.01
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7yos8"]
 material = SubResource("ShaderMaterial_jbj1t")
-size = Vector2(100, 100)
+size = Vector2(300, 300)
 
 [sub_resource type="QuadMesh" id="QuadMesh_yk7ts"]
 material = ExtResource("7_uacia")
@@ -115,8 +115,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
 [node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=1928514937 node_paths=PackedStringArray("npc_holder", "viewport")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 50
-world_size = 100.0
+number_of_npcs_to_spawn = 200
+world_size = 300.0
 npc_holder = NodePath("../NPC HOLDER")
 viewport = NodePath("../../../UI SubViewportContainer/SubViewport")
 

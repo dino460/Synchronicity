@@ -110,7 +110,8 @@ func perform_action(
 
 	# Reduce current energy while moving about.
 	var current_energy : float = agent.blackboard.get_property("energy")
-	var new_energy : float = max(0.0, current_energy - energy_decay * delta)
+	var energy_decay_mult : float = agent.blackboard.get_property("energy_decay_mult", 1.0)
+	var new_energy : float = max(0.0, current_energy - energy_decay * energy_decay_mult * delta)
 	agent.blackboard.set_property("energy", new_energy)
 
 	# Terminating conditions.

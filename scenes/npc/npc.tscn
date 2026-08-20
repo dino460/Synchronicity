@@ -126,6 +126,7 @@ metadata/_custom_type_script = "uid://cvie3m6t7c0hd"
 
 [sub_resource type="Resource" id="Resource_dq28c"]
 script = ExtResource("14_0ss8d")
+use_multithreading = true
 planning_interval = 0.167
 blackboard_plan = SubResource("Resource_t80jw")
 behavior_configs = Array[ExtResource("12_sjvbi")]([SubResource("Resource_tv3ln"), SubResource("Resource_x87aj")])
@@ -139,6 +140,7 @@ npc_name = "Test"
 current_age = 20
 personality = NodePath("Personality")
 navigation_agent = NodePath("NavigationAgent3D")
+should_animate = false
 gdpai_agent = NodePath("GdPAIAgent")
 stats = NodePath("Stats")
 
