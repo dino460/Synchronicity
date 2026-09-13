@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="5_d76mp"]
 [ext_resource type="Script" uid="uid://c52qfcrty7bbo" path="res://scripts/environment/grass_spawn_handler.gd" id="6_jbj1t"]
 [ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_a8y0u"]
-[ext_resource type="PackedScene" uid="uid://8q0jhlxkv5ok" path="res://scenes/npc/npc.tscn" id="7_muem4"]
 [ext_resource type="Material" uid="uid://bsvoh7nb070ja" path="res://materials/toon_sync_s.material" id="10_gqmmt"]
 [ext_resource type="Material" uid="uid://c3pfbwd425ifr" path="res://materials/rock.material" id="10_yc10j"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
@@ -311,18 +310,19 @@ shadow_mesh = SubResource("ArrayMesh_og1vs")
 render_priority = 2
 shader = ExtResource("18_jscy8")
 shader_parameter/light_direction = Vector3(0, -1, 0)
-shader_parameter/quad_size = 40.0
-shader_parameter/ray_alpha = 0.006000000285
+shader_parameter/quad_size_x = 1.0
+shader_parameter/quad_size_y = 120.0
+shader_parameter/ray_alpha = 0.00400000019
 shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
 shader_parameter/depth_fade_near = 0.0
 shader_parameter/depth_fade_far = 100.0
-shader_parameter/edge_fade_margin = 0.249999994412
+shader_parameter/edge_fade_margin = 0.0
 shader_parameter/ground_fade_y = 1.0
 shader_parameter/ground_fade_range = 3.0
 shader_parameter/sun_fade_start = 0.3
 shader_parameter/sun_fade_end = 0.7
-shader_parameter/sun_fade_strength = 0.8999999798832
-shader_parameter/alignment_fade_strength = 0.9
+shader_parameter/sun_fade_strength = 0.0
+shader_parameter/alignment_fade_strength = 0.999999977648
 
 [sub_resource type="QuadMesh" id="QuadMesh_hkefc"]
 material = SubResource("ShaderMaterial_y6deb")
@@ -387,6 +387,7 @@ metadata/_edit_lock_ = true
 transparent_bg = true
 handle_input_locally = false
 use_occlusion_culling = true
+scaling_3d_mode = 5
 anisotropic_filtering_level = 0
 audio_listener_enable_3d = true
 canvas_cull_mask = 4293918721
@@ -394,12 +395,11 @@ size = Vector2i(1000, 625)
 render_target_clear_mode = 1
 render_target_update_mode = 4
 
-[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1117597475 node_paths=PackedStringArray("debug_label", "mask_viewport", "stamina_panel") instance=ExtResource("1_ywxjf")]
+[node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1117597475 node_paths=PackedStringArray("debug_label", "stamina_panel") instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21415, 1.67426, 7.35026)
 walk_speed = 3.1
 run_speed = 15.0
 debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
-mask_viewport = NodePath("..")
 stamina_panel = NodePath("../../../UISubViewportContainer/UISubViewport/Panel")
 
 [node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=346623154]
@@ -736,11 +736,6 @@ libraries/ = SubResource("AnimationLibrary_0ld40")
 
 [node name="NPCs" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=267443601]
 
-[node name="NPC" parent="EnvironmentSubViewportContainer/SubViewport/NPCs" unique_id=1060219500 node_paths=PackedStringArray("home", "label") instance=ExtResource("7_muem4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3410525, 3.2193327, 5.388131)
-home = NodePath("../../Props/HOME_TEST")
-label = NodePath("../../../../UISubViewportContainer/UISubViewport/Label")
-
 [node name="BushHolder" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=2012438881]
 
 [node name="bush4" type="Node3D" parent="EnvironmentSubViewportContainer/SubViewport/BushHolder" unique_id=1740429518]
@@ -981,14 +976,15 @@ omni_range = 63.995
 
 [node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("godray_mesh", "player", "directional_light", "scheduler")]
 script = ExtResource("18_pm3ni")
-total_number_of_meshes = 30
+total_number_of_meshes = 36
+number_of_groups = 1
 godray_mesh = NodePath("Godray")
+random_spread = 1.5
 player = NodePath("../../Player")
 directional_light = NodePath("../../LightingAndEnvironment/DirectionalLight3D")
 scheduler = NodePath("../../../../Scheduler")
 
 [node name="Godray" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/GodrayHandler" unique_id=447186361]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.186301, 5.182287, -0.5805658)
 visible = false
 mesh = SubResource("QuadMesh_hkefc")
 skeleton = NodePath("../..")

@@ -6,13 +6,11 @@ var camera : Camera3D
 var directional_light : DirectionalLight3D
 var player : Player
 var number_of_meshes : int
+var random_spread : float
 var spawn_area_size : float
 var spawn_area_center : Vector3
 var godray_mesh : MeshInstance3D
 var scheduler : Scheduler
-
-var max_depth : float = 5.0
-var min_depth : float = 0.0
 
 func _ready():
 	scheduler.day_start.connect(_on_day_start)
@@ -31,22 +29,34 @@ func _ready():
 	camera = get_viewport().get_camera_3d()
 	# directional_light = get_viewport().find_child("DirectionalLight3D")
 
-	for i in multimesh.visible_instance_count:
-		# Position: random XZ spread, fixed Y. The shader uses this only for
-		# lateral offset — depth is driven by INSTANCE_CUSTOM.r below.
-		var pos := Transform3D()
-		pos = pos.translated(Vector3(
-			spawn_area_center.x + randf_range(-1.0, 1.0) * spawn_area_size / 2.0,
-			spawn_area_center.y,
-			spawn_area_center.z + randf_range(-1.0, 1.0) * spawn_area_size / 2.0
-		))
-		multimesh.set_instance_transform(i, pos)
+	var subdivisions : float = floor(sqrt(multimesh.visible_instance_count))
+	var i : float = floor(sqrt(multimesh.visible_instance_count))
+	var j : float = floor(sqrt(multimesh.visible_instance_count))
 
-		# # INSTANCE_CUSTOM.r distributes planes evenly from near to far.
-		# # The shader maps this 0..1 value to plane_offset_min..plane_offset_max.
-		# # Other channels (g, b, a) are free for future per-instance variation.
-		# var depth_fraction := float(i) / float(max(multimesh.instance_count - 1, 1))
-		# multimesh.set_instance_custom_data(i, Color(depth_fraction, 0.0, 0.0, 0.0))
+	print(spawn_area_center, " ", player.global_position)
+	for index in range(multimesh.visible_instance_count):
+		var mesh_position : Vector3 = Vector3.ZERO
+		var center_correction : float = spawn_area_center.x - spawn_area_size / 2.0
+		var x_randomness : float = randf_range(-random_spread, random_spread)
+		var z_randomness : float = randf_range(-random_spread, random_spread)
+
+		mesh_position.x = center_correction + (i * spawn_area_size / subdivisions) + x_randomness
+		mesh_position.z = center_correction + (j * spawn_area_size / subdivisions) + z_randomness
+		print(mesh_position)
+
+		var pos := Transform3D()
+		# pos = pos.translated(Vector3(
+		# 	spawn_area_center.x + randf_range(-1.0, 1.0) * spawn_area_size / 2.0,
+		# 	spawn_area_center.y,
+		# 	spawn_area_center.z + randf_range(-1.0, 1.0) * spawn_area_size / 2.0
+		# ))
+		pos = pos.translated(mesh_position)
+		multimesh.set_instance_transform(index, pos)
+
+		i -= 1
+		if i <= 0.0:
+			i = floor(sqrt(multimesh.visible_instance_count))
+			j -= 1
 
 func _process(_delta: float) -> void:
 	self.position = player.global_position

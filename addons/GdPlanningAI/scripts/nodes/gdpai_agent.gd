@@ -82,6 +82,11 @@ func _process(delta: float) -> void:
 		GdPAIAgentConfig.PlanningStrategy.CONTINUOUS:
 			# Check if a new plan is needed.
 			if _current_plan == null or _current_plan_step > _current_plan.get_plan().size() or should_change_plan:
+				if should_change_plan and _current_plan != null and _current_plan_step < _current_plan.get_plan().size():
+					var action_to_clean_up : Action = _current_plan.get_plan()[_current_plan_step]
+					var action_status: Action.Status = action_to_clean_up.post_perform_action(self)
+					_runtime_status[action_to_clean_up.uid]["post_status"] = action_status
+
 				await _query_world_state_and_plan()
 		GdPAIAgentConfig.PlanningStrategy.ON_INTERVAL:
 			# Timer will handle planning only if current plan is finished.

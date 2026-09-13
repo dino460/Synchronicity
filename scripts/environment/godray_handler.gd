@@ -12,6 +12,7 @@ var number_of_groups : int = 4
 @export var godray_mesh : MeshInstance3D
 
 @export var spawn_area_size : float = 40.0
+@export var random_spread : float
 
 @export var player : Player
 @export var directional_light : DirectionalLight3D
@@ -24,7 +25,7 @@ func _ready() -> void:
 	if total_number_of_meshes == 0:
 		return
 
-	var counter : int = sqrt(number_of_groups)
+	var counter : int = floor(sqrt(number_of_groups))
 	var mult_factor_x : float = - (sqrt(number_of_groups) - 1.0)
 	var mult_factor_z : float = - (sqrt(number_of_groups) - 1.0)
 	var increment : int = 2
@@ -32,7 +33,7 @@ func _ready() -> void:
 
 	for i in range(number_of_groups):
 		var multimesh_instance = Godray.new()
-		multimesh_instance.number_of_meshes = total_number_of_meshes / number_of_groups
+		multimesh_instance.number_of_meshes = floor(total_number_of_meshes as float / number_of_groups)
 		# multimesh_instance.spawn_area_size = ground_mesh.mesh.size.x / sqrt(number_of_groups)
 
 		# var new_center_x = ground_mesh.global_position.x + (mult_factor_x * ground_mesh.mesh.size.x / denominator)
@@ -47,7 +48,7 @@ func _ready() -> void:
 		mult_factor_x += increment
 		counter -= 1
 		if counter <= 0:
-			counter = sqrt(number_of_groups)
+			counter = floor(sqrt(number_of_groups))
 			mult_factor_x = - (sqrt(number_of_groups) - 1.0)
 			mult_factor_z += increment
 
@@ -57,4 +58,5 @@ func _ready() -> void:
 		multimesh_instance.scheduler = scheduler
 		multimesh_instance.player = player
 		multimesh_instance.directional_light = directional_light
+		multimesh_instance.random_spread = random_spread
 		add_child(multimesh_instance)

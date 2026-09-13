@@ -5,13 +5,12 @@ class_name Player
 # Get references to nodes
 # Removes get_node call each time the node is referenced
 @onready var characterbody_ref = $"."
-@onready var combo_timer_ref  = $ComboCooldownTimer
-@onready var mesh_pivot_ref   = $MeshPivot
-@onready var camera_pivot_ref = $CameraPivot
+@onready var combo_timer_ref   = $ComboCooldownTimer
+@onready var mesh_pivot_ref    = $MeshPivot
+@onready var camera_pivot_ref  = $CameraPivot
 
 @onready var input_handler_ref : InputHandler = $InputHandler
 
-@onready var skeleton_ref : Skeleton3D = $"MeshPivot/Low-Poly-Base_blend/rig/Skeleton3D"
 
 signal idling
 signal walking
@@ -46,14 +45,7 @@ var direction       : Vector3 = Vector3.ZERO
 var last_direction_normalized     : Vector3 = Vector3.UP
 
 @export_group("Rendering Properties")
-@export var mat_ref : Material
-@export var raycast_holder : Node3D
-
 @export var debug_label : Label
-@export var label_anchor : Node3D
-
-@export var mask_viewport : Viewport
-@export var shaded_mesh : MeshInstance3D
 
 @export_group("UI Properties")
 @export var stamina_panel : Panel
@@ -95,7 +87,6 @@ func rotate_direction(direction_to_rotate : Vector3) -> Vector3:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta : float) -> void:
 	set_is_running()
-	# shaded_mesh.get_surface_override_material(0).set_shader_parameter("mask_texture", mask_viewport.get_texture())
 
 
 func _physics_process(delta : float) -> void:
