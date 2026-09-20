@@ -198,7 +198,6 @@ lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 lightmapping/lightmap_gi/use_bicubic_filter=false
-occlusion_culling/use_occlusion_culling=true
 lights_and_shadows/positional_shadow/atlas_size=1024
 vrs/directional_shadow/16_bits=true
 
@@ -222,5 +221,5 @@ cloud_noise_texture={
 }
 cloud_cover_threshold={
 "type": "float",
-"value": 0.353
+"value": 1.0
 }

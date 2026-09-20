@@ -10,8 +10,8 @@ render_mode
 	skip_vertex_transform;
 
 uniform vec3  light_direction   = vec3(0.0, -1.0, 0.0);
-uniform float quad_size_x         : hint_range(1.0, 200.0, 0.5)   = 40.0;
-uniform float quad_size_y         : hint_range(1.0, 200.0, 0.5)   = 40.0;
+uniform float quad_size_x       : hint_range(1.0, 200.0, 0.5)   = 40.0;
+uniform float quad_size_y       : hint_range(1.0, 200.0, 0.5)   = 40.0;
 uniform float ray_alpha         : hint_range(0.0, 1.0,   0.001) = 0.04;
 uniform vec3  ray_color         : source_color                   = vec3(1.0, 0.95, 0.8);
 uniform float depth_fade_near   : hint_range(0.0, 50.0,  0.1)   = 2.0;

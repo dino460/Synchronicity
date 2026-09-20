@@ -120,8 +120,8 @@ void vertex() {
 	// it only steps by a full slice_spacing at a time, and each step is
 	// invisible because the new position was already part of the same
 	// repeating pattern.
-	float anchor_grid = round(dot(godray_anchor, plane_normal) / slice_spacing);
-	float grid_index  = anchor_grid + slice_index; // stable world-space slot for this instance right now
+	//float anchor_grid = round(dot(godray_anchor, plane_normal) / slice_spacing);
+	//float grid_index  = anchor_grid + slice_index; // stable world-space slot for this instance right now
 
 	// STEP 4: jitter, keyed to the world-space grid slot rather than
 	// INSTANCE_ID. That matters here: when the stack steps and a different
@@ -130,9 +130,9 @@ void vertex() {
 	// visible pop right at the step. Keying to grid_index keeps a given
 	// physical location's jitter stable regardless of which instance is
 	// currently drawing it.
-	float jitter = (hash11(grid_index + 17.0) - 0.5) * jitter_strength;
+	//float jitter = (hash11(grid_index + 17.0) - 0.5) * jitter_strength;
 
-	vec3 plane_point = plane_normal * (grid_index + jitter) * slice_spacing;
+	vec3 plane_point = plane_normal * slice_index * slice_spacing + godray_anchor;
 
 	// --- Build this vertex's view ray -------------------------------------
 	// VERTEX.xy on a standard 1x1 QuadMesh is in [-0.5, 0.5]. Multiply by 2
@@ -223,6 +223,6 @@ void light() {
 	if (LIGHT_IS_DIRECTIONAL) {
 		attenuation = min(ATTENUATION, cloud_cover);
 		ALPHA         *= attenuation;
-		DIFFUSE_LIGHT += LIGHT_COLOR * attenuation;
+		DIFFUSE_LIGHT += mix(LIGHT_COLOR, ray_color, 0.85) * attenuation;
 	}
 }
