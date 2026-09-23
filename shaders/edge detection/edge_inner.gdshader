@@ -28,7 +28,7 @@ render_mode specular_disabled, ambient_light_disabled, depth_draw_never, blend_m
 
 // ----- Textures (same hints as original) ---------------------------------------
 
-uniform sampler2D DEPTH_TEXTURE   : hint_depth_texture,          filter_linear_mipmap;
+uniform sampler2D DEPTH_TEXTURE   : hint_depth_texture,          filter_nearest;
 uniform sampler2D SCREEN_TEXTURE  : hint_screen_texture,          filter_nearest;
 uniform sampler2D NORMAL_TEXTURE  : hint_normal_roughness_texture, filter_nearest;
 
@@ -107,7 +107,7 @@ void fragment() {
 		invDepthDiff += depth - dOff;
 	}
 	invDepthDiff = clamp(invDepthDiff, 0.0, 1.0);
-	invDepthDiff = clamp(smoothstep(0.9, 0.9, invDepthDiff) * 10.0, 0.0, 1.0);
+	invDepthDiff = clamp(step(0.9, invDepthDiff) * 10.0, 0.0, 1.0);
 	depthDiff    = smoothstep(0.25, 0.3, depthDiff);
 
 	// ---- Normal edge ----------------------------------------------------------
@@ -119,7 +119,7 @@ void fragment() {
 		vec3 nOff   = GetNormal(offs[i], outlineMask);
 		normalDiff += NormalEdgeIndicator(edgeBias, normal, nOff, depthDiff);
 	}
-	normalDiff = smoothstep(0.2, 0.2, normalDiff * normalSensitivity);
+	normalDiff = step(0.2, normalDiff * normalSensitivity);
 	normalDiff = clamp(normalDiff - invDepthDiff, 0.0, 1.0);
 
 	// ---- Compose --------------------------------------------------------------

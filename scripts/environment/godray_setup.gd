@@ -33,6 +33,7 @@ func _ready() -> void:
 	for i in num_slices:
 		multimesh.set_instance_transform(i, Transform3D.IDENTITY)
 
+
 	multimesh.mesh.surface_get_material(0).set_shader_parameter("num_slices", num_slices)
 
 	# Godot culls draw calls using the mesh's ORIGINAL bounding box, computed

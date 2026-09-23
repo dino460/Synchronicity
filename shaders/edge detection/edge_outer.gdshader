@@ -26,8 +26,8 @@ render_mode unshaded, depth_draw_never, blend_mix;
 
 // ----- Textures ----------------------------------------------------------------
 
-uniform sampler2D DEPTH_TEXTURE  : hint_depth_texture, filter_linear_mipmap;
-uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+uniform sampler2D DEPTH_TEXTURE  : hint_depth_texture, filter_nearest;
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_nearest;
 
 // ----- Uniforms (matching original new_edge_outline) ---------------------------
 
