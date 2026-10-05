@@ -104,12 +104,12 @@ void light() {
 	
 	// Apply a shadow if it exists
 	if (use_attenuation) {
-		if (LIGHT_IS_DIRECTIONAL) {
-			attenuation = min(ATTENUATION, cloud_cover);
-		} else {
-			attenuation = ATTENUATION;
-		}
-		//attenuation = ATTENUATION;
+		//if (LIGHT_IS_DIRECTIONAL) {
+			//attenuation = min(ATTENUATION, cloud_cover);
+		//} else {
+			//attenuation = ATTENUATION;
+		//}
+		attenuation = ATTENUATION;
 	}
 
 	// Diffuse lighting.

@@ -103,6 +103,14 @@ func stop_npc_animation():
 	for npc in npc_holder.get_children():
 		npc.should_animate = camera_ref.is_position_in_frustum(npc.position)
 
+
+func get_time() -> float:
+	return time
+
+func get_rad_sun_rotation() -> float:
+	return deg_to_rad(sun_rotation.sample(get_time()))
+
+
 func update_sun_and_environment(sample_point : float):
 	if sun != null and is_day:
 		sun.rotation.x = deg_to_rad(sun_rotation.sample(sample_point))

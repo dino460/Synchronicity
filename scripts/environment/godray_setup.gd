@@ -17,8 +17,13 @@ extends MultiMeshInstance3D
 ## actually gets drawn.
 @export var cull_margin: float = 600.0
 
+@export var scheduler : Scheduler
+
 
 func _ready() -> void:
+	# scheduler.day_start.connect(_on_day_start)
+	# scheduler.day_over.connect(_on_day_over)
+
 	var mm := MultiMesh.new()
 	mm.use_custom_data = true
 	mm.transform_format = MultiMesh.TRANSFORM_3D
@@ -64,3 +69,9 @@ func _process(_delta: float) -> void:
 
 	# Keep this in sync with however you already update light_direction from
 	# your DirectionalLight3D - unchanged from your current setup.
+
+func _on_day_start():
+	multimesh.visible_instance_count = num_slices
+
+func _on_day_over():
+	multimesh.visible_instance_count = 0

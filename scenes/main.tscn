@@ -9,6 +9,7 @@
 [ext_resource type="Material" uid="uid://bsvoh7nb070ja" path="res://materials/toon_sync_s.material" id="10_gqmmt"]
 [ext_resource type="Material" uid="uid://c3pfbwd425ifr" path="res://materials/rock.material" id="10_yc10j"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
+[ext_resource type="Shader" uid="uid://dnkpyxman7htg" path="res://scripts/environment/clouds.gdshader" id="13_0ld40"]
 [ext_resource type="Script" uid="uid://b5g1cg7p11xb" path="res://scripts/environment/godray_setup.gd" id="13_gqmmt"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 [ext_resource type="Shader" uid="uid://bto1b2wcgu6lt" path="res://shaders/godray_v2.gdshader" id="14_yc10j"]
@@ -18,10 +19,6 @@
 [ext_resource type="Shader" uid="uid://c4620k2iihv5v" path="res://shaders/grass/leaf.gdshader" id="17_jscy8"]
 [ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="17_yc10j"]
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="18_0ld40"]
-[ext_resource type="Shader" uid="uid://chxvk0c4p3w0e" path="res://shaders/godray.gdshader" id="18_jscy8"]
-[ext_resource type="Script" uid="uid://1fw48gtkf2vv" path="res://scripts/environment/godray_handler.gd" id="18_pm3ni"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_dq28c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
@@ -310,27 +307,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_og1vs")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y6deb"]
-render_priority = 2
-shader = ExtResource("18_jscy8")
-shader_parameter/light_direction = Vector3(0, -1, 0)
-shader_parameter/quad_size_x = 28.5
-shader_parameter/quad_size_y = 120.0
-shader_parameter/ray_alpha = 0.00400000019
-shader_parameter/ray_color = Color(0.9723725, 0.9508727, 0.8777014, 1)
-shader_parameter/depth_fade_near = 0.0
-shader_parameter/depth_fade_far = 100.0
-shader_parameter/edge_fade_margin = 0.0
-shader_parameter/ground_fade_y = 1.0
-shader_parameter/ground_fade_range = 3.0
-shader_parameter/sun_fade_start = 0.3
-shader_parameter/sun_fade_end = 0.7
-shader_parameter/sun_fade_strength = 0.9
-shader_parameter/alignment_fade_strength = 0.9
-
-[sub_resource type="QuadMesh" id="QuadMesh_hkefc"]
-material = SubResource("ShaderMaterial_y6deb")
-
 [sub_resource type="SphereMesh" id="SphereMesh_hkefc"]
 material = ExtResource("10_gqmmt")
 
@@ -338,25 +314,39 @@ material = ExtResource("10_gqmmt")
 render_priority = 1
 shader = ExtResource("14_yc10j")
 shader_parameter/light_direction = Vector3(0, -1, 0)
-shader_parameter/num_slices = 15
+shader_parameter/num_slices = 16
 shader_parameter/slice_spacing = 1.3000000193715602
 shader_parameter/godray_anchor = Vector3(0, 0, 0)
-shader_parameter/jitter_strength = 0.0
-shader_parameter/stack_fade_start = 0.0
-shader_parameter/stack_fade_end = 1.0
-shader_parameter/ray_alpha = 0.2000000095
+shader_parameter/ray_alpha = 0.10000000475
 shader_parameter/ray_color = Color(1, 1, 1, 1)
+shader_parameter/ray_color_strength = 0.4499999899416
+shader_parameter/stack_fade_start = 0.249999994412
+shader_parameter/stack_fade_end = 0.8499999810008
 shader_parameter/depth_fade_near = 0.0
 shader_parameter/depth_fade_far = 100.0
 shader_parameter/ground_fade_y = 0.2000001519922403
 shader_parameter/ground_fade_range = 3.0
-shader_parameter/sun_fade_start = 0.3
-shader_parameter/sun_fade_end = 0.7
-shader_parameter/sun_fade_strength = 0.999999977648
-shader_parameter/alignment_fade_strength = 1.0
+shader_parameter/sun_fade_start = 0.249999994412
+shader_parameter/sun_fade_end = 0.6999999843536
+shader_parameter/sun_fade_strength = 0.0
+shader_parameter/dusk_dawn_fade_start = 0.05999999865888
+shader_parameter/dusk_dawn_fade_end = 0.15999999642368
+shader_parameter/dusk_dawn_fade_strength = 0.9
+shader_parameter/cloud_cover_start = 0.56999998725936
+shader_parameter/cloud_cover_end = 1.0
+shader_parameter/cloud_cover_strength = 0.9
 
 [sub_resource type="QuadMesh" id="QuadMesh_14b3q"]
 material = SubResource("ShaderMaterial_7hwx4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ld40"]
+render_priority = 2
+shader = ExtResource("13_0ld40")
+shader_parameter/pixelation = 256.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_7hwx4"]
+material = SubResource("ShaderMaterial_0ld40")
+size = Vector2(100, 100)
 
 [sub_resource type="Curve" id="Curve_muem4"]
 _limits = [-180.0, 0.0, 0.0, 1.0]
@@ -422,15 +412,15 @@ size = Vector2i(1000, 625)
 render_target_clear_mode = 1
 render_target_update_mode = 4
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1782499314]
-mesh = SubResource("QuadMesh_dq28c")
-
 [node name="Player" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1117597475 node_paths=PackedStringArray("debug_label", "stamina_panel") instance=ExtResource("1_ywxjf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.21415, 1.67426, 7.35026)
 walk_speed = 3.1
 run_speed = 15.0
 debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
 stamina_panel = NodePath("../../../UISubViewportContainer/UISubViewport/Panel")
+
+[node name="CloudPivot" parent="EnvironmentSubViewportContainer/SubViewport/Player" index="7" unique_id=16865122 node_paths=PackedStringArray("scheduler")]
+scheduler = NodePath("../../../../Scheduler")
 
 [node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=346623154]
 collision_layer = 1057
@@ -1004,31 +994,23 @@ light_energy = 24.53
 shadow_enabled = true
 omni_range = 63.995
 
-[node name="GodrayHandler" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1684901026 node_paths=PackedStringArray("godray_mesh", "player", "directional_light", "scheduler")]
-script = ExtResource("18_pm3ni")
-total_number_of_meshes = 0
-number_of_groups = 1
-godray_mesh = NodePath("Godray")
-random_spread = 1.5
-player = NodePath("../../Player")
-directional_light = NodePath("../../LightingAndEnvironment/DirectionalLight3D")
-scheduler = NodePath("../../../../Scheduler")
-
-[node name="Godray" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props/GodrayHandler" unique_id=447186361]
-visible = false
-mesh = SubResource("QuadMesh_hkefc")
-skeleton = NodePath("../..")
-
 [node name="HOME_TEST" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=568409881]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3574023, -0.14640665, 4.6301603)
 mesh = SubResource("SphereMesh_hkefc")
 
-[node name="GodrayMultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1380830036 node_paths=PackedStringArray("target", "directional_light")]
+[node name="GodrayMultiMeshInstance3D" type="MultiMeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport/Props" unique_id=1380830036 node_paths=PackedStringArray("target", "directional_light", "scheduler")]
 script = ExtResource("13_gqmmt")
 target = NodePath("../../Player")
-num_slices = 15
+num_slices = 16
 quad_mesh = SubResource("QuadMesh_14b3q")
 directional_light = NodePath("../../LightingAndEnvironment/DirectionalLight3D")
+cull_margin = 100.0
+scheduler = NodePath("../../../../Scheduler")
+
+[node name="CloudMeshInstance3D" type="MeshInstance3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=688033924]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 0)
+visible = false
+mesh = SubResource("QuadMesh_7hwx4")
 
 [node name="Scheduler" parent="." unique_id=1212023566 node_paths=PackedStringArray("sun", "environment", "npc_holder", "clock_label", "player_ref") instance=ExtResource("12_bvghk")]
 day_total_time = 30.0
@@ -1127,3 +1109,7 @@ offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.29190648, 0.74641275, 7.70092e-07, 1)
+
+[editable path="EnvironmentSubViewportContainer/SubViewport/Player"]
+[editable path="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male"]
+[editable path="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword"]

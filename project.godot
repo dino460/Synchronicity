@@ -209,11 +209,11 @@ cloud_cover_scale={
 }
 cloud_cover_intensity={
 "type": "float",
-"value": 0.47
+"value": 0.7
 }
 cloud_scroll_speed={
 "type": "vec2",
-"value": Vector2(2.1, 1.4)
+"value": Vector2(0, 0)
 }
 cloud_noise_texture={
 "type": "sampler2D",
@@ -221,5 +221,5 @@ cloud_noise_texture={
 }
 cloud_cover_threshold={
 "type": "float",
-"value": 1.0
+"value": 0.5
 }

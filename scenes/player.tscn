@@ -16,6 +16,8 @@
 [ext_resource type="AudioStream" uid="uid://dmgl0apygvae2" path="res://assets/sounds/footsteps/footsteps_7.ogg" id="13_jc3p3"]
 [ext_resource type="Script" uid="uid://cxbi3wjouuamw" path="res://scripts/weapons/lswrd/test_lswrd.gd" id="17_4ni07"]
 [ext_resource type="PackedScene" uid="uid://b4ancb03ldf8t" path="res://assets/models/base_male.blend" id="17_60mlk"]
+[ext_resource type="Script" uid="uid://c1gwfx7vil3do" path="res://scripts/environment/cloud_rotation.gd" id="20_a38lo"]
+[ext_resource type="Shader" uid="uid://dnkpyxman7htg" path="res://scripts/environment/clouds.gdshader" id="21_4ni07"]
 [ext_resource type="PackedScene" uid="uid://d2m4ugww47nhv" path="res://assets/models/weapons/lswrd/longsword.blend" id="22_a38lo"]
 [ext_resource type="Material" uid="uid://c836fjtf7i75m" path="res://materials/player_base.material" id="24_wnwbv"]
 [ext_resource type="Material" uid="uid://uyt4wh2elymb" path="res://materials/toon_base.material" id="24_wqfne"]
@@ -102,6 +104,15 @@ blend_shape_mode = 0
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i4ail"]
 height = 1.8076172
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v71bu"]
+render_priority = 2
+shader = ExtResource("21_4ni07")
+shader_parameter/pixelation = 256.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_l71n6"]
+material = SubResource("ShaderMaterial_v71bu")
+size = Vector2(150, 150)
+
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("stats", "weapon")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.3
@@ -158,7 +169,7 @@ shape = SubResource("CapsuleShape3D_sv48k")
 [node name="base_male" parent="MeshPivot" unique_id=743913056 instance=ExtResource("17_60mlk")]
 transform = Transform3D(-1.365, 0, 2.0610928e-07, 0, 1.365, 0, -2.0610928e-07, 0, -1.365, 0, -1.5, 0)
 
-[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(743913056, 1922391723) index="0" unique_id=1528562952]
+[node name="Skeleton3D" parent="MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(743913056, 153055397) index="0" unique_id=871142970]
 bones/0/position = Vector3(8.515904e-18, 0.16631146, 0.03835222)
 bones/0/rotation = Quaternion(-0.0323544, 5.4159005e-05, -0.00025172226, 0.9994765)
 bones/1/rotation = Quaternion(0.2192857, 3.5342695e-05, -0.0002095241, 0.9756607)
@@ -198,16 +209,16 @@ bones/35/rotation = Quaternion(0.07589675, 0.7766944, -0.61796933, -0.095390774)
 bones/36/position = Vector3(-0.7441894, -3.5668242, 2.5509284)
 bones/37/position = Vector3(-0.7953922, -6.1254706, -2.1674824)
 
-[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1206896634]
+[node name="arms" parent="MeshPivot/base_male/Armature/Skeleton3D" index="0" unique_id=1763912182]
 mesh = SubResource("ArrayMesh_i4ail")
 
-[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=956592308]
+[node name="head" parent="MeshPivot/base_male/Armature/Skeleton3D" index="1" unique_id=1696942182]
 mesh = SubResource("ArrayMesh_a38lo")
 
-[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=318522179]
+[node name="neck" parent="MeshPivot/base_male/Armature/Skeleton3D" index="2" unique_id=1132815055]
 mesh = SubResource("ArrayMesh_4ni07")
 
-[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=730397582]
+[node name="torso" parent="MeshPivot/base_male/Armature/Skeleton3D" index="3" unique_id=1725980482]
 mesh = SubResource("ArrayMesh_l71n6")
 
 [node name="HandAttachment" type="BoneAttachment3D" parent="MeshPivot/base_male/Armature/Skeleton3D" index="4" unique_id=1358059341]
@@ -238,12 +249,19 @@ shape = SubResource("CapsuleShape3D_i4ail")
 
 [node name="longsword" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword" unique_id=1758707092 instance=ExtResource("22_a38lo")]
 
-[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=1398014061]
+[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=360580900]
 transform = Transform3D(0.020202827, 0.0040225224, -0.009362542, 0.0017181743, 0.33557925, 0.0043147937, 0.009207238, -0.07144922, 0.019738412, 0.030324731, 0.3368261, 0.024280388)
 surface_material_override/0 = ExtResource("24_wqfne")
 
-[node name="AnimationPlayer" parent="MeshPivot/base_male" index="1" unique_id=1081708254]
+[node name="AnimationPlayer" parent="MeshPivot/base_male" index="1" unique_id=1736124738]
 autoplay = &"idle"
+
+[node name="CloudPivot" type="Node3D" parent="." unique_id=16865122]
+script = ExtResource("20_a38lo")
+
+[node name="CloudMesh" type="MeshInstance3D" parent="CloudPivot" unique_id=586618678]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 0)
+mesh = SubResource("QuadMesh_l71n6")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
 script = ExtResource("5_lu2e7")
@@ -258,7 +276,7 @@ projection = 1
 current = true
 size = 15.0
 near = 0.1
-far = 40.0
+far = 100.0
 
 [node name="FrustumCulllingCamera3D" type="Camera3D" parent="CameraPivot/EnvironmentCamera3D" unique_id=2143269882]
 process_thread_group = 2
@@ -288,8 +306,8 @@ radius = 1.0
 [connection signal="idling" from="." to="AnimationHandler" method="_on_idling"]
 [connection signal="running" from="." to="AnimationHandler" method="_on_running"]
 [connection signal="trigger_death" from="." to="." method="_on_trigger_death"]
-[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="walking" from="." to="AnimationHandler" method="_on_player_walking"]
+[connection signal="walking" from="." to="AnimationHandler" method="_on_walking"]
 [connection signal="attack_started" from="AnimationHandler" to="." method="_on_animation_handler_attack_started"]
 [connection signal="dash_ended" from="AnimationHandler" to="." method="_on_animation_handler_dash_ended"]
 [connection signal="spend_stamina" from="AnimationHandler" to="." method="_on_spend_stamina"]

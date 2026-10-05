@@ -9,19 +9,8 @@ render_mode
 	blend_add,
 	skip_vertex_transform;
 
-// ---------------------------------------------------------------------------
-// STEP 2 groundwork: light direction defines the orientation of every slice.
-// ---------------------------------------------------------------------------
 uniform vec3  light_direction   = vec3(0.0, -1.0, 0.0);
 
-// ---------------------------------------------------------------------------
-// STEP 1/2: how many slices exist, and how far apart they are.
-// With num_slices = 1, this behaves exactly like the "step 1" single-plane
-// test: one quad, guaranteed to fill the screen, so you can validate the
-// unprojection + intersection math in isolation before scaling up.
-// Raise num_slices (and set your MultiMesh instance_count to match) to move
-// into step 2 - no other code changes needed.
-// ---------------------------------------------------------------------------
 uniform int   num_slices        = 1;
 uniform float slice_spacing     : hint_range(0.1, 20.0, 0.1) = 2.0;
 
@@ -31,13 +20,12 @@ uniform float slice_spacing     : hint_range(0.1, 20.0, 0.1) = 2.0;
 // anchor to the player, smooth it, or snap it to a grid to reduce shimmer.
 uniform vec3  godray_anchor     = vec3(0.0, 0.0, 0.0);
 
-// ---------------------------------------------------------------------------
-// STEP 4 groundwork: anti-banding jitter. Leave jitter_strength at 0.0 while
-// you validate steps 1-2; you want a clean, predictable result first. Once
-// slices are working and you can *see* banding between them, dial this up.
-// ---------------------------------------------------------------------------
-uniform float jitter_strength   : hint_range(0.0, 1.0, 0.01) = 0.0;
+group_uniforms ray_coloring;
+uniform float ray_alpha          : hint_range(0.0, 1.0,   0.001) = 0.04;
+uniform vec3  ray_color          : source_color                  = vec3(1.0, 0.95, 0.8);
+uniform float ray_color_strength : hint_range(0.0, 1.0, 0.01) = 0.85;
 
+group_uniforms stack_fade;
 // ---------------------------------------------------------------------------
 // Every slice is a copy of the same plane. As the camera's view direction
 // gets close to lying *inside* that plane (viewing the stack edge-on),
@@ -51,22 +39,29 @@ uniform float jitter_strength   : hint_range(0.0, 1.0, 0.01) = 0.0;
 uniform float stack_fade_start : hint_range(0.0, 1.0, 0.01) = 0.15;
 uniform float stack_fade_end   : hint_range(0.0, 1.0, 0.01) = 0.35;
 
-uniform float ray_alpha         : hint_range(0.0, 1.0,   0.001) = 0.04;
-uniform vec3  ray_color         : source_color                  = vec3(1.0, 0.95, 0.8);
+group_uniforms depth_and_ground_fade;
 uniform float depth_fade_near   : hint_range(0.0, 50.0,  0.1)   = 2.0;
 uniform float depth_fade_far    : hint_range(0.0, 500.0, 1.0)   = 100.0;
 uniform float ground_fade_y     : hint_range(-10.0, 10.0, 0.1)  = 1.0;
 uniform float ground_fade_range : hint_range(0.0, 20.0,  0.1)   = 3.0;
 
+group_uniforms sun_apex_fade;
 uniform float sun_fade_start    : hint_range(0.0, 1.0,   0.01)  = 0.3;
 uniform float sun_fade_end      : hint_range(0.0, 1.0,   0.01)  = 0.7;
-uniform float sun_fade_strength : hint_range(0.0, 1.0, 0.01) = 0.9;
+uniform float sun_fade_strength : hint_range(0.0, 1.0, 0.01)    = 0.9;
 
-uniform float alignment_fade_strength : hint_range(0.0, 1.0, 0.01) = 0.9;
+group_uniforms dusk_and_dawn_fade;
+uniform float dusk_dawn_fade_start    : hint_range(0.0, 1.0,   0.01)  = 0.3;
+uniform float dusk_dawn_fade_end      : hint_range(0.0, 1.0,   0.01)  = 0.7;
+uniform float dusk_dawn_fade_strength : hint_range(0.0, 1.0, 0.01)    = 0.9;
 
 uniform sampler2D DEPTH_TEXTURE : hint_depth_texture, filter_linear_mipmap;
 
-group_uniforms clouds;
+group_uniforms cloud_cover;
+uniform float cloud_cover_start    : hint_range(0.0, 1.0, 0.01) = 0.3;
+uniform float cloud_cover_end      : hint_range(0.0, 1.0, 0.01) = 0.7;
+uniform float cloud_cover_strength : hint_range(0.0, 1.0, 0.01) = 0.9;
+
 global uniform float cloud_cover_scale;
 global uniform float cloud_cover_intensity;
 global uniform vec2 cloud_scroll_speed;
@@ -76,11 +71,11 @@ global uniform float cloud_cover_threshold;
 varying float v_view_depth;
 varying vec2  v_quad_uv;
 varying float v_world_y;
-varying float alignment;
-varying vec3  v_world_pos; // STEP 2 fix: per-fragment world pos, not a single instance-center point
+varying vec3  v_world_pos; // per-fragment world pos, not a single instance-center point
 varying float v_stack_alignment; // how edge-on the camera is to the slice stack right now
+varying float v_sun_fade;
 
-// Cheap pseudo-random float from an integer seed. Used only for jitter (step 4).
+// Cheap pseudo-random float from an integer seed. Used only for jitter
 float hash11(float p) {
 	p = fract(p * 0.1031);
 	p *= p + 33.33;
@@ -92,7 +87,7 @@ void vertex() {
 	vec3 light_ws = normalize(light_direction);
 	vec3 world_up = vec3(0.0, 1.0, 0.0);
 
-	// --- Slice orientation (same idea as your original code) -------------
+	// --- Slice orientation -------------
 	// plane_right: the horizontal axis perpendicular to the sun's azimuth.
 	// This is one of the two directions that lie *inside* every slice plane.
 	vec3 cross_lu    = cross(light_ws, world_up);
@@ -122,15 +117,6 @@ void vertex() {
 	// repeating pattern.
 	//float anchor_grid = round(dot(godray_anchor, plane_normal) / slice_spacing);
 	//float grid_index  = anchor_grid + slice_index; // stable world-space slot for this instance right now
-
-	// STEP 4: jitter, keyed to the world-space grid slot rather than
-	// INSTANCE_ID. That matters here: when the stack steps and a different
-	// INSTANCE_ID starts representing a given physical slot, keying jitter
-	// to INSTANCE_ID would make that slot's jitter suddenly change - a
-	// visible pop right at the step. Keying to grid_index keeps a given
-	// physical location's jitter stable regardless of which instance is
-	// currently drawing it.
-	//float jitter = (hash11(grid_index + 17.0) - 0.5) * jitter_strength;
 
 	vec3 plane_point = plane_normal * slice_index * slice_spacing + godray_anchor;
 
@@ -176,8 +162,6 @@ void vertex() {
 	vec4 view_pos = VIEW_MATRIX * vec4(world_pos, 1.0);
 	v_view_depth  = -view_pos.z;
 
-	alignment = abs(dot(light_ws, normalize(-INV_VIEW_MATRIX[2].xyz)));
-
 	VERTEX   = view_pos.xyz;
 	POSITION = PROJECTION_MATRIX * view_pos;
 }
@@ -197,32 +181,33 @@ void fragment() {
 	// spans the full screen by construction, there's no seam left to hide.
 	float ground_fade = smoothstep(ground_fade_y, ground_fade_y + ground_fade_range, v_world_y);
 
-	float sun_elevation = abs(normalize(light_direction).y);
-	float sun_fade = abs(sun_fade_strength - smoothstep(sun_fade_start, sun_fade_end, sun_elevation));
-
+	float sun_elevation  = abs(normalize(light_direction).y);
+	float sun_fade       = abs(sun_fade_strength - smoothstep(sun_fade_start, sun_fade_end, sun_elevation));
+	float dusk_dawn_fade = smoothstep(dusk_dawn_fade_start, dusk_dawn_fade_end, sun_elevation);
+	v_sun_fade = sun_fade;
+	
 	float stack_fade = smoothstep(stack_fade_start, stack_fade_end, v_stack_alignment);
 
 	ALBEDO = ray_color;
-	ALPHA  = ray_alpha * near_fade * soft_isect * dist_fade * ground_fade * sun_fade * stack_fade / float(num_slices);
+	ALPHA  = (1.0 - cloud_cover_threshold) * ray_alpha * near_fade * soft_isect * dist_fade * ground_fade * dusk_dawn_fade * sun_fade * stack_fade / float(num_slices);
 }
 
 void light() {
 	float attenuation = 1.0;
 
-	vec3 LIGHT_world_space = (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xyz;
-
 	// STEP 2 fix: sample clouds using the actual per-fragment world position
 	// (v_world_pos) instead of a single per-instance center point, since a
 	// slice quad now spans a large, non-uniform area of world space.
 	vec2 cloud_uv = (v_world_pos.xz + (cloud_scroll_speed * TIME)) * cloud_cover_scale;
-	cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
-
+	//cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
+	
 	float cloud_cover = texture(cloud_noise_texture, cloud_uv).r;
 	cloud_cover = (cloud_cover >= cloud_cover_threshold) ? 0.0 : 1.0;
 
 	if (LIGHT_IS_DIRECTIONAL) {
-		attenuation = min(ATTENUATION, cloud_cover);
+		//attenuation = min(ATTENUATION, cloud_cover);
+		attenuation = ATTENUATION;
 		ALPHA         *= attenuation;
-		DIFFUSE_LIGHT += mix(LIGHT_COLOR, ray_color, 0.85) * attenuation;
+		DIFFUSE_LIGHT += mix(LIGHT_COLOR, ray_color, ray_color_strength) * attenuation;
 	}
 }
