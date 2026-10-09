@@ -10,6 +10,7 @@
 [ext_resource type="Material" uid="uid://cneu7a23o6mwl" path="res://assets/materials/grass.tres" id="7_uacia"]
 [ext_resource type="Script" uid="uid://cu134mwsik6n5" path="res://addons/GdPlanningAI/scripts/nodes/gdpai_world_node.gd" id="9_yk7ts"]
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="10_ajshl"]
+[ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="11_ajshl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(300, 1, 300)
@@ -85,13 +86,13 @@ adjustment_saturation = 1.21
 script = ExtResource("10_ajshl")
 metadata/_custom_type_script = "uid://cvie3m6t7c0hd"
 
-[sub_resource type="SystemFont" id="SystemFont_ju7ma"]
-font_names = PackedStringArray("FiraCode Nerd Font Mono")
-
 [sub_resource type="LabelSettings" id="LabelSettings_v26lh"]
-font = SubResource("SystemFont_ju7ma")
-font_size = 30
+font = ExtResource("11_ajshl")
+font_size = 72
 font_color = Color(0.926528, 0, 0, 1)
+outline_size = 24
+outline_color = Color(0.20002359, 2.3914967e-07, 0.008727946, 1)
+shadow_size = 0
 
 [node name="Main" type="Node3D" unique_id=993117901]
 
@@ -113,10 +114,10 @@ render_target_update_mode = 4
 [node name="Player" parent="Main SubViewportContainer/SubViewport" unique_id=119236905 instance=ExtResource("4_t1xvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
 
-[node name="Node" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=1928514937 node_paths=PackedStringArray("npc_holder", "viewport")]
+[node name="TestController" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=1928514937 node_paths=PackedStringArray("npc_holder", "viewport")]
 script = ExtResource("1_mlvqa")
-number_of_npcs_to_spawn = 200
-world_size = 300.0
+number_of_npcs_to_spawn = 50
+world_size = 60.0
 npc_holder = NodePath("../NPC HOLDER")
 viewport = NodePath("../../../UI SubViewportContainer/SubViewport")
 
@@ -192,7 +193,9 @@ render_target_update_mode = 4
 
 [node name="Clock Label" type="Label" parent="UI SubViewportContainer/SubViewport" unique_id=1808016263]
 z_index = 100
-offset_right = 296.0
-offset_bottom = 38.0
+texture_filter = 1
+offset_left = 18.0
+offset_right = 314.0
+offset_bottom = 57.0
 text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_v26lh")

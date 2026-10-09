@@ -374,6 +374,8 @@ metadata/_custom_type_script = "uid://cvie3m6t7c0hd"
 font = ExtResource("14_a8y0u")
 font_size = 80
 font_color = Color(0.926528, 0, 0, 1)
+outline_size = 24
+outline_color = Color(0.2, 0, 0.007843138, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kgmxm"]
 font = ExtResource("14_a8y0u")

@@ -140,7 +140,6 @@ npc_name = "Test"
 current_age = 20
 personality = NodePath("Personality")
 navigation_agent = NodePath("NavigationAgent3D")
-should_animate = false
 gdpai_agent = NodePath("GdPAIAgent")
 stats = NodePath("Stats")
 

@@ -35,6 +35,7 @@ var cycle_total_time : float
 @export var environment_color    : Gradient
 
 @export_group("NPC Threading Parameters")
+@export var cull_animations : bool = true
 @export var npc_holder : Node
 @export var clock_label : Label
 
@@ -44,7 +45,22 @@ var cycle_total_time : float
 @export var camera_ref : Camera3D
 
 
+var max_fps : float = -1.0
+var min_fps : float = 10000.0
+var accumulated_fps : float = 0.0
+var accumulated_samples : int = 0
+var count_fps : bool = false
+
+var timer : Timer
+
+
 func _ready() -> void:
+	timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = 3.0
+	add_child(timer)
+	timer.start()
+
 	add_to_group("persist")
 
 	cycle_total_time = day_total_time + night_total_time
@@ -60,6 +76,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	if timer.time_left <= 0.0: count_fps = true
+
 	if Input.is_action_just_pressed("test_action"):
 		is_time_paused = not is_time_paused
 		time_warp_mod = 1.0
@@ -67,7 +85,14 @@ func _process(delta: float) -> void:
 	var hours : int = fmod(6 + get_current_time() * 24 / cycle_total_time, 24.0)
 	var minutes : int = (fmod(6 + get_current_time() * 24 / cycle_total_time, 24.0) - hours) * 60
 	if clock_label != null:
-		clock_label.text = "%d:%d | %f | %d" % [hours, minutes, get_current_time(), Engine.get_frames_per_second()]
+		var current_fps : float = Engine.get_frames_per_second()
+		if count_fps:
+			accumulated_fps += current_fps
+			accumulated_samples += 1
+			if current_fps > max_fps: max_fps = current_fps
+			if current_fps < min_fps: min_fps = current_fps
+
+		clock_label.text = "%d:%d | %f\nCurrent: %d\nMin: %d\nMax: %d\nAverage: %.1f\n" % [hours, minutes, get_current_time(), current_fps, min_fps, max_fps, accumulated_fps / accumulated_samples]
 
 	var total_time = day_total_time if is_day else night_total_time
 	update_sun_and_environment(time)
@@ -96,7 +121,8 @@ func _process(delta: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	call_deferred("stop_npc_animation")
+	if cull_animations: call_deferred("stop_npc_animation")
+	pass
 
 
 func stop_npc_animation():
