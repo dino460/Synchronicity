@@ -46,9 +46,12 @@ uniform float ground_fade_y     : hint_range(-10.0, 10.0, 0.1)  = 1.0;
 uniform float ground_fade_range : hint_range(0.0, 20.0,  0.1)   = 3.0;
 
 group_uniforms sun_apex_fade;
-uniform float sun_fade_start    : hint_range(0.0, 1.0,   0.01)  = 0.3;
-uniform float sun_fade_end      : hint_range(0.0, 1.0,   0.01)  = 0.7;
-uniform float sun_fade_strength : hint_range(0.0, 1.0, 0.01)    = 0.9;
+uniform float sun_fade_start        : hint_range(0.0, 1.0,   0.01)  = 0.3;
+uniform float sun_fade_end          : hint_range(0.0, 1.0,   0.01)  = 0.7;
+uniform float sun_fade_cloud_end    : hint_range(0.0, 1.0, 0.01)    = 0.355;
+uniform float sun_fade_cloud_start  : hint_range(0.0, 1.0, 0.01)    = 0.125;
+uniform float max_sun_fade_strength : hint_range(0.0, 1.0, 0.01)    = 0.9;
+uniform float min_sun_fade_strength : hint_range(0.0, 1.0, 0.01)    = 0.5;
 
 group_uniforms dusk_and_dawn_fade;
 uniform float dusk_dawn_fade_start    : hint_range(0.0, 1.0,   0.01)  = 0.3;
@@ -180,16 +183,17 @@ void fragment() {
 	// STEP 1 note: edge_fade is deliberately removed. Once the quad always
 	// spans the full screen by construction, there's no seam left to hide.
 	float ground_fade = smoothstep(ground_fade_y, ground_fade_y + ground_fade_range, v_world_y);
-
+	
+	float sun_fade_strength_with_clouds = smoothstep(sun_fade_cloud_start, sun_fade_cloud_end, cloud_cover_threshold);
+	sun_fade_strength_with_clouds = min(max_sun_fade_strength, max(min_sun_fade_strength, sun_fade_strength_with_clouds));
 	float sun_elevation  = abs(normalize(light_direction).y);
-	float sun_fade       = abs(sun_fade_strength - smoothstep(sun_fade_start, sun_fade_end, sun_elevation));
+	float sun_fade       = abs(sun_fade_strength_with_clouds - smoothstep(sun_fade_start, sun_fade_end, sun_elevation));
 	float dusk_dawn_fade = smoothstep(dusk_dawn_fade_start, dusk_dawn_fade_end, sun_elevation);
-	v_sun_fade = sun_fade;
 	
 	float stack_fade = smoothstep(stack_fade_start, stack_fade_end, v_stack_alignment);
-
+	
 	ALBEDO = ray_color;
-	ALPHA  = (1.0 - cloud_cover_threshold) * ray_alpha * near_fade * soft_isect * dist_fade * ground_fade * dusk_dawn_fade * sun_fade * stack_fade / float(num_slices);
+	ALPHA  = ray_alpha * near_fade * soft_isect * dist_fade * ground_fade * dusk_dawn_fade * sun_fade * stack_fade / float(num_slices);
 }
 
 void light() {
