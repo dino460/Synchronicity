@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://bvs1xcg0yjlxv"]
+[gd_scene format=4 uid="uid://bvs1xcg0yjlxv"]
 
-[ext_resource type="PackedScene" uid="uid://co7mw48qs41dx" path="res://assets/lukkys props/containers/crate.glb" id="1_e8afg"]
+[ext_resource type="PackedScene" uid="uid://co7mw48qs41dx" path="res://assets/third-party/lukkys/lukkys props/containers/crate.glb" id="1_e8afg"]
 [ext_resource type="Shader" uid="uid://di5alaopdsqxu" path="res://shaders/toon_lighting_shader.gdshader" id="2_ou5ok"]
-[ext_resource type="Texture2D" uid="uid://c3l6iskrcos4i" path="res://assets/lukkys props/containers/crate_crate_albedo.png" id="2_wxgmk"]
+[ext_resource type="Texture2D" uid="uid://c3l6iskrcos4i" path="res://assets/third-party/lukkys/lukkys props/containers/crate_crate_albedo.png" id="2_wxgmk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rc6k0"]
 render_priority = 0

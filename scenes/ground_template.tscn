@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dhgc375w016d"]
+[gd_scene format=3 uid="uid://dhgc375w016d"]
 
-[ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/lukkys textures/hand_painted_grass.png" id="1_1013y"]
+[ext_resource type="Texture2D" uid="uid://g146hua62ocj" path="res://assets/third-party/lukkys/lukkys textures/hand_painted_grass.png" id="1_1013y"]
 [ext_resource type="PackedScene" uid="uid://decyj3xqmljig" path="res://scenes/props/barrel.tscn" id="2_d5i64"]
 [ext_resource type="PackedScene" uid="uid://bvs1xcg0yjlxv" path="res://scenes/props/crate.tscn" id="3_4qxp4"]
 

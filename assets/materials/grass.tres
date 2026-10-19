@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" format=3 uid="uid://cneu7a23o6mwl"]
 
 [ext_resource type="Shader" uid="uid://b5vbm3cy7cjx" path="res://shaders/grass/grass.gdshader" id="1_j4c6y"]
-[ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="2_6h01r"]
+[ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/textures/sprites/grass.png" id="2_vgjhr"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vgjhr"]
 frequency = 0.005
@@ -28,7 +28,7 @@ shader_parameter/hframe = 4
 shader_parameter/vframe = 1
 shader_parameter/current_frame = Vector2(0, 0)
 shader_parameter/albedo = Color(0.254902, 0.486275, 0.2, 1)
-shader_parameter/albedo_texture = ExtResource("2_6h01r")
+shader_parameter/albedo_texture = ExtResource("2_vgjhr")
 shader_parameter/accent_noise_scale = 0.028
 shader_parameter/grass_dark_noise = SubResource("NoiseTexture2D_gjj3c")
 shader_parameter/grass_light_noise = SubResource("NoiseTexture2D_8xqkc")

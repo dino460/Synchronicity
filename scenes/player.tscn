@@ -16,8 +16,8 @@
 [ext_resource type="AudioStream" uid="uid://dmgl0apygvae2" path="res://assets/sounds/footsteps/footsteps_7.ogg" id="13_jc3p3"]
 [ext_resource type="Script" uid="uid://cxbi3wjouuamw" path="res://scripts/weapons/lswrd/test_lswrd.gd" id="17_4ni07"]
 [ext_resource type="PackedScene" uid="uid://b4ancb03ldf8t" path="res://assets/models/base_male.blend" id="17_60mlk"]
-[ext_resource type="Script" uid="uid://c1gwfx7vil3do" path="res://scripts/environment/cloud_rotation.gd" id="20_a38lo"]
-[ext_resource type="Shader" uid="uid://dnkpyxman7htg" path="res://scripts/environment/clouds.gdshader" id="21_4ni07"]
+[ext_resource type="Shader" uid="uid://dnkpyxman7htg" path="res://shaders/clouds.gdshader" id="21_4ni07"]
+[ext_resource type="Script" uid="uid://dugq6xxbfw25h" path="res://scripts/environment/cloud_handler.gd" id="21_a38lo"]
 [ext_resource type="PackedScene" uid="uid://d2m4ugww47nhv" path="res://assets/models/weapons/lswrd/longsword.blend" id="22_a38lo"]
 [ext_resource type="Material" uid="uid://c836fjtf7i75m" path="res://materials/player_base.material" id="24_wnwbv"]
 [ext_resource type="Material" uid="uid://uyt4wh2elymb" path="res://materials/toon_base.material" id="24_wqfne"]
@@ -112,6 +112,10 @@ shader_parameter/pixelation = 256.0
 [sub_resource type="QuadMesh" id="QuadMesh_l71n6"]
 material = SubResource("ShaderMaterial_v71bu")
 size = Vector2(150, 150)
+
+[sub_resource type="QuadMesh" id="QuadMesh_a38lo"]
+material = SubResource("ShaderMaterial_v71bu")
+size = Vector2(150, 40)
 
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("stats", "weapon")]
 script = ExtResource("1_br4xa")
@@ -257,11 +261,22 @@ surface_material_override/0 = ExtResource("24_wqfne")
 autoplay = &"idle"
 
 [node name="CloudPivot" type="Node3D" parent="." unique_id=16865122]
-script = ExtResource("20_a38lo")
 
-[node name="CloudMesh" type="MeshInstance3D" parent="CloudPivot" unique_id=586618678]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 20, 0)
+[node name="CloudMeshTop" type="MeshInstance3D" parent="CloudPivot" unique_id=586618678 node_paths=PackedStringArray("anchor")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 100, 0)
 mesh = SubResource("QuadMesh_l71n6")
+script = ExtResource("21_a38lo")
+anchor = NodePath("../../MeshPivot")
+
+[node name="CloudMesh-X" type="MeshInstance3D" parent="CloudPivot" unique_id=537292673]
+transform = Transform3D(-1, 6.181723e-08, 6.181723e-08, 0, -0.7071067, 0.7071067, 8.742278e-08, 0.7071067, 0.7071067, 0, 6, 88.632)
+visible = false
+mesh = SubResource("QuadMesh_a38lo")
+
+[node name="CloudMesh+X" type="MeshInstance3D" parent="CloudPivot" unique_id=1898228423]
+transform = Transform3D(1, 0, 0, 0, -0.7071067, 0.7071067, 0, -0.7071067, -0.7071067, 0, 6, -88.632)
+visible = false
+mesh = SubResource("QuadMesh_a38lo")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
 script = ExtResource("5_lu2e7")
@@ -276,7 +291,7 @@ projection = 1
 current = true
 size = 15.0
 near = 0.1
-far = 100.0
+far = 33.4
 
 [node name="FrustumCulllingCamera3D" type="Camera3D" parent="CameraPivot/EnvironmentCamera3D" unique_id=2143269882]
 process_thread_group = 2

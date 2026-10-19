@@ -21,7 +21,7 @@ config/icon="uid://vugnr6ttauny"
 
 [autoload]
 
-GlobalSettings="*res://scripts/global_settings.gd"
+GlobalSettings="*uid://bwjk56g3ebllh"
 
 [display]
 
@@ -193,9 +193,11 @@ previous_stance={
 
 occlusion_culling/bvh_build_quality=1
 textures/canvas_textures/default_texture_filter=0
-lights_and_shadows/directional_shadow/size=2048
+lights_and_shadows/directional_shadow/size=8196
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
+textures/default_filters/use_nearest_mipmap_filter=true
+textures/default_filters/anisotropic_filtering_level=0
 anti_aliasing/screen_space_roughness_limiter/enabled=false
 lightmapping/lightmap_gi/use_bicubic_filter=false
 lights_and_shadows/positional_shadow/atlas_size=1024
@@ -221,5 +223,13 @@ cloud_noise_texture={
 }
 cloud_cover_threshold={
 "type": "float",
-"value": 1.0
+"value": 0.725
+}
+sun_direction={
+"type": "vec3",
+"value": Vector3(0, 10, 0)
+}
+cloud_plane_offset={
+"type": "vec2",
+"value": Vector2(0, 0)
 }

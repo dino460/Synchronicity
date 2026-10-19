@@ -140,8 +140,11 @@ func get_rad_sun_rotation() -> float:
 func update_sun_and_environment(sample_point : float):
 	if sun != null and is_day:
 		sun.rotation.x = deg_to_rad(sun_rotation.sample(sample_point))
+		# var angle : float = snappedf(sun_rotation.sample(sample_point), 0.1)
+		# sun.rotation.x = deg_to_rad(angle)
 		sun.light_energy = sun_energy.sample(sample_point)
 		sun.light_color = sun_color.sample(sample_point)
+		RenderingServer.global_shader_parameter_set("sun_direction", -sun.global_basis.z)
 	if environment != null and is_day:
 		environment.environment.ambient_light_energy = environment_energy.sample(sample_point)
 		environment.environment.ambient_light_color = environment_color.sample(sample_point)

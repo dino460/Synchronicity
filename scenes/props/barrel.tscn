@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://decyj3xqmljig"]
+[gd_scene format=4 uid="uid://decyj3xqmljig"]
 
-[ext_resource type="PackedScene" uid="uid://2smwte7i8ht" path="res://assets/lukkys props/containers/barrel.glb" id="1_2oeeb"]
-[ext_resource type="Texture2D" uid="uid://lkh6p4gofnu2" path="res://assets/lukkys props/containers/barrel_barrel_albedo.png" id="2_l8aas"]
+[ext_resource type="PackedScene" uid="uid://2smwte7i8ht" path="res://assets/third-party/lukkys/lukkys props/containers/barrel.glb" id="1_2oeeb"]
+[ext_resource type="Texture2D" uid="uid://lkh6p4gofnu2" path="res://assets/third-party/lukkys/lukkys props/containers/barrel_barrel_albedo.png" id="2_l8aas"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dk2nw"]
 resource_name = "Material"

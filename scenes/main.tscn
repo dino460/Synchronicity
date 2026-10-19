@@ -9,16 +9,18 @@
 [ext_resource type="Material" uid="uid://bsvoh7nb070ja" path="res://materials/toon_sync_s.material" id="10_gqmmt"]
 [ext_resource type="Material" uid="uid://c3pfbwd425ifr" path="res://materials/rock.material" id="10_yc10j"]
 [ext_resource type="PackedScene" uid="uid://cr4wsdpcjwklo" path="res://scenes/scheduler.tscn" id="12_bvghk"]
-[ext_resource type="Shader" uid="uid://dnkpyxman7htg" path="res://scripts/environment/clouds.gdshader" id="13_0ld40"]
+[ext_resource type="Shader" uid="uid://dnkpyxman7htg" path="res://shaders/clouds.gdshader" id="13_0ld40"]
 [ext_resource type="Script" uid="uid://b5g1cg7p11xb" path="res://scripts/environment/godray_setup.gd" id="13_gqmmt"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="14_a8y0u"]
 [ext_resource type="Shader" uid="uid://bto1b2wcgu6lt" path="res://shaders/godray_v2.gdshader" id="14_yc10j"]
-[ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/gradients/sun_color.tres" id="16_dp3eg"]
-[ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/gradients/environment color.tres" id="17_0ld40"]
+[ext_resource type="Gradient" uid="uid://blcyp5qjgcbpw" path="res://assets/textures/gradients/sun_color.tres" id="16_dp3eg"]
+[ext_resource type="Gradient" uid="uid://yjdcfawisx1u" path="res://assets/textures/gradients/environment color.tres" id="17_0ld40"]
 [ext_resource type="Script" uid="uid://cu134mwsik6n5" path="res://addons/GdPlanningAI/scripts/nodes/gdpai_world_node.gd" id="17_dp3eg"]
 [ext_resource type="Shader" uid="uid://c4620k2iihv5v" path="res://shaders/grass/leaf.gdshader" id="17_jscy8"]
-[ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/sprites/grass.png" id="17_yc10j"]
+[ext_resource type="Texture2D" uid="uid://bvodgxwgdxmkr" path="res://assets/textures/sprites/grass.png" id="17_yc10j"]
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="18_0ld40"]
+[ext_resource type="Script" uid="uid://6kb1kkg2ckty" path="res://scripts/menus/settings_menu.gd" id="20_gqmmt"]
+[ext_resource type="Theme" uid="uid://dy72qguslybrs" path="res://ui_themes/main_pixelated_theme.tres" id="21_yc10j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(75, 1, 75)
@@ -38,15 +40,6 @@ shader_parameter/wrap = 0.355
 shader_parameter/steepness = 1.0
 shader_parameter/threshold_gradient_size = 0.2
 shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.33
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ip3kr"]
 material = SubResource("ShaderMaterial_dp3eg")
@@ -424,8 +417,58 @@ run_speed = 15.0
 debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
 stamina_panel = NodePath("../../../UISubViewportContainer/UISubViewport/Panel")
 
-[node name="CloudPivot" parent="EnvironmentSubViewportContainer/SubViewport/Player" index="7" unique_id=16865122 node_paths=PackedStringArray("scheduler")]
-scheduler = NodePath("../../../../Scheduler")
+[node name="Skeleton3D" parent="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1117597475, 743913056, 153055397) index="0" unique_id=871142970]
+bones/0/position = Vector3(8.515854e-18, 0.16631211, 0.038352102)
+bones/0/rotation = Quaternion(-0.022983339, 4.988634e-18, 4.988635e-18, 0.99973583)
+bones/1/rotation = Quaternion(0.20077464, -1.6873772e-16, -1.746278e-16, 0.97963744)
+bones/2/rotation = Quaternion(-0.1935759, 1.28978054e-17, 6.45129e-17, 0.9810853)
+bones/3/rotation = Quaternion(0.15298854, 1.17805925e-07, 1.8237651e-08, 0.988228)
+bones/4/rotation = Quaternion(0.061955146, 1.3987926e-14, 1.4771252e-08, 0.99807894)
+bones/5/rotation = Quaternion(0.27110344, 1.1474501e-07, 9.6954146e-08, 0.9625502)
+bones/6/rotation = Quaternion(0.009213, -0.00095329137, -0.793135, 0.60897547)
+bones/7/rotation = Quaternion(-0.022807274, 0.027750565, -0.48323104, 0.8747557)
+bones/8/rotation = Quaternion(0.21364957, -0.0022759177, -0.005008281, 0.9768949)
+bones/9/rotation = Quaternion(-0.016960371, 0.008899179, -0.1702624, 0.9852126)
+bones/11/rotation = Quaternion(0.0806488, 0.0007309473, -0.2099846, 0.9743725)
+bones/12/rotation = Quaternion(0.009212809, 0.00095314946, 0.793135, 0.6089755)
+bones/13/rotation = Quaternion(-0.022807278, -0.027750561, 0.48323104, 0.8747557)
+bones/14/rotation = Quaternion(0.21364957, 0.0022759282, 0.0050082672, 0.97689486)
+bones/15/rotation = Quaternion(-0.016960364, -0.008899177, 0.17026243, 0.9852126)
+bones/17/rotation = Quaternion(0.080648795, -0.00073094445, 0.20998457, 0.9743725)
+bones/18/rotation = Quaternion(0.9952591, 0.016333263, 0.0046015494, -0.09576714)
+bones/19/rotation = Quaternion(0.17046243, -0.00090261194, 0.009772803, 0.9853153)
+bones/20/rotation = Quaternion(-0.2632423, 0.00021352062, 0.0072041694, 0.96470284)
+bones/22/rotation = Quaternion(-0.07345149, -2.4565872e-11, -1.8703027e-05, 0.9972988)
+bones/23/rotation = Quaternion(0.9952591, -0.016333263, -0.0046015494, -0.09576714)
+bones/24/rotation = Quaternion(0.17046243, 0.00090261194, -0.009772803, 0.9853153)
+bones/25/rotation = Quaternion(-0.2632423, -0.00021352062, -0.0072041694, 0.96470284)
+bones/26/rotation = Quaternion(-0.5064619, -3.797198e-11, 0.00012896002, 0.86226237)
+bones/27/rotation = Quaternion(-0.07345149, 3.1690546e-11, 1.8703027e-05, 0.9972988)
+bones/28/position = Vector3(2.3331401, 0.34438735, 0.07826531)
+bones/28/rotation = Quaternion(-0.064306505, 0.038001154, 0.98867077, -0.13019489)
+bones/30/position = Vector3(1.8006313, 2.922995, -2.4904003)
+bones/31/position = Vector3(0.7441894, -3.5668237, 2.5509284)
+bones/32/position = Vector3(0.79539216, -6.12547, -2.1674824)
+bones/33/position = Vector3(1.2439805e-15, 5.460975, 1.0112063)
+bones/33/rotation = Quaternion(0.11307897, 1.1844465e-07, 1.3480062e-08, 0.993586)
+bones/34/position = Vector3(-2.3331401, 0.34438735, 0.07826531)
+bones/35/position = Vector3(-1.8006313, 2.922995, -2.4904003)
+bones/35/rotation = Quaternion(0.07589676, 0.77669436, -0.6179694, -0.095390774)
+bones/36/position = Vector3(-0.7441894, -3.5668237, 2.5509284)
+bones/37/position = Vector3(-0.79539216, -6.12547, -2.1674824)
+
+[node name="HandAttachment" parent="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature/Skeleton3D" index="4" unique_id=1358059341]
+transform = Transform3D(-0.98533565, 0.078292094, 0.1516033, -0.0756745, -0.9968675, 0.022967804, 0.15292661, 0.011158645, 0.98817456, -2.3331404, 0.3443892, 0.07826623)
+
+[node name="SheatheAttachment" parent="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature/Skeleton3D" index="5" unique_id=164721672]
+transform = Transform3D(1, -1.0203945e-17, 9.745322e-18, 9.745324e-18, 0.99894345, 0.045954533, -1.02039445e-17, -0.045954533, 0.99894345, 8.515854e-18, 0.16631211, 0.038352102)
+
+[node name="CloudMeshTop" parent="EnvironmentSubViewportContainer/SubViewport/Player/CloudPivot" parent_id_path=PackedInt32Array(1117597475, 16865122) index="0" unique_id=586618678 node_paths=PackedStringArray("sun")]
+sun = NodePath("../../../LightingAndEnvironment/DirectionalLight3D")
+
+[node name="FrustumCulllingCamera3D" parent="EnvironmentSubViewportContainer/SubViewport/Player/CameraPivot/EnvironmentCamera3D" parent_id_path=PackedInt32Array(1117597475, 24484333) index="0" unique_id=2143269882]
+near = 8.0
+far = 35.5
 
 [node name="Ground" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=346623154]
 collision_layer = 1057
@@ -729,8 +772,6 @@ mesh = SubResource("PlaneMesh_ip3kr")
 
 [node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_jbj1t")
-level_of_detail = 80000
-total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
@@ -744,13 +785,14 @@ skeleton = NodePath("")
 [node name="LightingAndEnvironment" type="Node" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=856473818]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=619800890]
-transform = Transform3D(0.9999999, 0, 0, 0, 0.62728214, 0.7787918, 0, -0.77879226, 0.6272818, 0, 0, 0)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.27274093, 0.96208704, 0, -0.96208763, 0.2727408, 0, 0, 0)
 layers = 3
 light_energy = 7.5575485
 light_indirect_energy = 0.0
 light_bake_mode = 0
 shadow_enabled = true
 directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="EnvironmentSubViewportContainer/SubViewport/LightingAndEnvironment" unique_id=790694228]
 environment = SubResource("Environment_jkv2x")
@@ -1042,12 +1084,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-metadata/_edit_lock_ = true
 
 [node name="UISubViewport" type="SubViewport" parent="UISubViewportContainer" unique_id=493926166]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
+anisotropic_filtering_level = 0
 size = Vector2i(1000, 625)
 render_target_update_mode = 4
 
@@ -1060,6 +1102,7 @@ text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_113qa")
 
 [node name="Label" type="Label" parent="UISubViewportContainer/UISubViewport" unique_id=2035844490]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -1093,6 +1136,7 @@ horizontal_alignment = 1
 uppercase = true
 
 [node name="Panel" type="Panel" parent="UISubViewportContainer/UISubViewport" unique_id=72008686]
+visible = false
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -1114,6 +1158,37 @@ offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.29190648, 0.74641275, 7.70092e-07, 1)
+
+[node name="Menu" type="Node" parent="UISubViewportContainer/UISubViewport" unique_id=627731810 node_paths=PackedStringArray("grass_density_menu")]
+script = ExtResource("20_gqmmt")
+grass_density_menu = NodePath("GrassDensityOptionButton")
+
+[node name="GrassDensityOptionButton" type="OptionButton" parent="UISubViewportContainer/UISubViewport/Menu" unique_id=2010253457]
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -271.0
+offset_top = 8.0
+offset_right = -39.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme = ExtResource("21_yc10j")
+
+[node name="ReloadSceneButton" type="Button" parent="UISubViewportContainer/UISubViewport/Menu" unique_id=94297006]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -432.0
+offset_top = 8.0
+offset_right = -280.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme = ExtResource("21_yc10j")
+text = "Reload Scene"
+
+[connection signal="item_selected" from="UISubViewportContainer/UISubViewport/Menu/GrassDensityOptionButton" to="UISubViewportContainer/UISubViewport/Menu" method="_on_grass_density_option_button_item_selected"]
+[connection signal="pressed" from="UISubViewportContainer/UISubViewport/Menu/ReloadSceneButton" to="UISubViewportContainer/UISubViewport/Menu" method="_on_reload_scene_button_pressed"]
 
 [editable path="EnvironmentSubViewportContainer/SubViewport/Player"]
 [editable path="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male"]

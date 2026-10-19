@@ -1,21 +1,11 @@
 shader_type spatial;
 
-//render_mode ambient_light_disabled;
 render_mode depth_draw_opaque;
-//const float PI = 3.1415926536f;
 
 group_uniforms color;
 uniform vec4 albedo : source_color = vec4(1.0f);
 uniform sampler2D albedo_texture : source_color;
 uniform bool clamp_diffuse_to_max = false;
-
-group_uniforms clouds;
-global uniform float cloud_cover_scale;
-global uniform float cloud_cover_intensity;
-global uniform vec2 cloud_scroll_speed;
-global uniform sampler2D cloud_noise_texture;
-global uniform float cloud_cover_threshold;
-//uniform float correction = 1.0f;
 
 group_uniforms toon_shading;
 uniform int cuts : hint_range(1, 8) = 3;
@@ -25,28 +15,9 @@ uniform float threshold_gradient_size = 0.2; // Hybrid toon shading control (set
 
 uniform bool use_attenuation = true;
 
-uniform bool use_specular = true;
-uniform float specular_strength : hint_range(0.0f, 1.0f) = 1.0f;
-uniform float specular_shininess : hint_range(0.0f, 32.0f) = 16.0f;
-uniform sampler2D specular_map : source_color;
-
-uniform bool use_rim = true;
-uniform float rim_width : hint_range(0.0f, 16.0f) = 8.0f;
-uniform vec4 rim_color : source_color = vec4(1.0f);
-
-uniform bool use_ramp = false;
-uniform sampler2D ramp : source_color;
-
-uniform bool use_borders = false;
-uniform float border_width = 0.01f;
-
 varying vec3 instance_pos;
 varying vec3 vertex_pos;
 varying vec3 normal;
-
-float split_specular(float specular) {
-	return step(0.5f, specular);
-}
 
 void vertex() {
 	instance_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
@@ -62,33 +33,8 @@ void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
 	
-	// Convert LIGHT from view space to world space
-	vec3 LIGHT_world_space = (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xyz;
-	
-	// Manipulate cloud noise UV values
-	vec2 cloud_uv = (instance_pos.xz + (cloud_scroll_speed * TIME) /*+ (LIGHT_world_space.xz / 2.0f)*/) * (cloud_cover_scale);
-	// Stretch UV in direction of the sun LIGHT
-	cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
-	
-	//Sample texture value for current pixel 
-	float cloud_cover = texture(cloud_noise_texture, cloud_uv).r;
-	
-	// Threshold value for crisp shadows 
-	if (cloud_cover >= cloud_cover_threshold) {
-		cloud_cover = 0.0;
-	} else {
-		cloud_cover = 1.0;
-	}
-	
-	//cloud_cover -= cloud_cover_intensity;
-	
 	// Apply a shadow if it exists
 	if (use_attenuation) {
-		//if (LIGHT_IS_DIRECTIONAL) {
-			//attenuation = min(ATTENUATION, cloud_cover);
-		//} else {
-			//attenuation = ATTENUATION;
-		//}
 		attenuation = ATTENUATION;
 	}
 

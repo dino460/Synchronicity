@@ -145,12 +145,12 @@ void light() {
 		vec4 n = texture(NORMAL_TEXTURE, v_screenUV);
 		n = n * 2.0 - 1.0;
 
-		float dotNL = dot(n.rgb, LIGHT);
+		float dotNL = dot(n.rgb, LIGHT + (ATTENUATION / 3.0 - 0.333));
 		dotNL = pow(dotNL, 2.5);
 		dotNL = clamp(dotNL, 0.0, 1.0);
 
 		if (LIGHT_IS_DIRECTIONAL)
-			DIFFUSE_LIGHT += mix(vec3(1.0), dotNL * LIGHT_COLOR * lightIntensity, v_lineMask);
+			DIFFUSE_LIGHT += mix(vec3(1.0), (dotNL) * LIGHT_COLOR * lightIntensity, v_lineMask);
 	} else {
 		DIFFUSE_LIGHT = vec3(1.0);
 	}

@@ -2,20 +2,12 @@ shader_type spatial;
 
 render_mode depth_draw_opaque;
 
-
 uniform float time_scale = 1.0;
 
 group_uniforms animation;
 uniform int hframe : hint_range(1,128);
 uniform int vframe : hint_range(1,128);
 uniform vec2 current_frame = vec2(0,0);
-
-group_uniforms clouds;
-global uniform float cloud_cover_scale = 1.0;
-global uniform float cloud_cover_intensity = 0.3;
-global uniform vec2 cloud_scroll_speed = vec2(0.5, 0.2);
-global uniform sampler2D cloud_noise_texture;
-global uniform float cloud_cover_threshold;
 
 group_uniforms color;
 uniform vec4 albedo : source_color = vec4(1.0f);
@@ -82,33 +74,8 @@ void light() {
 	// Attenuation.
 	float attenuation = 1.0f;
 	
-	// Convert LIGHT from view space to world space
-	vec3 LIGHT_world_space = (INV_VIEW_MATRIX * vec4(LIGHT, 0.0)).xyz;
-	
-	// Manipulate cloud noise UV values
-	vec2 cloud_uv = (instance_pos.xz + (cloud_scroll_speed * TIME) /*+ (LIGHT_world_space.xz / 2.0f)*/) * (cloud_cover_scale);
-	// Stretch UV in direction of the sun LIGHT
-	cloud_uv = vec2(cloud_uv.x, cloud_uv.y * LIGHT_world_space.y);
-	
-	//Sample texture value for current pixel 
-	float cloud_cover = texture(cloud_noise_texture, cloud_uv).r;
-	
-	// Threshold value for crisp shadows 
-	if (cloud_cover >= cloud_cover_threshold) {
-		cloud_cover = 0.0;
-	} else {
-		cloud_cover = 1.0;
-	}
-	
-	//cloud_cover -= cloud_cover_intensity;
-	
 	// Apply a shadow if it exists
 	if (use_attenuation) {
-		//if (LIGHT_IS_DIRECTIONAL) {
-			//attenuation = min(ATTENUATION, cloud_cover);
-		//} else {
-			//attenuation = ATTENUATION;
-		//}
 		attenuation = ATTENUATION;
 	}
 
