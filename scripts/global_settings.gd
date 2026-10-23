@@ -13,7 +13,7 @@ enum GrassDensity {
 	OFF = 0,
 	LOW = 10000,
 	MEDIUM = 20000,
-	HIGH = 80000,
+	HIGH = 80000, # 1,4222222 grasses per unit
 	ULTRA = 320000,
 	BENCHMARK_1M = 1000000,
 	BENCHMARK_5M = 5000000,

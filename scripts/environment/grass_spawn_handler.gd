@@ -11,36 +11,118 @@ var number_of_groups : int = 4
 @export var ground_mesh : MeshInstance3D
 @export var grass_mesh : MeshInstance3D
 
+@export_group("Following Grid")
+@export var use_following_grid : bool
+@export var player : Player
+@export var spawn_area_side_length : float
+var grid_center : Vector3 = Vector3.ZERO
+
 func _ready() -> void:
-	# if GlobalSettings.level_of_detail != 0:
-	total_number_of_meshes = GlobalSettings.grass_density
+	grid_center = player.global_position
+	grid_center.x -= spawn_area_side_length * 2.0
+	grid_center.z -= spawn_area_side_length * 2.0
 
-	if total_number_of_meshes == 0:
-		return
+	if use_following_grid:
+		spawn_in_grid()
+	else:
+		total_number_of_meshes = GlobalSettings.grass_density
 
-	var counter : int = sqrt(number_of_groups)
-	var mult_factor_x : float = - (sqrt(number_of_groups) - 1.0)
-	var mult_factor_z : float = - (sqrt(number_of_groups) - 1.0)
-	var increment : int = 2
-	var denominator : float = sqrt(number_of_groups) * 2.0
+		if total_number_of_meshes == 0:
+			return
 
-	for i in range(number_of_groups):
-		var multimesh_instance = GrassSpawner.new()
-		multimesh_instance.number_of_meshes = total_number_of_meshes / number_of_groups
-		multimesh_instance.spawn_area_size = ground_mesh.mesh.size.x / sqrt(number_of_groups)
+		var counter : int = sqrt(number_of_groups)
+		var mult_factor_x : float = - (sqrt(number_of_groups) - 1.0)
+		var mult_factor_z : float = - (sqrt(number_of_groups) - 1.0)
+		var increment : int = 2
+		var denominator : float = sqrt(number_of_groups) * 2.0
 
-		var new_center_x = ground_mesh.global_position.x + (mult_factor_x * ground_mesh.mesh.size.x / denominator)
-		var new_center_z = ground_mesh.global_position.z + (mult_factor_z * ground_mesh.mesh.size.x / denominator)
-		multimesh_instance.spawn_area_center = Vector3(new_center_x, ground_mesh.global_position.y, new_center_z)
+		for i in range(number_of_groups):
+			var multimesh_instance = GrassSpawner.new()
+			multimesh_instance.number_of_meshes = total_number_of_meshes / number_of_groups
+			multimesh_instance.spawn_area_size = ground_mesh.mesh.size.x / sqrt(number_of_groups)
 
-		mult_factor_x += increment
-		counter -= 1
-		if counter <= 0:
-			counter = sqrt(number_of_groups)
-			mult_factor_x = - (sqrt(number_of_groups) - 1.0)
-			mult_factor_z += increment
+			var new_center_x = ground_mesh.global_position.x + (mult_factor_x * ground_mesh.mesh.size.x / denominator)
+			var new_center_z = ground_mesh.global_position.z + (mult_factor_z * ground_mesh.mesh.size.x / denominator)
+			multimesh_instance.spawn_area_center = Vector3(new_center_x, ground_mesh.global_position.y, new_center_z)
 
-		multimesh_instance.grass_mesh = grass_mesh
-		multimesh_instance.multimesh = MultiMesh.new()
-		multimesh_instance.cast_shadow = false
-		add_child(multimesh_instance)
+			mult_factor_x += increment
+			counter -= 1
+			if counter <= 0:
+				counter = sqrt(number_of_groups)
+				mult_factor_x = - (sqrt(number_of_groups) - 1.0)
+				mult_factor_z += increment
+
+			multimesh_instance.grass_mesh = grass_mesh
+			multimesh_instance.multimesh = MultiMesh.new()
+			multimesh_instance.cast_shadow = false
+			add_child(multimesh_instance)
+			multimesh_instance.global_position = Vector3(new_center_x, 0.0, new_center_z)
+
+
+func _physics_process(_delta: float) -> void:
+	if use_following_grid: move_grass_in_grid()
+	pass
+
+
+## ========= Known working values ========= ##
+##
+##		spawn_area_side_length = 36~37
+##		2 x 2 groups
+##		distance_check_offset = 1.0
+##		distance_move_offset = 2.0
+##		center offset = 0.0
+## 		total grass = 75168
+##
+##		spawn_area_side_length = 9
+##		5 x 5 groups
+##		distance_check_offset = 2.5
+##		distance_move_offset = 5.0
+##		center offset = 0.0
+## 		total grass = 29362
+##
+## 	All of this can be improved by separating
+## 	X and Z axis checks (for example, using a
+## 	5x4 grid, which reduces number of grass to
+## 	23490 or -20%). That is easy and should be
+## 	implemented ASAP for free memory gains.
+## ========= ===================== ========= ##
+
+
+func spawn_in_grid() -> void:
+	var number_of_grasses_to_spawn : int = floor(spawn_area_side_length * spawn_area_side_length * 14.5)
+
+	for i in 5:
+		for j in 5:
+			var mesh := MeshInstance3D.new()
+			mesh.mesh = SphereMesh.new()
+			var spawn_center : Vector3 = Vector3(grid_center.x + i * spawn_area_side_length, ground_mesh.global_position.y, grid_center.z + j * spawn_area_side_length)
+			var multimesh_instance = GrassSpawner.new(number_of_grasses_to_spawn, spawn_area_side_length, spawn_center, grass_mesh)
+			multimesh_instance.multimesh = MultiMesh.new()
+			multimesh_instance.cast_shadow = false
+			add_child(multimesh_instance)
+			multimesh_instance.global_position = spawn_center
+			multimesh_instance.add_child(mesh)
+			mesh.global_position = multimesh_instance.global_position
+			mesh.global_position.y = 2.0
+
+
+func move_grass_in_grid() -> void:
+	var player_direction : Vector2 = Vector2(
+		player.direction.x / max(0.0001, abs(player.direction.x)),
+		player.direction.z / max(0.0001, abs(player.direction.z))
+	)
+
+	for grass_patch : Node3D in self.get_children():
+		var distance_check_offset : float = 2.5
+		var distance_move_offset : float = 5.0
+
+		var x_distance : float = abs(grass_patch.global_position.x - player.global_position.x)
+		var x_direction : float = (grass_patch.global_position.x - player.global_position.x) / abs(grass_patch.global_position.x - player.global_position.x)
+		var z_distance : float = abs(grass_patch.global_position.z - player.global_position.z)
+		var z_direction : float = (grass_patch.global_position.z - player.global_position.z) / abs(grass_patch.global_position.z - player.global_position.z)
+
+		if x_distance >= spawn_area_side_length * distance_check_offset and x_direction != player_direction.x:
+			grass_patch.global_position.x += distance_move_offset * player_direction.x * spawn_area_side_length
+
+		if z_distance >= spawn_area_side_length * distance_check_offset and z_direction != player_direction.y:
+			grass_patch.global_position.z += distance_move_offset * player_direction.y * spawn_area_side_length

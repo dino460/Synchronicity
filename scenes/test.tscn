@@ -11,6 +11,9 @@
 [ext_resource type="Script" uid="uid://cu134mwsik6n5" path="res://addons/GdPlanningAI/scripts/nodes/gdpai_world_node.gd" id="9_yk7ts"]
 [ext_resource type="Script" uid="uid://cvie3m6t7c0hd" path="res://addons/GdPlanningAI/scripts/gdpai_blackboard_plan.gd" id="10_ajshl"]
 [ext_resource type="FontFile" uid="uid://dx5ct7jymslr3" path="res://assets/fonts/m3x6.ttf" id="11_ajshl"]
+[ext_resource type="Script" uid="uid://6kb1kkg2ckty" path="res://scripts/menus/settings_menu.gd" id="12_ff6ho"]
+[ext_resource type="Theme" uid="uid://dy72qguslybrs" path="res://ui_themes/main_pixelated_theme.tres" id="14_5jxlq"]
+[ext_resource type="Script" uid="uid://rtsrb5fh67fy" path="res://scripts/benchmark_helper.gd" id="15_xrtyr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7h77l"]
 size = Vector3(300, 1, 300)
@@ -38,15 +41,6 @@ shader_parameter/wrap = 0.355
 shader_parameter/steepness = 1.0
 shader_parameter/threshold_gradient_size = 0.2
 shader_parameter/use_attenuation = true
-shader_parameter/use_specular = false
-shader_parameter/specular_strength = 1.0
-shader_parameter/specular_shininess = 16.33
-shader_parameter/use_rim = false
-shader_parameter/rim_width = 8.0
-shader_parameter/rim_color = Color(1, 1, 1, 1)
-shader_parameter/use_ramp = false
-shader_parameter/use_borders = false
-shader_parameter/border_width = 0.01
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_7yos8"]
 material = SubResource("ShaderMaterial_jbj1t")
@@ -94,6 +88,21 @@ outline_size = 24
 outline_color = Color(0.20002359, 2.3914967e-07, 0.008727946, 1)
 shadow_size = 0
 
+[sub_resource type="LabelSettings" id="LabelSettings_daiq8"]
+font = ExtResource("11_ajshl")
+font_size = 36
+font_color = Color(0.9999766, 0.7091604, 0.662535, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c6rvn"]
+font = ExtResource("11_ajshl")
+font_size = 40
+font_color = Color(0.3245466, 0.947226, 0, 1)
+outline_size = 16
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
 [node name="Main" type="Node3D" unique_id=993117901]
 
 [node name="Main SubViewportContainer" type="SubViewportContainer" parent="." unique_id=388678303]
@@ -113,6 +122,9 @@ render_target_update_mode = 4
 
 [node name="Player" parent="Main SubViewportContainer/SubViewport" unique_id=119236905 instance=ExtResource("4_t1xvl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.0595, 2.20592, 4.83151)
+
+[node name="CloudMeshTop" parent="Main SubViewportContainer/SubViewport/Player/CloudPivot" parent_id_path=PackedInt32Array(119236905, 16865122) index="0" unique_id=586618678 node_paths=PackedStringArray("sun")]
+sun = NodePath("../../../DirectionalLight3D")
 
 [node name="TestController" type="Node" parent="Main SubViewportContainer/SubViewport" unique_id=1928514937 node_paths=PackedStringArray("npc_holder", "viewport")]
 script = ExtResource("1_mlvqa")
@@ -147,8 +159,6 @@ skeleton = NodePath("../..")
 
 [node name="MainGrass" type="Node" parent="Main SubViewportContainer/SubViewport/Ground" unique_id=1056454851 node_paths=PackedStringArray("ground_mesh", "grass_mesh")]
 script = ExtResource("6_ghpyy")
-level_of_detail = 80000
-total_number_of_meshes = 0
 number_of_groups = 64
 ground_mesh = NodePath("../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("GrassMeshInstance3D")
@@ -199,3 +209,127 @@ offset_right = 314.0
 offset_bottom = 57.0
 text = "18:0 --- 45.000 "
 label_settings = SubResource("LabelSettings_v26lh")
+
+[node name="Label" type="Label" parent="UI SubViewportContainer/SubViewport" unique_id=1946369568]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -271.0
+offset_bottom = 38.0
+grow_horizontal = 0
+text = "test to test test size"
+label_settings = SubResource("LabelSettings_daiq8")
+horizontal_alignment = 2
+
+[node name="Player Debug" type="Label" parent="UI SubViewportContainer/SubViewport" unique_id=994775193]
+visible = false
+y_sort_enabled = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -93.5
+offset_right = 162.0
+offset_bottom = -51.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(141, 21)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "test to test test size"
+label_settings = SubResource("LabelSettings_c6rvn")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="Panel" type="Panel" parent="UI SubViewportContainer/SubViewport" unique_id=663659265]
+visible = false
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -52.0
+offset_right = 349.0
+offset_bottom = -12.0
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="UI SubViewportContainer/SubViewport/Panel" unique_id=103964486]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.29190648, 0.74641275, 7.70092e-07, 1)
+
+[node name="Menu" type="Node" parent="UI SubViewportContainer/SubViewport" unique_id=1519989929 node_paths=PackedStringArray("grass_density_menu")]
+script = ExtResource("12_ff6ho")
+grass_density_menu = NodePath("GrassDensityOptionButton")
+next_scene = "main"
+
+[node name="GrassDensityOptionButton" type="OptionButton" parent="UI SubViewportContainer/SubViewport/Menu" unique_id=515068961]
+texture_filter = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -271.0
+offset_top = 8.0
+offset_right = -39.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme = ExtResource("14_5jxlq")
+
+[node name="ReloadSceneButton" type="Button" parent="UI SubViewportContainer/SubViewport/Menu" unique_id=1961510692]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -466.0
+offset_top = 59.0
+offset_right = -314.0
+offset_bottom = 105.0
+grow_horizontal = 0
+theme = ExtResource("14_5jxlq")
+text = "Reload Scene"
+
+[node name="StartMeasurementsButton" type="Button" parent="UI SubViewportContainer/SubViewport/Menu" unique_id=1053281856]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -714.0
+offset_top = 8.0
+offset_right = -517.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme = ExtResource("14_5jxlq")
+text = "Start Benchmark"
+script = ExtResource("15_xrtyr")
+tester_name = "zoz"
+
+[node name="ChangeSceneButton" type="Button" parent="UI SubViewportContainer/SubViewport/Menu" unique_id=479977614]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -489.0
+offset_top = 8.0
+offset_right = -292.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme = ExtResource("14_5jxlq")
+text = "Change Scene"
+script = ExtResource("15_xrtyr")
+tester_name = "zoz"
+
+[connection signal="item_selected" from="UI SubViewportContainer/SubViewport/Menu/GrassDensityOptionButton" to="UI SubViewportContainer/SubViewport/Menu" method="_on_grass_density_option_button_item_selected"]
+[connection signal="pressed" from="UI SubViewportContainer/SubViewport/Menu/ReloadSceneButton" to="UI SubViewportContainer/SubViewport/Menu" method="_on_reload_scene_button_pressed"]
+[connection signal="pressed" from="UI SubViewportContainer/SubViewport/Menu/StartMeasurementsButton" to="UI SubViewportContainer/SubViewport/Menu/StartMeasurementsButton" method="_on_pressed"]
+[connection signal="pressed" from="UI SubViewportContainer/SubViewport/Menu/ChangeSceneButton" to="UI SubViewportContainer/SubViewport/Menu" method="_on_change_scene_button_pressed"]
+
+[editable path="Main SubViewportContainer/SubViewport/Player"]
+[editable path="Main SubViewportContainer/SubViewport/Player/MeshPivot/base_male"]
+[editable path="Main SubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword"]

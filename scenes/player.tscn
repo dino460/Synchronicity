@@ -113,10 +113,6 @@ shader_parameter/pixelation = 256.0
 material = SubResource("ShaderMaterial_v71bu")
 size = Vector2(150, 150)
 
-[sub_resource type="QuadMesh" id="QuadMesh_a38lo"]
-material = SubResource("ShaderMaterial_v71bu")
-size = Vector2(150, 40)
-
 [node name="Player" type="CharacterBody3D" unique_id=1117597475 node_paths=PackedStringArray("stats", "weapon")]
 script = ExtResource("1_br4xa")
 walk_speed = 4.3
@@ -253,7 +249,7 @@ shape = SubResource("CapsuleShape3D_i4ail")
 
 [node name="longsword" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword" unique_id=1758707092 instance=ExtResource("22_a38lo")]
 
-[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=360580900]
+[node name="Cube" parent="MeshPivot/base_male/Armature/Skeleton3D/SheatheAttachment/Weapon/Longsword/longsword" index="0" unique_id=1979578884]
 transform = Transform3D(0.020202827, 0.0040225224, -0.009362542, 0.0017181743, 0.33557925, 0.0043147937, 0.009207238, -0.07144922, 0.019738412, 0.030324731, 0.3368261, 0.024280388)
 surface_material_override/0 = ExtResource("24_wqfne")
 
@@ -267,16 +263,6 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1
 mesh = SubResource("QuadMesh_l71n6")
 script = ExtResource("21_a38lo")
 anchor = NodePath("../../MeshPivot")
-
-[node name="CloudMesh-X" type="MeshInstance3D" parent="CloudPivot" unique_id=537292673]
-transform = Transform3D(-1, 6.181723e-08, 6.181723e-08, 0, -0.7071067, 0.7071067, 8.742278e-08, 0.7071067, 0.7071067, 0, 6, 88.632)
-visible = false
-mesh = SubResource("QuadMesh_a38lo")
-
-[node name="CloudMesh+X" type="MeshInstance3D" parent="CloudPivot" unique_id=1898228423]
-transform = Transform3D(1, 0, 0, 0, -0.7071067, 0.7071067, 0, -0.7071067, -0.7071067, 0, 6, -88.632)
-visible = false
-mesh = SubResource("QuadMesh_a38lo")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=770097922]
 script = ExtResource("5_lu2e7")

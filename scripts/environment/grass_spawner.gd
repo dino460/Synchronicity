@@ -7,6 +7,18 @@ var spawn_area_size : float
 var spawn_area_center : Vector3
 var grass_mesh : MeshInstance3D
 
+func _init(
+	p_number_of_meshes : int = 0,
+	p_spawn_area_size : float = 0.0,
+	p_spawn_area_center : Vector3 = Vector3.ZERO,
+	p_grass_mesh : MeshInstance3D = null,
+) -> void:
+	number_of_meshes = p_number_of_meshes
+	spawn_area_size = p_spawn_area_size
+	spawn_area_center = p_spawn_area_center
+	grass_mesh = p_grass_mesh
+
+
 func _ready():
 	# Create the multimesh.
 	# multimesh = MultiMesh.new()
@@ -20,10 +32,15 @@ func _ready():
 
 	multimesh.mesh = grass_mesh.mesh
 
-
 	# Set the transform of the instances.
 	for i in multimesh.visible_instance_count:
-		var position = Transform3D()
-		position = position.translated(Vector3(spawn_area_center.x + randf_range(-1.0, 1.0) * spawn_area_size / 2.0, spawn_area_center.y + (multimesh.mesh.size.y / 2.0), spawn_area_center.z + randf_range(-1.0, 1.0) * spawn_area_size / 2.0))
-		multimesh.set_instance_transform(i, position)
+		var instance_position = Transform3D()
+		instance_position = instance_position.translated(
+			Vector3(
+				randf_range(-spawn_area_size / 2.0, spawn_area_size / 2.0),
+				spawn_area_center.y + (multimesh.mesh.size.y / 2.0),
+				randf_range(-spawn_area_size / 2.0, spawn_area_size / 2.0)
+			)
+		)
+		multimesh.set_instance_transform(i, instance_position)
 		multimesh.set_instance_custom_data(i, Color(randf(), randf(), randf(), randf()))

@@ -1,4 +1,4 @@
-extends Node
+extends Button
 
 
 @export var tester_name : String = ""
@@ -31,9 +31,23 @@ func write_data_to_file() -> bool:
 
 	if file:
 		for data in fps_data:
+			var string : String = str("%d,%.f" % [data, fps_data[data]])
+			file.store_line(string)
 			print(data, " ", fps_data[data])
 		file.close()
 
 		return true
 	else:
 		return false
+
+
+func _on_pressed() -> void:
+	if gather_data:
+		self.text = "Start Benchmark"
+		write_data_to_file()
+	else:
+		self.text = "Stop Benchmark"
+
+	gather_data = not gather_data
+	current_data_point = 0
+	fps_data.clear()

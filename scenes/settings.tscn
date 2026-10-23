@@ -4,3 +4,4 @@
 
 [node name="Settings" type="Node" unique_id=1210704652]
 script = ExtResource("1_5p8wc")
+cloud_cover_threshold = 1.0
