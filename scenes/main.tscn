@@ -417,7 +417,7 @@ run_speed = 15.0
 debug_label = NodePath("../../../UISubViewportContainer/UISubViewport/Player Debug")
 stamina_panel = NodePath("../../../UISubViewportContainer/UISubViewport/Panel")
 
-[node name="Skeleton3D" parent="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1117597475, 743913056, 153055397) index="0" unique_id=871142970]
+[node name="Skeleton3D" parent="EnvironmentSubViewportContainer/SubViewport/Player/MeshPivot/base_male/Armature" parent_id_path=PackedInt32Array(1117597475, 743913056, 1922391723) index="0" unique_id=1528562952]
 bones/0/position = Vector3(8.515854e-18, 0.16631211, 0.038352102)
 bones/0/rotation = Quaternion(-0.022983339, 4.988634e-18, 4.988635e-18, 0.99973583)
 bones/1/rotation = Quaternion(0.20077464, -1.6873772e-16, -1.746278e-16, 0.97963744)
@@ -776,14 +776,17 @@ cast_shadow = 0
 mesh = SubResource("QuadMesh_a8y0u")
 skeleton = NodePath("")
 
-[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh", "player")]
+[node name="MainGrass" type="Node" parent="EnvironmentSubViewportContainer/SubViewport/Ground/Grass" unique_id=1380608546 node_paths=PackedStringArray("ground_mesh", "grass_mesh", "player", "camera_reference")]
 script = ExtResource("6_jbj1t")
 number_of_groups = 64
 ground_mesh = NodePath("../../NavigationRegion3D/Ground Mesh")
 grass_mesh = NodePath("../GrassMeshInstance3D")
 use_following_grid = true
 player = NodePath("../../../Player")
-spawn_area_side_length = 9.0
+camera_reference = NodePath("../../../Player/CameraPivot/EnvironmentCamera3D")
+spawn_area_side_length = 10.0
+number_of_groups_x = 5
+number_of_groups_z = 5
 
 [node name="Ground2" type="StaticBody3D" parent="EnvironmentSubViewportContainer/SubViewport" unique_id=1828502318]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -73)
